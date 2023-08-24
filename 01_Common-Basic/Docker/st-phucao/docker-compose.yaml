@@ -29,7 +29,6 @@ services:
       MYSQL_PASSWORD: 'lara_password'
       MYSQL_USER: 'lara_user'
     volumes:
-      - ./db/mysql:/var/lib/mysql
       - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - laravelapp
@@ -45,7 +44,31 @@ services:
       - ./.docker/nginx:/etc/nginx/conf.d
     networks:
       - laravelapp
+  redis:
+    image: redis:latest
+    container_name: laravelapp-redis
+    restart: unless-stopped
+    networks:
+      - laravelapp
 
+  minio:
+    image: bitnami/minio:latest
+    container_name: laravelapp-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - laravelapp
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: laravelapp-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"  # Cổng truy cập
+    environment:
+      PMA_HOST: db  # Kết nối đến dịch vụ MySQL trong Docker Compose
+    networks:
+      - laravelapp  
 
 
 networks: 
