@@ -1,66 +1,224 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Install Laravel & MySQL & Nginx & Minio & Redis with Docker
+## Prerequisites
+- Docker
+- Docker compose
+- Composer
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Installation process
 
-## About Laravel
+### Step 1: Create base laravel project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```sh
+composer create-project laravel/laravel .
+```
+### Step 2: Change environment variables in `.env`
+```sh
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+### Step 3: Setup Docker
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Create and config docker-compose.yml
+```sh
+touch docker-compose.yml
+```
+- Open docker-compose.yml and paste below script in it
+```sh
+version: '3.7'
+networks:
+  backend:
+    driver: bridge
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+services:
+  nginx:  
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile  # Use the Dockerfile you created
+    container_name: laravel_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ".:/var/www/html"
+      - "./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      - backend
+    depends_on:
+      - php
+    links:
+      - php
 
-## Learning Laravel
+  mysql:
+    image: mysql:5.7
+    container_name: laravel_mysql
+    ports:
+      - "3386:3306"
+    volumes:
+      - "./docker/mysql:/var/lib/mysql"
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - backend
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: laravel_php
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - backend
+    links:
+      - mysql
+      - redis
+      - minio
+    environment:
+      - MINIO_SERVER_ACCESS_KEY=minio-access-key
+      - MINIO_SERVER_SECRET_KEY=minio-secret-key
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  # redis
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - ./docker/redis:/var/log/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  #minio
+  minio:
+    image: 'bitnami/minio:latest'
+    ports:
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=minio-root-user
+      - MINIO_ROOT_PASSWORD=minio-root-password
+    networks:
+      - backend 
+    volumes:
+      - ./docker/minio:/data
+```
+Create directory for mounting to container
+```sh
+mkdir docker
+cd docker
+mkdir php nginx redis mysql minio
+```
 
-## Laravel Sponsors
+Config Dockerfile for php
+```sh
+cd php
+touch Dockerfile
+nano Dockerfile
+```
+- Open Dockerfile and paste below script in it
+```sh
+FROM php:8.1-fpm
+# set your user name, ex: user=bernardo
+ARG user=noo
+ARG uid=1000
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-### Premium Partners
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 
-## Contributing
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
 
-## Code of Conduct
+# Set working directory
+WORKDIR /var/www/html
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+USER $user
+```
+Config Dockerfile and nginx.conf for nginx
+```sh
+cd nginx
+touch Dockerfile
+touch nginx.conf
+```
+- Open Dockerfile and paste below script in it
+```sh
+# Use the official Nginx image as the base image
+FROM nginx:stable-alpine
 
-## Security Vulnerabilities
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Copy your custom Nginx configuration to the container
+COPY ./docker/nginx/nginx.conf /etc/nginx/conf.d/
+```
+ - Open nginx.conf and paste below script in it
+```sh
+server {
+    listen 80;
+    listen [::]:80;
+    server_name localhost;
+    root /var/www/html/public;
+ 
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+ 
+    index index.php;
+ 
+    charset utf-8;
+ 
+    location / {
+	try_files $uri $uri/ /index.php?$query_string;
+    }
+ 
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+ 
+    error_page 404 /index.php;
+ 
+    location ~ \.php$ {
+	fastcgi_pass php:9000;
+	fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+	include fastcgi_params;
+    }
+ 
+    location ~ /\.(?!well-known).* {
+	deny all;
+    }
+}
+```
+Change mod of docker/minio
+```sh
+sudo chown -R 1001:1001 docker/minio
+```
+### Step 4: Run application
+```sh
+docker-compose.yml
+```
+Now you can access `localhost:8080` to see interesting things
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
