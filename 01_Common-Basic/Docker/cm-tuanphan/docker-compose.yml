@@ -51,10 +51,8 @@ services:
   minio:
     image: minio/minio
     ports:
-      - target: 9000
-        published: ${MINIO_PORT:-9000}
-        protocol: tcp
-        mode: host
+      - "9000:9000"
+      - "9001:9001"
     volumes:
       - type: volume
         source: minio-store
