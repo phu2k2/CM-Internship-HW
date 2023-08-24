@@ -27,10 +27,10 @@ Before you begin, ensure you have the following installed:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/laravel-docker-minio.git
+   git clone https://github.com/yourusername/project-name
 2. Navigate to the project directory:
    ```bash
-   cd laravel-docker-minio
+   cd project-name
 3. Copy the .env.example file and rename it to .env:
     ```bash
     cp .env.example .env
