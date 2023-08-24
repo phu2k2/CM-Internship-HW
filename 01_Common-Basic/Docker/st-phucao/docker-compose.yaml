@@ -66,10 +66,10 @@ services:
     ports:
       - "8080:80"  # Cổng truy cập
     environment:
-      PMA_HOST: db  # Kết nối đến dịch vụ MySQL trong Docker Compose
-    networks:
-      - laravelapp  
 
+      PMA_HOST: db  # Tên của dịch vụ MySQL trong Docker Compose
+    networks:
+      - laravelapp
 
 networks: 
   laravelapp:
