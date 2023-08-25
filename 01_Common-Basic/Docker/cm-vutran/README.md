@@ -165,6 +165,11 @@ docker-compose up -d
 
 
 # If you want to connect laravel with mysql, redis, in env file change:
+## First, you create .env from .env.example:
+```sh
+cp .env.example .env
+```
+## Then change .env like this:
 ```
 DB_HOST=db
 DB PORT=3307
