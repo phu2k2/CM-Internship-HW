@@ -5,7 +5,12 @@ RED='\033[0;31m'
 GRN='\033[1;32m'
 NC='\033[0m' # No Color
 
-mkdir src
+if [ ! -d "src" ]; then
+    mkdir src
+fi
+if [ ! -f ".env" ]; then
+    cp .env.example .env
+fi
 
 if [ -x $(command -v docker-compose) > /dev/null ]; then
     docker-compose up --build -d
