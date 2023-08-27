@@ -39,18 +39,16 @@ If your computer installed docker and docker-compose, you can skip this step and
 
 ## 4. Get started
 
-1. Make a new project Laravel 
+1. Create the `.env` file from `.env.example` file
    
-   If you want to create a new laravel project for yourself, please **delete** the `laravel` folder and execute the command below. Otherwise you can skip this step.
-   
+    In the `laravel` folder, copy `.env` file with following command:
+
     ```bash
-    docker run -u ${UID}:${UID} --rm composer create-project laravel/laravel laravel
+    cp .env.example .env
     ```
-
-    Wait a few minutes for it to finish, and then you will see laravel project you just created in the `laravel` folder.
-
+   
     > ## Remember
-    >Change the project environment variables in your `.env` and `docker-compose.yml` file.
+    >Update the project environment variables in your `.env` and `docker-compose.yml` file.
     >
     > The configuration of the database must be the same on both sides.
     
@@ -100,6 +98,11 @@ If your computer installed docker and docker-compose, you can skip this step and
    
    ```bash
    docker compose down -v
+   ``` 
+   or
+
+   ```bash
+   docker-compose down -v
    ``` 
 
 ## 5. Helping commands
