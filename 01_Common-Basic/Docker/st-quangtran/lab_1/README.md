@@ -78,4 +78,3 @@ To stop the environment and remove volume data and container network (eg. for st
 ```bash
 $ docker-compose down 
 ```
-
