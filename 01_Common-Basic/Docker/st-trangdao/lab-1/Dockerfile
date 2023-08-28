@@ -1,8 +1,7 @@
-# su dung hinh anh co so
-FROM php:8.2.9-fpm
-# Thiet lap thu muc lam viec
+FROM php:8.2.9-fpm 
+# Set working directory
 WORKDIR /var/www
-# Cai dat moi truong 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     locales \
@@ -13,15 +12,15 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     unzip 
-# Ho tro ket noi php voi mysql
+# Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql 
 RUN docker-php-ext-enable pdo_mysql
 # mysqli mbstring zip exif pcntl
-# Cai dat trinh soan thao 
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# Tao nguoi dung moi 
+# Create system user to run Composer and Artisan Commands
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www \
     && chown -R www:www /var/www
- # Thay doi nguoi dung
+# Change current user to www
 USER www

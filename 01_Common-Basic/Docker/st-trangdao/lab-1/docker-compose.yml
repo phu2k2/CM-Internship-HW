@@ -39,8 +39,7 @@ services:
       SERVICE_TAGS: dev 
       SERVICE_NAME: mysql
     volumes:
-      - ./mysql/dbdata:/var/lib/mysql
-      - ./mysql/sql_scripts:/docker-entrypoint-initdb.d
+      - ./dbdata:/var/lib/mysql
     networks:
       - dockerproject
   redis:
@@ -61,11 +60,13 @@ services:
     volumes:
       - ./minio_data:/data 
     environment:
-      MINIO_ROOT_USER: changchang
-      MINIO_ROOT_PASSWORD: changchang2404
+      MINIO_ROOT_USER: admin1234
+      MINIO_ROOT_PASSWORD: admin1234
     command: server --console-address ":9001" /data
     networks:
       - dockerproject
 networks:
   dockerproject:
     driver: bridge
+volumes:
+  dbdata:
