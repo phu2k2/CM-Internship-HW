@@ -29,6 +29,7 @@ touch docker-compose.yml
 - Open docker-compose.yml and paste below script in it
 ```sh
 version: '3.7'
+
 networks:
   backend:
     driver: bridge
@@ -49,8 +50,6 @@ services:
       - backend
     depends_on:
       - php
-    links:
-      - php
 
   mysql:
     image: mysql:5.7
@@ -58,7 +57,7 @@ services:
     ports:
       - "3386:3306"
     volumes:
-      - "./docker/mysql:/var/lib/mysql"
+      - "mysql-vol:/var/lib/mysql"
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -79,10 +78,6 @@ services:
       - ./:/var/www/html
     networks:
       - backend
-    links:
-      - mysql
-      - redis
-      - minio
     environment:
       - MINIO_SERVER_ACCESS_KEY=minio-access-key
       - MINIO_SERVER_SECRET_KEY=minio-secret-key
@@ -110,6 +105,9 @@ services:
       - backend 
     volumes:
       - ./docker/minio:/data
+
+volumes:
+  mysql-vol:
 ```
 Create directory for mounting to container
 ```sh
