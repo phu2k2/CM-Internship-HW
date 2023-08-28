@@ -82,10 +82,11 @@ server {
 
 # Next, in your project folder, create docker-compose.yml:
 ```sh
+
 version: '3'
 
 services:
-#build app image with dockerfile
+  #build php
   app:
     build:
       context: .
@@ -95,63 +96,68 @@ services:
     volumes:
       - ./:/var/www/
     networks:
-      - laravel
-#build nginx image with dockerfile
-  nginx:
+      - project
+
+  #build nginx with ubuntu
+  nginx-custom:
     build:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - "8888:80"
+      - "${NGINX_PORT}:80"
     volumes:
       - ./:/var/www/
       - ./nginx/:/etc/nginx/conf.d/
     networks:
-      - laravel
-#build minio image, pull from dockerhub
+      - project
+
+  #build minio, pull from docker hub
   minio:
     image: minio/minio
-    container_name: minio
+    container_name: minio2
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "${MINIO_DATA_PORT}:9000"
+      - "${MINIO_ADMIN_PORT}:9001"
     volumes:
       - ./storage:/data
     environment:
-      MINIO_ROOT_USER: thanhvu
-      MINIO_ROOT_PASSWORD: zucoder2002
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
     command: server --console-address ":9001" /data
 
-#build redis image, pull from dockerhub
+  #build redis, pull from docker hub
   redis:
     image: redis:latest
+    container_name: redis_app
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     networks:
-      - laravel
-#build mysql image, pull from dockerhub
+      - project
+
+  #build mysql, pull from docker hub
   db:
     image: mysql
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=zucoder2002
-      - MYSQL_DATABASE=laravel
-      - MYSQL_USER=
-      - MYSQL_PASSWORD=your-password
+      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE: ${MYSQL_DATABASE}
+      - MYSQL_USER: 
+      - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3307:3306"
+      - "${MYSQL_PORT}:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
     networks:
-      - laravel
+      - project
 
 volumes:
   storage: {}
   mysql-data:
 
 networks:
-  laravel:
+  project:
     driver: bridge
+
 ```
 
 
