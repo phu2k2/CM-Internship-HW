@@ -37,12 +37,13 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: root
     volumes:
       - ./.docker/mysql/dbdata:/var/lib/mysql
+      - mysql:/var/lib/mysql
     ports:
       - "3388:3306"
     networks:
@@ -52,6 +53,8 @@ services:
     image: redis:latest
     networks:
       - laravel
+    ports:
+      - "6379:6379"
   #Minio
   minio:
     image: 'bitnami/minio:latest'
@@ -66,3 +69,6 @@ services:
 networks:
   laravel:
     driver: bridge
+volumes:
+  mysql:
+    driver: local
