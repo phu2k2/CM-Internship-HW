@@ -41,9 +41,6 @@ RUN mkdir -p storage bootstrap/cache
 
 # Set proper permissions for Laravel storage and log directories
 RUN chown -R $user:www-data storage bootstrap/cache
-RUN chmod -R 777 storage bootstrap/cache
-RUN chmod -R 777 storage
-RUN chmod -R 777 /var/www/storage
 RUN  chown -R www-data:www-data /var/www/storage
 # Switch to non-root user
 USER $user
