@@ -1,66 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Table of Contents
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- [Setup](#setup)
+    - [1. Create laravel-framework](#step-1-create-laravel-framework)
+    - [2. Write DockerFile](#step-2-write-Dockerfile-and-Dockercompose)
+    - [3. Execute Docker](#step-3-excute-docker)
+    - [4. Run Composer](#step-4-install-composer-dependencies)
 
-## About Laravel
+# Setup
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Create a remote reposity "Example-app". Then I clone this to my local reposity
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Step 1: Create Laravel Framework
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Using this command line to add Laravel Framework into my app
 
-## Learning Laravel
+## Step 2: Write Dockerfile and docker-compose.yml
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+In `docker-compose.yml`, I define 5 services: 
+- laravel
+- nginx
+- minio 
+- redis
+- mysql
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+In `Dockerfile` I:
+- Set up user name and user uid.
+- Install system dependencies (git, curl, libpng-dev, libonig-dev,... ).
+- Install PHP extensions.
+- Get latest composer.
+- Create system user to run Composer and Artisan Commands.
+- Set working directory.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+In `./docker/nginx/laravel.conf` I write a configuration of nginx.
 
-## Laravel Sponsors
+```sh
+  server {
+    listen 80;
+    index index.php;
+    root /var/www/public;
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    client_max_body_size 51g;
+    client_body_buffer_size 512k;
+    client_body_in_file_only clean;
 
-### Premium Partners
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass app:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_read_timeout 1800; 
+    }
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+        gzip_static on;
+    }
 
-## Contributing
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Step 3: Execute Docker
 
-## Code of Conduct
+Run container
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  ```sh
+  docker-compose up -d 
+  ```
 
-## Security Vulnerabilities
+After the container has been setup, check the status of containers with
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+  ```sh
+  docker-compose ps
+  ```
 
-## License
+## Step 4: Install Composer dependencies
+Bash into your container:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  ```sh
+  docker-compose exec <container-ID> bash
+  ```
+
+When I bash successfully, I install composer dependencies :
+
+  ```sh
+  composer install
+  ```
+
+and finally generate a key
+
+  ```sh
+  php artisan key:generate
+  ```
+
+# Your app should now be accessible under `localhost:8989`
+
+
+
+
