@@ -11,7 +11,5 @@
 /public/storage
 
 # Ignore database files
-/db/data/
-/db/init-scripts/
-
+db/
 
