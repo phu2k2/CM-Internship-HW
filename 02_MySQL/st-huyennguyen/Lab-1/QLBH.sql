@@ -209,8 +209,8 @@ add constraint add_DienThoai check (DienThoai like '0%');
 -- List TenCongTy of NHACUNGCAP supply merchandise for the company
 select TenCongTy from NHACUNGCAP;
 
--- MATHANG table query,  condition: SoLuong > 10
-select MaHang, TenHang, SoLuong from MATHANG where SoLuong > 10;
+-- MATHANG table query,  condition: SoLuong > 10 and DonViTinh = Cái
+select MaHang, TenHang, SoLuong from MATHANG where SoLuong > 10 and DonViTinh = 'Cái';
 
 -- NHANVIEN table query
 select concat(Ho,' ',Ten) as HoTen, DiaChi, year(NgayLamViec) as NamLamViec from NHANVIEN;
