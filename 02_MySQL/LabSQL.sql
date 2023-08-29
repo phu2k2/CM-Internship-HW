@@ -1,4 +1,4 @@
-CREATE DATABASE QLBH;
+CREATE DATABASE 02_MySQL/cm-phunguyen/mysql_basic_part_1.sql;
 USE QLBH;
 CREATE TABLE KHACHHANG(
 	MaKhachHang INT PRIMARY KEY,
@@ -170,7 +170,7 @@ MODIFY COLUMN DienThoai varchar(11);
 
 -- -------------------------------	CAU17 -------------------------------
 ALTER TABLE KHACHHANG
-ADD CONSTRAINT KHACHHANG_DienThoai CHECK (DienThoai Like '0%') ;
+ADD CONSTRAINT check_phone_number CHECK (DienThoai Like '0%') ;
 
 
 -- -------------------------------	CAU18 -------------------------------
@@ -185,7 +185,7 @@ FROM NHACUNGCAP;
 -- -------------------------------	CAU20 -------------------------------
 SELECT MaHang,TenHang, SoLuong
 FROM MATHANG
-WHERE SoLuong > 10;
+WHERE SoLuong > 10 AND DonViTinh = 'Cái';
 
 -- -------------------------------	CAU21 -------------------------------
 SELECT Ho,Ten,DiaChi,year(NgayLamViec)
