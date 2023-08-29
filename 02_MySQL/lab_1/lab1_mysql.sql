@@ -178,7 +178,6 @@ alter table KHACHHANG
 modify column DienThoai varchar(11);
 
 -- -------------------------------	Câu 17 -------------------------------
-
 alter table KHACHHANG 
 add constraint KHACHHANG_CHECK_DIENTHOAI check(DienThoai like "0%");
 
@@ -191,33 +190,14 @@ select TenCongTy from NHACUNGCAP;
 -- -------------------------------	Câu 20 -------------------------------
 select MaHang, TenHang, SoLuong
 from MATHANG
-where SoLuong > 10;
+where SoLuong > 10 and DonViTinh = 'Cái';
 
 -- -------------------------------	Câu 21 -------------------------------
 select Ho, Ten, DiaChi, year(NgayLamViec) as NamBatDauLamViec
 from NHANVIEN;
 
-
+-- -------------------------------	Câu 22 -------------------------------
 select MaHang, TenHang
 from MATHANG
 where SoLuong < 50 and GiaHang > 100000
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
+   
