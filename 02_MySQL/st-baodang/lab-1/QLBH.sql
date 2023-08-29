@@ -1,3 +1,4 @@
+-- Active: 1693205472840@@127.0.0.1@3306@QLBH
 -----------------------------------------------------------
 -- Create QLBH Database
 CREATE DATABASE QLBH;
@@ -5,7 +6,7 @@ USE QLBH;
 
 -- Create KHACHHANG Table
 CREATE TABLE KHACHHANG (
-    MaKhachHang int NOT NULL AUTO_INCREMENT,
+    MaKhachHang int AUTO_INCREMENT,
     TenCongTy VARCHAR(50),
     TenGiaoDich VARCHAR(20),
     DiaChi VARCHAR(50),
@@ -17,7 +18,7 @@ CREATE TABLE KHACHHANG (
 
 -- Create NHACUNGCAP Table
 CREATE TABLE NHACUNGCAP (
-    MaCongTy CHAR(3) NOT NULL,
+    MaCongTy CHAR(3),
     TenCongTy VARCHAR(50),
     TenGiaoDich VARCHAR(20),
     DiaChi VARCHAR(50),
@@ -29,14 +30,14 @@ CREATE TABLE NHACUNGCAP (
 
 -- Create LOAIHANG Table 
 CREATE TABLE LOAIHANG (
-    MaLoaiHang CHAR(2) NOT NULL,
+    MaLoaiHang CHAR(2),
     TenLoaiHang VARCHAR(30),
     PRIMARY KEY (MaLoaiHang)
 );
 
 -- Create MATHANG Table
 CREATE TABLE MATHANG (
-    MaHang CHAR(4) NOT NULL,
+    MaHang CHAR(4),
     TenHang VARCHAR(30),
     MaCongTy CHAR(3),
     MaLoaiHang CHAR(2),
@@ -50,7 +51,7 @@ CREATE TABLE MATHANG (
 
 -- Create NHANVIEN Table
 CREATE TABLE NHANVIEN (
-    MaNhanVien CHAR(4) NOT NULL,
+    MaNhanVien CHAR(4),
     Ho VARCHAR(40),
     Ten VARCHAR(10),
     NgaySinh TIMESTAMP,
@@ -64,7 +65,7 @@ CREATE TABLE NHANVIEN (
 
 -- Create DONDATHANG Table
 CREATE TABLE DONDATHANG (
-    SoHoaDon INT NOT NULL AUTO_INCREMENT,
+    SoHoaDon INT AUTO_INCREMENT,
     MaKhachHang INT,
     MaNhanVien CHAR(4),
     NgayDatHang TIMESTAMP,
@@ -78,12 +79,12 @@ CREATE TABLE DONDATHANG (
 
 -- Create CHITIETDATHANG Table
 CREATE TABLE CHITIETDATHANG (
-    SoHoaDon INT NOT NULL,
-    MaHang CHAR(4) NOT NULL,
+    SoHoaDon INT,
+    MaHang CHAR(4),
     GiaBan DECIMAL(10,2),
     SoLuong INT,
     MucGiamGia DECIMAL(10,2),
-    PRIMARY KEY (SoHoaDon, MaHang),
+    CONSTRAINT PK_CHITIETDATHANG PRIMARY KEY (SoHoaDon, MaHang),
     FOREIGN KEY (SoHoaDon) REFERENCES DONDATHANG(SoHoaDon),
     FOREIGN KEY (MaHang) REFERENCES MATHANG(MaHang)
 );
@@ -212,10 +213,10 @@ SELECT `TenCongTy`
 FROM `NHACUNGCAP`;
 
 -- Query: MaHang, TenHang, Soluong 
--- TABLE: MATHANG | Condition: SoLuong > 10
-SELECT `MaHang`, `TenHang`, `SoLuong` 
+-- TABLE: MATHANG | Condition: SoLuong > 10 AND DonViTinh = 'Cái'
+SELECT `MaHang`, `TenHang`, `SoLuong`
 FROM `MATHANG`
-WHERE `SoLuong` > 10;
+WHERE `SoLuong` > 10 AND `DonViTinh` = 'Cái';
 
 -- Query: HoTen which concatenates from (Ho, Ten), DiaChi, NamLamViec which extracts from (NgayLamViec)
 -- TABLE NHANVIEN
