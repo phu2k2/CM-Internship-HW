@@ -1,7 +1,7 @@
 CREATE SCHEMA QLBH;
 --  ------------------------------------------- CREATE TABLE-------------------------------------------------------
 CREATE TABLE KHACHHANG (
-	MaKhachHang INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    MaKhachHang INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     TenCongTy VARCHAR(50),
     TenGiaoDich VARCHAR(20),
     DiaChi VARCHAR(50),
@@ -10,7 +10,7 @@ CREATE TABLE KHACHHANG (
     Fax	VARCHAR(15)
 );
 CREATE TABLE NHANVIEN(
-	MaNhanVien CHAR(4) PRIMARY KEY NOT NULL,
+    MaNhanVien CHAR(4) PRIMARY KEY NOT NULL,
     Ho VARCHAR(40),
     Ten VARCHAR(10),
     NgaySinh TIMESTAMP,
@@ -33,7 +33,7 @@ CREATE TABLE DONDATHANG (
 );
 
 CREATE TABLE NHACUNGCAP(
-	MaCongTy CHAR(3) PRIMARY KEY NOT NULL,
+    MaCongTy CHAR(3) PRIMARY KEY NOT NULL,
     TenCongTy VARCHAR(50),
     TenGiaoDich VARCHAR(20),
     DiaChi VARCHAR(50),
@@ -42,12 +42,12 @@ CREATE TABLE NHACUNGCAP(
     Email VARCHAR(30)
 );
 CREATE TABLE LOAIHANG(
-	MaLoaiHang CHAR(2) PRIMARY KEY NOT NULL,
+    MaLoaiHang CHAR(2) PRIMARY KEY NOT NULL,
     TenLoaiHang VARCHAR(30)
 );
 
 CREATE TABLE MATHANG(
-	MaHang CHAR(4) PRIMARY KEY NOT NULL,
+    MaHang CHAR(4) PRIMARY KEY NOT NULL,
     TenHang VARCHAR(30),
     MaCongTy CHAR(3),
     MaLoaiHang CHAR(2),
@@ -59,7 +59,7 @@ CREATE TABLE MATHANG(
 );
 
 CREATE TABLE CHITIETDATHANG(
-	SoHoaDon INT  NOT NULL,
+    SoHoaDon INT  NOT NULL,
     MaHang CHAR(4)  NOT NULL,
     GiaBan DECIMAL(10,2),
     SoLuong INT,
@@ -139,35 +139,35 @@ INSERT INTO `QLBH`.`NHANVIEN` (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamVi
 
 INSERT INTO DONDATHANG (MaKhachHang, MaNhanVien, NgayDatHang, NgayGiaoHang, NgayChuyenHang, NoiGiaoHang)
 VALUES
-    (1, 'A001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
-    (1, 'H001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
-    (2, 'H002', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
-    (3, 'H003', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
-    (4, 'P001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
-    (5, 'D001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
-    (6, 'M001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
-    (2, 'Q001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
-    (3, 'T001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn');
+(1, 'A001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
+(1, 'H001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
+(2, 'H002', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
+(3, 'H003', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
+(4, 'P001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
+(5, 'D001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
+(6, 'M001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội'),
+(2, 'Q001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn'),
+(3, 'T001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn');
 INSERT INTO CHITIETDATHANG (SoHoaDon, MaHang, GiaBan, SoLuong, MucGiamGia)
 VALUES
-    (1, 'TP01', 4000.00, 5, 0.00),
-    (1, 'TP02', 180000.00, 5, 5000.00),
-	(1, 'TP03', 12000.00, 5, 0.00),
-	(1, 'TP06', 3000.00, 50, 0.00),
-	(1, 'TP07', 40000.00, 100, 0.00),
-	(2, 'MM01', 340000.00, 30, 10000.00),
-    (2, 'MM02', 500000.00, 20, 10000.00),
-    (3, 'MM01', 340000.00, 30, 10000.00),
-    (3, 'MM02', 500000.00, 30, 10000.00),
-    (4, 'MM01', 340000.00, 80, 10000.00),
-    (5, 'TP03', 3000.00, 1000, 0.00),
-    (6, 'DT01', 3100000.00, 2, 100000.00),
-    (6, 'DT05', 18000000.00, 20, 10000000.00),
-    (7, 'TP03', 3000.00, 200, 0.00),
-    (8, 'DT04', 20000000.00, 2, 1000000.00),
-    (9, 'DC01', 48000.00, 1000, 0.00),
-    (9, 'DC02', 2000.00, 1000, 0.00),
-    (9, 'DC03', 7500.00, 1000, 0.00);
+(1, 'TP01', 4000.00, 5, 0.00),
+(1, 'TP02', 180000.00, 5, 5000.00),
+(1, 'TP03', 12000.00, 5, 0.00),
+(1, 'TP06', 3000.00, 50, 0.00),
+(1, 'TP07', 40000.00, 100, 0.00),
+(2, 'MM01', 340000.00, 30, 10000.00),
+(2, 'MM02', 500000.00, 20, 10000.00),
+(3, 'MM01', 340000.00, 30, 10000.00),
+(3, 'MM02', 500000.00, 30, 10000.00),
+(4, 'MM01', 340000.00, 80, 10000.00),
+(5, 'TP03', 3000.00, 1000, 0.00),
+(6, 'DT01', 3100000.00, 2, 100000.00),
+(6, 'DT05', 18000000.00, 20, 10000000.00),
+(7, 'TP03', 3000.00, 200, 0.00),
+(8, 'DT04', 20000000.00, 2, 1000000.00),
+(9, 'DC01', 48000.00, 1000, 0.00),
+(9, 'DC02', 2000.00, 1000, 0.00),
+(9, 'DC03', 7500.00, 1000, 0.00);
     
 
 --  ------------------------------------------- ALTER QUERY-------------------------------------------------------
@@ -191,7 +191,7 @@ SELECT * FROM NHACUNGCAP;
 --  Mã hàng, tên hàng và số lượng của các mặt hàng hiện có trong công ty có số lượng lớn hơn 10 Cái?
 SELECT MaHang, TenHang, SoLuong 
 FROM MATHANG 
-WHERE SoLuong > 10;
+WHERE SoLuong > 10 AND DonViTinh='Cái';
 
 --  Họ tên, địa chỉ và năm bắt đầu làm việc của các nhân viên trong cty? 
 SELECT CONCAT(Ho, ' ', Ten) AS "Họ tên",
