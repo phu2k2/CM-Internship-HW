@@ -1,4 +1,4 @@
-CREATE DATABASE 02_MySQL/cm-phunguyen/mysql_basic_part_1.sql;
+CREATE DATABASE qlbh
 USE QLBH;
 CREATE TABLE KHACHHANG(
 	MaKhachHang INT PRIMARY KEY,
