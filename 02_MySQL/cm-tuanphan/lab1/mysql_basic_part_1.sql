@@ -225,3 +225,7 @@ FROM NHANVIEN;
 SELECT MaHang, TenHang
 FROM MATHANG
 WHERE GiaHang > 100000 AND SoLuong < 50;
+
+
+
+
