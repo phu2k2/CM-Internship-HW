@@ -3,79 +3,79 @@ create schema QLBH ;
 use QLBH;
 
 Create table KHACHHANG (
-	MaKhachHang int primary key auto_increment,
-    TenCongTy varchar(50),
-    TenGiaoDich varchar(20),
-    DiaChi varchar(50),
-    Email varchar(30),
-    DienThoai varchar(15),
-    Fax varchar(15)
+ MaKhachHang int primary key auto_increment,
+ TenCongTy varchar(50),
+ TenGiaoDich varchar(20),
+ DiaChi varchar(50),
+ Email varchar(30),
+ DienThoai varchar(15),
+ Fax varchar(15)
 );
 
 Create table NHACUNGCAP (
-	MaCongTy char(3) primary key,
-    TenCongTy varchar(50),
-    TenGiaoDich varchar(20),
-    DiaChi varchar(50),
-    DienThoai varchar(15),
-    Fax varchar(15),
-    Email varchar(30)
+ MaCongTy char(3) primary key,
+ TenCongTy varchar(50),
+ TenGiaoDich varchar(20),
+ DiaChi varchar(50),
+ DienThoai varchar(15),
+ Fax varchar(15),
+ Email varchar(30)
 );
 
 Create table LOAIHANG (
-	MaLoaiHang char(2) primary key,
-    TenLoaiHang varchar(30)
+ MaLoaiHang char(2) primary key,
+ TenLoaiHang varchar(30)
 );
 
 Create table MATHANG (
-	MaHang char(4) primary key,
-    TenHang varchar(30),
-    MaCongTy char(3),
-    MaLoaiHang char(2),
-    SoLuong int,
-    DonViTinh varchar(10),
-    GiaHang decimal(10,2),
-    foreign key (MaLoaiHang)
-    references LOAIHANG(MaLoaiHang),
-	foreign key (MaCongTy)
-    references NHACUNGCAP(MaCongTy)
+ MaHang char(4) primary key,
+ TenHang varchar(30),
+ MaCongTy char(3),
+ MaLoaiHang char(2),
+ SoLuong int,
+ DonViTinh varchar(10),
+ GiaHang decimal(10,2),
+ foreign key (MaLoaiHang)
+ references LOAIHANG(MaLoaiHang),
+ foreign key (MaCongTy)
+ references NHACUNGCAP(MaCongTy)
 );
 
 Create table NHANVIEN (
-	MaNhanVien char(4) primary key,
-    Ho varchar(40),
-    Ten varchar(10),
-    NgaySinh timestamp,
-    NgayLamViec timestamp,
-    DiaChi varchar(60),
-    DienThoai varchar(15),
-    LuongCoBan decimal(10,2),
-    PhuCap decimal(10,2)
+ MaNhanVien char(4) primary key,
+ Ho varchar(40),
+ Ten varchar(10),
+ NgaySinh timestamp,
+ NgayLamViec timestamp,
+ DiaChi varchar(60),
+ DienThoai varchar(15),
+ LuongCoBan decimal(10,2),
+ PhuCap decimal(10,2)
 );
 
 Create table DONDATHANG (
-	SoHoaDon int primary key auto_increment	,
-    MaKhachHang int,
-    MaNhanVien char(4),
-    NgayDatHang timestamp,
-    NgayGiaoHang timestamp,
-    NgayChuyenHang timestamp,
-    NoiGiaoHang varchar(80),
-	foreign key (MaNhanVien)
-    references NHANVIEN(MaNhanVien),
-	foreign key (MaKhachHang)
-    references KHACHHANG(MaKhachHang)
+ SoHoaDon int primary key auto_increment	,
+ MaKhachHang int,
+ MaNhanVien char(4),
+ NgayDatHang timestamp,
+ NgayGiaoHang timestamp,
+ NgayChuyenHang timestamp,
+ NoiGiaoHang varchar(80),
+ foreign key (MaNhanVien)
+ references NHANVIEN(MaNhanVien),
+ foreign key (MaKhachHang)
+ references KHACHHANG(MaKhachHang)
 );
 
 Create table CHITIETDATHANG (
-	SoHoaDon int ,
-    MaHang char(4) ,
-    GiaBan decimal(10,2),
-    SoLuong int,
-    MucGiamGia decimal(10,2),
-    Constraint PK_CHITIETDATHANG primary key(SoHoaDon, MaHang),
-    foreign key (MaHang)
-references MATHANG(MaHang)
+ SoHoaDon int ,
+ MaHang char(4) ,
+ GiaBan decimal(10,2),
+ SoLuong int,
+ MucGiamGia decimal(10,2),
+ Constraint PK_CHITIETDATHANG primary key(SoHoaDon, MaHang),
+ foreign key (MaHang)
+ references MATHANG(MaHang)
 );
 
 -- Add data table KHACHHANG
