@@ -1,84 +1,84 @@
-create schema QLBH ;
+CREATE SCHEMA QLBH ;
 
-use QLBH;
+USE QLBH;
 
-Create table KHACHHANG (
- MaKhachHang int primary key auto_increment,
- TenCongTy varchar(50),
+CREATE TABLE KHACHHANG (
+ MaKhachHang INT PRIMARY KEY AUTO_INCREMENT,
+ TenCongTy VARCHAR(50),
  TenGiaoDich varchar(20),
- DiaChi varchar(50),
- Email varchar(30),
- DienThoai varchar(15),
- Fax varchar(15)
+ DiaChi VARCHAR(50),
+ Email VARCHAR(30),
+ DienThoai VARCHAR(15),
+ Fax VARCHAR(15)
 );
 
-Create table NHACUNGCAP (
- MaCongTy char(3) primary key,
- TenCongTy varchar(50),
+CREATE TABLE NHACUNGCAP (
+ MaCongTy CHAR(3) PRIMARY KEY,
+ TenCongTy VARCHAR(50),
  TenGiaoDich varchar(20),
- DiaChi varchar(50),
- DienThoai varchar(15),
- Fax varchar(15),
- Email varchar(30)
+ DiaChi VARCHAR(50),
+ DienThoai VARCHAR(15),
+ Fax VARCHAR(15),
+ Email VARCHAR(30)
 );
 
-Create table LOAIHANG (
- MaLoaiHang char(2) primary key,
- TenLoaiHang varchar(30)
+CREATE TABLE LOAIHANG (
+ MaLoaiHang CHAR(2) PRIMARY KEY,
+ TenLoaiHang VARCHAR(30)
 );
 
-Create table MATHANG (
- MaHang char(4) primary key,
- TenHang varchar(30),
- MaCongTy char(3),
- MaLoaiHang char(2),
- SoLuong int,
- DonViTinh varchar(10),
- GiaHang decimal(10,2),
- foreign key (MaLoaiHang)
- references LOAIHANG(MaLoaiHang),
- foreign key (MaCongTy)
- references NHACUNGCAP(MaCongTy)
+CREATE TABLE MATHANG (
+ MaHang CHAR(4) PRIMARY KEY,
+ TenHang VARCHAR(30),
+ MaCongTy CHAR(3),
+ MaLoaiHang CHAR(2),
+ SoLuong INT,
+ DonViTinh VARCHAR(10),
+ GiaHang DECIMAL(10,2),
+ FOREIGN KEY (MaLoaiHang)
+ REFERENCES LOAIHANG(MaLoaiHang),
+ FOREIGN KEY (MaCongTy)
+ REFERENCES NHACUNGCAP(MaCongTy)
 );
 
-Create table NHANVIEN (
- MaNhanVien char(4) primary key,
- Ho varchar(40),
- Ten varchar(10),
- NgaySinh timestamp,
- NgayLamViec timestamp,
+CREATE TABLE NHANVIEN (
+ MaNhanVien CHAR(4) PRIMARY KEY,
+ Ho VARCHAR(40),
+ Ten VARCHAR(10),
+ NgaySinh TIMESTAMP,
+ NgayLamViec TIMESTAMP,
  DiaChi varchar(60),
- DienThoai varchar(15),
- LuongCoBan decimal(10,2),
- PhuCap decimal(10,2)
+ DienThoai VARCHAR(15),
+ LuongCoBan DECIMAL(10,2),
+ PhuCap DECIMAL(10,2)
 );
 
-Create table DONDATHANG (
- SoHoaDon int primary key auto_increment	,
- MaKhachHang int,
- MaNhanVien char(4),
- NgayDatHang timestamp,
- NgayGiaoHang timestamp,
- NgayChuyenHang timestamp,
- NoiGiaoHang varchar(80),
- foreign key (MaNhanVien)
- references NHANVIEN(MaNhanVien),
- foreign key (MaKhachHang)
- references KHACHHANG(MaKhachHang)
+CREATE TABLE DONDATHANG (
+ SoHoaDon INT PRIMARY KEY AUTO_INCREMENT,
+ MaKhachHang INT,
+ MaNhanVien CHAR(4),
+ NgayDatHang TIMESTAMP,
+ NgayGiaoHang TIMESTAMP,
+ NgayChuyenHang TIMESTAMP,
+ NoiGiaoHang VARCHAR(80),
+ FOREIGN KEY (MaNhanVien)
+ REFERENCES NHANVIEN(MaNhanVien),
+ FOREIGN KEY (MaKhachHang)
+ REFERENCES KHACHHANG(MaKhachHang)
 );
 
-Create table CHITIETDATHANG (
- SoHoaDon int ,
- MaHang char(4) ,
- GiaBan decimal(10,2),
- SoLuong int,
- MucGiamGia decimal(10,2),
- Constraint PK_CHITIETDATHANG primary key(SoHoaDon, MaHang),
- foreign key (MaHang)
- references MATHANG(MaHang)
+CREATE TABLE CHITIETDATHANG (
+ SoHoaDon INT ,
+ MaHang CHAR(4) ,
+ GiaBan DECIMAL(10,2),
+ SoLuong INT,
+ MucGiamGia DECIMAL(10,2),
+ CONSTRAINT PK_CHITIETDATHANG PRIMARY KEY(SoHoaDon, MaHang),
+ FOREIGN KEY (MaHang)
+ REFERENCES MATHANG(MaHang)
 );
 
--- Add data table KHACHHANG
+-- Add data TABLE KHACHHANG
 INSERT INTO KHACHHANG (`TenCongTy`, `TenGiaoDich`, `DiaChi`, `Email`, `DienThoai`, `Fax`) VALUES 
 ('Công ty sữa Việt Nam', 'VINAMILK', 'Hà Nội', 'vinamilk@vietnam.com', '04-891135', '');
 
@@ -97,7 +97,7 @@ INSERT INTO KHACHHANG (`TenCongTy`, `TenGiaoDich`, `DiaChi`, `Email`, `DienThoai
 INSERT INTO KHACHHANG (`TenCongTy`, `TenGiaoDich`, `DiaChi`, `Email`, `DienThoai`, `Fax`) VALUES 
 ('Công ty dụng	 cụ học sinh MIC', 'MIC', 'Hà Nội', 'mic@vietnam.com', '04-804408', '');
 
--- Add data table NHACUNGCAP	
+-- Add data TABLE NHACUNGCAP	
 INSERT INTO NHACUNGCAP (`MaCongTy`, `TenCongTy`, `TenGiaoDich`, `DiaChi`, `DienThoai`, `Fax`, `Email`) VALUES ('DAF', 'Nội Thất Đài Loan Dafuco', 'DAFUCO', 'Quy Nhơn', '056-888111', '', 'dafuco@vietnam.com');
 INSERT INTO NHACUNGCAP (`MaCongTy`, `TenCongTy`, `TenGiaoDich`, `DiaChi`, `DienThoai`, `Fax`, `Email`) VALUES ('DQV', 'Công ty máy tính Quang Vũ', 'QUANGVU', 'Quy Nhơn', '056-888777', '', 'quangvu@vietnam.com');
 INSERT INTO NHACUNGCAP (`MaCongTy`, `TenCongTy`, `TenGiaoDich`, `DiaChi`, `DienThoai`, `Fax`, `Email`) VALUES ('GOL', 'Công ty sản xuất dụng cụ học sinh Golden', 'GOLDEN', 'Quy Nhơn', '056-891135','', 'golden@vietnam.com');
@@ -106,14 +106,14 @@ INSERT INTO NHACUNGCAP (`MaCongTy`, `TenCongTy`, `TenGiaoDich`, `DiaChi`, `DienT
 INSERT INTO NHACUNGCAP (`MaCongTy`, `TenCongTy`, `TenGiaoDich`, `DiaChi`, `DienThoai`, `Fax`, `Email`) VALUES ('VNM', 'Công ty sữa Việt Nam', 'VINAMILK', 'Hà Nội', '04-891135', '', 'vinamilk@vietnam.com');
 	
 		
--- Add data table LOAIHANG
+-- Add data TABLE LOAIHANG
 INSERT INTO LOAIHANG (`MaLoaiHang`, `TenLoaiHang`) VALUES ('DC', 'Dụng cụ học tập');
 INSERT INTO LOAIHANG (`MaLoaiHang`, `TenLoaiHang`) VALUES ('DT', 'Điện tử');
 INSERT INTO LOAIHANG (`MaLoaiHang`, `TenLoaiHang`) VALUES ('MM', 'May mặc');
 INSERT INTO LOAIHANG (`MaLoaiHang`, `TenLoaiHang`) VALUES ('NT', 'Nội thất');
 INSERT INTO LOAIHANG (`MaLoaiHang`, `TenLoaiHang`) VALUES ('TP', 'Thực phẩm');
 
--- Add data table MATHANG
+-- Add data TABLE MATHANG
 INSERT INTO MATHANG (`MaHang`, `TenHang`, `MaCongTy`, `MaLoaiHang`, `SoLuong`, `DonViTinh`, `GiaHang`) VALUES ('DC01', 'Vở học sinh cao cấp', 'GOL', 'DC', '20000', 'Ram', '48000.00');
 INSERT INTO MATHANG (`MaHang`, `TenHang`, `MaCongTy`, `MaLoaiHang`, `SoLuong`, `DonViTinh`, `GiaHang`) VALUES ('DC02', 'Viết bi học sinh', 'GOL', 'DC', '2000', 'Cây', '2000.00');
 INSERT INTO MATHANG (`MaHang`, `TenHang`, `MaCongTy`, `MaLoaiHang`, `SoLuong`, `DonViTinh`, `GiaHang`) VALUES ('DC03', 'Hộp màu tô', 'GOL', 'DC', '2000', 'Hộp', '7500.00');
@@ -139,7 +139,7 @@ INSERT INTO MATHANG (`MaHang`, `TenHang`, `MaCongTy`, `MaLoaiHang`, `SoLuong`, `
 INSERT INTO MATHANG (`MaHang`, `TenHang`, `MaCongTy`, `MaLoaiHang`, `SoLuong`, `DonViTinh`, `GiaHang`) VALUES ('TP07', 'Mì tôm A-One', 'SCM', 'TP', '150', 'Thùng', '40000.00');
 
 
--- Add data table NHANVIEN
+-- Add data TABLE NHANVIEN
 
 INSERT INTO NHANVIEN (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamViec`, `DiaChi`, `DienThoai`, `LuongCoBan`, `PhuCap`) VALUES ('A001', 'Đậu Tố', 'Anh', '1986-03-07 00:00:00', '2009-03-01 00:00:00', 'Quy Nhơn', '056-647995', '10000000.00', '1000000.00');
 INSERT INTO NHANVIEN (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamViec`, `DiaChi`, `DienThoai`, `LuongCoBan`, `PhuCap`) VALUES ('D001', 'Nguyễn Minh', 'Đăng', '1987-12-29 00:00:00', '2009-03-01 00:00:00', 'Quy Nhơn', '0905-779919', '14000000.00', '0.00');
@@ -151,7 +151,7 @@ INSERT INTO NHANVIEN (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamViec`, `Dia
 INSERT INTO NHANVIEN (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamViec`, `DiaChi`, `DienThoai`, `LuongCoBan`, `PhuCap`) VALUES ('Q001', 'Trương Thị Thế', 'Quang', '1987-06-17 00:00:00', '2009-03-01 00:00:00', 'Ayunpa', '0979-792176', '10000000.00', '500000.00');
 INSERT INTO NHANVIEN (`MaNhanVien`, `Ho`, `Ten`, `NgaySinh`, `NgayLamViec`, `DiaChi`, `DienThoai`, `LuongCoBan`, `PhuCap`) VALUES ('T001', 'Nguyễn Đức', 'Thắng', '1984-09-13 00:00:00', '2009-03-1 00:00:00', 'Phù Mỹ', '0955-593893', '1200000.00', '0.00');
 
--- Add data table DONDATHANG
+-- Add data TABLE DONDATHANG
 
 INSERT INTO DONDATHANG (MaKhachHang, MaNhanVien, NgayDatHang, NgayGiaoHang, NgayChuyenHang, NoiGiaoHang) VALUES
 (1, 'A001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Hà Nội');
@@ -181,7 +181,7 @@ INSERT INTO DONDATHANG (MaKhachHang, MaNhanVien, NgayDatHang, NgayGiaoHang, Ngay
 (3, 'T001', '2007-09-20 00:00:00', '2007-10-01 00:00:00', '2007-10-01 00:00:00', 'Sài Gòn');
 
 
--- ADD data table CHITIETDATHANG
+-- ADD data TABLE CHITIETDATHANG
 
 INSERT INTO CHITIETDATHANG (SoHoaDon, MaHang, GiaBan, SoLuong, MucGiamGia) VALUES
 (3, 'MM02', 500000.00, 30, 10000.00);
@@ -214,31 +214,31 @@ INSERT INTO CHITIETDATHANG (SoHoaDon, MaHang, GiaBan, SoLuong, MucGiamGia) VALUE
 (9, 'DC03', 7500.00, 1000, 0.00);
 
 
--- Change column data type in table KHACHHANG
-Alter table KHACHHANG
-modify column DienThoai varchar(11);
+-- Change column data type in TABLE KHACHHANG
+ALTER TABLE KHACHHANG
+MODIFY COLUMN DienThoai VARCHAR(11);
 
--- Add constraint phone number must start with zero
+-- Add constraINT phone number must start with zero
 ALTER TABLE KHACHHANG
 ADD CONSTRAINT check_phone_start_with_zero
-CHECK (DienThoai like '0%');	
+CHECK (DienThoai LIKE '0%');	
 
--- Delete constraint 
+-- Delete constraINT 
 ALTER TABLE KHACHHANG
 DROP CONSTRAINT check_phone_start_with_zero;			
 
 -- SQL QUERY all nhacungcap
-select * 
-from NHACUNGCAP;
+SELECT * 
+FROM NHACUNGCAP;
 
--- Query MaHang, TenHang, SoLuong from MatHang with SoLuong greater than 10
-select MaHang, TenHang, SoLuong 
-from MATHANG where SoLuong > 10 and DonViTinh = 'Cái';
+-- Query MaHang, TenHang, SoLuong FROM MatHang with SoLuong greater than 10
+SELECT MaHang, TenHang, SoLuong 
+FROM MATHANG WHERE SoLuong > 10 AND DonViTinh = 'Cái';
 
--- Query Ho, Ten, Dia Chi, Nam Bat Dau Lam Viec from NHANVIEN
-select concat(Ho,' ',Ten) as HoTen, DiaChi, year(NgayLamViec) as NamBatDauLamViec 
-from NHANVIEN;	
+-- Query Ho, Ten, Dia Chi, Nam Bat Dau Lam Viec FROM NHANVIEN
+SELECT concat(Ho,' ',Ten) AS HoTen, DiaChi, year(NgayLamViec) AS NamBatDauLamViec 
+FROM NHANVIEN;	
 
--- Query Ma, Ten from MATHANG have value greater than  100000 and quality less than 50
-select MaHang, TenHang 
-from MATHANG where GiaHang > 100000 and SoLuong < 50;
+-- Query Ma, Ten FROM MATHANG have value greater than  100000 AND quality less than 50
+SELECT MaHang, TenHang 
+FROM MATHANG WHERE GiaHang > 100000 AND SoLuong < 50;
