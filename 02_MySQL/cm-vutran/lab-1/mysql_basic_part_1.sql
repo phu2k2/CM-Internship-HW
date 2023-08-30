@@ -35,9 +35,9 @@ Create table MATHANG (
     SoLuong int,
     DonViTinh varchar(10),
     GiaHang decimal(10,2),
-    Constraint FK_MATHANG_MaLoaiHang foreign key (MaLoaiHang)
+    foreign key (MaLoaiHang)
     references LOAIHANG(MaLoaiHang),
-	Constraint FK_MATHANG_MaCongTy foreign key (MaCongTy)
+	foreign key (MaCongTy)
     references NHACUNGCAP(MaCongTy)
 );
 
@@ -61,9 +61,9 @@ Create table DONDATHANG (
     NgayGiaoHang timestamp,
     NgayChuyenHang timestamp,
     NoiGiaoHang varchar(80),
-	Constraint FK_DONDATHANG_MaNhanVien foreign key (MaNhanVien)
+	foreign key (MaNhanVien)
     references NHANVIEN(MaNhanVien),
-	Constraint FK_MATHANG_MaKhachHang foreign key (MaKhachHang)
+	foreign key (MaKhachHang)
     references KHACHHANG(MaKhachHang)
 );
 
@@ -73,9 +73,9 @@ Create table CHITIETDATHANG (
     GiaBan decimal(10,2),
     SoLuong int,
     MucGiamGia decimal(10,2),
-    Constraint PK_CHITIETDATHANG_SoHoaDon_MaHang primary key(SoHoaDon, MaHang),
-    Constraint FK_CHITIETDATHANG_MaHang foreign key (MaHang)
-    references MATHANG(MaHang)
+    Constraint PK_CHITIETDATHANG primary key(SoHoaDon, MaHang),
+    foreign key (MaHang)
+references MATHANG(MaHang)
 );
 
 -- Add data table KHACHHANG
@@ -228,13 +228,17 @@ ALTER TABLE KHACHHANG
 DROP CONSTRAINT check_phone_start_with_zero;			
 
 -- SQL QUERY all nhacungcap
-select * from NHACUNGCAP;
+select * 
+from NHACUNGCAP;
 
 -- Query MaHang, TenHang, SoLuong from MatHang with SoLuong greater than 10
-select MaHang, TenHang, SoLuong from MATHANG where SoLuong>10 and DonViTinh = 'Cái';
+select MaHang, TenHang, SoLuong 
+from MATHANG where SoLuong > 10 and DonViTinh = 'Cái';
 
 -- Query Ho, Ten, Dia Chi, Nam Bat Dau Lam Viec from NHANVIEN
-select concat(Ho,' ',Ten) as HoTen, DiaChi, year(NgayLamViec) as NamBatDauLamViec from NHANVIEN;	
+select concat(Ho,' ',Ten) as HoTen, DiaChi, year(NgayLamViec) as NamBatDauLamViec 
+from NHANVIEN;	
 
 -- Query Ma, Ten from MATHANG have value greater than  100000 and quality less than 50
-select MaHang, TenHang from MATHANG where GiaHang > 100000 and SoLuong < 50;
+select MaHang, TenHang 
+from MATHANG where GiaHang > 100000 and SoLuong < 50;
