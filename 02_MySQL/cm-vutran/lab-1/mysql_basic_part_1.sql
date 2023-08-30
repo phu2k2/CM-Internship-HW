@@ -3,7 +3,7 @@ create schema QLBH ;
 use QLBH;
 
 Create table KHACHHANG (
-	MaKhachHang int not null primary key auto_increment,
+	MaKhachHang int primary key auto_increment,
     TenCongTy varchar(50),
     TenGiaoDich varchar(20),
     DiaChi varchar(50),
@@ -13,7 +13,7 @@ Create table KHACHHANG (
 );
 
 Create table NHACUNGCAP (
-	MaCongTy char(3) not null primary key,
+	MaCongTy char(3) primary key,
     TenCongTy varchar(50),
     TenGiaoDich varchar(20),
     DiaChi varchar(50),
@@ -23,12 +23,12 @@ Create table NHACUNGCAP (
 );
 
 Create table LOAIHANG (
-	MaLoaiHang char(2) not null primary key,
+	MaLoaiHang char(2) primary key,
     TenLoaiHang varchar(30)
 );
 
 Create table MATHANG (
-	MaHang char(4) not null primary key,
+	MaHang char(4) primary key,
     TenHang varchar(30),
     MaCongTy char(3),
     MaLoaiHang char(2),
@@ -42,7 +42,7 @@ Create table MATHANG (
 );
 
 Create table NHANVIEN (
-	MaNhanVien char(4) not null primary key,
+	MaNhanVien char(4) primary key,
     Ho varchar(40),
     Ten varchar(10),
     NgaySinh timestamp,
@@ -54,7 +54,7 @@ Create table NHANVIEN (
 );
 
 Create table DONDATHANG (
-	SoHoaDon int not null primary key auto_increment	,
+	SoHoaDon int primary key auto_increment	,
     MaKhachHang int,
     MaNhanVien char(4),
     NgayDatHang timestamp,
@@ -68,12 +68,12 @@ Create table DONDATHANG (
 );
 
 Create table CHITIETDATHANG (
-	SoHoaDon int not null,
-    MaHang char(4) not null,
+	SoHoaDon int ,
+    MaHang char(4) ,
     GiaBan decimal(10,2),
     SoLuong int,
     MucGiamGia decimal(10,2),
-    primary key(SoHoaDon, MaHang),
+    Constraint PK_CHITIETDATHANG_SoHoaDon_MaHang primary key(SoHoaDon, MaHang),
     Constraint FK_CHITIETDATHANG_MaHang foreign key (MaHang)
     references MATHANG(MaHang)
 );
@@ -231,7 +231,7 @@ DROP CONSTRAINT check_phone_start_with_zero;
 select * from NHACUNGCAP;
 
 -- Query MaHang, TenHang, SoLuong from MatHang with SoLuong greater than 10
-select MaHang, TenHang, SoLuong from MATHANG where SoLuong>10;
+select MaHang, TenHang, SoLuong from MATHANG where SoLuong>10 and DonViTinh = 'Cái';
 
 -- Query Ho, Ten, Dia Chi, Nam Bat Dau Lam Viec from NHANVIEN
 select concat(Ho,' ',Ten) as HoTen, DiaChi, year(NgayLamViec) as NamBatDauLamViec from NHANVIEN;	
