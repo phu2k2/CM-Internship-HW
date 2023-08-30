@@ -214,7 +214,7 @@ SELECT * FROM NHACUNGCAP;
 -- Mã hàng, tên hàng và số lượng của các mặt hàng hiện có trong công ty có số lượng lớn hơn 10 Cái:
 SELECT MaHang, TenHang, SoLuong
 FROM MATHANG
-WHERE SoLuong > 10;
+WHERE SoLuong > 10 AND DonViTinh = "Cái";
 
 
 -- Họ tên, địa chỉ và năm bắt đầu làm việc của các nhân viên trong công ty:
