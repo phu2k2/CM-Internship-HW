@@ -1,45 +1,8 @@
-CREATE TABLE CHITIETDATHANG (
-    SoHoaDon int,
-    MaHang char(4),
-    GiaBan decimal(10,2),
-    SoLuong int,
-    MucGiamGia decimal(10,2)
-);
-
-
-CREATE TABLE DONDATHANG (
-    SoHoaDon int PRIMARY KEY AUTO_INCREMENT,
-    MaKhachHang int,
-    MaNhanVien char(4),
-    NgayDatHang timestamp,
-    NgayGiaoHang timestamp,
-    NgayChuyenHang timestamp,
-    NoiGiaoHang varchar(80)
-);
-
-CREATE TABLE KHACHHANG (
-    MaKhachHang int PRIMARY KEY AUTO_INCREMENT,
-    TenCongTy varchar(50),
-    TenGiaoDich varchar(20),
-    DiaChi varchar(50),
-    Email varchar(30),
-    DienThoai varchar(15),
-    Fax varchar(15)
-);
+SET sql_mode = '';
 
 CREATE TABLE LOAIHANG (
     MaLoaiHang char(2) PRIMARY KEY,
     TenLoaiHang varchar(30)
-);
-
-CREATE TABLE MATHANG (
-    MaHang char(4) PRIMARY KEY, 
-    TenHang varchar(30),
-    MaCongTy char(3),
-    MaLoaiHang char(2),
-    SoLuong int,
-    DonViTinh varchar(10),
-    GiaHang decimal(10,2)
 );
 
 CREATE TABLE NHACUNGCAP (
@@ -50,7 +13,16 @@ CREATE TABLE NHACUNGCAP (
     DienThoai varchar(15),
     Fax varchar(15),
     Email varchar(30)
+);
 
+CREATE TABLE KHACHHANG (
+    MaKhachHang int PRIMARY KEY AUTO_INCREMENT,
+    TenCongTy varchar(50),
+    TenGiaoDich varchar(20),
+    DiaChi varchar(50),
+    Email varchar(30),
+    DienThoai varchar(15),
+    Fax varchar(15)
 );
 
 CREATE TABLE NHANVIEN (
@@ -65,32 +37,39 @@ CREATE TABLE NHANVIEN (
     PhuCap decimal(10,2)
 );
 
-ALTER TABLE DONDATHANG
-ADD CONSTRAINT FK_DONDATHANG_KHACHHANG
-FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG(MaKhachHang);
+CREATE TABLE MATHANG (
+    MaHang char(4) PRIMARY KEY, 
+    TenHang varchar(30),
+    MaCongTy char(3),
+    MaLoaiHang char(2),
+    SoLuong int,
+    DonViTinh varchar(10),
+    GiaHang decimal(10,2),
+    FOREIGN KEY (MaLoaiHang) REFERENCES LOAIHANG(MaLoaiHang),
+    FOREIGN KEY (MaCongTy) REFERENCES NHACUNGCAP(MaCongTy)
+);
 
-ALTER TABLE CHITIETDATHANG
-ADD CONSTRAINT FK_CHITIETDATHANG_DONDATHANG
-FOREIGN KEY (SoHoaDon) REFERENCES DONDATHANG(SoHoaDon);
+CREATE TABLE DONDATHANG (
+    SoHoaDon int PRIMARY KEY AUTO_INCREMENT,
+    MaKhachHang int,
+    MaNhanVien char(4),
+    NgayDatHang timestamp,
+    NgayGiaoHang timestamp,
+    NgayChuyenHang timestamp,
+    NoiGiaoHang varchar(80),
+    FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG(MaKhachHang),
+    FOREIGN KEY (MaNhanVien) REFERENCES NHANVIEN(MaNhanVien)
+);
 
-ALTER TABLE DONDATHANG
-ADD CONSTRAINT FK_DONDATHANG_NHANVIEN
-FOREIGN KEY (MaNhanVien) REFERENCES NHANVIEN(MaNhanVien);
-
-ALTER TABLE CHITIETDATHANG
-ADD CONSTRAINT FK_CHITIETDATHANG_MAHANG
-FOREIGN KEY (MaHang) REFERENCES MATHANG(MaHang);
-
-ALTER TABLE MATHANG
-ADD CONSTRAINT FK_MAHANG_LOAIHANG
-FOREIGN KEY (MaLoaiHang) REFERENCES LOAIHANG(MaLoaiHang);
-
-ALTER TABLE MATHANG
-ADD CONSTRAINT FK_MAHẠNG_NHACUNGCAP
-FOREIGN KEY (MaCongTy) REFERENCES NHACUNGCAP(MaCongTy);
-
-ALTER TABLE KHACHHANG
-MODIFY COLUMN DienThoai varchar(11);
+CREATE TABLE CHITIETDATHANG (
+    SoHoaDon int,
+    MaHang char(4),
+    GiaBan decimal(10,2),
+    SoLuong int,
+    MucGiamGia decimal(10,2),
+    FOREIGN KEY (SoHoaDon) REFERENCES DONDATHANG(SoHoaDon),
+    FOREIGN KEY (MaHang) REFERENCES MATHANG(MaHang)
+);
 
 INSERT INTO KHACHHANG (TenCongTy, TenGiaoDich, DiaChi, Email, DienThoai, Fax)
 VALUES
@@ -229,7 +208,6 @@ ADD CONSTRAINT CK_DienThoai_StartsWith0 CHECK (DienThoai LIKE '0%');
 ALTER TABLE KHACHHANG
 DROP CONSTRAINT CK_DienThoai_StartsWith0;
 
-
 -- Danh sách các đối tác cung cấp hàng cho công ty:
 SELECT * FROM NHACUNGCAP;
 
@@ -242,7 +220,6 @@ WHERE SoLuong > 10;
 -- Họ tên, địa chỉ và năm bắt đầu làm việc của các nhân viên trong công ty:
 SELECT CONCAT(NHANVIEN.Ho, ' ', NHANVIEN.Ten) AS HoTen, DiaChi, YEAR(NgayLamViec) AS NamBatDauLamViec
 FROM NHANVIEN;
-
 
 -- Mã và tên của các mặt hàng có giá trị lớn hơn 100000 và số lượng hiện có ít hơn 50:
 SELECT MaHang, TenHang
