@@ -47,7 +47,7 @@ CREATE TABLE NHANVIEN (
  Ten VARCHAR(10),
  NgaySinh TIMESTAMP,
  NgayLamViec TIMESTAMP,
- DiaChi varchar(60),
+ DiaChi VARCHAR(60),
  DienThoai VARCHAR(15),
  LuongCoBan DECIMAL(10,2),
  PhuCap DECIMAL(10,2)
