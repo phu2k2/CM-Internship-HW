@@ -98,7 +98,7 @@ SELECT
     MH.TenHang,
     COALESCE(MH.SoLuong, 0) AS SoLuong
 FROM LOAIHANG LH
-LEFT JOIN MATHANG MH ON LH.MaLoaiHang = MH.MaLoaiHang
+JOIN MATHANG MH ON LH.MaLoaiHang = MH.MaLoaiHang
 UNION ALL
 SELECT
     LH.MaLoaiHang,
