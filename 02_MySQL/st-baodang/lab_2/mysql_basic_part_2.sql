@@ -53,11 +53,12 @@ FROM `KHACHHANG` kh
     JOIN `NHACUNGCAP` n ON kh.`TenGiaoDich` = n.`TenGiaoDich`;
 
 -- Question 8 (No case to test)
-EXPLAIN SELECT 
-    DISTINCT CONCAT(n1.`Ho`, ' ', n1.`Ten`) as HoTen,
+SELECT 
+    DISTINCT GROUP_CONCAT(n1.`Ho`, ' ', n1.`Ten` SEPARATOR ', ') as HoTen,
     n1.`NgaySinh` 
-FROM `NHANVIEN` n1 
-    JOIN `NHANVIEN` n2 ON n1.`NgaySinh` = n2.`NgaySinh` AND n1.`MaNhanVien` <> n2.`MaNhanVien`
+FROM `NHANVIEN` n1
+GROUP BY `NgaySinh`
+HAVING COUNT(*) > 1
 ORDER BY n1.`NgaySinh`;
 
 -- Question 9
@@ -87,7 +88,7 @@ SELECT
     CONCAT(`Ho`, ' ', `Ten`) as HoTen
 FROM `NHANVIEN`
 WHERE `LuongCoBan` = (
-    SELECT MAX(`LuongCoBan`) FROM `NHANVIEN`
+    SELECT `LuongCoBan` FROM `NHANVIEN` ORDER BY `LuongCoBan` DESC LIMIT 1
 );
 
 -- Question 13
@@ -173,13 +174,14 @@ WITH TSL AS (
         FROM `DONDATHANG` d
             JOIN `CHITIETDATHANG` c ON c.`SoHoaDon` = d.`SoHoaDon`
         GROUP BY `MaNhanVien`
+        ORDER BY TongSoLuong DESC
 )
 SELECT 
     CONCAT(`Ho`, ' ', `Ten`) as HoTen, 
     `TongSoLuong`
 FROM `NHANVIEN` n
     JOIN TSL d ON n.`MaNhanVien` = d.`MaNhanVien`
-WHERE `TongSoLuong` = (SELECT MAX(`TongSoLuong`) from TSL);
+WHERE `TongSoLuong` = (SELECT TongSoLuong from TSL LIMIT 1);
 
 
 -- Question 21
@@ -189,26 +191,24 @@ WITH TSL AS (
         SUM(`SoLuong`) as TongSoLuong
     FROM `CHITIETDATHANG`
     GROUP BY `SoHoaDon`
+    ORDER BY TongSoLuong ASC
 )
 SELECT * 
 FROM TSL
-WHERE `TongSoLuong` = (SELECT MIN(`TongSoLuong`) FROM TSL);
+WHERE `TongSoLuong` = (SELECT `TongSoLuong` FROM TSL LIMIT 1);
 
 -- Question 22
 SELECT 
-    kh.`MaKhachHang`, 
-    kh.`TenCongTy`, 
-    MAX(TongSoTien) as SoTienNhieuNhat 
-FROM `KHACHHANG` kh
-    JOIN(SELECT 
-            d.`MaKhachHang`, 
-            c.`SoHoaDon`, 
-            SUM(`SoLuong` * (`GiaBan` - `MucGiamGia`)) as TongSoTien
-        FROM `CHITIETDATHANG` c
-            JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
-        GROUP BY d.`SoHoaDon`
-    ) tst ON kh.`MaKhachHang` = tst.`MaKhachHang`
-GROUP BY kh.`MaKhachHang`, kh.`TenCongTy`;
+    d.`MaKhachHang`,
+    `TenCongTy`, 
+    SUM(`SoLuong` * (`GiaBan` - `MucGiamGia`)) as TongSoTien
+FROM `CHITIETDATHANG` c
+    JOIN `DONDATHANG` d USING(`SoHoaDon`)
+    JOIN `KHACHHANG` kh USING(`MaKhachHang`)
+GROUP BY d.`SoHoaDon`
+ORDER BY TongSoTien DESC
+LIMIT 1
+    
 
 -- Question 23
 
@@ -228,7 +228,7 @@ SELECT
     c.`SoLuong` * (`GiaBan` - `MucGiamGia`) as SoTien
 FROM `CHITIETDATHANG` c
     JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` 
-UNION ALL
+UNION
     SELECT 
         `SoHoaDon`, 
         'ALL' as TenHang, 
@@ -245,14 +245,14 @@ SELECT
     m.`SoLuong`
 FROM `LOAIHANG` l
     JOIN `MATHANG` m ON l.`MaLoaiHang` = m.`MaLoaiHang`
-UNION ALL
+UNION
     SELECT
         `MaLoaiHang`,
         'ALL',
         SUM(`SoLuong`) as SoLuong
     FROM `MATHANG`
     GROUP BY `MaLoaiHang`
-UNION ALL
+UNION
     SELECT
         'ALL',
         'ALL',
@@ -330,13 +330,14 @@ WITH TSL AS (
     FROM `CHITIETDATHANG` c
         JOIN `DONDATHANG` d USING(`SoHoaDon`)
     GROUP BY `MaNhanVien`
+    ORDER BY TongSL DESC
 )
 UPDATE `NHANVIEN`
     JOIN (
         SELECT `MaNhanVien` 
         FROM TSL 
         WHERE TongSL = (
-            SELECT MAX(TongSL) FROM TSL
+            SELECT TongSL FROM TSL LIMIT 1
         )
     ) ts USING(`MaNhanVien`)
 SET `PhuCap` = `LuongCoBan` / 2;
