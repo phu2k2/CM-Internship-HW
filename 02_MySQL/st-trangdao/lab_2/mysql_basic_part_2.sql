@@ -1,0 +1,455 @@
+-- Active: 1693453052992@@127.0.01@3306@QLBH
+-- QUESTION 1
+SELECT TenHang 
+FROM MATHANG 
+WHERE MaCongTy IN(SELECT MaCongTy FROM NHACUNGCAP WHERE TenCongTy LIKE 'Công ty%Việt Tiến');
+
+SELECT TenHang
+FROM `MATHANG`
+JOIN `NHACUNGCAP` ON MATHANG.`MaCongTy`=NHACUNGCAP.`MaCongTy` AND TenCongTy LIKE 'Công ty%Việt Tiến';
+
+-- QUESTION 2
+SELECT TenCongTy, DiaChi 
+FROM NHACUNGCAP 
+WHERE MaCongTy IN(SELECT DISTINCT MaCongTy 
+                  FROM MATHANG 
+                  WHERE MaLoaiHang = (SELECT MaLoaiHang 
+                                      FROM LOAIHANG
+                                      WHERE TenLoaiHang = 'Thực phẩm' ));
+
+SELECT DISTINCT TenCongTy, DiaChi 
+FROM ( NHACUNGCAP JOIN MATHANG ON NHACUNGCAP.MaCongTy = MATHANG.MaCongTy) 
+JOIN LOAIHANG ON LOAIHANG.MaLoaiHang = MATHANG.MaLoaiHang AND TenLoaiHang = 'Thực phẩm';
+
+
+-- QUESTION 3
+ SELECT DISTINCT TenGiaoDich 
+ FROM KHACHHANG 
+ WHERE MaKhachHang IN(SELECT MaKhachHang
+                      FROM DONDATHANG
+                      WHERE `SoHoaDon` IN(SELECT `SoHoaDon`
+                                          FROM `CHITIETDATHANG`
+                                          WHERE `MaHang` IN(SELECT `MaHang`
+                                                            FROM `MATHANG`
+                                                            WHERE `TenHang` LIKE '%Sữa%' AND `DonViTinh`='Hộp')));
+
+ SELECT DISTINCT TenGiaoDich 
+ FROM KHACHHANG 
+ JOIN `DONDATHANG` 
+ ON KHACHHANG.`MaKhachHang` = DONDATHANG.`MaKhachHang`
+ AND `SoHoaDon` IN(SELECT `SoHoaDon`
+                    FROM `CHITIETDATHANG`
+                    JOIN `MATHANG` ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang` 
+                                      AND `TenHang` LIKE '%Sữa%' AND `DonViTinh`='Hộp');
+
+SELECT DISTINCT TenGiaoDich
+FROM ((CHITIETDATHANG JOIN `MATHANG` ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang` AND `TenHang` LIKE '%Sữa%' AND `DonViTinh`='Hộp')
+JOIN `DONDATHANG` ON CHITIETDATHANG.`SoHoaDon` = DONDATHANG.`SoHoaDon`)
+JOIN `KHACHHANG` ON KHACHHANG.`MaKhachHang` = DONDATHANG.`MaKhachHang`
+
+
+-- QUESTION 4
+
+SELECT TenCongTy, CONCAT(Ho, ' ',Ten) AS NhanVien, NgayGiaoHang, NoiGiaoHang
+FROM `DONDATHANG`
+JOIN KHACHHANG ON KHACHHANG.`MaKhachHang`= DONDATHANG.`MaKhachHang` AND `SoHoaDon` = 1
+JOIN NHANVIEN ON DONDATHANG.`MaNhanVien`=NHANVIEN.`MaNhanVien`
+
+
+-- QUESTION 5
+SELECT CONCAT(Ho,' ', Ten) AS NhanVien, (LuongCoBan + PhuCap) AS TienLuong FROM `NHANVIEN`;
+
+-- QUESTION 6
+SELECT TenHang, (C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
+FROM `CHITIETDATHANG` AS C
+JOIN `MATHANG`
+ON C.`MaHang` = MATHANG.MaHang
+AND `SoHoaDon` = 3;
+
+
+--QUESTION 7
+SELECT `TenCongTy`
+FROM `KHACHHANG` 
+WHERE `TenGiaoDich` IN(SELECT `TenGiaoDich` FROM NHACUNGCAP);
+
+SELECT TenCongTy
+FROM `KHACHHANG`
+JOIN `NHACUNGCAP` ON KHACHHANG.`TenGiaoDich`= NHACUNGCAP.`TenGiaoDich`
+
+--QUESTION 8
+SELECT GROUP_CONCAT(Ho,' ', Ten SEPARATOR '\n') AS NhanVien, NgaySinh 
+FROM `NHANVIEN`
+GROUP BY `NgaySinh`
+HAVING COUNT(*) > 1;
+
+SELECT DISTINCT CONCAT(v1.Ho,' ',v1.Ten) AS NhanVien, v1.NgaySinh
+FROM `NHANVIEN` AS v1
+JOIN `NHANVIEN` AS v2
+ON v1.NgaySinh = v2.NgaySinh
+AND v1.`MaNhanVien` <> v2.`MaNhanVien`
+ORDER BY v1.`NgaySinh`;
+
+--QUESTION 9
+SELECT SoHoaDon, TenCongTy
+FROM `DONDATHANG`
+JOIN `KHACHHANG`
+ON DONDATHANG.`MaKhachHang`= KHACHHANG.`MaKhachHang`
+AND KHACHHANG.`DiaChi` = DONDATHANG.`NoiGiaoHang`;
+
+--QUESTION 10
+SELECT TenHang FROM `MATHANG` WHERE MaHang NOT IN(SELECT DISTINCT MaHang FROM `CHITIETDATHANG`);
+
+SELECT TenHang FROM `MATHANG` 
+LEFT JOIN `CHITIETDATHANG` ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang` 
+WHERE CHITIETDATHANG.`MaHang` IS NULL;
+
+--QUESTION 11
+SELECT CONCAT(Ho, ' ', Ten) AS NhanVien FROM `NHANVIEN` WHERE `MaNhanVien` NOT IN(SELECT DISTINCT `MaNhanVien` FROM `DONDATHANG`);
+
+SELECT CONCAT(Ho, ' ', Ten) AS NhanVien 
+FROM `NHANVIEN` 
+LEFT JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien` = DONDATHANG.`MaNhanVien`
+WHERE DONDATHANG.`MaNhanVien` IS NULL;
+
+--QUESTION 12
+SELECT CONCAT(Ho,' ', Ten) AS NhanVien, `LuongCoBan` FROM `NHANVIEN` WHERE `LuongCoBan`= (SELECT MAX(`LuongCoBan`) FROM `NHANVIEN`);
+
+--QUESTION 13
+SELECT D.SoHoaDon, TenCongTy, SUM(C.SoLuong*(GiaBan - MucGiamGia)) AS SoTienPhaiTra 
+FROM `DONDATHANG` AS D
+JOIN `KHACHHANG` ON KHACHHANG.`MaKhachHang` = D.`MaKhachHang`
+JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
+GROUP BY D.`SoHoaDon`;
+
+--QUESTION 14
+SELECT TenHang 
+FROM (DONDATHANG JOIN `CHITIETDATHANG` ON DONDATHANG.`SoHoaDon` = CHITIETDATHANG.`SoHoaDon` AND YEAR(NgayDatHang) = 2007)
+JOIN `MATHANG` ON CHITIETDATHANG.`MaHang` = MATHANG.`MaHang`
+GROUP BY CHITIETDATHANG.`MaHang`
+HAVING COUNT(*)=1; 
+
+--QUESTION 15
+SELECT  TenCongTy,  SUM(COALESCE(C.SoLuong * (C.GiaBan - C.MucGiamGia), 0.00)) AS SoTienPhaiTra 
+FROM `DONDATHANG` AS D
+RIGHT JOIN `KHACHHANG` ON KHACHHANG.`MaKhachHang` = D.`MaKhachHang`
+LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
+GROUP BY `TenCongTy`;
+
+SELECT TenCongTy,SUM(
+                    CASE 
+                        WHEN  D.`SoHoaDon` IS NULL THEN '0'
+                        ELSE  C.SoLuong*(GiaBan - MucGiamGia)
+                    END) AS SoTienPhaiTra
+FROM `DONDATHANG` AS D
+RIGHT JOIN `KHACHHANG` ON KHACHHANG.`MaKhachHang` = D.`MaKhachHang`
+LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
+GROUP BY `TenCongTy`;
+
+--QUESTION 16
+SELECT CONCAT(Ho,' ', Ten) AS NhanVien, 
+        CASE 
+            WHEN  DONDATHANG.`MaNhanVien` IS NULL THEN '0'
+            ELSE  COUNT(*)
+        END AS DonHangLapDuoc
+FROM `NHANVIEN`
+LEFT JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien` = DONDATHANG.`MaNhanVien`
+GROUP BY NHANVIEN.`MaNhanVien`;
+
+--QUESTION 17
+SELECT Thang, SUM(COALESCE(C.SoLuong * (C.GiaBan - C.MucGiamGia), 0.00)) AS DoanhThuThangCuaNam2007
+FROM (
+    SELECT 1 AS Thang
+    UNION SELECT 2
+    UNION SELECT 3
+    UNION SELECT 4
+    UNION SELECT 5
+    UNION SELECT 6
+    UNION SELECT 7
+    UNION SELECT 8
+    UNION SELECT 9
+    UNION SELECT 10
+    UNION SELECT 11
+    UNION SELECT 12
+) AS ThangThamChieu
+LEFT JOIN DONDATHANG AS D ON YEAR(D.NgayDatHang) = 2007 AND MONTH(D.NgayDatHang) = ThangThamChieu.Thang 
+LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
+GROUP BY Thang
+ORDER BY Thang;
+
+SELECT Thang,SUM(
+                    CASE 
+                        WHEN  MONTH(D.NgayDatHang) IS NULL THEN '0'
+                        ELSE  C.SoLuong*(GiaBan - MucGiamGia)
+                    END) AS DoanhThuThangCuaNam2007
+FROM (
+    SELECT 1 AS Thang
+    UNION SELECT 2
+    UNION SELECT 3
+    UNION SELECT 4
+    UNION SELECT 5
+    UNION SELECT 6
+    UNION SELECT 7
+    UNION SELECT 8
+    UNION SELECT 9
+    UNION SELECT 10
+    UNION SELECT 11
+    UNION SELECT 12
+) AS ThangThamChieu
+LEFT JOIN DONDATHANG AS D ON YEAR(D.NgayDatHang) = 2007 AND MONTH(D.NgayDatHang) = ThangThamChieu.Thang 
+LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
+GROUP BY Thang
+ORDER BY Thang;
+
+--QUESTION 18
+SELECT TenHang , SUM(C.SoLuong*(GiaBan - MucGiamGia - `GiaHang`)) AS TienLoi
+FROM (DONDATHANG JOIN `CHITIETDATHANG` AS C ON DONDATHANG.`SoHoaDon` = C.`SoHoaDon` AND YEAR(NgayDatHang) = 2007)
+JOIN `MATHANG` ON C.`MaHang` = MATHANG.`MaHang`
+GROUP BY C.`MaHang`
+
+--QUESTION 19
+SELECT TenHang ,(MATHANG.`SoLuong` - SUM(CASE 
+                                            WHEN  C.`MaHang` IS NULL THEN '0'
+                                            ELSE  C.SoLuong
+                                        END)) AS SoLuongConLai
+FROM `CHITIETDATHANG` AS C
+RIGHT JOIN `MATHANG` ON C.`MaHang` = MATHANG.`MaHang`
+GROUP BY MATHANG.`MaHang`;
+
+SELECT TenHang , (MATHANG.`SoLuong` -SUM(COALESCE(C.SoLuong, 0.00)))AS SoLuongConLai
+FROM `CHITIETDATHANG` AS C
+RIGHT JOIN `MATHANG` ON C.`MaHang` = MATHANG.`MaHang`
+GROUP BY MATHANG.`MaHang`;
+
+--QUESTION 20
+SELECT CONCAT(Ho, ' ', Ten) AS NhanVien, SoLuongBan 
+FROM `NHANVIEN`
+JOIN  (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
+    FROM DONDATHANG
+    JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+    GROUP BY DONDATHANG.MaNhanVien
+) AS T ON NHANVIEN.MaNhanVien = T.MaNhanVien
+WHERE SoLuongBan = (SELECT MAX(SoLuongBan) FROM (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
+                                                FROM DONDATHANG
+                                                JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+                                                GROUP BY DONDATHANG.MaNhanVien) AS TH );
+
+
+--QUESTION 21
+SELECT SoHoaDon, SUM(`SoLuong`) 
+FROM `CHITIETDATHANG`
+GROUP BY SoHoaDon
+HAVING SUM(`SoLuong`)  = (SELECT MIN(SoLuongItNhat) 
+                          FROM (SELECT `SoHoaDon`, SUM(SoLuong) AS SoLuongItNhat
+                                FROM `CHITIETDATHANG` 
+                                GROUP BY `SoHoaDon`) AS T);
+
+--QUESTION 22
+SELECT KHACHHANG.`MaKhachHang`, KHACHHANG.`TenCongTy`, MAX(TongSoTien) as SoTienNhieuNhat 
+FROM `KHACHHANG` 
+LEFT JOIN(SELECT DONDATHANG.`MaKhachHang`, C.`SoHoaDon`, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia), 0.00) as TongSoTien
+    FROM `CHITIETDATHANG` AS C
+    JOIN `DONDATHANG` ON C.`SoHoaDon` = DONDATHANG.`SoHoaDon`
+    GROUP BY DONDATHANG.`SoHoaDon`
+    ) T ON KHACHHANG.`MaKhachHang` = T.`MaKhachHang`
+GROUP BY KHACHHANG.`MaKhachHang`, KHACHHANG.`TenCongTy`;
+
+--QUESTION 23
+SELECT C.`SoHoaDon`, GROUP_CONCAT(TenHang SEPARATOR '\n'), SUM(C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
+FROM `CHITIETDATHANG` AS C
+JOIN `MATHANG`
+ON C.`MaHang` = MATHANG.MaHang
+GROUP BY C.`SoHoaDon`;
+
+SELECT C.`SoHoaDon`, TenHang, (C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
+FROM `CHITIETDATHANG` AS C
+JOIN `MATHANG`
+ON C.`MaHang` = MATHANG.MaHang
+UNION ALL
+SELECT C.`SoHoaDon`, 'ALL', SUM(C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
+FROM `CHITIETDATHANG` AS C
+JOIN `MATHANG`
+ON C.`MaHang` = MATHANG.MaHang
+GROUP BY C.`SoHoaDon`
+ORDER BY `SoHoaDon` ASC, TenHang DESC;
+
+
+--QUESTION 24
+SELECT LOAIHANG.MaLoaiHang, TenLoaiHang, TenHang, SoLuong
+FROM `MATHANG`
+JOIN LOAIHANG ON LOAIHANG.`MaLoaiHang`= MATHANG.`MaLoaiHang`
+UNION ALL 
+SELECT LOAIHANG.MaLoaiHang, TenLoaiHang, COUNT(TenHang), SUM(SoLuong)
+FROM `MATHANG`
+JOIN LOAIHANG ON LOAIHANG.`MaLoaiHang`= MATHANG.`MaLoaiHang`
+GROUP BY LOAIHANG.MaLoaiHang
+UNION ALL
+SELECT 'ALL', 'ALL', COUNT(`TenHang`), SUM(`SoLuong`)
+FROM `MATHANG`
+JOIN LOAIHANG ON LOAIHANG.`MaLoaiHang`= MATHANG.`MaLoaiHang`
+ORDER BY `MaLoaiHang` DESC, `SoLuong` ASC
+
+--QUESTION 25
+SELECT MATHANG.`MaHang`,MATHANG.`TenHang`,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 1 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang1,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 2 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang2,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 3 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang3,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 4 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang4,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 5 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang5,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 6 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang6,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 7 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang7,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 8 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang8,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 9 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang9,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 10 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang10,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 11 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang11,
+    SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 12 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang12,
+    SUM(CHITIETDATHANG.SoLuong) AS Nam
+FROM MATHANG
+LEFT JOIN CHITIETDATHANG ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang`
+LEFT JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
+WHERE YEAR(DONDATHANG.NgayDatHang) = 2007
+GROUP BY MATHANG.`MaHang`, MATHANG.`TenHang`;
+
+--QUESTION 26
+UPDATE DONDATHANG
+SET `NgayChuyenHang` = `NgayDatHang`
+WHERE `NgayChuyenHang` IS NULL;
+
+--QUESTION 27
+UPDATE `MATHANG`
+JOIN `NHACUNGCAP` ON NHACUNGCAP.`MaCongTy` = MATHANG.`MaCongTy` AND `TenGiaoDich` = 'VINAMILK'
+SET `SoLuong` = `SoLuong`*2;
+
+
+--QUESTION 28
+UPDATE DONDATHANG
+JOIN `KHACHHANG` ON DONDATHANG.`MaKhachHang`= KHACHHANG.`MaKhachHang`
+SET `NoiGiaoHang`= `DiaChi`
+WHERE `NoiGiaoHang` IS NULL;
+
+
+--QUESTION 29
+UPDATE `KHACHHANG` AS KH
+JOIN `NHACUNGCAP` AS NCC ON KH.`TenCongTy` = NCC.`TenCongTy` AND KH.`TenGiaoDich` = NCC.`TenGiaoDich`
+SET KH.`DiaChi` = NCC.`DiaChi`,
+    KH.`DienThoai` = NCC.`DienThoai`,
+    KH.`Email` = NCC.`Email`,
+    KH.`Fax` = NCC.`Fax`;
+
+--QUESTION 30
+UPDATE NHANVIEN
+JOIN (SELECT MaNhanVien
+    FROM DONDATHANG 
+    JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon AND YEAR(DONDATHANG.NgayDatHang) = 2003
+    GROUP BY MaNhanVien
+    HAVING SUM(CHITIETDATHANG.SoLuong) > 100) AS T ON T.`MaNhanVien` = NHANVIEN.`MaNhanVien`
+SET  `LuongCoBan`= `LuongCoBan` * 1.5;
+
+--QUESTION 31
+UPDATE NHANVIEN 
+JOIN  (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
+    FROM DONDATHANG
+    JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+    GROUP BY DONDATHANG.MaNhanVien
+) AS T ON NHANVIEN.MaNhanVien = T.MaNhanVien
+SET `PhuCap` = `LuongCoBan`* 0.5
+WHERE SoLuongBan = (SELECT MAX(SoLuongBan) FROM (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
+                                                FROM DONDATHANG
+                                                JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+                                                GROUP BY DONDATHANG.MaNhanVien) AS TH );
+
+--QUESTION 32
+UPDATE `NHANVIEN`
+LEFT JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien`=DONDATHANG.`MaNhanVien` AND YEAR(DONDATHANG.NgayDatHang) = 2003
+SET `LuongCoBan` = `LuongCoBan`* 0.75
+WHERE DONDATHANG.`MaNhanVien` IS NULL;
+
+--QUESTION 33
+UPDATE DONDATHANG
+JOIN (
+    SELECT SoHoaDon, SUM(SoLuong*(GiaBan - MucGiamGia)) AS SoTien
+    FROM CHITIETDATHANG
+    GROUP BY SoHoaDon
+) AS T ON DONDATHANG.SoHoaDon = T.SoHoaDon
+SET DONDATHANG.SoTien = T.SoTien;
+
+--QUESTION 34
+DELETE FROM `NHANVIEN`
+WHERE YEAR(NOW()) - YEAR(`NgayLamViec`) > 40;
+
+--QUESTION 35
+DELETE FROM `DONDATHANG`
+WHERE YEAR(`NgayDatHang`) < 2000;
+
+--QUESTION 36
+DELETE LOAIHANG
+FROM LOAIHANG 
+LEFT JOIN `MATHANG` ON LOAIHANG.`MaLoaiHang` = MATHANG.`MaLoaiHang`
+WHERE MATHANG.`MaLoaiHang` IS NULL;
+
+DELETE FROM `LOAIHANG`
+WHERE `MaLoaiHang` NOT IN(SELECT DISTINCT `MaLoaiHang` FROM `MATHANG`);
+
+--QUESTION 37
+DELETE KHACHHANG
+FROM `KHACHHANG`
+LEFT JOIN `DONDATHANG` ON KHACHHANG.`MaKhachHang` = DONDATHANG.`MaKhachHang`
+WHERE DONDATHANG.`MaKhachHang` IS NULL;
+
+DELETE FROM `KHACHHANG`
+WHERE `MaKhachHang` NOT IN(SELECT DISTINCT `MaKhachHang` FROM DONDATHANG);
+
+--QUESTION 38
+DELETE FROM `MATHANG`
+WHERE `MaHang` NOT IN(SELECT DISTINCT `MaHang` FROM CHITIETDATHANG) AND SoLuong = 0;
+
+DELETE MATHANG
+FROM MATHANG
+LEFT JOIN CHITIETDATHANG ON CHITIETDATHANG.`MaHang` = MATHANG.`MaHang` 
+WHERE MATHANG.`SoLuong` = 0 AND CHITIETDATHANG.`MaHang` IS NULL;
+
+
+--QUESTION 39
+SELECT DISTINCT TenCongTy 
+FROM `KHACHHANG`
+JOIN `DONDATHANG` ON DONDATHANG.`MaKhachHang`=KHACHHANG.`MaKhachHang`
+WHERE KHACHHANG.`MaKhachHang` NOT IN(SELECT DISTINCT KHACHHANG.`MaKhachHang`
+                           FROM KHACHHANG 
+                           JOIN `DONDATHANG` ON DONDATHANG.`MaKhachHang`=KHACHHANG.`MaKhachHang`
+                           JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
+                           WHERE `MaHang` <> 'TP07');
+
+
+SELECT DISTINCT TenCongTy 
+FROM `KHACHHANG`
+JOIN `DONDATHANG` ON DONDATHANG.`MaKhachHang`=KHACHHANG.`MaKhachHang`
+JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
+GROUP BY DONDATHANG.`MaKhachHang`
+HAVING COUNT(CASE WHEN `MaHang`='TP07' THEN 1 END) = COUNT(`MaHang`);
+
+--QUESTION 40
+SELECT DISTINCT TenCongTy 
+FROM `KHACHHANG`
+JOIN (SELECT MaKhachHang 
+      FROM `DONDATHANG`
+      JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
+      GROUP BY `MaKhachHang`
+      HAVING COUNT(DISTINCT `MaHang`) >= 2
+      AND COUNT(CASE WHEN `MaHang`='TP07' THEN 1 END) > 0  
+      AND COUNT(CASE WHEN `MaHang`='MM01' THEN 1 END) = 0) AS T ON T.`MaKhachHang` = KHACHHANG.`MaKhachHang`;
+
+--QUESTION 41
+SELECT `SoHoaDon`
+FROM `CHITIETDATHANG`
+GROUP BY `SoHoaDon`
+HAVING 
+COUNT(CASE WHEN `MaHang`='DT01' THEN 1 END) > 0
+AND COUNT(CASE WHEN `MaHang`='DT02' THEN 1 END) > 0 
+AND COUNT(CASE WHEN `MaHang`='DT03' THEN 1 END) > 0 
+AND COUNT(CASE WHEN `MaHang`='DT04' THEN 1 END) > 0 
+AND (COUNT(CASE WHEN `MaHang`='DC01' THEN 1 END) = 0
+OR COUNT(CASE WHEN `MaHang`='TP03' THEN 1 END) = 0) ;
+
+
+
+
+
