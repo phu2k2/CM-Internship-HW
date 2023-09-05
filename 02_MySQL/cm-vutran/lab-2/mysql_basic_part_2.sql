@@ -199,8 +199,12 @@ WHERE YEAR(NgayLamViec) = 2003 AND MaNhanVien NOT IN(
 );
 
 -- Cau 33: Giả sử trong bảng DONDATHANG có thêm trường SOTIEN cho biết số tiền mà khách hàng phải trả trong mỗi đơn đặt hàng. Hãy tính giá trị cho trường này? 
-SELECT DDH.SoHoaDon, DDH.MaKhachHang, ((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia)) AS SoTien
-FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon GROUP BY DDH.SoHoaDon;
+ALTER TABLE DONDATHANG
+ADD SoTien NUMERIC(38,2);
+UPDATE DONDATHANG DDH JOIN (SELECT CTDH.SoHoaDon, SUM((CTDH.GiaBan * CTDH.SoLuong - CTDH.SoLuong * CTDH.MucGiamGia)) as TienPhaiTra
+FROM CHITIETDATHANG CTDH
+GROUP BY CTDH.SoHoaDon) AS T ON DDH.SoHoaDon = T.SoHoaDon
+SET d.SoTien = T.TienPhaiTra;
 
 -- Câu 34: Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm?
 DELETE FROM NHANVIEN WHERE TIMESTAMPDIFF(YEAR, NgayLamViec, CURDATE()) > 40;
