@@ -1,7 +1,7 @@
 -- Cau 1 --
 select TenHang 
 from MATHANG 
-where MaCongTy = (select MaCongTy from NHACUNGCAP where TenCongTy like '%Việt Tiến%');
+where MaCongTy in (select MaCongTy from NHACUNGCAP where TenCongTy like '%Việt Tiến%');
 
 -- Cau 2 --
 select TenCongTy, DiaChi 
@@ -15,9 +15,9 @@ select TenGiaoDich
 from KHACHHANG KH
 join DONDATHANG DH using(MaKhachHang)
 join CHITIETDATHANG using(SoHoaDon)
-where MaHang = (
+where MaHang in (
 	select MaHang from MATHANG 
-    where TenHang like '%Sữa hộp%' );
+    where TenHang like '%Sữa hộp%');
 
 -- Cau 4 --
 select KH.TenGiaoDich as TenKhachHang, 
