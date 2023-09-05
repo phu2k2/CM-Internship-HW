@@ -72,9 +72,9 @@ SELECT `TenCongTy`
 FROM `KHACHHANG` 
 WHERE `TenGiaoDich` IN(SELECT `TenGiaoDich` FROM NHACUNGCAP);
 
-SELECT TenCongTy
+SELECT KHACHHANG.`TenCongTy`
 FROM `KHACHHANG`
-JOIN `NHACUNGCAP` ON KHACHHANG.`TenGiaoDich`= NHACUNGCAP.`TenGiaoDich`
+JOIN `NHACUNGCAP` ON KHACHHANG.`TenGiaoDich`= NHACUNGCAP.`TenGiaoDich`;
 
 --QUESTION 8
 SELECT GROUP_CONCAT(Ho,' ', Ten SEPARATOR '\n') AS NhanVien, NgaySinh 
@@ -246,7 +246,7 @@ HAVING SUM(`SoLuong`)  = (SELECT MIN(SoLuongItNhat)
 --QUESTION 22
 SELECT KHACHHANG.`MaKhachHang`, KHACHHANG.`TenCongTy`, MAX(TongSoTien) as SoTienNhieuNhat 
 FROM `KHACHHANG` 
-LEFT JOIN(SELECT DONDATHANG.`MaKhachHang`, C.`SoHoaDon`, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia), 0.00) as TongSoTien
+LEFT JOIN(SELECT DONDATHANG.`MaKhachHang`, C.`SoHoaDon`, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) as TongSoTien
     FROM `CHITIETDATHANG` AS C
     JOIN `DONDATHANG` ON C.`SoHoaDon` = DONDATHANG.`SoHoaDon`
     GROUP BY DONDATHANG.`SoHoaDon`
