@@ -3,7 +3,7 @@
 SELECT * 
 FROM MATHANG
 WHERE MaCongTy = 'MVT';
-Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
+-- Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
 
 SELECT DISTINCT NHACUNGCAP.TenCongTy, NHACUNGCAP.DiaChi
 FROM MATHANG
@@ -77,11 +77,11 @@ FROM CHITIETDATHANG
 GROUP BY SoHoaDon;
 -- Trong năm 2007 những mặt hàng nào đặt mua đúng một lần?
 
-SELECT MaHang, COUNT(*) AS SoLanDatMua
-FROM CHITIETDATHANG
-WHERE YEAR(NgayDatHang) = 2007
-GROUP BY MaHang
-HAVING COUNT(*) = 1;
+SELECT c.MaHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c on d.SoHoaDon = c.SoHoaDon
+WHERE YEAR(d.NgayDatHang) = 2007 
+GROUP BY c.MaHang
+HAVING COUNT(d.SoHoaDon) = 1;
 -- Mỗi khách hàng đã bỏ ra bao nhiêu tiền để đặt mua hàng của công ty?
 
 SELECT KHACHHANG.TenGiaoDich, SUM(SoLuong * (GiaBan - MucGiamGia)) AS TongTien
@@ -97,18 +97,16 @@ LEFT JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
 GROUP BY NHANVIEN.Ten;
 -- Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)?
 
-SELECT MONTH(NgayDatHang) AS Thang, SUM(SoLuong * GiaBan) AS TongDoanhThu
-FROM CHITIETDATHANG
-WHERE YEAR(NgayDatHang) = 2007
-GROUP BY MONTH(NgayDatHang)
-ORDER BY Thang;
+SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
+FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
+WHERE YEAR(d.NgayDatHang) = 2007
+GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
 -- Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007?
 
-SELECT MATHANG.TenHang, SUM(SoLuong * (GiaBan - MucGiamGia)) AS LoiNhuan
-FROM CHITIETDATHANG
-INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
-WHERE YEAR(ChITIETDATHANG.NgayDatHang) = 2007
-GROUP BY MATHANG.TenHang;
+SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
+FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
+WHERE YEAR(d.NgayDatHang) = 2007
+GROUP BY n.MaCongTy;
 -- Số lượng hàng còn lại của mỗi mặt hàng mà công ty đã có (tổng số lượng hàng hiện có và đã bán)?
 
 SELECT MATHANG.TenHang, MATHANG.SoLuong - COALESCE(SUM(CHITIETDATHANG.SoLuong), 0) AS SoLuongConLai
@@ -188,48 +186,38 @@ SET SoLuong = SoLuong * 2
 WHERE MaCongTy = 'VNM';
 -- Cập nhật giá trị của trường NOIGIAOHANG trong bảng DONDATHANG bằng địa chỉ của khách hàng đối với những đơn đặt hàng chưa xác định được nơi giao hàng (giá trị trường NOIGIAOHANG bằng NULL):
 
-UPDATE DONDATHANG
-SET NOIGIAOHANG = KHACHHANG.DiaChi
-FROM DONDATHANG
-INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
-WHERE NOIGIAOHANG IS NULL;
+UPDATE DONDATHANG d JOIN KHACHHANG k ON d.MaKhachHang = k.MaKhachHang
+SET d.NoiGiaoHang = k.DiaChi
+WHERE d.NoiGiaoHang IS NULL;
 -- Cập nhật lại dữ liệu trong bảng KHACHHANG sao cho nếu tên công ty và tên giao dịch của khách hàng trùng với tên công ty và tên giao dịch của một nhà cung cấp nào đó thì địa chỉ, điện thoại, fax và e-mail phải giống nhau:
 
-UPDATE KHACHHANG
-SET KHACHHANG.DiaChi = NHACUNGCAP.DiaChi,
-    KHACHHANG.DienThoai = NHACUNGCAP.DienThoai,
-    KHACHHANG.Fax = NHACUNGCAP.Fax,
-    KHACHHANG.Email = NHACUNGCAP.Email
-FROM KHACHHANG
-INNER JOIN NHACUNGCAP ON KHACHHANG.TenCongTy = NHACUNGCAP.TenCongTy AND KHACHHANG.TenGiaoDich = NHACUNGCAP.TenGiaoDich;
+UPDATE KHACHHANG k JOIN NHACUNGCAP n ON k.TenCongTy = n.TenCongTy AND k.TenGiaoDich = n.TenGiaoDich
+SET k.DiaChi = n.DiaChi, k.DienThoai = n.DienThoai, k.Fax = n.Fax, k.Email = n.Email;
 -- Tăng lương lên gấp đôi cho những nhân viên bán được số lượng hàng nhiều hơn 100 trong năm 2003:
 
-UPDATE NHANVIEN
-SET LuongCoBan = LuongCoBan * 2
-WHERE MaNhanVien IN (
-    SELECT DISTINCT NHANVIEN.MaNhanVien
-    FROM NHANVIEN
-    INNER JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
-    INNER JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
-    WHERE YEAR(DONDATHANG.NgayDatHang) = 2003
-    GROUP BY NHANVIEN.MaNhanVien
-    HAVING SUM(CHITIETDATHANG.SoLuong) > 100
-);
+UPDATE NHANVIEN n JOIN (SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc, YEAR(d.NgayDatHang) AS Nam
+ FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
+ GROUP BY d.MaNhanVien, YEAR(d.NgayDatHang)) AS T ON n.MaNhanVien = T.MaNhanVien
+SET n.LuongCoBan = 1.5 * n.LuongCoBan
+WHERE SoLuongBanDuoc > 100 AND T.Nam = 2003;
 -- Tăng phụ cấp lên bằng 50% lương cho những nhân viên bán được hàng nhiều nhất:
 
-UPDATE NHANVIEN
-SET PhuCap = PhuCap + (LuongCoBan * 0.5)
-WHERE MaNhanVien IN (
-    SELECT TOP 1 MaNhanVien
-    FROM (
-        SELECT NHANVIEN.MaNhanVien, SUM(CHITIETDATHANG.SoLuong) AS TongSoLuongBanDuoc
-        FROM NHANVIEN
-        INNER JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
-        INNER JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
-        GROUP BY NHANVIEN.MaNhanVien
-        ORDER BY TongSoLuongBanDuoc DESC
-    ) AS NhanVienBanNhieuNhat
-);
+UPDATE NHANVIEN n JOIN (SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
+FROM(
+ SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
+ FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
+ GROUP BY d.MaNhanVien
+) AS T
+WHERE 
+ T.SoLuongBanDuoc = (
+  SELECT MAX(T.SoLuongBanDuoc) 
+  FROM (
+   SELECT d.MaNhanVien, SUM(c.SoLuong) AS SoLuongBanDuoc	
+   FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon 
+   GROUP BY d.MaNhanVien
+  ) AS T 
+ )) AS T1 ON n.MaNhanVien = T1.MaNhanVien
+ SET n.PhuCap = n.LuongCoBan / 2;
 -- Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào:
 
 UPDATE NHANVIEN
@@ -318,5 +306,3 @@ WHERE MATHANG.MaHang IN ('DT01', 'DT02', 'DT03', 'DT04')
     )
 GROUP BY DONDATHANG.SoHoaDon
 HAVING COUNT(DISTINCT MATHANG.MaHang) = 4;
-
-
