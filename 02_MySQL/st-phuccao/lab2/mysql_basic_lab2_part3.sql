@@ -121,38 +121,20 @@ WHERE MH.SoLuong = 0
 -- - Khách hàng B mua 1 mặt hàng TP07
 -- -> Kết quả select chỉ có khác hàng B 
 -- note: Tính mặt hàng trên tổng tất cả đơn hàng chứ không phải từng đơn hàng 
-
 SELECT KH.MaKhachHang AS MaKhachHang ,KH.TenCongTy AS TenCongTy
 FROM KHACHHANG KH
 JOIN DONDATHANG DDH ON KH.MaKhachHang = DDH.MaKhachHang
 JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY KH.MaKhachHang HAVING COUNT(CASE WHEN CTDH.MaHang='TP07' THEN 1 END) = COUNT(*)
-
 -- 40. Select khách hàng có mua 2 mặt hàng trở lên. Trong đó phải có mặt hàng TP07 và không có mặt hàng MM01.
--- Ví dụ:
--- 	- Khách hàng A mua mặt hàng TP07 và MM01
--- 	- Khách hàng B mua mặt hàng TP07 và DC02
--- 	- Khách hàng C mua mặt hàng TP07
--- - Khách hàng D mua mặt hàng MM01, DC02 và DT03
---     	- Khách hàng E mua mặt hàng TP07, DC02 và DT03
--- -> Kết quả select chỉ có khác hàng B và E 
-
-SELECT KH.MaKhachHang AS MaKhachHang,
-       KH.TenCongTy AS TenCongTy
+SELECT KH.MaKhachHang AS MaKhachHang ,KH.TenCongTy AS TenCongTy
 FROM KHACHHANG KH
 JOIN DONDATHANG DDH ON KH.MaKhachHang = DDH.MaKhachHang
 JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-GROUP BY KH.MaKhachHang
-HAVING COUNT(CASE 
-            WHEN CTDH.MaHang = 'TP07'
-                THEN 1
-            END) >= 1
-    AND COUNT(CASE 
-            WHEN CTDH.MaHang = 'MM01'
-                THEN 1
-            END) = 0
-    AND COUNT(DISTINCT CTDH.MaHang) >= 2
-
+GROUP BY KH.MaKhachHang HAVING 
+COUNT(CASE WHEN CTDH.MaHang='TP07' THEN 1 END ) >=1
+AND COUNT(CASE WHEN CTDH.MaHang='MM01' THEN 1 END ) = 0 
+AND COUNT(DISTINCT CTDH.MaHang) >=2
 -- 41. Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng k dc mua DC01 hoặc TP03
 SELECT DDH.SoHoaDon,
     GROUP_CONCAT(DISTINCT CTDH.MaHang) AS TatCaMaHang
