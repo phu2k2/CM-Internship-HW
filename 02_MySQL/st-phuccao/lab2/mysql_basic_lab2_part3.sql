@@ -23,7 +23,6 @@ SET KH.DiaChi = NCC.DiaChi,
     KH.DienThoai = NCC.DienThoai,
     KH.Fax = NCC.Fax,
     KH.Email = NCC.Email
-WHERE KH.MaKhachHang IS NOT NULL;
 -- 30. Tăng lương lên gấp rưỡi cho những nhân viên bán được số lượng hàng nhiều hơn 100 trong năm 2003? 
 UPDATE NHANVIEN NV
 JOIN (
@@ -137,15 +136,9 @@ AND COUNT(CASE WHEN CTDH.MaHang='MM01' THEN 1 END ) = 0
 AND COUNT(DISTINCT CTDH.MaHang) >=2
 -- 41. Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng k dc mua DC01 hoặc TP03
 SELECT DDH.SoHoaDon,
-    GROUP_CONCAT(DISTINCT CTDH.MaHang) AS TatCaMaHang
+    JSON_ARRAYAGG(CTDH.MaHang) AS TatCaMaHang
 FROM DONDATHANG DDH
 JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY DDH.SoHoaDon
-HAVING (
-        TatCaMaHang LIKE '%DT01%'
-        AND TatCaMaHang LIKE '%DT02%'
-        AND TatCaMaHang LIKE '%DT03%'
-        AND TatCaMaHang LIKE '%DT04%'
-        AND TatCaMaHang NOT LIKE '%DC01%'
-        AND TatCaMaHang NOT LIKE '%TP03%'
-    );
+HAVING JSON_CONTAINS(TatCaMaHang, '["DT01", "DT02", "DT03", "DT04"]') = 1
+    AND JSON_CONTAINS(TatCaMaHang, '["DC01", "TP03"]') = 0;

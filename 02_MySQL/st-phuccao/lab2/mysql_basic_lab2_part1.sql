@@ -50,15 +50,15 @@ INNER JOIN NHACUNGCAP NCC ON NCC.TenGiaoDich = KH.TenGiaoDich
 -- MaCongTy --> Lỡ có trường hợp 2 cty khác nhau nhưng cùng 1 tên giao dịch 
 
 -- 8. Trong công ty có những nhân viên nào có cùng ngày sinh? 
-SELECT DISTINCT NV1.MaNhanVien,
-    NV1.Ho,
-    NV1.Ten,
-    DATE (NV1.NgaySinh) AS NgaySinh
-FROM NHANVIEN NV1
-JOIN NHANVIEN NV2 ON DATE (NV1.NgaySinh) = DATE (NV2.NgaySinh)
-    AND NV1.MaNhanVien != NV2.MaNhanVien
-ORDER BY NgaySinh;
-
+SELECT Date(NgaySinh) AS NS, 
+    GROUP_CONCAT(CONCAT (
+            NV.Ho,
+            ' ',
+            NV.Ten
+            ) ORDER BY NV.MaNhanVien) AS DanhSachNhanVien
+FROM NHANVIEN NV
+GROUP BY NS
+HAVING COUNT(*) > 1;
 -- 9. Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào? 
 SELECT DDH.SoHoaDon,
        KH.TenCongTy
@@ -76,16 +76,16 @@ WHERE C.MaHang IS NULL;
 SELECT N.MaNhanVien,
        N.Ho,
        N.Ten
-FROM NHANVIEN N
+FROM NHANVIEN 
 LEFT JOIN DONDATHANG D ON N.MaNhanVien = D.MaNhanVien
 WHERE D.MaNhanVien IS NULL;
 -- 12. Những nhân viên nào của công ty có lương cơ bản cao nhất? 
-SELECT NHANVIEN.Ho,
-       NHANVIEN.Ten,
-       NHANVIEN.LuongCoBan
+SELECT Ho,
+       Ten,
+       LuongCoBan
 FROM NHANVIEN
-WHERE NHANVIEN.LuongCoBan = (
-        SELECT MAX(NHANVIEN.LuongCoBan)
+WHERE LuongCoBan = (
+        SELECT MAX(LuongCoBan)
         FROM NHANVIEN
 	);
 -- 13. Tổng số tiền mà khách hàng phải trả cho mỗi đơn đặt hàng là bao nhiêu? 

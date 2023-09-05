@@ -1,7 +1,7 @@
 -- 16. Mỗi nhân viên của công ty đã lập bao nhiêu đơn đặt hàng (nếu chưa hề lập hóa đơn nào thì cho kết quả là 0)?
 SELECT NV.MaNhanVien,
     CONCAT (NV.Ho,' ',NV.Ten) AS 'Tên nhân viên',
-    COALESCE(COUNT(DDH.SoHoaDon), 0) AS 'Số đơn đặt hàng'
+    COUNT(DDH.SoHoaDon) AS 'Số đơn đặt hàng'
 FROM NHANVIEN NV
 LEFT JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien
 GROUP BY NV.MaNhanVien;
@@ -58,24 +58,16 @@ HAVING MAX(TongSoLuongBan) = (
     );
 
 -- 21. Đơn đặt hàng nào có số lượng hàng được đặt mua ít nhất? 
-SELECT SoHoaDon,
-    SUM(COALESCE(SoLuong, 0)) AS SoLuong
+SELECT SoHoaDon, MIN(SoLuong) AS SoLuongItNhat
 FROM CHITIETDATHANG
 GROUP BY SoHoaDon
-HAVING SUM(SoLuong) = (
-    SELECT MIN(TotalQuantity)
-    FROM (
-        SELECT SoHoaDon,
-            SUM(COALESCE(SoLuong, 0)) AS TotalQuantity
-        FROM CHITIETDATHANG
-        GROUP BY SoHoaDon
-        ) AS MinQuantity
-    );
+ORDER BY SoLuongItNhat
+LIMIT 1;
 
 -- 22. Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
 SELECT CustomerOrders.MaKhachHang,
     KH.TenCongTy,
-    MAX(TotalAmount) AS 'Số tiền nhiều nhất'
+    MAX(TotalAmount) AS SoTien
 FROM (
     SELECT DNH.MaKhachHang AS MaKhachHang,
         DNH.SoHoaDon,
@@ -86,7 +78,8 @@ FROM (
         DNH.SoHoaDon
     ) AS CustomerOrders
 LEFT JOIN KHACHHANG KH ON KH.MaKhachHang = CustomerOrders.MaKhachHang
-GROUP BY CustomerOrders.MaKhachHang;
+GROUP BY CustomerOrders.MaKhachHang 
+ORDER BY SoTien DESC LIMIT 1;
 
 -- 23. Mỗi một đơn đặt hàng đặt mua những mặt hàng nào và tổng số tiền của đơn đặt hàng?
 SELECT DDH.SoHoaDon,
@@ -115,14 +108,14 @@ SELECT
 FROM LOAIHANG LH
 LEFT JOIN MATHANG MH ON LH.MaLoaiHang = MH.MaLoaiHang
 GROUP BY LH.MaLoaiHang, LH.TenLoaiHang
-UNION ALL
+UNION 
 SELECT
     'ALL' AS MaLoaiHang,
     'ALL' AS TenLoaiHang,
     'ALL' AS TenHang,
     SUM(COALESCE(SoLuong, 0)) AS SoLuong
 FROM MATHANG
-ORDER BY MaLoaiHang DESC, if(TenHang = 'ALL', 0, TenHang) DESC;
+ORDER BY MaLoaiHang DESC, TenHang DESC;
 -- 25. Thống kê trong năm 2007 mỗi một mặt hàng trong mỗi tháng và trong cả năm bán được với số lượng bao nhiêu? (Yêu cầu kết quả hiểu thị dưới dạng bảng, hai cột đầu là mã hàng, tên hàng, các cột còn lại tương ứng từ tháng 1 đến tháng 12 và cả năm. Như vậy mỗi dòng trong kết quả cho biết số lượng hàng bán được mỗi tháng và trong cả năm của mỗi mặt hàng) 
 SELECT
     MH.MaHang,
