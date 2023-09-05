@@ -1,23 +1,23 @@
 -- Cau 1 --
-select TenHang 
-from MATHANG 
-where MaCongTy in (select MaCongTy from NHACUNGCAP where TenCongTy like '%Việt Tiến%');
+select TenHang
+from MATHANG
+join NHACUNGCAP using(MaCongTy)
+where TenCongTy like '%Việt Tiến%';
 
 -- Cau 2 --
-select TenCongTy, DiaChi 
+select distinct TenCongTy, DiaChi
 from NHACUNGCAP
-where MaCongTy in (
-	select MaCongTy from MATHANG 
-	where MaLoaiHang = (select MaLoaiHang from LOAIHANG where TenLoaiHang = 'Thực phẩm'));
+join MATHANG using(MaCongTy)
+join LOAIHANG using(MaLoaiHang)
+where TenLoaiHang = 'Thực phẩm';
 
 -- Cau 3 --
 select TenGiaoDich
 from KHACHHANG KH
 join DONDATHANG DH using(MaKhachHang)
 join CHITIETDATHANG using(SoHoaDon)
-where MaHang in (
-	select MaHang from MATHANG 
-    where TenHang like '%Sữa hộp%');
+join MATHANG using(MaHang)
+where TenHang like '%Sữa hộp%';
 
 -- Cau 4 --
 select KH.TenGiaoDich as TenKhachHang, 
@@ -59,14 +59,16 @@ join KHACHHANG KH using(MaKhachHang)
 where DH.NoiGiaoHang = KH.DiaChi;
 
 -- Cau 10 --
-select TenHang 
-from MATHANG
-where MaHang not in(select distinct MaHang from CHITIETDATHANG);
+select TenHang
+from MATHANG MH
+left join CHITIETDATHANG CT using(MaHang)
+where CT.MaHang is null;
 
 -- Cau 11 --
 select concat(Ho,' ',Ten) as TenNhanVien
-from NHANVIEN
-where MaNhanVien not in(select distinct MaNhanVien from DONDATHANG);
+from NHANVIEN NV
+left join DONDATHANG DH using(MaNhanVien) 
+where DH.MaNhanVien is null;
 
 -- Cau 12 --
 select concat(Ho,' ',Ten) as TenNhanVien 
@@ -168,7 +170,7 @@ where TongTien = (select max(TongTien) from DH as DH2 where TenCongTy = DH.TenCo
 select SoHoaDon, TenHang, 
 	sum(CT.SoLuong * (GiaBan - MucGiamGia)) as TongTien
 from CHITIETDATHANG as CT
-join MATHANG as MH using(MaHang)
+join MATHANG MH using(MaHang)
 group by SoHoaDon, TenHang
 union all
 select SoHoaDon, 'ALL', sum(SoLuong * (GiaBan - MucGiamGia)) as TongTien

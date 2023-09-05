@@ -6,14 +6,16 @@ set NgayChuyenHang = NgayDatHang
 where NgayChuyenHang is null;
 
 -- Cau 27 --
-update MATHANG 
-set SoLuong = SoLuong * 2 
-where  MaCongTy = (select MaCongTy from NHACUNGCAP where TenGiaoDich = 'VINAMILK');
+update MATHANG
+join NHACUNGCAP using(MaCongTy)
+set SoLuong = SoLuong * 2
+where TenGiaoDich = 'VINAMILK';
 
 -- Cau 28 --
- update DONDATHANG D1
- set NoiGiaoHang = (select DiaChi from KHACHHANG where D1.MaKhachHang = MaKhachHang)
- where NoiGiaoHang is null;
+update DONDATHANG
+join KHACHHANG using(MaKhachHang)
+set NoiGiaoHang = DiaChi
+where NoiGiaoHang is null;
 
 --  Cau 29 --
  update KHACHHANG KH, NHACUNGCAP NCC
@@ -38,19 +40,16 @@ select DH.MaNhanVien, sum(CT.SoLuong) as SoLuongHang
 	join CHITIETDATHANG CT using(SoHoaDon)
     group by DH.MaNhanVien
 )
-update NHANVIEN
+update NHANVIEN NV
+join SOLUONGHANG using(MaNhanVien)
 set PhuCap = LuongCoBan * 0.5
-where MaNhanVien in (
-	select MaNhanVien from SOLUONGHANG 
-	where SoLuongHang = (select max(SoLuongHang) from SOLUONGHANG));
+where SoLuongHang = (select max(SoLuongHang) from SOLUONGHANG);
 
 -- Cau 32 --
-update NHANVIEN
-set LuongCoBan = LuongCoBan * 3/4 
-where MaNhanVien not in (
-	select distinct MaNhanVien 
-	from DONDATHANG 
-	where year(NgayDatHang) = 2003);
+update NHANVIEN NV
+left join DONDATHANG DH using(MaNhanVien)
+set LuongCoBan = LuongCoBan * 3/4
+where year(NgayDatHang) = 2003 and DH.MaNhanVien is null;
 
 -- Cau 33 --
 update DONDATHANG D1
@@ -71,16 +70,22 @@ delete from DONDATHANG
 where year(NgayDatHang) < 2000; 
  
 -- Cau 36 --
-delete from LOAIHANG
-where MaLoaiHang not in(select distinct MaLoaiHang from MATHANG);
+delete LH
+from LOAIHANG LH
+left join MATHANG MH using(MaLoaiHang)
+where MH.MaLoaiHang is null;
 
 -- Cau 37 --
-delete from KHACHHANG
-where MaKhachHang not in(select distinct MaKhachHang from DONDATHANG); 
+delete KH
+from KHACHHANG KH
+left join DONDATHANG DH using(MaKhachHang)
+where DH.MaKhachHang is null;
 
 -- Cau 38 --
-delete from MATHANG 
-where SoLuong = 0 and MaHang not in(select distinct MaHang from CHITIETDATHANG);
+delete MH
+from MATHANG MH
+left join CHITIETDATHANG CT using(MaHang)
+where MH.SoLuong = 0 and CT.MaHang is null;
 
 
 -- *** SELECT *** --
