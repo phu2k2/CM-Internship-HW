@@ -1,35 +1,25 @@
 -- Question 1
 SELECT `TenHang` 
 FROM `MATHANG`
-WHERE `MaCongTy` = (
-    SELECT `MaCongTy` FROM `NHACUNGCAP` 
-    WHERE `TenCongTy` LIKE '%Công ty%Việt Tiến%'
-);
+    JOIN `NHACUNGCAP` USING(`MaCongTy`)
+WHERE `TenCongTy` LIKE '%Công ty%Việt Tiến%'
 
 -- Question 2
-SELECT 
+SELECT DISTINCT
     `TenCongTy`, 
     `DiaChi` 
 FROM `NHACUNGCAP`
-WHERE `MaCongTy` IN (
-    SELECT `MaCongTy` FROM `MATHANG` 
-    WHERE `MaLoaiHang` = (
-        SELECT `MaLoaiHang` FROM `LOAIHANG` 
-        WHERE `TenLoaiHang` = 'Thực phẩm'
-    )
-);
+    JOIN `MATHANG` USING(`MaCongTy`)
+    JOIN `LOAIHANG` USING(`MaLoaiHang`)
+WHERE `TenLoaiHang` = 'Thực phẩm';
 
 -- Question 3
-SELECT kh.`TenGiaoDich` 
-FROM `DONDATHANG` d 
-    JOIN `KHACHHANG` kh ON d.`MaKhachHang` = kh.`MaKhachHang`
-WHERE `SoHoaDon` IN (
-    SELECT `SoHoaDon` FROM `CHITIETDATHANG` 
-    WHERE `MaHang` IN (
-        SELECT DISTINCT `MaHang` FROM `MATHANG` 
-        WHERE `TenHang` LIKE '%Sữa%' AND `DonViTinh` = 'Hộp'
-    )
-);
+SELECT DISTINCT kh.`TenGiaoDich`
+FROM `CHITIETDATHANG` c
+    JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` AND `TenHang` LIKE '%Sữa%' AND `DonViTinh` = 'Hộp'
+    JOIN `DONDATHANG` d USING(`SoHoaDon`)
+    JOIN `KHACHHANG` kh USING(`MaKhachHang`);
+
 
 -- Question 4
 SELECT 
@@ -57,13 +47,13 @@ FROM `CHITIETDATHANG` c
 WHERE `SoHoaDon` = 3;
 
 -- Question 7
-SELECT 
+EXPLAIN SELECT 
     kh.`TenCongTy` 
 FROM `KHACHHANG` kh
     JOIN `NHACUNGCAP` n ON kh.`TenGiaoDich` = n.`TenGiaoDich`;
 
 -- Question 8 (No case to test)
-SELECT 
+EXPLAIN SELECT 
     DISTINCT CONCAT(n1.`Ho`, ' ', n1.`Ten`) as HoTen,
     n1.`NgaySinh` 
 FROM `NHANVIEN` n1 
@@ -79,20 +69,18 @@ FROM `DONDATHANG` d
 WHERE d.`NoiGiaoHang` = kh.`DiaChi`;
 
 -- Question 10
-SELECT `TenHang` 
+SELECT `MaHang`, `TenHang`
 FROM `MATHANG`
-WHERE `MaHang` NOT IN (
-    SELECT DISTINCT `MaHang` FROM `CHITIETDATHANG`
-);
+    LEFT JOIN `CHITIETDATHANG` USING(`MaHang`)
+WHERE `SoHoaDon` IS NULL;
 
 -- Question 11 (No case to test)
 SELECT 
     `MaNhanVien`, 
     CONCAT(`Ho`, ' ', `Ten`) as HoTen 
 FROM `NHANVIEN`
-WHERE `MaNhanVien` NOT IN (
-    SELECT DISTINCT `MaNhanVien` FROM `DONDATHANG`
-);
+    LEFT JOIN `DONDATHANG` USING(`MaNhanVien`)
+WHERE `SoHoaDon` IS NULL;
 
 -- Question 12
 SELECT
@@ -117,15 +105,12 @@ FROM `DONDATHANG` d
     JOIN `KHACHHANG` kh ON d.`MaKhachHang` = kh.`MaKhachHang`;
 
 -- Question 14
-SELECT `TenHang` 
-FROM `MATHANG`
-WHERE `MaHang` IN (
-    SELECT `MaHang` 
-    FROM `CHITIETDATHANG` c
-        JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
-    GROUP BY `MaHang`
-    HAVING COUNT(`MaHang`) = 1
-);
+SELECT `MaHang`, `TenHang`
+FROM `CHITIETDATHANG`
+    JOIN `DONDATHANG` USING(`SoHoaDon`)
+    JOIN `MATHANG` USING(`MaHang`)
+GROUP BY `MaHang`, `TenHang`
+HAVING COUNT(`MaHang`) = 1;
 
 -- Question 15
 SELECT 
@@ -307,12 +292,9 @@ WHERE d1.`NgayChuyenHang` IS NULL;
 
 -- Question 27
 UPDATE `MATHANG` m
+    JOIN `NHACUNGCAP` USING(`MaCongTy`)
 SET `SoLuong` = `SoLuong` * 2
-WHERE `MaCongTy` = (
-    SELECT `MaCongTy` 
-    FROM `NHACUNGCAP` 
-    WHERE `TenGiaoDich` LIKE '%VINAMILK'
-);
+WHERE `TenGiaoDich` LIKE '%VINAMILK';
 
 -- Question 28
 UPDATE `DONDATHANG` d
@@ -330,15 +312,15 @@ SET
 
 -- Question 30
 UPDATE `NHANVIEN`
-SET `LuongCoBan` = `LuongCoBan` * 1.5
-WHERE `MaNhanVien` IN (
-    SELECT `MaNhanVien`
-    FROM `CHITIETDATHANG` c
-        JOIN `DONDATHANG` d USING(`SoHoaDon`)
-    WHERE YEAR(`NgayDatHang`) = 2003
-    GROUP BY `MaNhanVien`
-    HAVING SUM(`SoLuong`) > 100
-);
+    JOIN (
+        SELECT `MaNhanVien`
+        FROM `CHITIETDATHANG` c
+            JOIN `DONDATHANG` d USING(`SoHoaDon`)
+        WHERE YEAR(`NgayDatHang`) = 2003
+        GROUP BY `MaNhanVien`
+        HAVING SUM(`SoLuong`) > 100
+    ) c USING(`MaNhanVien`)
+SET `LuongCoBan` = `LuongCoBan` * 1.5;
 
 -- Question 31
 WITH TSL AS (
@@ -350,23 +332,24 @@ WITH TSL AS (
     GROUP BY `MaNhanVien`
 )
 UPDATE `NHANVIEN`
-SET `PhuCap` = `LuongCoBan` / 2
-WHERE `MaNhanVien` IN (
-    SELECT `MaNhanVien` 
-    FROM TSL 
-    WHERE TongSL = (
-        SELECT MAX(TongSL) FROM TSL
-    )
-);
+    JOIN (
+        SELECT `MaNhanVien` 
+        FROM TSL 
+        WHERE TongSL = (
+            SELECT MAX(TongSL) FROM TSL
+        )
+    ) ts USING(`MaNhanVien`)
+SET `PhuCap` = `LuongCoBan` / 2;
 
 -- Question 32
-UPDATE `NHANVIEN`
+UPDATE `NHANVIEN` n
+    LEFT JOIN (
+        SELECT DISTINCT `MaNhanVien` 
+        FROM `DONDATHANG`
+        WHERE YEAR(`NgayDatHang`) = 2003
+    ) d USING(`MaNhanVien`)
 SET `LuongCoBan` = `LuongCoBan` * 3 / 4
-WHERE `MaNhanVien` NOT IN (
-    SELECT DISTINCT `MaNhanVien` 
-    FROM `DONDATHANG`
-    WHERE YEAR(`NgayDatHang`) = 2003
-);
+WHERE d.`MaNhanVien` IS NULL;
 
 -- Question 33
 UPDATE `DONDATHANG` d
@@ -389,16 +372,21 @@ DELETE FROM `DONDATHANG`
 WHERE YEAR(`NgayDatHang`) < 2000;
 
 -- Question 36
-DELETE FROM `LOAIHANG` 
-WHERE `MaLoaiHang` NOT IN (SELECT DISTINCT `MaLoaiHang` FROM `MATHANG`);
+DELETE l
+FROM `LOAIHANG` l
+    LEFT JOIN `MATHANG` m USING(`MaLoaiHang`)
+WHERE m.`MaLoaiHang` IS NULL;
 
 -- Question 37
-DELETE FROM `KHACHHANG` 
-WHERE `MaKhachHang` NOT IN (SELECT `MaKhachHang` FROM `DONDATHANG`);
-
+DELETE kh
+FROM `KHACHHANG` kh
+    LEFT JOIN `DONDATHANG` d USING(`MaKhachHang`)
+WHERE d.`MaKhachHang` IS NULL;
 -- Question 38
-DELETE FROM `MATHANG` 
-WHERE `SoLuong` = 0 AND `MaHang` NOT IN (SELECT `MaHang` FROM `CHITIETDATHANG`);
+DELETE m
+FROM `MATHANG` m
+    LEFT JOIN `CHITIETDATHANG` c USING(`MaHang`)
+WHERE m.`SoLuong` = 0 AND c.`MaHang` IS NULL;
 
 -- Question 39
 SELECT `MaKhachHang`
@@ -415,7 +403,9 @@ FROM `KHACHHANG`
         FROM `DONDATHANG`
             JOIN `CHITIETDATHANG` USING (`SoHoaDon`)
         GROUP BY `MaKhachHang`
-        HAVING COUNT(DISTINCT `MaHang`) > 2
+        HAVING COUNT(DISTINCT `MaHang`) >= 2 
+            AND COUNT(CASE WHEN `MaHang` = 'MM01' THEN 1 END) = 0 
+            AND COUNT(CASE WHEN `MaHang` = 'TP07' THEN 1 END) > 0
     ) n USING (`MaKhachHang`);
 
 -- Question 41
