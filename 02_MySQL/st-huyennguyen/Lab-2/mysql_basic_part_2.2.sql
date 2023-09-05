@@ -18,10 +18,10 @@ set NoiGiaoHang = DiaChi
 where NoiGiaoHang is null;
 
 --  Cau 29 --
- update KHACHHANG KH, NHACUNGCAP NCC
- set KH.DiaChi = NCC.DiaChi, KH.DienThoai = NCC.DienThoai, 
+update KHACHHANG KH, NHACUNGCAP NCC
+set KH.DiaChi = NCC.DiaChi, KH.DienThoai = NCC.DienThoai, 
  	KH.Fax = NCC.Fax, KH.Email = NCC.Email
- where KH.TenCongTy = NCC.TenCongTy and KH.TenGiaoDich = NCC.TenGiaoDich;
+where KH.TenCongTy = NCC.TenCongTy and KH.TenGiaoDich = NCC.TenGiaoDich;
 
 --  Cau 30 --
 update NHANVIEN NV1 
@@ -34,16 +34,14 @@ join (select MaNhanVien
 set LuongCoBan = LuongCoBan * 1.5;
 
 -- Cau 31 --
-with SOLUONGHANG as (
-select DH.MaNhanVien, sum(CT.SoLuong) as SoLuongHang 
-	from DONDATHANG DH
-	join CHITIETDATHANG CT using(SoHoaDon)
-    group by DH.MaNhanVien
-)
 update NHANVIEN NV
-join SOLUONGHANG using(MaNhanVien)
-set PhuCap = LuongCoBan * 0.5
-where SoLuongHang = (select max(SoLuongHang) from SOLUONGHANG);
+join (select MaNhanVien 
+	from DONDATHANG DH 
+	join CHITIETDATHANG CT using(SoHoaDon)
+	group by MaNhanVien 
+	order by sum(SoLuong) desc limit 1
+) SL using(MaNhanVien)
+set PhuCap = PhuCap + LuongCoBan * 0.5;
 
 -- Cau 32 --
 update NHANVIEN NV

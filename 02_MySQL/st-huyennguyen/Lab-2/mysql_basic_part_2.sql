@@ -5,11 +5,12 @@ join NHACUNGCAP using(MaCongTy)
 where TenCongTy like '%Việt Tiến%';
 
 -- Cau 2 --
-select distinct TenCongTy, DiaChi
+select TenCongTy, DiaChi
 from NHACUNGCAP
 join MATHANG using(MaCongTy)
 join LOAIHANG using(MaLoaiHang)
-where TenLoaiHang = 'Thực phẩm';
+where TenLoaiHang = 'Thực phẩm'
+group by TenCongTy, DiaChi;
 
 -- Cau 3 --
 select TenGiaoDich
@@ -46,14 +47,15 @@ from KHACHHANG KH
 join NHACUNGCAP NCC using(TenGiaoDich);
 
 -- Cau 8 --
-select distinct concat(NV1.Ho,' ',NV1.Ten) as TenNhanVien, NV1.NgaySinh
-from NHANVIEN NV1
-join NHANVIEN NV2 on NV1.NgaySinh = NV2.NgaySinh 
-	and NV1.MaNhanVien <> NV2.MaNhanVien
-order by NV1.NgaySinh;
+select date(NgaySinh), 
+    group_concat(Ho,' ',Ten separator ', ') as ListNhanVien
+from NHANVIEN 
+group by NgaySinh
+having count(NgaySinh) > 1
+order by NgaySinh; 
 
 -- Cau 9 --
-select distinct DH.SoHoaDon, KH.TenCongTy 
+select DH.SoHoaDon, KH.TenCongTy 
 from DONDATHANG DH
 join KHACHHANG KH using(MaKhachHang) 
 where DH.NoiGiaoHang = KH.DiaChi;
@@ -65,15 +67,15 @@ left join CHITIETDATHANG CT using(MaHang)
 where CT.MaHang is null;
 
 -- Cau 11 --
-select concat(Ho,' ',Ten) as TenNhanVien
+select NV.MaNhanVien, concat(Ho,' ',Ten) as TenNhanVien
 from NHANVIEN NV
 left join DONDATHANG DH using(MaNhanVien) 
 where DH.MaNhanVien is null;
 
 -- Cau 12 --
-select concat(Ho,' ',Ten) as TenNhanVien 
+select MaNhanVien, concat(Ho,' ',Ten) as TenNhanVien 
 from NHANVIEN
-where LuongCoBan = (select max(LuongCoBan) from NHANVIEN);
+where LuongCoBan = (select LuongCoBan from NHANVIEN order by LuongCoBan desc limit 1); 
 
 -- Cau 13 --
 select KH.TenCongTy as KhachHang, DH.SoHoaDon, 
@@ -133,63 +135,70 @@ left join CHITIETDATHANG CT using(MaHang)
 group by MH.MaHang;
 
 -- Cau 20 --
-with SOLUONGHANG as (
-select DH.MaNhanVien, sum(CT.SoLuong) as SoLuongHang 
-	from DONDATHANG DH
-	join CHITIETDATHANG CT using(SoHoaDon)
-    group by DH.MaNhanVien
-)
-select concat(NV.Ho,' ',NV.Ten) as TenNhanVien, SoLuongHang
+select concat(NV.Ho,' ',NV.Ten) as TenNhanVien, sum(CT.SoLuong) as SoLuongHang
 from NHANVIEN NV
-join SOLUONGHANG SLH using(MaNhanVien)
-where SoLuongHang = (select max(SoLuongHang) from SOLUONGHANG);
+join DONDATHANG DH using(MaNhanVien)
+join CHITIETDATHANG CT using(SoHoaDon)
+group by MaNhanVien 
+having SoLuongHang = (
+	select sum(SoLuong) as SoLuongHang
+    from CHITIETDATHANG CT
+    join DONDATHANG DH using(SoHoaDon)
+    group by MaNhanVien 
+    order by SoLuongHang desc limit 1);
 
 -- Cau 21 --
-with MIN as (
-	select  SoHoaDon, sum(SoLuong) as SoLuongHang
-	from CHITIETDATHANG
-	group by SoHoaDon
-)
-select  SoHoaDon, SoLuongHang
-from MIN
-where SoLuongHang = (select min(SoLuongHang) from MIN);
+select CT.SoHoaDon, sum(CT.SoLuong) as SoLuongHang 
+from DONDATHANG DH
+join CHITIETDATHANG CT using(SoHoaDon)
+group by SoHoaDon
+having SoLuongHang = (
+	select sum(SoLuong) as SoLuongHang 
+    from CHITIETDATHANG 
+    group by SoHoaDon 
+    order by SoLuongHang limit 1);
 
 -- Cau 22 --
-with DH as (
-	select KH.TenCongTy,CT.SoHoaDon, 
-		sum(CT.SoLuong * (CT.GiaBan - CT.MucGiamGia)) as TongTien 
-	from KHACHHANG KH
-	join DONDATHANG DDH using(MaKhachHang)
-	join CHITIETDATHANG CT using(SoHoaDon)
-	group by CT.SoHoaDon
-)
-select * from DH
-where TongTien = (select max(TongTien) from DH as DH2 where TenCongTy = DH.TenCongTy);
+select KH.TenCongTy,CT.SoHoaDon, 
+	sum(CT.SoLuong * (CT.GiaBan - CT.MucGiamGia)) as TongTien 
+from KHACHHANG KH
+join DONDATHANG DDH using(MaKhachHang)
+join CHITIETDATHANG CT using(SoHoaDon)
+group by CT.SoHoaDon
+having TongTien = (
+	select sum(SoLuong * (GiaBan - MucGiamGia)) as TongTien
+    from CHITIETDATHANG 
+    group by SoHoaDon
+    order by TongTien desc limit 1);
+	
+
+select KH.TenCongTy,CT.SoHoaDon, 
+	sum(CT.SoLuong * (CT.GiaBan - CT.MucGiamGia)) as TongTien 
+from KHACHHANG KH
+join DONDATHANG DH using(MaKhachHang)
+join CHITIETDATHANG CT using(SoHoaDon)
+group by CT.SoHoaDon
+order by TongTien desc limit 1;
 
 -- Cau 23 --
-select SoHoaDon, TenHang, 
-	sum(CT.SoLuong * (GiaBan - MucGiamGia)) as TongTien
-from CHITIETDATHANG as CT
+select DH.SoHoaDon,
+    group_concat(MH.TenHang separator', ') as ListMatHang,
+    sum(CT.SoLuong * (CT.GiaBan - CT.MucGiamGia)) as TongTien
+from DONDATHANG DH
+join CHITIETDATHANG CT using(SoHoaDon)
 join MATHANG MH using(MaHang)
-group by SoHoaDon, TenHang
-union all
-select SoHoaDon, 'ALL', sum(SoLuong * (GiaBan - MucGiamGia)) as TongTien
-from CHITIETDATHANG 
-group by SoHoaDon
-order by 
-	SoHoaDon asc,
-    if(TenHang = 'ALL', 0, TenHang) desc;
+group by DH.SoHoaDon;
 
 --  Cau 24 --
 select MaLoaiHang, TenLoaiHang, TenHang, SoLuong
-	from MATHANG MH
-	join LOAIHANG LH using(MaLoaiHang)
-union all
+from MATHANG MH
+join LOAIHANG LH using(MaLoaiHang)
+union
 select MaLoaiHang, TenLoaiHang,'ALL', sum(ifnull(SoLuong,0))
-	from MATHANG MH
-	join LOAIHANG LH using(MaLoaiHang)
- 	group by MaLoaiHang
-union all
+from MATHANG MH
+join LOAIHANG LH using(MaLoaiHang)
+group by MaLoaiHang
+union
 select 'ALL','ALL','ALL',sum(ifnull(SoLuong,0)) from MATHANG
 order by 
 	MaLoaiHang desc, 
@@ -215,4 +224,3 @@ join MATHANG MH using(MaHang)
 join DONDATHANG DH using(SoHoaDon)
 where year(DH.NgayDatHang) = 2007
 group by MH.MaHang, MH.TenHang;
-
