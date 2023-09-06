@@ -1,120 +1,115 @@
--- Công ty Việt Tiến đã cung cấp những mặt hàng nào?
+-- Câu 1: Công ty Việt Tiến đã cung cấp những mặt hàng nào?
+SELECT * FROM MATHANG WHERE MaCongTy = 'MVT';
 
-SELECT * 
-FROM MATHANG
-WHERE MaCongTy = 'MVT';
--- Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
-
+-- Câu 2: Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
 SELECT DISTINCT NHACUNGCAP.TenCongTy, NHACUNGCAP.DiaChi
 FROM MATHANG
 INNER JOIN NHACUNGCAP ON MATHANG.MaCongTy = NHACUNGCAP.MaCongTy
 INNER JOIN LOAIHANG ON MATHANG.MaLoaiHang = LOAIHANG.MaLoaiHang
 WHERE LOAIHANG.MaLoaiHang = 'TP';
--- Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
 
+-- Câu 3: Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
 SELECT DISTINCT KHACHHANG.TenGiaoDich
 FROM CHITIETDATHANG
 INNER JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
 INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
-WHERE MATHANG.TenHang LIKE '%sữa hộp%' ;
--- Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
+WHERE MATHANG.TenHang LIKE '%sữa hộp%';
 
+-- Câu 4: Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
 SELECT KHACHHANG.TenGiaoDich AS KhachHangDatHang, NHANVIEN.Ten AS NhanVienLapDon,
        DONDATHANG.NgayDatHang, DONDATHANG.NoiGiaoHang
 FROM DONDATHANG
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
 INNER JOIN NHANVIEN ON DONDATHANG.MaNhanVien = NHANVIEN.MaNhanVien
 WHERE DONDATHANG.SoHoaDon = 1;
--- Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu (lương=lương cơ bản+phụ cấp)?
 
-SELECT MaNhanVien, (LuongCoBan + PhuCap) AS Luong
-FROM NHANVIEN;
--- Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng phải trả cho mỗi mặt hàng là bao nhiêu (số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
+-- Câu 5: Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu (lương=lương cơ bản+phụ cấp)?
+SELECT MaNhanVien, (LuongCoBan + PhuCap) AS Luong FROM NHANVIEN;
 
+-- Câu 6: Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng phải trả cho mỗi mặt hàng là bao nhiêu (số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
 SELECT MATHANG.TenHang, (CHITIETDATHANG.SoLuong * (MATHANG.GiaHang - CHITIETDATHANG.MucGiamGia)) AS SoTien
 FROM CHITIETDATHANG
 INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
 WHERE CHITIETDATHANG.SoHoaDon = 3;
--- Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
 
+-- Câu 7: Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
 SELECT DISTINCT KHACHHANG.TenGiaoDich
 FROM KHACHHANG
 INNER JOIN NHACUNGCAP ON KHACHHANG.TenGiaoDich = NHACUNGCAP.TenGiaoDich;
--- Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
 
+-- Câu 8: Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
 SELECT NgaySinh, COUNT(*) AS SoNhanVien
 FROM NHANVIEN
 GROUP BY NgaySinh
 HAVING COUNT(*) > 1;
 
--- Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
-
+-- Câu 9: Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
 SELECT DONDATHANG.SoHoaDon, DONDATHANG.MaNhanVien, DONDATHANG.NgayChuyenHang
 FROM DONDATHANG
 WHERE DONDATHANG.NoiGiaoHang = 'Hà Nội';
--- Những mặt hàng nào chưa từng được khách hàng đặt mua?
 
+-- Câu 10: Những mặt hàng nào chưa từng được khách hàng đặt mua?
 SELECT MATHANG.TenHang
 FROM MATHANG
 LEFT JOIN CHITIETDATHANG ON MATHANG.MaHang = CHITIETDATHANG.MaHang
 WHERE CHITIETDATHANG.SoHoaDon IS NULL;
--- Những nhân viên nào của công ty chưa từng lập hóa đơn đặt hàng nào?
 
+-- Câu 11: Những nhân viên nào của công ty chưa từng lập hóa đơn đặt hàng nào?
 SELECT NHANVIEN.MaNhanVien, NHANVIEN.Ten
 FROM NHANVIEN
 LEFT JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
 WHERE DONDATHANG.SoHoaDon IS NULL;
--- Những nhân viên nào của công ty có lương cơ bản cao nhất?
 
+-- Câu 12: Những nhân viên nào của công ty có lương cơ bản cao nhất?
 SELECT MaNhanVien, Ten, LuongCoBan
 FROM NHANVIEN
 WHERE LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
--- Tổng số tiền mà khách hàng phải trả cho mỗi đơn đặt hàng là bao nhiêu?
 
+-- Câu 13: Tổng số tiền mà khách hàng phải trả cho mỗi đơn đặt hàng là bao nhiêu?
 SELECT SoHoaDon, SUM(SoLuong * (GiaBan - MucGiamGia)) AS TongTienDonHang
 FROM CHITIETDATHANG
 GROUP BY SoHoaDon;
--- Trong năm 2007 những mặt hàng nào đặt mua đúng một lần?
 
+-- Câu 14: Trong năm 2007 những mặt hàng nào đặt mua đúng một lần?
 SELECT c.MaHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c on d.SoHoaDon = c.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007 
 GROUP BY c.MaHang
 HAVING COUNT(d.SoHoaDon) = 1;
--- Mỗi khách hàng đã bỏ ra bao nhiêu tiền để đặt mua hàng của công ty?
 
+-- Câu 15: Mỗi khách hàng đã bỏ ra bao nhiêu tiền để đặt mua hàng của công ty?
 SELECT KHACHHANG.TenGiaoDich, SUM(SoLuong * (GiaBan - MucGiamGia)) AS TongTien
 FROM CHITIETDATHANG
 INNER JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
 GROUP BY KHACHHANG.TenGiaoDich;
--- Mỗi nhân viên của công ty đã lập bao nhiêu đơn đặt hàng (nếu chưa hề lập hóa đơn nào thì cho kết quả là 0)?
 
+-- Câu 16: Mỗi nhân viên của công ty đã lập bao nhiêu đơn đặt hàng (nếu chưa hề lập hóa đơn nào thì cho kết quả là 0)?
 SELECT NHANVIEN.Ten, COUNT(DONDATHANG.SoHoaDon) AS SoDonDatHang
 FROM NHANVIEN
 LEFT JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
 GROUP BY NHANVIEN.Ten;
--- Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)?
 
+-- Câu 17: Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)?
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
 FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
 GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
--- Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007?
 
+-- Câu 18: Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007?
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
 FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
 GROUP BY n.MaCongTy;
--- Số lượng hàng còn lại của mỗi mặt hàng mà công ty đã có (tổng số lượng hàng hiện có và đã bán)?
 
+-- Câu 19: Số lượng hàng còn lại của mỗi mặt hàng mà công ty đã có (tổng số lượng hàng hiện có và đã bán)?
 SELECT MATHANG.TenHang, MATHANG.SoLuong - COALESCE(SUM(CHITIETDATHANG.SoLuong), 0) AS SoLuongConLai
 FROM MATHANG
 LEFT JOIN CHITIETDATHANG ON MATHANG.MaHang = CHITIETDATHANG.MaHang
 GROUP BY MATHANG.TenHang, MATHANG.SoLuong;
--- Nhân viên nào của công ty bán được số lượng hàng nhiều nhất và số lượng hàng bán được của những nhân viên này là bao nhiêu?
 
+-- Câu 20: Nhân viên nào của công ty bán được số lượng hàng nhiều nhất và số lượng hàng bán được của những nhân viên này là bao nhiêu?
 SELECT NHANVIEN.MaNhanVien, NHANVIEN.Ten, SUM(CHITIETDATHANG.SoLuong) AS SoLuongBanDuoc
 FROM NHANVIEN
 INNER JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
@@ -122,37 +117,37 @@ INNER JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
 GROUP BY NHANVIEN.MaNhanVien, NHANVIEN.Ten
 ORDER BY SoLuongBanDuoc DESC
 LIMIT 1;
--- Đơn đặt hàng nào có số lượng hàng được đặt mua ít nhất?
 
+-- Câu 21: Đơn đặt hàng nào có số lượng hàng được đặt mua ít nhất?
 SELECT DONDATHANG.SoHoaDon, MIN(CHITIETDATHANG.SoLuong) AS SoLuongMin
 FROM DONDATHANG
 INNER JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
 GROUP BY DONDATHANG.SoHoaDon
 ORDER BY SoLuongMin;
--- Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
 
+-- Câu 22: Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
 SELECT KHACHHANG.TenGiaoDich, MAX(SoLuong * (GiaBan - MucGiamGia)) AS SoTienMax
 FROM CHITIETDATHANG
 INNER JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
 GROUP BY KHACHHANG.TenGiaoDich;
--- Mỗi một đơn đặt hàng đặt mua những mặt hàng nào và tổng số tiền của đơn đặt hàng?
 
+-- Câu 23: Mỗi một đơn đặt hàng đặt mua những mặt hàng nào và tổng số tiền của đơn đặt hàng?
 SELECT DONDATHANG.SoHoaDon, GROUP_CONCAT(MATHANG.TenHang) AS MatHangDaDat, SUM(CHITIETDATHANG.SoLuong * (MATHANG.GiaHang - CHITIETDATHANG.MucGiamGia)) AS TongTien
 FROM CHITIETDATHANG
 INNER JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
 INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
 GROUP BY DONDATHANG.SoHoaDon;
--- Mỗi một loại hàng bao gồm những mặt hàng nào, tổng số lượng của mỗi loại và tổng số lượng của tất cả các mặt hàng hiện có trong công ty?
 
+-- Câu 24: Mỗi một loại hàng bao gồm những mặt hàng nào, tổng số lượng của mỗi loại và tổng số lượng của tất cả các mặt hàng hiện có trong công ty?
 SELECT LOAIHANG.TenLoaiHang, GROUP_CONCAT(MATHANG.TenHang) AS MatHangTrongLoai,
        SUM(MATHANG.SoLuong) AS TongSoLuongTrongLoai,
        (SELECT SUM(SoLuong) FROM MATHANG) AS TongSoLuongTatCaMatHang
 FROM MATHANG
 INNER JOIN LOAIHANG ON MATHANG.MaLoaiHang = LOAIHANG.MaLoaiHang
 GROUP BY LOAIHANG.TenLoaiHang;
--- Thống kê trong năm 2007 mỗi một mặt hàng trong mỗi tháng và trong cả năm bán được với số lượng bao nhiêu?
 
+-- Câu 25: Thống kê trong năm 2007 mỗi một mặt hàng trong mỗi tháng và trong cả năm bán được với số lượng bao nhiêu?
 SELECT MATHANG.MaHang, MATHANG.TenHang,
        SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 1 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang1,
        SUM(CASE WHEN MONTH(DONDATHANG.NgayDatHang) = 2 THEN CHITIETDATHANG.SoLuong ELSE 0 END) AS Thang2,
@@ -174,34 +169,33 @@ WHERE YEAR(DONDATHANG.NgayDatHang) = 2007
 GROUP BY MATHANG.MaHang, MATHANG.TenHang
 ORDER BY MATHANG.MaHang;
 
--- Cập nhật lại giá thị trường NGAYCHUYENHANG của những bản ghi có NGAYCHUYENHANG chưa xác định (NULL) trong bảng DONDATHANG bằng với giá trị của trường NGAYDATHANG:
-
+-- Câu 26: Cập nhật lại giá thị trường NGAYCHUYENHANG của những bản ghi có NGAYCHUYENHANG chưa xác định (NULL) trong bảng DONDATHANG bằng với giá trị của trường NGAYDATHANG:
 UPDATE DONDATHANG
 SET NGAYCHUYENHANG = NGAYDATHANG
 WHERE NGAYCHUYENHANG IS NULL;
--- Tăng số lượng hàng của những mặt hàng do công ty VINAMILK cung cấp lên gấp đôi:
 
+-- Câu 27: Tăng số lượng hàng của những mặt hàng do công ty VINAMILK cung cấp lên gấp đôi:
 UPDATE MATHANG
 SET SoLuong = SoLuong * 2
 WHERE MaCongTy = 'VNM';
--- Cập nhật giá trị của trường NOIGIAOHANG trong bảng DONDATHANG bằng địa chỉ của khách hàng đối với những đơn đặt hàng chưa xác định được nơi giao hàng (giá trị trường NOIGIAOHANG bằng NULL):
 
+-- Câu 28: Cập nhật giá trị của trường NOIGIAOHANG trong bảng DONDATHANG bằng địa chỉ của khách hàng đối với những đơn đặt hàng chưa xác định được nơi giao hàng (giá trị trường NOIGIAOHANG bằng NULL):
 UPDATE DONDATHANG d JOIN KHACHHANG k ON d.MaKhachHang = k.MaKhachHang
 SET d.NoiGiaoHang = k.DiaChi
 WHERE d.NoiGiaoHang IS NULL;
--- Cập nhật lại dữ liệu trong bảng KHACHHANG sao cho nếu tên công ty và tên giao dịch của khách hàng trùng với tên công ty và tên giao dịch của một nhà cung cấp nào đó thì địa chỉ, điện thoại, fax và e-mail phải giống nhau:
 
+-- Câu 29: Cập nhật lại dữ liệu trong bảng KHACHHANG sao cho nếu tên công ty và tên giao dịch của khách hàng trùng với tên công ty và tên giao dịch của một nhà cung cấp nào đó thì địa chỉ, điện thoại, fax và e-mail phải giống nhau:
 UPDATE KHACHHANG k JOIN NHACUNGCAP n ON k.TenCongTy = n.TenCongTy AND k.TenGiaoDich = n.TenGiaoDich
 SET k.DiaChi = n.DiaChi, k.DienThoai = n.DienThoai, k.Fax = n.Fax, k.Email = n.Email;
--- Tăng lương lên gấp đôi cho những nhân viên bán được số lượng hàng nhiều hơn 100 trong năm 2003:
 
+-- Câu 30: Tăng lương lên gấp đôi cho những nhân viên bán được số lượng hàng nhiều hơn 100 trong năm 2003:
 UPDATE NHANVIEN n JOIN (SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc, YEAR(d.NgayDatHang) AS Nam
  FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
  GROUP BY d.MaNhanVien, YEAR(d.NgayDatHang)) AS T ON n.MaNhanVien = T.MaNhanVien
 SET n.LuongCoBan = 1.5 * n.LuongCoBan
 WHERE SoLuongBanDuoc > 100 AND T.Nam = 2003;
--- Tăng phụ cấp lên bằng 50% lương cho những nhân viên bán được hàng nhiều nhất:
 
+-- Câu 31: Tăng phụ cấp lên bằng 50% lương cho những nhân viên bán được hàng nhiều nhất:
 UPDATE NHANVIEN n JOIN (SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
 FROM(
  SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
@@ -218,8 +212,8 @@ WHERE
   ) AS T 
  )) AS T1 ON n.MaNhanVien = T1.MaNhanVien
  SET n.PhuCap = n.LuongCoBan / 2;
--- Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào:
 
+-- Câu 32: Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào:
 UPDATE NHANVIEN
 SET LuongCoBan = LuongCoBan - (LuongCoBan * 0.25)
 WHERE MaNhanVien NOT IN (
@@ -227,8 +221,8 @@ WHERE MaNhanVien NOT IN (
     FROM DONDATHANG
     WHERE YEAR(DONDATHANG.NgayDatHang) = 2003
 );
--- Giả sử trong bảng DONDATHANG có thêm trường SOTIEN cho biết số tiền mà khách hàng phải trả trong mỗi đơn đặt hàng. Hãy tính giá trị cho trường này. (Chú ý: SOTIEN = SUM(SoLuong * (GiaBan - MucGiamGia)) cho từng đơn đặt hàng)
 
+-- Câu 33: Giả sử trong bảng DONDATHANG có thêm trường SOTIEN cho biết số tiền mà khách hàng phải trả trong mỗi đơn đặt hàng. Hãy tính giá trị cho trường này. (Chú ý: SOTIEN = SUM(SoLuong * (GiaBan - MucGiamGia)) cho từng đơn đặt hàng)
 UPDATE DONDATHANG
 SET SOTIEN = (
     SELECT SUM(CHITIETDATHANG.SoLuong * (MATHANG.GiaHang - CHITIETDATHANG.MucGiamGia))
@@ -238,32 +232,27 @@ SET SOTIEN = (
 )
 WHERE SOTIEN IS NULL;
 
--- Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm:
-
+-- Câu 34: Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm:
 DELETE FROM NHANVIEN
 WHERE DATEDIFF(YEAR, NgayLamViec, GETDATE()) >= 40;
--- Xoá những đơn đặt hàng trước năm 2000 ra khỏi cơ sở dữ liệu:
 
+-- Câu 35: Xoá những đơn đặt hàng trước năm 2000 ra khỏi cơ sở dữ liệu:
 DELETE FROM DONDATHANG
 WHERE YEAR(NgayDatHang) < 2000;
--- Xoá khỏi bảng LOAIHANG những loại hàng hiện không có mặt hàng:
 
+-- Câu 36: Xoá khỏi bảng LOAIHANG những loại hàng hiện không có mặt hàng:
 DELETE FROM LOAIHANG
 WHERE MaLoaiHang NOT IN (SELECT DISTINCT MaLoaiHang FROM MATHANG);
--- Xoá khỏi bảng KHACHHANG những khách hàng hiện không có bất kỳ đơn đặt hàng nào cho công ty:
 
+-- Câu 37: Xoá khỏi bảng KHACHHANG những khách hàng hiện không có bất kỳ đơn đặt hàng nào cho công ty:
 DELETE FROM KHACHHANG
 WHERE MaKhachHang NOT IN (SELECT DISTINCT MaKhachHang FROM DONDATHANG);
--- Xoá khỏi bảng MATHANG những mặt hàng có số lượng bằng 0 và không được đặt mua trong bất kỳ đơn đặt hàng nào:
 
+-- Câu 38: Xoá khỏi bảng MATHANG những mặt hàng có số lượng bằng 0 và không được đặt mua trong bất kỳ đơn đặt hàng nào:
 DELETE FROM MATHANG
 WHERE SoLuong = 0 AND MaHang NOT IN (SELECT DISTINCT MaHang FROM CHITIETDATHANG);
--- Sau khi thực hiện các câu lệnh DELETE này, hãy nhớ là dữ liệu sẽ bị xoá và không thể khôi phục, hãy đảm bảo bạn đã sao lưu dữ liệu quan trọng trước khi thực hiện.
 
-
-
--- Select khách hàng chỉ mua mặt hàng có ID = TP07 mà không mua mặt hàng nào khác:
-
+-- Câu 39: Select khách hàng chỉ mua mặt hàng có ID = TP07 mà không mua mặt hàng nào khác:
 SELECT KHACHHANG.MaKhachHang, KHACHHANG.TenGiaoDich
 FROM KHACHHANG
 LEFT JOIN DONDATHANG ON KHACHHANG.MaKhachHang = DONDATHANG.MaKhachHang
@@ -272,8 +261,8 @@ LEFT JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
 WHERE MATHANG.MaLoaiHang = 'TP' AND MATHANG.MaHang = 'TP07'
 GROUP BY KHACHHANG.MaKhachHang, KHACHHANG.TenGiaoDich
 HAVING COUNT(DISTINCT MATHANG.MaHang) = 1;
--- Select khách hàng có mua 2 mặt hàng trở lên. Trong đó phải có mặt hàng TP07 và không có mặt hàng MM01:
 
+-- Câu 40: Select khách hàng có mua 2 mặt hàng trở lên. Trong đó phải có mặt hàng TP07 và không có mặt hàng MM01:
 SELECT KHACHHANG.MaKhachHang, KHACHHANG.TenGiaoDich
 FROM KHACHHANG
 LEFT JOIN DONDATHANG ON KHACHHANG.MaKhachHang = DONDATHANG.MaKhachHang
@@ -291,7 +280,7 @@ WHERE MATHANG.MaLoaiHang = 'TP' AND MATHANG.MaHang = 'TP07'
 GROUP BY KHACHHANG.MaKhachHang, KHACHHANG.TenGiaoDich
 HAVING COUNT(DISTINCT MATHANG.MaHang) >= 2;
 
--- Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng không mua DC01 hoặc TP03:
+-- Câu 41: Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng không mua DC01 hoặc TP03:
 SELECT DONDATHANG.SoHoaDon
 FROM DONDATHANG
 LEFT JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
