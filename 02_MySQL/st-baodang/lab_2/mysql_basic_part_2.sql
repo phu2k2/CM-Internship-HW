@@ -132,7 +132,7 @@ SELECT
     COUNT(d.`MaNhanVien`) as SoDonHang
 FROM `NHANVIEN` n
     LEFT JOIN `DONDATHANG` d ON d.`MaNhanVien` = n.`MaNhanVien`
-GROUP BY n.`MaNhanVien`, n.`Ho`, n.`Ten`;
+GROUP BY n.`MaNhanVien`;
 
 -- Question 17
 SELECT 
