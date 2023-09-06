@@ -95,7 +95,7 @@ GROUP BY NHANVIEN.Ten;
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
 FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
-GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
+GROUP BY n.MaCongTy, MONTH(d.NgayDatHang);
 
 -- Câu 18: Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007?
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
@@ -223,18 +223,22 @@ WHERE MaNhanVien NOT IN (
 );
 
 -- Câu 33: Giả sử trong bảng DONDATHANG có thêm trường SOTIEN cho biết số tiền mà khách hàng phải trả trong mỗi đơn đặt hàng. Hãy tính giá trị cho trường này. (Chú ý: SOTIEN = SUM(SoLuong * (GiaBan - MucGiamGia)) cho từng đơn đặt hàng)
-UPDATE DONDATHANG
-SET SOTIEN = (
-    SELECT SUM(CHITIETDATHANG.SoLuong * (MATHANG.GiaHang - CHITIETDATHANG.MucGiamGia))
-    FROM CHITIETDATHANG
-    INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
-    WHERE CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
-)
-WHERE SOTIEN IS NULL;
+UPDATE DONDATHANG AS d
+JOIN (
+    SELECT dh.SoHoaDon, SUM(ct.SoLuong * (mh.GiaHang - ct.MucGiamGia)) AS NewSOTIEN
+    FROM DONDATHANG AS dh
+    LEFT JOIN CHITIETDATHANG AS ct ON dh.SoHoaDon = ct.SoHoaDon
+    LEFT JOIN MATHANG AS mh ON ct.MaHang = mh.MaHang
+    GROUP BY dh.SoHoaDon
+) AS subquery
+ON d.SoHoaDon = subquery.SoHoaDon
+SET d.SOTIEN = subquery.NewSOTIEN;
+
 
 -- Câu 34: Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm:
 DELETE FROM NHANVIEN
-WHERE DATEDIFF(YEAR, NgayLamViec, GETDATE()) >= 40;
+WHERE NgayLamViec <= (NOW() - INTERVAL 40 YEAR)
+
 
 -- Câu 35: Xoá những đơn đặt hàng trước năm 2000 ra khỏi cơ sở dữ liệu:
 DELETE FROM DONDATHANG
