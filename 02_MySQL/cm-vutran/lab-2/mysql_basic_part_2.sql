@@ -31,8 +31,9 @@ FROM KHACHHANG KH JOIN NHACUNGCAP NCC ON KH.TenGiaoDich = NCC.TenGiaoDich ;
 
 -- Cau 8: Trong công ty có những nhân viên nào có cùng ngày sinh? 
 
-SELECT MaNhanVien, CONCAT(Ho, '', Ten) AS HoTen FROM NHANVIEN WHERE DAY(NgaySinh) IN(
-SELECT DAY(NgaySinh) FROM NHANVIEN GROUP BY DAY(NgaySinh) HAVING count(MaNhanVien) >1);
+SELECT Date(NgaySinh) AS NS, GROUP_CONCAT(CONCAT (NV.Ho,' ',NV.Ten)) AS DanhSachNhanVien
+FROM NHANVIEN NV GROUP BY NS HAVING COUNT(*) > 1;
+
 
 -- Cau 9: Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào? 
 SELECT DDH.SoHoaDon, KH.MaKhachHang, KH.TenCongTy 
@@ -238,17 +239,14 @@ JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY KH.MaKhachHang HAVING COUNT(DISTINCT CTDH.MaHang) > 1 AND COUNT(CASE WHEN CTDH.MaHang='TP07' THEN 1 END) > 0 AND COUNT(CASE WHEN CTDH.MaHang='MM01' THEN 1 END) < 1;
 
 -- Câu 41: Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng k dc mua DC01 hoặc TP03
-SELECT DDH.SoHoaDon, GROUP_CONCAT(CTDH.MaHang) AS CacMaLoaiHang, COUNT(DDH.MaKhachHang) AS SoLuongLoaiHang
-FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-GROUP BY DDH.MaKhachHang 
-HAVING CacMaLoaiHang LIKE '%DT01%'
-AND CacMaLoaiHang LIKE '%DT02%'
-AND CacMaLoaiHang LIKE '%DT03%'
-AND CacMaLoaiHang LIKE '%DT04%'
-AND (CacMaLoaiHang NOT LIKE '%DC01%'
-OR CacMaLoaiHang NOT LIKE '%TP03%');
-
-
-
-
+WITH GopChiTietDonHang AS (
+	SELECT CTDH.SoHoaDon, JSON_ARRAYAGG(CTDH.MaHang) AS MaHangArray
+    FROM CHITIETDATHANG CTDH
+    GROUP BY CTDH.SoHoaDon
+)
+SELECT DDH.SoHoaDon
+FROM DONDATHANG DDH
+JOIN GopChiTietDonHang CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
+WHERE JSON_CONTAINS(CTDH.MaHangArray, '["DT01", "DT02", "DT03", "DT04"]')
+AND NOT JSON_CONTAINS(CTDH.MaHangArray, '["DC01", "TP03"]');
 
