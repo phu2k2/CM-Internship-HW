@@ -17,12 +17,12 @@ FROM MATHANG
 JOIN CHITIETDATHANG USING(MaHang)
 JOIN DONDATHANG USING(SoHoaDon)
 JOIN KHACHHANG USING(MaKhachHang)
-WHERE TenHang LIKE '%Sửa%' AND DonViTinh LIKE '%Hộp%';
+WHERE TenHang LIKE '%Sữa%' AND DonViTinh LIKE '%Hộp%';
 
 -- Câu 4
 SELECT TenCongTy, CONCAT(Ho, ' ', Ten) AS HoTen, NgayGiaoHang, NoiGiaoHang
-FROM KHACHHANG 
-JOIN DONDATHANG USING(MaKhachHang) 
+FROM KHACHHANG
+JOIN DONDATHANG USING(MaKhachHang)
 JOIN NHANVIEN USING(MaNhanVien)
 WHERE SoHoaDon = 1;
 
@@ -35,12 +35,12 @@ SELECT MaHang, TenHang, (ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS S
 FROM MATHANG JOIN CHITIETDATHANG ctdh USING(MaHang);
 
 -- Câu 7
-SELECT MaKhachHang, kh.TenCongTy, kh.TenGiaoDich 
+SELECT MaKhachHang, kh.TenCongTy, kh.TenGiaoDich
 FROM KHACHHANG kh JOIN NHACUNGCAP USING(TenGiaoDich);
 
 -- Câu 8
 Select nv1.MaNhanVien, CONCAT(nv1.Ho, ' ', nv1.Ten) AS HoTen, nv1.NgaySinh
-FROM NHANVIEN nv1 
+FROM NHANVIEN nv1
 JOIN NHANVIEN nv2 ON (nv2.NgaySinh) = (nv1.NgaySinh)
 WHERE nv2.MaNhanVien != nv1.MaNhanVien;
 
@@ -68,8 +68,8 @@ FROM NHANVIEN WHERE LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 
 -- Câu 13
 SELECT MaKhachHang, TenCongTy, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
-FROM KHACHHANG 
-JOIN DONDATHANG ddh USING(MaKhachHang) 
+FROM KHACHHANG
+JOIN DONDATHANG ddh USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 GROUP BY MaKhachHang, TenCongTy;
 
@@ -84,20 +84,20 @@ HAVING COUNT(ctdh.MaHang) = 1;
 
 -- Câu 15
 SELECT MaKhachHang, TenCongTy, TenGiaoDich, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
-FROM KHACHHANG 
+FROM KHACHHANG
 JOIN DONDATHANG USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 GROUP BY MaKhachHang, TenCongTy, TenGiaoDich;
 
 -- Câu 16
 SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, COUNT(SoHoaDon) AS TongSoHoaDon
-FROM NHANVIEN 
+FROM NHANVIEN
 LEFT JOIN DONDATHANG USING(MaNhanVien)
 GROUP BY MaNhanVien;
 
 -- Câu 17
 SELECT MONTH(NgayDatHang), SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS TongTien
-FROM DONDATHANG 
+FROM DONDATHANG
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 WHERE YEAR(NgayDatHang) = 2007
 GROUP BY MONTH(NgayDatHang);
@@ -117,36 +117,44 @@ LEFT JOIN CHITIETDATHANG ctdh USING(MaHang)
 GROUP BY mh.MaHang, mh.TenHang, mh.SoLuong;
 
 -- Câu 20
+
 SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, SUM(SoLuong) AS TongSoLuong
 FROM NHANVIEN 
 JOIN DONDATHANG USING(MaNhanVien)
 JOIN CHITIETDATHANG USING(SoHoaDon)
 GROUP BY MaNhanVien, HoTen
-HAVING SUM(SoLuong) = (
-    SELECT MAX(TongSoLuong)
-    FROM (
-        SELECT MaNhanVien, SUM(SoLuong) AS TongSoLuong
-        FROM NHANVIEN 
-        JOIN DONDATHANG USING(MaNhanVien)
-        JOIN CHITIETDATHANG USING(SoHoaDon)
-        GROUP BY MaNhanVien
-    ) AS Sub
-);
+ORDER BY TongSoLuong DESC
+LIMIT 1
+-- HAVING SUM(SoLuong) = (
+--     SELECT MAX(TongSoLuong)
+--     FROM (
+--         SELECT MaNhanVien, SUM(SoLuong) AS TongSoLuong
+--         FROM NHANVIEN 
+--         JOIN DONDATHANG USING(MaNhanVien)
+--         JOIN CHITIETDATHANG USING(SoHoaDon)
+--         GROUP BY MaNhanVien
+--     ) AS Sub
+-- );
 
 -- Câu 21
-SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
-FROM DONDATHANG
-JOIN CHITIETDATHANG USING(SoHoaDon)
-GROUP BY SoHoaDon
-HAVING SUM(SoLuong) = (
-	SELECT MIN(TongSoLuong) 
-    FROM ( SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
-    FROM DONDATHANG 
-    JOIN CHITIETDATHANG USING(SoHoaDon)
-    GROUP BY SoHoaDon
-	) AS Sub
-);
-
+-- SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
+-- FROM DONDATHANG
+-- JOIN CHITIETDATHANG USING(SoHoaDon)
+-- GROUP BY SoHoaDon
+-- HAVING SUM(SoLuong) = (
+-- 	SELECT MIN(TongSoLuong) 
+--     FROM ( SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
+--     FROM DONDATHANG 
+--     JOIN CHITIETDATHANG USING(SoHoaDon)
+--     GROUP BY SoHoaDon
+-- 	) AS Sub
+-- );
+SELECT ddh.SoHoaDon, MIN(ct.SoLuong) AS SoLuongItNhat
+FROM DONDATHANG ddh
+JOIN CHITIETDATHANG ct USING(SoHoaDon)
+GROUP BY ddh.SoHoaDon
+ORDER BY SoLuongItNhat ASC
+LIMIT 1;
 -- Câu 22 
 SELECT MAX(TongTien) AS SoTienNhieuNhat
 FROM (
@@ -165,11 +173,11 @@ GROUP BY ddh.SoHoaDon, ctdh.MaHang, TenHang;
 
 -- Câu 24
 SELECT MaLoaiHang, TenLoaiHang, TenHang, SoLuong
-FROM MATHANG 
+FROM MATHANG
 JOIN LOAIHANG lh USING(MaLoaiHang)
 UNION ALL
 SELECT MaLoaiHang, TenLoaiHang,'ALL', sum(SoLuong)
-FROM MATHANG 
+FROM MATHANG
 JOIN LOAIHANG USING(MaLoaiHang)
 GROUP BY MaLoaiHang
 UNION ALL
@@ -191,7 +199,7 @@ SUM(CASE MONTH(NgayDatHang) WHEN 10 THEN ctdh.SoLuong ELSE 0 END) AS Thang10,
 SUM(CASE MONTH(NgayDatHang) WHEN 11 THEN ctdh.SoLuong ELSE 0 END) AS Thang11,
 SUM(CASE MONTH(NgayDatHang) WHEN 12 THEN ctdh.SoLuong ELSE 0 END) AS Thang12,
 SUM(ctdh.SoLuong) AS CaNam
-FROM DONDATHANG 
+FROM DONDATHANG
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 JOIN MATHANG USING(MaHang)
 WHERE YEAR(NgayDatHang) = 2007
@@ -253,18 +261,18 @@ WHERE MaNhanVien IN (
 );
 
 -- Câu 32
-UPDATE NHANVIEN 
+UPDATE NHANVIEN
 SET LuongCoBan = LuongCoBan - LuongCoBan * 0.25
 WHERE NOT EXISTS (
-SELECT MaNhanVien 
-FROM DONDATHANG 
+SELECT MaNhanVien
+FROM DONDATHANG
 WHERE DONDATHANG.MaNhanVien=NHANVIEN.MaNhanVien
 );
 
 -- Câu 33
 ALTER TABLE DONDATHANG
 ADD SoTien NUMERIC(38,2);
-UPDATE DONDATHANG 
+UPDATE DONDATHANG
 SET SoTien = (SELECT SUM(SoLuong*GiaBan - SoLuong*MucGiamGia) 
 FROM CHITIETDATHANG WHERE DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon);
 
@@ -317,12 +325,12 @@ GROUP BY d.MaKhachHang
 HAVING CacMaLoaiHang LIKE '%TP07%' AND CacMaLoaiHang NOT LIKE '%MM01%' AND SoLuongLoaiHang >= 2;
 
 -- Câu 41
- SELECT d.SoHoaDon, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
- FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
- GROUP BY d.MaKhachHang 
- HAVING CacMaLoaiHang LIKE '%DT01%'
-  AND CacMaLoaiHang LIKE '%DT02%'
-  AND CacMaLoaiHang LIKE '%DT03%'
-  AND CacMaLoaiHang LIKE '%DT04%'
-  AND (CacMaLoaiHang NOT LIKE '%DC01%'
-  OR CacMaLoaiHang NOT LIKE '%TP03%');
+SELECT d.SoHoaDon, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+GROUP BY d.MaKhachHang 
+HAVING CacMaLoaiHang LIKE '%DT01%'
+AND CacMaLoaiHang LIKE '%DT02%'
+AND CacMaLoaiHang LIKE '%DT03%'
+AND CacMaLoaiHang LIKE '%DT04%'
+AND (CacMaLoaiHang NOT LIKE '%DC01%'
+OR CacMaLoaiHang NOT LIKE '%TP03%');
