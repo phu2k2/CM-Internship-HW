@@ -17,15 +17,15 @@ INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
 WHERE MATHANG.TenHang LIKE '%sữa hộp%';
 
 -- Câu 4: Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
-SELECT KHACHHANG.TenGiaoDich AS KhachHangDatHang, NHANVIEN.Ten AS NhanVienLapDon,
-       DONDATHANG.NgayDatHang, DONDATHANG.NoiGiaoHang
+SELECT KHACHHANG.TenCongTy AS KhachHangDatHang,  CONCAT(NHANVIEN.`Ho`, ' ', NHANVIEN.`Ten`) AS NhanVienLapDon,
+       DONDATHANG.NgayGiaoHang, DONDATHANG.NoiGiaoHang
 FROM DONDATHANG
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
 INNER JOIN NHANVIEN ON DONDATHANG.MaNhanVien = NHANVIEN.MaNhanVien
 WHERE DONDATHANG.SoHoaDon = 1;
 
 -- Câu 5: Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu (lương=lương cơ bản+phụ cấp)?
-SELECT MaNhanVien, (LuongCoBan + PhuCap) AS Luong FROM NHANVIEN;
+SELECT MaNhanVien, CONCAT(`Ho`, ' ', `Ten`) as TenNhanVien, (LuongCoBan + PhuCap) AS Luong FROM NHANVIEN;
 
 -- Câu 6: Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng phải trả cho mỗi mặt hàng là bao nhiêu (số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
 SELECT MATHANG.TenHang, (CHITIETDATHANG.SoLuong * (MATHANG.GiaHang - CHITIETDATHANG.MucGiamGia)) AS SoTien
@@ -34,20 +34,20 @@ INNER JOIN MATHANG ON CHITIETDATHANG.MaHang = MATHANG.MaHang
 WHERE CHITIETDATHANG.SoHoaDon = 3;
 
 -- Câu 7: Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
-SELECT DISTINCT KHACHHANG.TenGiaoDich
+SELECT DISTINCT KHACHHANG.TenCongTy
 FROM KHACHHANG
 INNER JOIN NHACUNGCAP ON KHACHHANG.TenGiaoDich = NHACUNGCAP.TenGiaoDich;
 
 -- Câu 8: Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
-SELECT NgaySinh, COUNT(*) AS SoNhanVien
+SELECT  GROUP_CONCAT(`Ho`, ' ', `Ten` SEPARATOR ', ') , NgaySinh, COUNT(*) AS SoLuong
 FROM NHANVIEN
 GROUP BY NgaySinh
 HAVING COUNT(*) > 1;
 
 -- Câu 9: Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
-SELECT DONDATHANG.SoHoaDon, DONDATHANG.MaNhanVien, DONDATHANG.NgayChuyenHang
-FROM DONDATHANG
-WHERE DONDATHANG.NoiGiaoHang = 'Hà Nội';
+SELECT DISTINCT k.TenCongTy 
+FROM DONDATHANG d
+JOIN KHACHHANG k ON k.MaKhachHang = d.MaKhachHang WHERE k.DiaChi = d.NoiGiaoHang;
 
 -- Câu 10: Những mặt hàng nào chưa từng được khách hàng đặt mua?
 SELECT MATHANG.TenHang
@@ -79,17 +79,17 @@ GROUP BY c.MaHang
 HAVING COUNT(d.SoHoaDon) = 1;
 
 -- Câu 15: Mỗi khách hàng đã bỏ ra bao nhiêu tiền để đặt mua hàng của công ty?
-SELECT KHACHHANG.TenGiaoDich, SUM(SoLuong * (GiaBan - MucGiamGia)) AS TongTien
+SELECT KHACHHANG.TenCongTy , SUM(SoLuong * (GiaBan - MucGiamGia)) AS TongTien
 FROM CHITIETDATHANG
 INNER JOIN DONDATHANG ON CHITIETDATHANG.SoHoaDon = DONDATHANG.SoHoaDon
 INNER JOIN KHACHHANG ON DONDATHANG.MaKhachHang = KHACHHANG.MaKhachHang
-GROUP BY KHACHHANG.TenGiaoDich;
+GROUP BY KHACHHANG.TenCongTy;
 
 -- Câu 16: Mỗi nhân viên của công ty đã lập bao nhiêu đơn đặt hàng (nếu chưa hề lập hóa đơn nào thì cho kết quả là 0)?
-SELECT NHANVIEN.Ten, COUNT(DONDATHANG.SoHoaDon) AS SoDonDatHang
+SELECT CONCAT(NHANVIEN.`Ho`, ' ', NHANVIEN.`Ten`), COUNT(DONDATHANG.SoHoaDon) AS SoDonDatHang
 FROM NHANVIEN
 LEFT JOIN DONDATHANG ON NHANVIEN.MaNhanVien = DONDATHANG.MaNhanVien
-GROUP BY NHANVIEN.Ten;
+GROUP BY CONCAT(NHANVIEN.`Ho`, ' ', NHANVIEN.`Ten`);
 
 -- Câu 17: Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)?
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
@@ -98,13 +98,13 @@ WHERE YEAR(d.NgayDatHang) = 2007
 GROUP BY n.MaCongTy, MONTH(d.NgayDatHang);
 
 -- Câu 18: Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007?
-SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
+SELECT n.MaCongTy, m.MaHang, n.TenCongTy, m.TenHang, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
 FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
-GROUP BY n.MaCongTy;
+GROUP BY m.MaHang, m.TenHang;
 
 -- Câu 19: Số lượng hàng còn lại của mỗi mặt hàng mà công ty đã có (tổng số lượng hàng hiện có và đã bán)?
-SELECT MATHANG.TenHang, MATHANG.SoLuong - COALESCE(SUM(CHITIETDATHANG.SoLuong), 0) AS SoLuongConLai
+SELECT MATHANG.TenHang, MATHANG.SoLuong, MATHANG.SoLuong - (MATHANG.SoLuong - COALESCE(SUM(CHITIETDATHANG.SoLuong), 0)) AS SoLuongDaBan ,MATHANG.SoLuong - COALESCE(SUM(CHITIETDATHANG.SoLuong), 0) AS SoLuongConLai
 FROM MATHANG
 LEFT JOIN CHITIETDATHANG ON MATHANG.MaHang = CHITIETDATHANG.MaHang
 GROUP BY MATHANG.TenHang, MATHANG.SoLuong;
@@ -123,7 +123,7 @@ SELECT DONDATHANG.SoHoaDon, MIN(CHITIETDATHANG.SoLuong) AS SoLuongMin
 FROM DONDATHANG
 INNER JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
 GROUP BY DONDATHANG.SoHoaDon
-ORDER BY SoLuongMin;
+ORDER BY SoLuongMin LIMIT 1;
 
 -- Câu 22: Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
 SELECT KHACHHANG.TenGiaoDich, MAX(SoLuong * (GiaBan - MucGiamGia)) AS SoTienMax
