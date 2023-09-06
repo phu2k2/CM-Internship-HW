@@ -17,10 +17,9 @@ GROUP BY n.`TenCongTy`, n.`DiaChi`;
 -- Question 3
 SELECT kh.`TenGiaoDich`
 FROM `CHITIETDATHANG` c
-    JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` AND `TenHang` LIKE '%Sữa%' AND `DonViTinh` = 'Hộp'
+    JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` AND `TenHang` LIKE '%Sữa hộp%'
     JOIN `DONDATHANG` d ON d.`SoHoaDon` = c.`SoHoaDon`
-    JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`
-GROUP BY kh.`TenGiaoDich`;
+    JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`;
 
 
 -- Question 4
@@ -31,7 +30,7 @@ SELECT
     d.`NoiGiaoHang` 
 FROM `DONDATHANG` d 
     JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`
-    JOIN `NHANVIEN`n ON n.`MaNhanVien` = d.`MaNhanVien` 
+    JOIN `NHANVIEN` n ON n.`MaNhanVien` = d.`MaNhanVien` 
 WHERE `SoHoaDon` = 1;
 
 -- Question 5
