@@ -36,29 +36,18 @@ JOIN (
     ) AS B ON NV.MaNhanVien = B.MaNhanVien
 SET NV.LuongCoBan = NV.LuongCoBan * 1.5;
 -- 31. Tăng phụ cấp lên bằng 50% lương cho những nhân viên bán được hàng nhiều nhất?
-WITH NhanVienBanNhieuNhat AS (
-    SELECT NV.MaNhanVien
-    FROM NHANVIEN NV
-    JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien
-    JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-    GROUP BY NV.MaNhanVien
-    HAVING SUM(CTDH.SoLuong) = (
-            SELECT MAX(TongSoLuongBan)
-            FROM (
-                SELECT SUM(CTDH.SoLuong) AS TongSoLuongBan
-                FROM NHANVIEN NV
-                JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien
-                JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-                GROUP BY NV.MaNhanVien
-                ) AS TongSoLuongBan
-            )
-    )
-UPDATE NHANVIEN
-SET PhuCap = LuongCoBan * 0.5
-WHERE MaNhanVien IN (
-        SELECT MaNhanVien
-        FROM NhanVienBanNhieuNhat
-        );
+WITH TEMP AS (
+	SELECT MaNhanVien, SUM(SoLuong) as SOLUONG 
+    FROM DONDATHANG DDH 
+    INNER JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
+    GROUP BY MaNhanVien
+)
+UPDATE NHANVIEN JOIN TEMP USING (MaNhanVien)
+SET PhuCap = PhuCap + LuongCoBan * 0.5
+WHERE soluong = (
+	SELECT MAX(soluong) FROM TEMP
+);
+
 
 -- 32. Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào?
 UPDATE NHANVIEN NV
@@ -141,4 +130,4 @@ FROM DONDATHANG DDH
 JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY DDH.SoHoaDon
 HAVING JSON_CONTAINS(TatCaMaHang, '["DT01", "DT02", "DT03", "DT04"]') = 1
-    AND JSON_CONTAINS(TatCaMaHang, '["DC01", "TP03"]') = 0;
+    AND JSON_CONTAINS(TatCaMaHang, '["TP03"]') = 0 AND JSON_CONTAINS(TatCaMaHang, '["TP03"]') = 0;

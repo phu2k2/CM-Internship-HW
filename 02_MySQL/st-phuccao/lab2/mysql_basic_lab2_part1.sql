@@ -5,7 +5,7 @@ FROM MATHANG MH
 INNER JOIN NHACUNGCAP NCC ON MH.MaCongTy = NCC.MaCongTy
       AND NCC.TenCongTy = 'Công ty may mặc Việt Tiến';
 -- 2. Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó? 
-SELECT NCC.MaCongTy,
+SELECT DISTINCT NCC.MaCongTy,
        NCC.TenCongTy,
        NCC.DiaChi
 FROM MATHANG MH
