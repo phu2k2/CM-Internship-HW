@@ -88,7 +88,8 @@ GROUP BY n.MaNhanVien;
 ---- Câu 17 ----
 SELECT YEAR(d.NgayDatHang) AS Nam, MONTH(d.NgayDatHang) AS Thang, SUM(((c.SoLuong * c.GiaBan) - (c.SoLuong * c.MucGiamGia))) AS TongSoTien
 FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang JOIN DONDATHANG d ON d.SoHoaDon = c.SoHoaDon
-GROUP BY YEAR(d.NgayDatHang), MONTH(d.NgayDatHang) HAVING Nam = 2007;
+WHERE Nam = 2007
+GROUP BY YEAR(d.NgayDatHang), MONTH(d.NgayDatHang) ;
 
 ---- Câu 18 ----
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
@@ -102,30 +103,23 @@ FROM MATHANG m JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang
 GROUP BY m.MaHang;
 
 ---- Câu 20 ----
-SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
-FROM(
- SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
- FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
- GROUP BY d.MaNhanVien
-) AS T
-WHERE 
- T.SoLuongBanDuoc = (
-  SELECT MAX(T.SoLuongBanDuoc) 
+SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN NHANVIEN n ON d.MaNhanVien = n.MaNhanVien
+GROUP BY d.MaNhanVien
+HAVING SoLuongBanDuoc = (
+  SELECT MAX(T.SoLuongBanDuoc)
   FROM (
    SELECT d.MaNhanVien, SUM(c.SoLuong) AS SoLuongBanDuoc	
-   FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon 
+   FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
    GROUP BY d.MaNhanVien
-  ) AS T 
- );
- 
+  ) AS T
+);
+
 ---- Câu 21 ----
-SELECT *
-FROM(
- SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
- FROM CHITIETDATHANG c 
- GROUP BY c.SoHoaDon 
-) AS T
-WHERE T.TongSoLuong = (
+SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
+FROM CHITIETDATHANG c 
+GROUP BY c.SoHoaDon 
+HAVING TongSoLuong = (
  SELECT MIN(T.TongSoLuong) FROM(
   SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
   FROM CHITIETDATHANG c 
