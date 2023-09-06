@@ -4,9 +4,9 @@ FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy
 WHERE n.TenCongTy = 'Công ty may mặc Việt Tiến';
 
 -- Câu 2
-SELECT distinct n.TenCongTy, n.DiaChi, m.MaLoaiHang
-FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy;
-
+SELECT DISTINCT n.TenCongTy, n.DiaChi, m.MaLoaiHang
+FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy JOIN LOAIHANG l ON m.MaLoaiHang = l.MaLoaiHang
+WHERE l.TenLoaiHang = 'Thực phẩm';
 -- Câu 3
 SELECT DISTINCT k.TenGiaoDich
 FROM KHACHHANG k JOIN DONDATHANG d JOIN CHITIETDATHANG c JOIN MATHANG m ON k.MaKhachHang = d.MaKhachHang AND d.SoHoaDon = c.SoHoaDon AND c.MaHang = m.MaHang
@@ -18,12 +18,12 @@ FROM DONDATHANG d JOIN KHACHHANG k ON d.MaKhachHang = k.MaKhachHang
 WHERE d.SoHoaDon = 1;
 
 -- Câu 5
-SELECT n.Ho, n.Ten, (n.LuongCoBan + n.PhuCap) AS Luong
-FROM NHANVIEN n;
+SELECT Ho, Ten, (LuongCoBan + PhuCap) AS Luong
+FROM NHANVIEN;
 
 -- Câu 6
 SELECT m.TenHang, (c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TienPhaiTra
-FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN MATHANG m ON d.SoHoaDon = c.SoHoaDon AND c.MaHang = m.MaHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN MATHANG m ON c.MaHang = m.MaHang
 WHERE d.SoHoaDon = 3;
 
 -- Câu 7
@@ -32,8 +32,10 @@ FROM KHACHHANG k, NHACUNGCAP n
 WHERE k.TenGiaoDich = n.TenGiaoDich;
 
 -- Câu 8
-SELECT DISTINCT n.Ho, n.Ten, n.NgaySinh
-FROM NHANVIEN n JOIN NHANVIEN n1 on DAY(n.NgaySinh) = DAY(n1.NgaySinh) AND n.MaNhanVien != n1.MaNhanVien;
+SELECT NgaySinh, GROUP_CONCAT(CONCAT(Ho, " ", Ten)) AS ListNhanVien
+FROM NHANVIEN
+GROUP BY NgaySinh
+HAVING COUNT(Ho) > 1; 
 
 -- Câu 9
 SELECT k.TenCongTy, d.*
@@ -79,52 +81,47 @@ GROUP BY n.MaNhanVien;
 
 -- Câu 17
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
-FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
+FROM 
+ NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy 
+ JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang 
+ JOIN DONDATHANG d ON c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
 GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
 
 -- Câu 18
-SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
-FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
+SELECT m.MaHang, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienLoi
+FROM MATHANG m JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang JOIN DONDATHANG d ON  c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
-GROUP BY n.MaCongTy;
+GROUP BY m.MaHang;
 
 -- Câu 19
-SELECT n.TenCongTy, m.MaHang, (m.SoLuong - (IF(c.SoLuong IS NULL, 0, c.SoLuong)) )
+SELECT n.TenCongTy, m.MaHang, (m.SoLuong - IFNULL(c.SoLuong, 0) )
 FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy LEFT JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang 
 GROUP BY n.MaCongTy, m.MaHang;
 
 -- Câu 20
-SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
-FROM(
- SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
- FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
- GROUP BY d.MaNhanVien
-) AS T
-WHERE 
- T.SoLuongBanDuoc = (
+SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN NHANVIEN n ON d.MaNhanVien = n.MaNhanVien
+GROUP BY d.MaNhanVien
+HAVING SoLuongBanDuoc = (
   SELECT MAX(T.SoLuongBanDuoc) 
   FROM (
    SELECT d.MaNhanVien, SUM(c.SoLuong) AS SoLuongBanDuoc	
    FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon 
    GROUP BY d.MaNhanVien
   ) AS T 
- );
+);
  
 -- Câu 21
-SELECT *
-FROM(
- SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
- FROM CHITIETDATHANG c 
- GROUP BY c.SoHoaDon 
-) AS T
-WHERE T.TongSoLuong = (
+SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
+FROM CHITIETDATHANG c 
+GROUP BY c.SoHoaDon 
+HAVING TongSoLuong = (
  SELECT MIN(T.TongSoLuong) FROM(
   SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
   FROM CHITIETDATHANG c 
   GROUP BY c.SoHoaDon 
- ) AS T
-);
+ ) AS T );
 
 -- Câu 22
 SELECT SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTraNhieuNhat
@@ -139,9 +136,13 @@ FROM CHITIETDATHANG c JOIN MATHANG m ON c.MaHang = m.MaHang
 GROUP BY c.SoHoaDon;
 
 -- Câu 24
-SELECT m.MaCongTy, m.MaHang, SUM(m.SoLuong) AS TongSoLuong, T.TongSoLuongSanPhamTrongCongTy
-FROM MATHANG m JOIN (SELECT m.MaCongTy, SUM(m.SoLuong) AS TongSoLuongSanPhamTrongCongTy FROM MATHANG m GROUP BY m.MaCongTy ) AS T ON m.MaCongTy = T.MaCongTy
-GROUP BY m.MaCongTy,m.MaHang;
+SELECT 
+ IFNULL(MaLoaiHang, 'ALL') AS LoaiMatHang,
+ IFNULL(TenHang, 'ALL') AS TenMatHang, 
+ SUM(SoLuong) AS SoLuongLoaiHang
+FROM MATHANG
+GROUP BY MaLoaiHang, TenHang WITH ROLLUP;
+
 
 -- Câu 25
 SELECT c.MaHang, m.TenHang, 
@@ -182,29 +183,28 @@ UPDATE KHACHHANG k JOIN NHACUNGCAP n ON k.TenCongTy = n.TenCongTy AND k.TenGiaoD
 SET k.DiaChi = n.DiaChi, k.DienThoai = n.DienThoai, k.Fax = n.Fax, k.Email = n.Email;
 
 -- Câu 30
-UPDATE NHANVIEN n JOIN (SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc, YEAR(d.NgayDatHang) AS Nam
- FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
- GROUP BY d.MaNhanVien, YEAR(d.NgayDatHang)) AS T ON n.MaNhanVien = T.MaNhanVien
-SET n.LuongCoBan = 1.5 * n.LuongCoBan
-WHERE SoLuongBanDuoc > 100 AND T.Nam = 2003;
+UPDATE NHANVIEN n JOIN (
+	SELECT d.MaNhanVien
+	FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon AND YEAR(d.NgayDatHang) = 2003 
+	GROUP BY d.MaNhanVien HAVING SUM(c.SoLuong) > 100
+) AS T USING (MaNhanVien)
+SET n.LuongCoBan = 1.5 * n.LuongCoBan;
 
 -- Câu 31
-UPDATE NHANVIEN n JOIN (SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
-FROM(
+UPDATE NHANVIEN n JOIN (
  SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
  FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN NHANVIEN n ON d.SoHoaDon = c.SoHoaDon AND d.MaNhanVien = n.MaNhanVien
  GROUP BY d.MaNhanVien
-) AS T
-WHERE 
- T.SoLuongBanDuoc = (
+ HAVING SoLuongBanDuoc = (
   SELECT MAX(T.SoLuongBanDuoc) 
   FROM (
    SELECT d.MaNhanVien, SUM(c.SoLuong) AS SoLuongBanDuoc	
    FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon 
    GROUP BY d.MaNhanVien
   ) AS T 
- )) AS T1 ON n.MaNhanVien = T1.MaNhanVien
- SET n.PhuCap = n.LuongCoBan / 2;
+ ) 
+) AS T1 ON n.MaNhanVien = T1.MaNhanVien
+ SET n.PhuCap = PhuCap + n.LuongCoBan / 2;
  
 -- Câu 32
 UPDATE NHANVIEN n
@@ -222,7 +222,7 @@ SET d.SoTien = T.TienPhaiTra;
 
 -- Câu 34
  DELETE FROM NHANVIEN 
- WHERE DATEDIFF(NOW(), NgayLamViec ) / 365 > 40;
+ WHERE TIMESTAMPDIFF(YEAR, NgayLamViec, NOW()) > 40 ;
  
 -- Câu 35
 DELETE d, c FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
@@ -243,24 +243,24 @@ WHERE MaKhachHang NOT IN(
  WHERE SoLuong = 0 AND MaHang NOT IN (SELECT DISTINCT MaHang FROM CHITIETDATHANG);
  
  -- Câu 39
-SELECT d.MaKhachHang, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+SELECT d.MaKhachHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
 GROUP BY d.MaKhachHang 
-HAVING CacMaLoaiHang = 'TP03' AND SoLuongLoaiHang = 1;
+HAVING SUM(CASE WHEN MaHang = 'TP07' THEN 1 ELSE 0 END) = SUM(CASE WHEN MaHang <> 'TP07' THEN 1 ELSE 0 END);
 
 -- Câu 40
-SELECT d.MaKhachHang, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+SELECT d.MaKhachHang, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-GROUP BY d.MaKhachHang 
-HAVING CacMaLoaiHang LIKE '%TP07%' AND CacMaLoaiHang NOT LIKE '%MM01%' AND SoLuongLoaiHang >= 2;
+GROUP BY d.MaKhachHang
+HAVING JSON_SEARCH(CacMaLoaiHang, 'all', 'TP07') IS NOT NULL 
+ AND JSON_SEARCH(CacMaLoaiHang, 'all', 'MM01') IS NULL
+ AND SoLuongLoaiHang >= 2;
 
 -- Câu 41
- SELECT d.SoHoaDon, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
- FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
- GROUP BY d.MaKhachHang 
- HAVING CacMaLoaiHang LIKE '%DT01%'
-  AND CacMaLoaiHang LIKE '%DT02%'
-  AND CacMaLoaiHang LIKE '%DT03%'
-  AND CacMaLoaiHang LIKE '%DT04%'
-  AND (CacMaLoaiHang NOT LIKE '%DC01%'
-  OR CacMaLoaiHang NOT LIKE '%TP03%');
+SELECT d.SoHoaDon, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+GROUP BY d.MaKhachHang 
+HAVING 
+ JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DT01', '$.DT02', '$.DT03', '$.DT04') = 1
+ AND (JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.TP03') = 0 OR JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DC01') = 0);
+ 
