@@ -91,7 +91,7 @@ SELECT
     CONCAT(`Ho`, ' ', `Ten`) as HoTen
 FROM `NHANVIEN`
 WHERE `LuongCoBan` = (
-    SELECT `LuongCoBan` FROM `NHANVIEN` ORDER BY `LuongCoBan` DESC LIMIT 1
+    SELECT MAX(`LuongCoBan`) FROM `NHANVIEN`
 );
 
 -- Question 13
@@ -127,11 +127,12 @@ GROUP BY kh.`MaKhachHang`
 
 -- Question 16
 SELECT
+    n.`MaNhanVien`,
     CONCAT(n.`Ho`, ' ', n.`Ten`) as HoTen, 
     COUNT(d.`MaNhanVien`) as SoDonHang
 FROM `NHANVIEN` n
     LEFT JOIN `DONDATHANG` d ON d.`MaNhanVien` = n.`MaNhanVien`
-GROUP BY n.`Ho`, n.`Ten`;
+GROUP BY n.`MaNhanVien`, n.`Ho`, n.`Ten`;
 
 -- Question 17
 SELECT 
