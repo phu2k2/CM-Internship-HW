@@ -5,22 +5,21 @@ FROM `MATHANG` m
 WHERE `TenCongTy` LIKE '%Công ty%Việt Tiến%';
 
 -- Question 2
-SELECT
+SELECT DISTINCT
     n.`TenCongTy`, 
     n.`DiaChi` 
 FROM `NHACUNGCAP` n
     JOIN `MATHANG` m ON n.`MaCongTy` = m.`MaCongTy`
     JOIN `LOAIHANG` l ON l.`MaLoaiHang` = m.`MaLoaiHang`
 WHERE l.`TenLoaiHang` = 'Thực phẩm'
-GROUP BY n.`TenCongTy`, n.`DiaChi`;
 
 -- Question 3
 SELECT kh.`TenGiaoDich`
 FROM `CHITIETDATHANG` c
-    JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` AND `TenHang` LIKE '%Sữa hộp%'
+    JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang`
     JOIN `DONDATHANG` d ON d.`SoHoaDon` = c.`SoHoaDon`
-    JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`;
-
+    JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`
+WHERE m.`TenHang` LIKE '%Sữa hộp%';
 
 -- Question 4
 SELECT 
