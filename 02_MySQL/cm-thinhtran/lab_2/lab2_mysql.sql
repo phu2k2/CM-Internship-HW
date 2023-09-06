@@ -80,13 +80,11 @@ FROM NHANVIEN n LEFT JOIN DONDATHANG d ON n.MaNhanVien = d.MaNhanVien
 GROUP BY n.MaNhanVien;
 
 -- Câu 17
-SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
-FROM 
- NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy 
- JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang 
- JOIN DONDATHANG d ON c.SoHoaDon = d.SoHoaDon
-WHERE YEAR(d.NgayDatHang) = 2007
-GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
+SELECT MONTH(d.NgayDatHang), SUM(c.SoLuong * c.GiaBan - c.SoLuong * c.MucGiamGia) AS TongTien
+FROM DONDATHANG d
+JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+WHERE YEAR(NgayDatHang) = 2007
+GROUP BY MONTH(NgayDatHang);
 
 -- Câu 18
 SELECT m.MaHang, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienLoi
@@ -246,8 +244,7 @@ WHERE MaKhachHang NOT IN(
 SELECT d.MaKhachHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
 GROUP BY d.MaKhachHang 
-HAVING SUM(CASE WHEN MaHang = 'TP07' THEN 1 ELSE 0 END) = SUM(CASE WHEN MaHang <> 'TP07' THEN 1 ELSE 0 END);
-
+HAVING SUM(CASE WHEN MaHang = 'TP07' THEN 1 ELSE 0 END) >= 1 AND SUM(CASE WHEN MaHang <> 'TP07' THEN 1 ELSE 0 END) = 0;
 -- Câu 40
 SELECT d.MaKhachHang, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
@@ -262,5 +259,4 @@ FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
 GROUP BY d.MaKhachHang 
 HAVING 
  JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DT01', '$.DT02', '$.DT03', '$.DT04') = 1
- AND (JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.TP03') = 0 OR JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DC01') = 0);
- 
+ AND NOT JSON_CONTAINS_PATH(CacMaLoaiHang, 'one','$.DC01', '$.TP03');
