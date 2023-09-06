@@ -25,7 +25,7 @@ where KH.TenCongTy = NCC.TenCongTy and KH.TenGiaoDich = NCC.TenGiaoDich;
 
 --  Cau 30 --
 update NHANVIEN NV1 
-join (select MaNhanVien 
+join (select DH.MaNhanVien 
 	from DONDATHANG DH 
 	join CHITIETDATHANG CT using(SoHoaDon) 
     where year(DH.NgayDatHang) = 2003 
@@ -35,7 +35,7 @@ set LuongCoBan = LuongCoBan * 1.5;
 
 -- Cau 31 --
 update NHANVIEN NV
-join (select MaNhanVien 
+join (select DH.MaNhanVien 
 	from DONDATHANG DH 
 	join CHITIETDATHANG CT using(SoHoaDon)
 	group by MaNhanVien 
@@ -110,9 +110,10 @@ having count(distinct CT.MaHang) >= 2
 select SoHoaDon
 from CHITIETDATHANG
 group by SoHoaDon
-having count(case when MaHang = 'DC01' then 1 end) > 0
-	and count(case when MaHang = 'DC02' then 1 end) > 0
-    and count(case when MaHang = 'DC03' then 1 end) > 0
-    and (count(case when MaHang = 'DT01' then 1 end) = 0
+having count(case when MaHang = 'DT01' then 1 end) > 0
+	and count(case when MaHang = 'DT02' then 1 end) > 0
+    and count(case when MaHang = 'DT03' then 1 end) > 0
+	and count(case when MaHang = 'DT04' then 1 end) > 0
+    and (count(case when MaHang = 'DC01' then 1 end) = 0
 		or count(case when MaHang = 'TP03' then 1 end) = 0);
 
