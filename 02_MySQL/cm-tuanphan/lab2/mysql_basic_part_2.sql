@@ -223,17 +223,9 @@ WHERE MaNhanVien NOT IN (
 );
 
 -- Câu 33: Giả sử trong bảng DONDATHANG có thêm trường SOTIEN cho biết số tiền mà khách hàng phải trả trong mỗi đơn đặt hàng. Hãy tính giá trị cho trường này. (Chú ý: SOTIEN = SUM(SoLuong * (GiaBan - MucGiamGia)) cho từng đơn đặt hàng)
-UPDATE DONDATHANG AS d
-JOIN (
-    SELECT dh.SoHoaDon, SUM(ct.SoLuong * (mh.GiaHang - ct.MucGiamGia)) AS NewSOTIEN
-    FROM DONDATHANG AS dh
-    LEFT JOIN CHITIETDATHANG AS ct ON dh.SoHoaDon = ct.SoHoaDon
-    LEFT JOIN MATHANG AS mh ON ct.MaHang = mh.MaHang
-    GROUP BY dh.SoHoaDon
-) AS subquery
-ON d.SoHoaDon = subquery.SoHoaDon
-SET d.SOTIEN = subquery.NewSOTIEN;
-
+SELECT DONDATHANG.*, SUM(SoLuong * (GiaBan - MucGiamGia)) AS SOTIEN FROM DONDATHANG
+LEFT JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon
+GROUP BY DONDATHANG.SoHoaDon;
 
 -- Câu 34: Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm:
 DELETE FROM NHANVIEN
