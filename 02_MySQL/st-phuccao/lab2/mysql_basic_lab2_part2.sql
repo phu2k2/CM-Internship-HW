@@ -58,11 +58,10 @@ HAVING MAX(TongSoLuongBan) = (
     );
 
 -- 21. Đơn đặt hàng nào có số lượng hàng được đặt mua ít nhất? 
-SELECT SoHoaDon, MIN(SoLuong) AS SoLuongItNhat
-FROM CHITIETDATHANG
-GROUP BY SoHoaDon
-ORDER BY SoLuongItNhat
-LIMIT 1;
+WITH TEMP AS (
+	SELECT SoHoaDon, SUM(SoLuong) as total FROM CHITIETDATHANG GROUP BY SoHoaDon
+)
+SELECT SoHoaDon FROM TEMP WHERE total = (SELECT MIN(total) FROM TEMP);
 
 -- 22. Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
 SELECT CustomerOrders.MaKhachHang,
