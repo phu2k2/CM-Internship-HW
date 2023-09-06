@@ -5,13 +5,14 @@ SELECT TenHang
 FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy
 WHERE n.TenCongTy = 'Công ty may mặc Việt Tiến';
 
+
 ---- Câu 2 ----
-SELECT distinct n.TenCongTy, n.DiaChi, m.MaLoaiHang
-FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy;
+SELECT DISTINCT n.TenCongTy, n.DiaChi, m.MaLoaiHang
+FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy JOIN LOAIHANG l ON l.MaLoaiHang = m.MaLoaiHang WHERE l.TenLoaiHang = 'Thực phẩm';
 
 ---- Câu 3 ----
 SELECT DISTINCT k.TenGiaoDich
-FROM KHACHHANG k JOIN DONDATHANG d JOIN CHITIETDATHANG c JOIN MATHANG m ON k.MaKhachHang = d.MaKhachHang AND d.SoHoaDon = c.SoHoaDon AND c.MaHang = m.MaHang
+FROM KHACHHANG k JOIN DONDATHANG d ON k.MaKhachHang = d.MaKhachHang JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN MATHANG m ON c.MaHang = m.MaHang
 WHERE m.TenHang LIKE '%Sữa%' AND m.DonViTinh = 'Hộp';
 
 ---- Câu 4 ----
@@ -20,12 +21,12 @@ FROM DONDATHANG d JOIN KHACHHANG k ON d.MaKhachHang = k.MaKhachHang
 WHERE d.SoHoaDon = 1;
 
 ---- Câu 5 ----
-SELECT n.Ho, n.Ten, (n.LuongCoBan + n.PhuCap) AS Luong
-FROM NHANVIEN n;
+SELECT Ho, Ten, (LuongCoBan + PhuCap) AS Luong
+FROM NHANVIEN ;
 
 ---- Câu 6 ----
 SELECT m.TenHang, (c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TienPhaiTra
-FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN MATHANG m ON d.SoHoaDon = c.SoHoaDon AND c.MaHang = m.MaHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN MATHANG m ON c.MaHang = m.MaHang
 WHERE d.SoHoaDon = 3;
 
 
@@ -39,8 +40,8 @@ WHERE
     k.TenGiaoDich = n.TenGiaoDich;	
 
 ---- Câu 8 ----
-SELECT DISTINCT n.Ho, n.Ten, n.NgaySinh
-FROM NHANVIEN n JOIN NHANVIEN n1 on DAY(n.NgaySinh) = DAY(n1.NgaySinh) AND n.MaNhanVien != n1.MaNhanVien;
+SELECT MaNhanVien, CONCAT(Ho, '', Ten) AS HoTen FROM NHANVIEN WHERE DAY(NgaySinh) IN(
+SELECT DAY(NgaySinh) FROM NHANVIEN GROUP BY DAY(NgaySinh) HAVING count(MaNhanVien) >1);
 
 ---- Câu 9 ----
 SELECT k.TenCongTy, d.*
@@ -65,7 +66,7 @@ WHERE n.LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 ---- Câu 13 ----
 SELECT c.SoHoaDon, SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTra
 FROM CHITIETDATHANG c 
-GROUP BY c.SoHoaDon;
+GROUP BY c.SoHoaDon;    
 
 ---- Câu 14 ----
 SELECT c.MaHang
@@ -85,21 +86,20 @@ FROM NHANVIEN n LEFT JOIN DONDATHANG d ON n.MaNhanVien = d.MaNhanVien
 GROUP BY n.MaNhanVien;
 
 ---- Câu 17 ----
-SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TongTienHangThuDuoc, MONTH(d.NgayDatHang) AS Thang
-FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
-WHERE YEAR(d.NgayDatHang) = 2007
-GROUP BY n.MaCongTy, MONTH(d.NgayDatHang) ;
+SELECT YEAR(d.NgayDatHang) AS Nam, MONTH(d.NgayDatHang) AS Thang, SUM(((c.SoLuong * c.GiaBan) - (c.SoLuong * c.MucGiamGia))) AS TongSoTien
+FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang JOIN DONDATHANG d ON d.SoHoaDon = c.SoHoaDon
+GROUP BY YEAR(d.NgayDatHang), MONTH(d.NgayDatHang) HAVING Nam = 2007;
 
 ---- Câu 18 ----
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
-FROM NHACUNGCAP n JOIN MATHANG m JOIN CHITIETDATHANG c JOIN DONDATHANG d ON n.MaCongTy = m.MaCongTy AND m.MaHang = c.MaHang AND c.SoHoaDon = d.SoHoaDon
+FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang JOIN DONDATHANG d ON c.SoHoaDon = d.SoHoaDon
 WHERE YEAR(d.NgayDatHang) = 2007
 GROUP BY n.MaCongTy;
 
 ---- Câu 19 ----
-SELECT n.TenCongTy, m.MaHang, (m.SoLuong - (IF(c.SoLuong IS NULL, 0, c.SoLuong)) )
-FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy LEFT JOIN CHITIETDATHANG c ON m.MaHang = c.MaHang 
-GROUP BY n.MaCongTy, m.MaHang;
+SELECT m.MaHang, m.TenHang,SUM(m.SoLuong) - SUM(c.SoLuong) AS TongSoHangHienCo, SUM(c.SoLuong) AS TongSoHangDaBan
+FROM MATHANG m JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang 
+GROUP BY m.MaHang;
 
 ---- Câu 20 ----
 SELECT T.MaNhanVien, T.HoTen ,T.SoLuongBanDuoc
