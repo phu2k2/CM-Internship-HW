@@ -1,39 +1,36 @@
 -- Cau 1: Công ty Việt Tiến đã cung cấp những mặt hàng nào? 
 SELECT MH.TenHang 
-FROM NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy where NCC.MaCongTy = "MVT";
+FROM MATHANG MH JOIN NHACUNGCAP NCC ON NCC.MaCongTy = MH.MaCongTy WHERE NCC.TenCongTy LIKE "%Công ty % Việt Tiến%";
 
 -- Cau 2: Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó? 
-SELECT DISTINCT NCC.TenCongTy, NCC.DiaChi FROM
-NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy JOIN LOAIHANG LH ON LH.MaLoaiHang = MH.MaLoaiHang where LH.TenLoaiHang = "Thực Phẩm";
+SELECT DISTINCT NCC.MaCongTy, NCC.TenCongTy, NCC.DiaChi FROM
+NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy JOIN LOAIHANG LH ON LH.MaLoaiHang = MH.MaLoaiHang WHERE LH.TenLoaiHang = "Thực Phẩm";
 
 -- Cau 3: Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
 SELECT KH.TenGIaoDich FROM 
 KHACHHANG KH JOIN DONDATHANG DDH ON KH.MaKhachHang = DDH.MaKhachHang JOIN CHITIETDATHANG CTDH ON CTDH.SoHoaDon = DDH.SoHoaDon JOIN MATHANG MH ON MH.MaHang = CTDH.MaHang
-WHERE MH.TenHang = "Sữa hộp XYZ";
+WHERE MH.TenHang LIKE "%Sữa hộp%";
 
 -- Cau 4: Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
 SELECT KH.MaKhachHang, KH.Email ,NV.MaNhanVien, CONCAT(NV.Ho,' ',NV.Ten) AS HoTenNhanVien, DDH.NgayGiaoHang, DDH.NoiGiaoHang 
-FROM DONDATHANG DDH JOIN KHACHHANG KH ON DDH.MaKhachHang = KH.MaKhachHang JOIN NHANVIEN NV ON NV.MaNhanVien = DDH.MaNhanVien LIMIT 1  ;
-
+FROM DONDATHANG DDH JOIN KHACHHANG KH ON DDH.MaKhachHang = KH.MaKhachHang JOIN NHANVIEN NV ON NV.MaNhanVien = DDH.MaNhanVien WHERE DDH.SoHoaDon = 1 ;
 -- Cau 5: Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu (lương=lương cơ bản+phụ cấp)? 
-SELECT MaNhanVien, CONCAT(Ho,' ',Ten) AS HoTen, (LuongCoBan + PhuCap) AS Luong 
+SELECT MaNhanVien, CONCAT(Ho,' ',Ten) AS HoTen, (LuongCoBan + IFNULL(PhuCap, 0)) AS Luong 
 FROM NHANVIEN;
 
 -- Cau 6: Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng phải trả cho mỗi mặt hàng 
 -- là bao nhiêu(số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
 SELECT MH.TenHang, ((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia)) AS SoTien 
 FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon JOIN MATHANG MH ON MH.MaHang = CTDH.MaHang
-where DDH.SoHoaDon = 3;
+WHERE DDH.SoHoaDon = 3;
 
 -- Cau 7: Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)? 
 SELECT NCC.TenCongTy, NCC.TenGiaoDich 
 FROM KHACHHANG KH JOIN NHACUNGCAP NCC ON KH.TenGiaoDich = NCC.TenGiaoDich ;
 
 -- Cau 8: Trong công ty có những nhân viên nào có cùng ngày sinh? 
-
-SELECT Date(NgaySinh) AS NS, GROUP_CONCAT(CONCAT (NV.Ho,' ',NV.Ten)) AS DanhSachNhanVien
+SELECT Date(NgaySinh) AS NS, GROUP_CONCAT(CONCAT (NV.Ho,' ',NV.Ten) SEPARATOR ', ') AS DanhSachNhanVien
 FROM NHANVIEN NV GROUP BY NS HAVING COUNT(*) > 1;
-
 
 -- Cau 9: Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào? 
 SELECT DDH.SoHoaDon, KH.MaKhachHang, KH.TenCongTy 
@@ -52,7 +49,7 @@ SELECT MaNhanVien, CONCAT(Ho,' ',Ten) AS HoTen
 FROM NHANVIEN WHERE LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 
 -- Cau 13: Tổng số tiền mà khách hàng phải trả cho mỗi đơn đặt hàng là bao nhiêu? 
-SELECT DDH.SoHoaDon,  SUM(((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia))) AS TongSoTien 
+SELECT DDH.SoHoaDon,  SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) AS TongSoTien 
 FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON CTDH.SoHoaDon = DDH.SoHoaDon
 GROUP BY CTDH.SoHoaDon;
 
@@ -62,7 +59,7 @@ FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon JOI
 WHERE YEAR(DDH.NgayDatHang) = 2007 GROUP BY MH.MaHang HAVING COUNT(MH.MaHang) = 1;
 
 -- Cau 15: Mỗi khách hàng đã bỏ ra bao nhiêu tiền để đặt mua hàng của công ty?
-SELECT KH.MaKhachHang, KH.TenCongTy,SUM(((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia))) AS TongSoTien 
+SELECT KH.MaKhachHang, KH.TenCongTy, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) AS TongSoTien 
 FROM KHACHHANG KH JOIN DONDATHANG DDH ON KH.MaKhachHang = DDH.MaKhachHang JOIN CHITIETDATHANG CTDH ON CTDH.SoHoaDon = DDH.SoHoaDon
 GROUP BY KH.MaKhachHang;
 
@@ -71,12 +68,12 @@ SELECT DDH.MaNhanVien, (IFNULL(COUNT(DDH.MaNhanVien), 0)) AS SoLanLapHoaDon
 FROM NHANVIEN NV JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien GROUP BY DDH.MaNhanVien;
 
 -- Cau 17: Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)? 
-SELECT YEAR(DDH.NgayDatHang) AS Nam, MONTH(DDH.NgayDatHang) AS Thang, SUM(((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia))) AS TongSoTien
+SELECT YEAR(DDH.NgayDatHang) AS Nam, MONTH(DDH.NgayDatHang) AS Thang, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) AS TongSoTien
 FROM NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy JOIN CHITIETDATHANG CTDH ON CTDH.MaHang = MH.MaHang JOIN DONDATHANG DDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY YEAR(DDH.NgayDatHang), MONTH(DDH.NgayDatHang) HAVING Nam = 2007;
 
 -- Cau 18: Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007? 
-SELECT MH.MaHang, MH.TenHang, SUM(((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia))) - SUM((CTDH.SoLuong * MH.GiaHang)) AS TongSoTien
+SELECT MH.MaHang, MH.TenHang, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) - SUM((CTDH.SoLuong * MH.GiaHang)) AS TongSoTien
 FROM NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy JOIN CHITIETDATHANG CTDH ON CTDH.MaHang = MH.MaHang JOIN DONDATHANG DDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 WHERE YEAR(DDH.NgayDatHang) = 2007
 GROUP BY MH.MaHang ;
@@ -102,7 +99,7 @@ SELECT DDH.SoHoaDon, SUM(CTDH.SoLuong) AS SoLuongHang  FROM DONDATHANG DDH JOIN 
 ORDER BY SoLuongHang LIMIT 1;
 
 -- Cau 22: Số tiền nhiều nhất mà khách hàng đã từng bỏ ra để đặt hàng trong các đơn đặt hàng là bao nhiêu?
-SELECT DDH.SoHoaDon, SUM(((CTDH.SoLuong * CTDH.GiaBan) - (CTDH.SoLuong * CTDH.MucGiamGia))) AS SoTienBoRa 
+SELECT DDH.SoHoaDon, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) AS SoTienBoRa 
 FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon GROUP BY DDH.SoHoaDon ORDER BY SoTienBoRa DESC LIMIT 1;
 
 -- Cau 23: Mỗi một đơn đặt hàng đặt mua những mặt hàng nào và tổng số tiền của đơn đặt hàng?
