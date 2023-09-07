@@ -134,3 +134,17 @@ having count(case when MaHang = 'DT01' then 1 end) > 0
     and (count(case when MaHang = 'DC01' then 1 end) = 0
 		or count(case when MaHang = 'TP03' then 1 end) = 0);
 
+-- Solution 2: json_contains_path vs json_objectagg
+select SoHoaDon
+from CHITIETDATHANG
+group by SoHoaDon
+having json_contains_path(
+    json_objectagg(MaHang, 1), 
+    'all',
+    '$.DC01', '$.DC02', '$.DC03'
+) = 1
+and not json_contains_path(
+    json_objectagg(MaHang, 1),  
+    'one',
+    '$.DT01', '$.TP03'
+) = 1;
