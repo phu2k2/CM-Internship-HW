@@ -1,4 +1,4 @@
--- Active: 1693453052992@@127.0.01@3306@QLBH
+-- Active: 1694049895723@@127.0.0.1@3306@QLDH
 -- QUESTION 1
 
 SELECT TenHang
@@ -13,8 +13,8 @@ JOIN LOAIHANG ON LOAIHANG.MaLoaiHang = MATHANG.MaLoaiHang AND TenLoaiHang = 'Th�
 
 -- QUESTION 3
 SELECT DISTINCT TenGiaoDich
-FROM ((CHITIETDATHANG JOIN `MATHANG` ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang` AND `TenHang` LIKE '%Sữa%' AND `DonViTinh`='Hộp')
-JOIN `DONDATHANG` ON CHITIETDATHANG.`SoHoaDon` = DONDATHANG.`SoHoaDon`)
+FROM CHITIETDATHANG JOIN `MATHANG` ON MATHANG.`MaHang` = CHITIETDATHANG.`MaHang` AND `TenHang` LIKE '%Sữa%' AND `DonViTinh`='Hộp'
+JOIN `DONDATHANG` ON CHITIETDATHANG.`SoHoaDon` = DONDATHANG.`SoHoaDon`
 JOIN `KHACHHANG` ON KHACHHANG.`MaKhachHang` = DONDATHANG.`MaKhachHang`
 
 
@@ -101,35 +101,17 @@ GROUP BY `TenCongTy`;
 -- GROUP BY `TenCongTy`;
 
 --QUESTION 16
-SELECT CONCAT(Ho,' ', Ten) AS NhanVien, 
-        CASE 
-            WHEN  DONDATHANG.`MaNhanVien` IS NULL THEN '0'
-            ELSE  COUNT(*)
-        END AS DonHangLapDuoc
+SELECT CONCAT(Ho,' ', Ten) AS NhanVien, COUNT(`SoHoaDon`)
 FROM `NHANVIEN`
 LEFT JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien` = DONDATHANG.`MaNhanVien`
 GROUP BY NHANVIEN.`MaNhanVien`;
 
 --QUESTION 17
-SELECT Thang, SUM(COALESCE(C.SoLuong * (C.GiaBan - C.MucGiamGia), 0.00)) AS DoanhThuThangCuaNam2007
-FROM (
-    SELECT 1 AS Thang
-    UNION SELECT 2
-    UNION SELECT 3
-    UNION SELECT 4
-    UNION SELECT 5
-    UNION SELECT 6
-    UNION SELECT 7
-    UNION SELECT 8
-    UNION SELECT 9
-    UNION SELECT 10
-    UNION SELECT 11
-    UNION SELECT 12
-) AS ThangThamChieu
-LEFT JOIN DONDATHANG AS D ON YEAR(D.NgayDatHang) = 2007 AND MONTH(D.NgayDatHang) = ThangThamChieu.Thang 
-LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon`
-GROUP BY Thang
-ORDER BY Thang;
+SELECT MONTH(D.NgayDatHang) AS Thang, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) AS DoanhThuThangCuaNam2007
+FROM DONDATHANG AS D 
+LEFT JOIN `CHITIETDATHANG` AS C ON D.`SoHoaDon`= C.`SoHoaDon` AND YEAR(D.NgayDatHang) = 2007
+GROUP BY Thang;
+
 
 
 --QUESTION 18
@@ -150,21 +132,24 @@ FROM `NHANVIEN`
 JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien` = DONDATHANG.`MaNhanVien`
 JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
 GROUP BY DONDATHANG.`MaNhanVien`
-HAVING SoLuongBan = (SELECT MAX(SoLuongBan) FROM (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
-                                                FROM DONDATHANG
-                                                JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
-                                                GROUP BY DONDATHANG.MaNhanVien) AS TH );
+HAVING SoLuongBan = (SELECT SUM(C.SoLuong) AS SoLuongBan
+                    FROM DONDATHANG
+                    JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+                    GROUP BY DONDATHANG.MaNhanVien 
+                    ORDER BY SoLuongBan DESC
+                    LIMIT 1);
 
 
 
 --QUESTION 21
-SELECT SoHoaDon, SUM(`SoLuong`) 
+SELECT SoHoaDon, SUM(`SoLuong`) AS SoLuongItNhat
 FROM `CHITIETDATHANG`
 GROUP BY SoHoaDon
-HAVING SUM(`SoLuong`)  = (SELECT MIN(SoLuongItNhat) 
-                          FROM (SELECT `SoHoaDon`, SUM(SoLuong) AS SoLuongItNhat
-                                FROM `CHITIETDATHANG` 
-                                GROUP BY `SoHoaDon`) AS T);
+HAVING SUM(`SoLuong`)  = (SELECT SUM(SoLuong) 
+                          FROM `CHITIETDATHANG` 
+                          GROUP BY `SoHoaDon` 
+                          ORDER BY SUM(SoLuong)
+                          LIMIT 1);
 
 --QUESTION 22
 -- Số tiền nhiều nhất mà mỗi khách hàng bỏ ra trong các đơn hàng
@@ -194,20 +179,6 @@ FROM `CHITIETDATHANG` AS C
 JOIN `MATHANG`
 ON C.`MaHang` = MATHANG.MaHang
 GROUP BY C.`SoHoaDon`;
-
-SELECT C.`SoHoaDon`, TenHang, (C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
-FROM `CHITIETDATHANG` AS C
-JOIN `MATHANG`
-ON C.`MaHang` = MATHANG.MaHang
-UNION ALL
-SELECT C.`SoHoaDon`, 'ALL', SUM(C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
-FROM `CHITIETDATHANG` AS C
-JOIN `MATHANG`
-ON C.`MaHang` = MATHANG.MaHang
-GROUP BY C.`SoHoaDon`
-ORDER BY `SoHoaDon` ASC, 
-IF(`TenHang` = 'ALL', 0 , `TenHang`) DESC;
-
 
 --QUESTION 24
 SELECT LOAIHANG.MaLoaiHang, TenLoaiHang, TenHang, SoLuong
@@ -288,16 +259,19 @@ JOIN  (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
     GROUP BY DONDATHANG.MaNhanVien
 ) AS T ON NHANVIEN.MaNhanVien = T.MaNhanVien
 SET `PhuCap` = `LuongCoBan`* 0.5
-WHERE SoLuongBan = (SELECT MAX(SoLuongBan) FROM (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
-                                                FROM DONDATHANG
-                                                JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
-                                                GROUP BY DONDATHANG.MaNhanVien) AS TH );
+WHERE SoLuongBan = (SELECT  SUM(C.SoLuong) 
+                            FROM DONDATHANG
+                            JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+                            GROUP BY DONDATHANG.MaNhanVien
+                            ORDER BY SUM(C.SoLuong) DESC
+                            LIMIT 1);
 
 --QUESTION 32
 UPDATE `NHANVIEN`
 LEFT JOIN `DONDATHANG` ON NHANVIEN.`MaNhanVien`=DONDATHANG.`MaNhanVien` AND YEAR(DONDATHANG.NgayDatHang) = 2003
 SET `LuongCoBan` = `LuongCoBan`* 0.75
 WHERE DONDATHANG.`MaNhanVien` IS NULL;
+
 
 --QUESTION 33
 UPDATE DONDATHANG
@@ -337,7 +311,7 @@ WHERE MATHANG.`SoLuong` = 0 AND CHITIETDATHANG.`MaHang` IS NULL;
 
 
 --QUESTION 39
-SELECT DISTINCT TenCongTy 
+SELECT TenCongTy 
 FROM `KHACHHANG`
 JOIN `DONDATHANG` ON DONDATHANG.`MaKhachHang`=KHACHHANG.`MaKhachHang`
 JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
@@ -345,15 +319,14 @@ GROUP BY DONDATHANG.`MaKhachHang`
 HAVING COUNT(CASE WHEN `MaHang`='TP07' THEN 1 END) = COUNT(`MaHang`);
 
 --QUESTION 40
-SELECT DISTINCT TenCongTy 
+SELECT TenCongTy 
 FROM `KHACHHANG`
-JOIN (SELECT MaKhachHang 
-      FROM `DONDATHANG`
-      JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
-      GROUP BY `MaKhachHang`
-      HAVING COUNT(DISTINCT `MaHang`) >= 2
-      AND COUNT(CASE WHEN `MaHang`='TP07' THEN 1 END) > 0  
-      AND COUNT(CASE WHEN `MaHang`='MM01' THEN 1 END) = 0) AS T ON T.`MaKhachHang` = KHACHHANG.`MaKhachHang`;
+JOIN `DONDATHANG` ON DONDATHANG.`MaKhachHang` = KHACHHANG.`MaKhachHang`
+JOIN `CHITIETDATHANG` ON CHITIETDATHANG.`SoHoaDon`=DONDATHANG.`SoHoaDon`
+GROUP BY `KHACHHANG`.`MaKhachHang`
+HAVING COUNT(DISTINCT `MaHang`) >= 2
+AND COUNT(CASE WHEN `MaHang`='TP07' THEN 1 END) > 0  
+AND COUNT(CASE WHEN `MaHang`='MM01' THEN 1 END) = 0;
 
 --QUESTION 41
 SELECT `SoHoaDon`
@@ -364,8 +337,9 @@ COUNT(CASE WHEN `MaHang`='DT01' THEN 1 END) > 0
 AND COUNT(CASE WHEN `MaHang`='DT02' THEN 1 END) > 0 
 AND COUNT(CASE WHEN `MaHang`='DT03' THEN 1 END) > 0 
 AND COUNT(CASE WHEN `MaHang`='DT04' THEN 1 END) > 0 
-AND (COUNT(CASE WHEN `MaHang`='DC01' THEN 1 END) = 0
-OR COUNT(CASE WHEN `MaHang`='TP03' THEN 1 END) = 0) ;
+AND 
+    (COUNT(CASE WHEN `MaHang`='DC01' THEN 1 END) = 0
+    OR COUNT(CASE WHEN `MaHang`='TP03' THEN 1 END) = 0);
 
 
 
