@@ -1,148 +1,150 @@
 -- Cau 1
 -- Tao stored procedure cap nhat Luong --
-delimiter //
-create procedure updateSalary(n int(11))
-begin
-	update NHANVIEN NV
-    join (select MaNhanVien 
-		from DONDATHANG DH 
-		join CHITIETDATHANG CT using(SoHoaDon)
-		group by MaNhanVien 
-		order by sum(SoLuong) desc limit n
-	) SL on NV.MaNhanVien = SL.MaNhanVien
-	set LuongCoBan = LuongCoBan + 500000;
-end// 
-delimiter ;
+DELIMITER //
+CREATE PROCEDURE updateSalary(n INT(11))
+BEGIN
+	UPDATE NHANVIEN NV
+    JOIN (SELECT MaNhanVien 
+		FROM DONDATHANG DH 
+		JOIN CHITIETDATHANG CT ON DH.SoHoaDon = CT.SoHoaDon
+		GROUP BY MaNhanVien 
+		ORDER BY SUM(SoLuong) DESC LIMIT n
+	) SL ON NV.MaNhanVien = SL.MaNhanVien
+	SET LuongCoBan = LuongCoBan + 500000;
+END// 
+DELIMITER ;
 
-call updateSalary(1);
-call updateSalary(3);
+CALL updateSalary(1);
+CALL updateSalary(3);
 
 
 -- Cau 2
 -- Tao function tinh luong theo MaNhanVien --
-delimiter //
-create function calcSalary (MNV char(4))
-returns decimal
-begin
-	declare Luong decimal default 0;
-    select (LuongCoBan + PhuCap + ifnull(sum(GiaBan * SoLuong * 10/100),0)) into Luong
-	from NHANVIEN NV
-	left join DONDATHANG DH on DH.MaNhanVien = NV.MaNhanVien
-	left join CHITIETDATHANG CT on DH.SoHoaDon = CT.SoHoaDon
-	group by NV.MaNhanVien
-    having MaNhanVien = MNV;
-    return Luong;
-end//
-delimiter ;
+DELIMITER //
+CREATE FUNCTION calcSalary (MNV CHAR(4))
+RETURNS DECIMAL
+BEGIN
+	DECLARE Luong DECIMAL DEFAULT 0;
+    SELECT (LuongCoBan + PhuCap + IFNULL(SUM(GiaBan * SoLuong * 10/100),0)) INTO Luong
+	FROM NHANVIEN NV
+	LEFT JOIN DONDATHANG DH ON DH.MaNhanVien = NV.MaNhanVien
+	LEFT JOIN CHITIETDATHANG CT ON DH.SoHoaDon = CT.SoHoaDon
+	GROUP BY NV.MaNhanVien
+    HAVING MaNhanVien = MNV;
+    RETURN Luong;
+END//
+DELIMITER ;
 
 -- Test function --
-select calcSalary ('A011') as Luong;
+SELECT calcSalary ('A011') AS Luong;
+
+SELECT MaNhanVien, CONCAT(Ho,' ',Ten) AS TenNhanVien, calcSalary(MaNhanVien) AS Luong FROM NHANVIEN;
 
 
 -- Cau 3 --
 -- Them column TongTien vao table DONDATHANG --
-alter table DONDATHANG
-add column TongTien decimal(15,2);
+ALTER TABLE DONDATHANG
+ADD COLUMN TongTien DECIMAL(15,2);
 
 -- Tao trigger cap nhat TongTien sau khi insert --
-delimiter //
-create trigger after_CHITIETDATHANG_insert
-after insert on CHITIETDATHANG 
-for each row
-begin
-	 update DONDATHANG 
-	 set TongTien = ifnull(TongTien,0) + NEW.SoLuong*(NEW.GiaBan - NEW.MucGiamGia)
-     where SoHoaDon = NEW.SoHoaDon;
-end//
-delimiter ;
+DELIMITER //
+CREATE TRIGGER after_CHITIETDATHANG_insert
+AFTER INSERT ON CHITIETDATHANG 
+FOR EACH ROW
+BEGIN
+	 UPDATE DONDATHANG 
+	 SET TongTien = IFNULL(TongTien,0) + NEW.SoLuong*(NEW.GiaBan - NEW.MucGiamGia)
+     WHERE SoHoaDon = NEW.SoHoaDon;
+END//
+DELIMITER ;
 
 -- Test trigger --
 INSERT INTO CHITIETDATHANG VALUES
 (4, 'DC03', 7500, 1000, 0);
 
-select * from DONDATHANG;
+SELECT * FROM DONDATHANG;
 
 
 -- Cau 4 --
 -- Tao va them du lieu bang PHONGBAN --
- create table PHONGBAN (
-	MaPhongBan char(3) primary key,
-    TenPhongBan varchar(30),
-    SoLuongNhanVien int
- );
- insert into PHONGBAN values
- ('PNS','Phòng Nhân Sự',10),
- ('NVS','Nhân viên bán hàng',0);
+CREATE TABLE PHONGBAN (
+	MaPhongBan CHAR(3) PRIMARY KEY,
+    TenPhongBan VARCHAR(30),
+    SoLuongNhanVien INT
+);
+INSERT INTO PHONGBAN VALUES
+('PNS','Phòng Nhân Sự',10),
+('NVS','Nhân viên bán hàng',0);
  
 --  Tao bang trung gian --
- create table NHANVIENPHONGBAN (
-	MaPhongBan char(3),
-    MaNhanVien char(4),
-    constraint PK_NHANVIENPHONGBAN PRIMARY KEY(MaPhongBan,MaNhanVien),
-    foreign key (MaPhongBan) references PHONGBAN(MaPhongBan),
-    foreign key (MaNhanVien) references NHANVIEN(MaNhanVien)
- );
+CREATE TABLE NHANVIENPHONGBAN (
+	MaPhongBan CHAR(3),
+    MaNhanVien CHAR(4),
+    CONSTRAINT PK_NHANVIENPHONGBAN PRIMARY KEY(MaPhongBan,MaNhanVien),
+    FOREIGN KEY (MaPhongBan) REFERENCES PHONGBAN(MaPhongBan),
+    FOREIGN KEY (MaNhanVien) REFERENCES NHANVIEN(MaNhanVien)
+);
  
 --  Tao trigger cap nhat  so luong table PHONGBAN sau khi insert --
-delimiter //
-create trigger after_NHANVIENPHONGBAN_insert   
-after insert on NHANVIENPHONGBAN  
-for each row     
-begin   
-	update PHONGBAN         
-    set SoLuongNhanVien = (ifnull(SoLuongNhanVien,0) + 1)         
-    where MaPhongBan = NEW.MaPhongBan;     
-end//
-delimiter ; 
+DELIMITER //
+CREATE TRIGGER after_NHANVIENPHONGBAN_insert   
+AFTER INSERT ON NHANVIENPHONGBAN  
+FOR EACH ROW    
+BEGIN   
+	UPDATE PHONGBAN         
+    SET SoLuongNhanVien = (IFNULL(SoLuongNhanVien,0) + 1)         
+    WHERE MaPhongBan = NEW.MaPhongBan;     
+END//
+DELIMITER ; 
  
 -- Tao trigger cap nhat so luong table PHONGBAN sau khi delete --
-delimiter //
-create trigger affer_NHANVIENPHONGBAN_delete
-after delete on NHANVIENPHONGBAN     
-for each row     
-begin   
-    update PHONGBAN         
-    set SoLuongNhanVien = (ifnull(SoLuongNhanVien,0) - 1)         
-    where MaPhongBan = OLD.MaPhongBan;     
-end//
-delimiter ;
+DELIMITER //
+CREATE TRIGGER affer_NHANVIENPHONGBAN_delete
+AFTER DELETE ON NHANVIENPHONGBAN     
+FOR EACH ROW    
+BEGIN   
+    UPDATE PHONGBAN         
+    SET SoLuongNhanVien = (IFNULL(SoLuongNhanVien,0) - 1)         
+    WHERE MaPhongBan = OLD.MaPhongBan;     
+END//
+DELIMITER ;
 
 -- Test trigger --
-insert into NHANVIENPHONGBAN values
+INSERT INTO NHANVIENPHONGBAN VALUES
 ('PNS','A001'),
 ('NVS','H003');
 
-delete from NHANVIENPHONGBAN
-where MaPhongBan = 'PNS' and MaNhanVien = 'A001';
-select * from PHONGBAN;
+DELETE FROM NHANVIENPHONGBAN
+WHERE MaPhongBan = 'PNS' AND MaNhanVien = 'A001';
+SELECT * FROM PHONGBAN;
 
 
 -- Cau 5 --
 -- Tao trigger kiem tra truoc khi insert --
-delimiter //
-create trigger  before_NHANVIEN_insert
-before insert on NHANVIEN
-for each row
-begin
-	if (year(curdate()) - year(NEW.NgaySinh) not between 18 and 60) then
-		signal sqlstate '45000'
-        set message_text = 'Nhan vien phai tu 18 tuoi den 60';
-    end if;
-end//
-delimiter ;
+DELIMITER //
+CREATE TRIGGER  before_NHANVIEN_insert
+BEFORE INSERT ON NHANVIEN
+FOR EACH ROW
+BEGIN
+	IF (YEAR(CURDATE()) - YEAR(NEW.NgaySinh) NOT BETWEEN 18 AND 60) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Nhan vien phai tu 18 tuoi den 60';
+    END IF;
+END//
+DELIMITER ;
 
 -- Tao trigger kiem tra truoc khi update --
-delimiter //
-create trigger  before_NHANVIEN_update
-before insert on NHANVIEN
-for each row
-begin
-	if (year(curdate()) - year(NEW.NgaySinh) not between 18 and 60) then
-		signal sqlstate '45000'
-        set message_text = 'Nhan vien phai tu 18 tuoi den 60';
-    end if;
-end//
-delimiter ;
+DELIMITER //
+CREATE TRIGGER  before_NHANVIEN_update
+BEFORE UPDATE ON NHANVIEN
+FOR EACH ROW
+BEGIN
+	IF (YEAR(CURDATE()) - YEAR(NEW.NgaySinh) NOT BETWEEN 18 AND 60) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Nhan vien phai tu 18 tuoi den 60';
+    END IF;
+END//
+DELIMITER ;
 
 -- Test trigger --
 INSERT INTO NHANVIEN VALUES
