@@ -99,7 +99,7 @@ select KH.MaKhachHang, KH.TenCongTy, KH.TenGiaoDich
 from KHACHHANG KH
 join DONDATHANG DH using(MaKhachHang)
 join CHITIETDATHANG CT using(SoHoaDon)
-group by KH.MaKhachHang, KH.TenCongTy
+group by KH.MaKhachHang
 having count(distinct CT.MaHang) = 1
 	and count(case when MaHang = 'TP07' then 1 end) > 0;
 
@@ -108,7 +108,7 @@ select KH.MaKhachHang, KH.TenCongTy, KH.TenGiaoDich
 from DONDATHANG DH
 join KHACHHANG KH using(MaKhachHang)
 join CHITIETDATHANG CT using(SoHoaDon)
-group by DH.MaKhachHang, KH.TenCongTy
+group by DH.MaKhachHang
 having count(distinct CT.MaHang) >= 2
 	and count(case when MaHang = 'TP07' then 1 end) > 0
     and count(case when MaHang = 'MM01' then 1 end) = 0;
@@ -118,9 +118,9 @@ select KH.MaKhachHang, KH.TenCongTy, KH.TenGiaoDich
 from DONDATHANG DH
 join KHACHHANG KH using(MaKhachHang)
 join CHITIETDATHANG CT using(SoHoaDon)
-group by DH.MaKhachHang, KH.TenCongTy
+group by DH.MaKhachHang
 having count(distinct CT.MaHang) >= 2
-	and find_in_set('DT01',group_concat(MaHang))
+	and find_in_set('TP07',group_concat(MaHang))
     and not find_in_set('MM01',group_concat(MaHang));
 
 -- Cau 41 --

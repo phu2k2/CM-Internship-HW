@@ -222,4 +222,4 @@ from CHITIETDATHANG CT
 join MATHANG MH using(MaHang)
 join DONDATHANG DH using(SoHoaDon)
 where year(DH.NgayDatHang) = 2007
-group by MH.MaHang, MH.TenHang;
+group by MH.MaHang;
