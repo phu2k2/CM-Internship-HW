@@ -2,7 +2,7 @@
 SELECT MaHang, TenHang, TenCongTy 
 FROM NHACUNGCAP 
 JOIN MATHANG USING(MaCongTy)
-WHERE MaCongTy = 'MVT';
+WHERE n.TenCongTy = 'Công ty may mặc Việt Tiến';
 
 -- Câu 2
 SELECT DISTINCT MaCongTy, TenCongTy, DiaChi 
@@ -17,7 +17,7 @@ FROM MATHANG
 JOIN CHITIETDATHANG USING(MaHang)
 JOIN DONDATHANG USING(SoHoaDon)
 JOIN KHACHHANG USING(MaKhachHang)
-WHERE TenHang LIKE '%Sữa%' AND DonViTinh LIKE '%Hộp%';
+WHERE TenHang LIKE '%Sữa Hộp%';
 
 -- Câu 4
 SELECT TenCongTy, CONCAT(Ho, ' ', Ten) AS HoTen, NgayGiaoHang, NoiGiaoHang
