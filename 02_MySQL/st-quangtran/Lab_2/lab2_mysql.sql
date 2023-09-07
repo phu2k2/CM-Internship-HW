@@ -39,10 +39,10 @@ SELECT MaKhachHang, kh.TenCongTy, kh.TenGiaoDich
 FROM KHACHHANG kh JOIN NHACUNGCAP USING(TenGiaoDich);
 
 -- Câu 8
-Select nv1.MaNhanVien, CONCAT(nv1.Ho, ' ', nv1.Ten) AS HoTen, nv1.NgaySinh
-FROM NHANVIEN nv1
-JOIN NHANVIEN nv2 ON (nv2.NgaySinh) = (nv1.NgaySinh)
-WHERE nv2.MaNhanVien != nv1.MaNhanVien;
+SELECT NgaySinh, GROUP_CONCAT(CONCAT(Ho, " ", Ten)) AS ListNhanVien
+FROM NHANVIEN
+GROUP BY NgaySinh
+HAVING COUNT(Ho) > 1; 
 
 -- Câu 9
 SELECT SoHoaDon, TenCongTy, NgayDatHang, NoiGiaoHang
@@ -123,38 +123,31 @@ FROM NHANVIEN
 JOIN DONDATHANG USING(MaNhanVien)
 JOIN CHITIETDATHANG USING(SoHoaDon)
 GROUP BY MaNhanVien, HoTen
-ORDER BY TongSoLuong DESC
-LIMIT 1
--- HAVING SUM(SoLuong) = (
---     SELECT MAX(TongSoLuong)
---     FROM (
---         SELECT MaNhanVien, SUM(SoLuong) AS TongSoLuong
---         FROM NHANVIEN 
---         JOIN DONDATHANG USING(MaNhanVien)
---         JOIN CHITIETDATHANG USING(SoHoaDon)
---         GROUP BY MaNhanVien
---     ) AS Sub
--- );
+HAVING SUM(SoLuong) = (
+    SELECT MAX(TongSoLuong)
+    FROM (
+        SELECT MaNhanVien, SUM(SoLuong) AS TongSoLuong
+        FROM NHANVIEN 
+        JOIN DONDATHANG USING(MaNhanVien)
+        JOIN CHITIETDATHANG USING(SoHoaDon)
+        GROUP BY MaNhanVien
+    ) AS Sub
+);
 
 -- Câu 21
--- SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
--- FROM DONDATHANG
--- JOIN CHITIETDATHANG USING(SoHoaDon)
--- GROUP BY SoHoaDon
--- HAVING SUM(SoLuong) = (
--- 	SELECT MIN(TongSoLuong) 
---     FROM ( SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
---     FROM DONDATHANG 
---     JOIN CHITIETDATHANG USING(SoHoaDon)
---     GROUP BY SoHoaDon
--- 	) AS Sub
--- );
-SELECT ddh.SoHoaDon, MIN(ct.SoLuong) AS SoLuongItNhat
-FROM DONDATHANG ddh
-JOIN CHITIETDATHANG ct USING(SoHoaDon)
-GROUP BY ddh.SoHoaDon
-ORDER BY SoLuongItNhat ASC
-LIMIT 1;
+SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
+FROM DONDATHANG
+JOIN CHITIETDATHANG USING(SoHoaDon)
+GROUP BY SoHoaDon
+HAVING SUM(SoLuong) = (
+	SELECT MIN(TongSoLuong) 
+    FROM ( SELECT SoHoaDon, SUM(SoLuong) AS TongSoLuong
+    FROM DONDATHANG 
+    JOIN CHITIETDATHANG USING(SoHoaDon)
+    GROUP BY SoHoaDon
+	) AS Sub
+);
+
 -- Câu 22 
 SELECT MAX(TongTien) AS SoTienNhieuNhat
 FROM (
@@ -313,24 +306,23 @@ FROM CHITIETDATHANG
 WHERE MaHang = MATHANG.MaHang);
 
 -- Câu 39
-SELECT d.MaKhachHang, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
-FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-GROUP BY d.MaKhachHang
-HAVING CacMaLoaiHang = 'TP03' AND SoLuongLoaiHang = 1;
-
--- Câu 40
-SELECT d.MaKhachHang, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
-FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-GROUP BY d.MaKhachHang
-HAVING CacMaLoaiHang LIKE '%TP07%' AND CacMaLoaiHang NOT LIKE '%MM01%' AND SoLuongLoaiHang >= 2;
-
--- Câu 41
-SELECT d.SoHoaDon, GROUP_CONCAT(c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+SELECT d.MaKhachHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
 GROUP BY d.MaKhachHang 
-HAVING CacMaLoaiHang LIKE '%DT01%'
-AND CacMaLoaiHang LIKE '%DT02%'
-AND CacMaLoaiHang LIKE '%DT03%'
-AND CacMaLoaiHang LIKE '%DT04%'
-AND (CacMaLoaiHang NOT LIKE '%DC01%'
-OR CacMaLoaiHang NOT LIKE '%TP03%');
+HAVING SUM(CASE WHEN MaHang = 'TP07' THEN 1 ELSE 0 END) >= 1 AND SUM(CASE WHEN MaHang <> 'TP07' THEN 1 ELSE 0 END) = 0;
+
+-- Câu 40
+SELECT d.MaKhachHang, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+GROUP BY d.MaKhachHang
+HAVING JSON_SEARCH(CacMaLoaiHang, 'all', 'TP07') IS NOT NULL 
+AND JSON_SEARCH(CacMaLoaiHang, 'all', 'MM01') IS NULL
+AND SoLuongLoaiHang >= 2;
+
+-- Câu 41
+SELECT d.SoHoaDon, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
+FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+GROUP BY d.MaKhachHang 
+HAVING 
+JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DT01', '$.DT02', '$.DT03', '$.DT04') = 1
+AND NOT JSON_CONTAINS_PATH(CacMaLoaiHang, 'one','$.DC01', '$.TP03');
