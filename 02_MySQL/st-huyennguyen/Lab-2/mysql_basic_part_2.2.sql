@@ -52,7 +52,7 @@ set PhuCap = PhuCap + LuongCoBan * 0.5;
 update NHANVIEN NV1
 left join (select MaNhanVien from NHANVIEN NV
 	join DONDATHANG DH using (MaNhanVien) 
-    where year(NgayDatHang) = 2007) NV2 using(MaNhanVien)
+    where year(NgayDatHang) = 2003) NV2 using(MaNhanVien)
 set LuongCoBan = LuongCoBan * 3/4
 where NV2.MaNhanVien is null;
 
@@ -122,7 +122,7 @@ group by DH.MaKhachHang, KH.TenCongTy
 having count(distinct CT.MaHang) >= 2
 	and find_in_set('DT01',group_concat(MaHang))
     and not find_in_set('MM01',group_concat(MaHang));
-	
+
 -- Cau 41 --
 select SoHoaDon
 from CHITIETDATHANG
