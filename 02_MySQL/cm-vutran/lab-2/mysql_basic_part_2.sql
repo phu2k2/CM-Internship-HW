@@ -147,8 +147,8 @@ UPDATE DONDATHANG SET NgayChuyenHang = NgayDatHang
 WHERE NgayChuyenHang IS NULL;
 
 -- Cau 27: Tăng số lượng hàng của những mặt hàng do công ty VINAMILK cung cấp lên gấp đôi?
-UPDATE MATHANG SET SoLuong = SoLuong * 2 
-WHERE MaCongTy = 'VNM';
+UPDATE MATHANG MH JOIN NHACUNGCAP NCC ON MH.MaCongTy = NCC.MaCongTy SET MH.SoLuong = MH.SoLuong * 2 
+WHERE NCC.TenGiaoDich = 'VINAMILK';
 
 -- Cau 28: Cập nhật giá trị của trường NOIGIAOHANG trong bảng DONDATHANG bằng địa chỉ của 
 -- khách hàng đối với những đơn đặt hàng chưa xác định được nơi giao hàng (giá trị trường NOIGIAOHANG bằng NULL)? 
@@ -159,7 +159,6 @@ WHERE DDH.NoiGiaoHang IS NULL;
 -- trùng với tên công ty và tên giao dịch của một nhà cung cấp nào đó thì địa chỉ, điện thoại, fax và e-mail phải giống nhau? 
 UPDATE KHACHHANG KH JOIN NHACUNGCAP NCC ON KH.TenCongTy = NCC.TenCongTy AND KH.TenGiaoDich = NCC.TenGiaoDich 
 SET KH.DiaChi = NCC.DiaChi, KH.DienThoai = NCC.DienThoai, KH.Fax = NCC.Fax, KH.Email = NCC.Email 
-WHERE KH.TenCongTy = NCC.TenCongTy AND KH.TenGiaoDich = NCC.TenGiaoDich;
 
 -- Cau 30: Tăng lương lên gấp rưỡi cho những nhân viên bán được số lượng hàng nhiều hơn 100 trong năm 2003? 
 UPDATE NHANVIEN NV
