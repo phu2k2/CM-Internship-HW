@@ -51,7 +51,7 @@ CREATE TRIGGER calBillSum
     ON `CHITIETDATHANG` FOR EACH ROW
 BEGIN
     UPDATE `DONDATHANG` 
-    SET `TongTien` = IFNULL(`TongTien`, 0) + IFNULL(NEW.`SoLuong` * (NEW.`GiaBan` - NEW.`MucGiamGia`),0)
+    SET `TongTien` = IFNULL(`TongTien`, 0) + IFNULL(NEW.`SoLuong` * (NEW.`GiaBan` - IFNULL(NEW.`MucGiamGia`,0)),0)
     WHERE `SoHoaDon` = NEW.`SoHoaDon`;
 END $$
 
