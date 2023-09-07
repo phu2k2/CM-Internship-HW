@@ -101,7 +101,7 @@ SELECT
 FROM `CHITIETDATHANG` c
     JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
     JOIN `KHACHHANG` kh ON kh.`MaKhachHang` = d.`MaKhachHang`
-GROUP BY c.`SoHoaDon`, kh.`TenCongTy`
+GROUP BY c.`SoHoaDon`
 ORDER BY c.`SoHoaDon`;
 
 -- Question 14
@@ -111,7 +111,8 @@ SELECT
 FROM `CHITIETDATHANG` c
     JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
     JOIN `MATHANG` m ON m.`MaHang` = c.`MaHang`
-GROUP BY m.`MaHang`, m.`TenHang`
+WHERE YEAR(d.`NgayDatHang`) = 2007
+GROUP BY m.`MaHang`
 HAVING COUNT(m.`MaHang`) = 1;
 
 -- Question 15
@@ -151,20 +152,20 @@ FROM `CHITIETDATHANG` c
     JOIN `MATHANG` m ON c.`MaHang` = m .`MaHang`
     JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
 WHERE YEAR(`NgayDatHang`) = 2007
-GROUP BY m.`MaHang`, m.`TenHang`;
+GROUP BY m.`MaHang`;
 
 -- Question 19
 SELECT 
     m.`MaHang`, 
     m.`TenHang`, 
-    IFNULL(SUM(IFNULL(c.`SoLuong`,0)), 0) as SoLuongDaBan,
-    IFNULL(IFNULL(m.`SoLuong`,0) - SUM(c.`SoLuong`), m.`SoLuong`) as SoLuongConLai
+    SUM(IFNULL(c.`SoLuong`, 0)) as SoLuongDaBan,
+    IFNULL(m.SoLuong, 0) - IFNULL(SUM(c.SoLuong), 0) as SoLuongConLai
 FROM `MATHANG` m
     LEFT JOIN `CHITIETDATHANG` c ON c.`MaHang` = m.`MaHang`
-GROUP BY m.`MaHang`, m.`TenHang`;
+GROUP BY m.`MaHang`;
 
 -- Question 20
-
+-- Solution 1:
 SELECT 
     CONCAT(n.`Ho`, ' ', n.`Ten`) as HoTen,
     SUM(c.`SoLuong`) as TongSoLuong
@@ -178,6 +179,24 @@ HAVING TongSoLuong = (
         JOIN `CHITIETDATHANG` c ON d.`SoHoaDon` = c.`SoHoaDon`
     GROUP BY d.`MaNhanVien`
     ORDER BY TSL DESC
+    LIMIT 1
+);
+
+-- Solution 2:
+WITH TEMP_SL AS (
+    SELECT d.`MaNhanVien`, SUM(c.`SoLuong`) as TongSoLuong
+    FROM `DONDATHANG` d 
+        JOIN `CHITIETDATHANG` c ON d.`SoHoaDon` = c.`SoHoaDon`
+    GROUP BY d.`MaNhanVien`
+)
+SELECT 
+    CONCAT(n.`Ho`, ' ', n.`Ten`) as HoTen,
+    sl.`TongSoLuong` 
+FROM `TEMP_SL` sl
+    JOIN `NHANVIEN` n ON n.`MaNhanVien` = sl.`MaNhanVien`
+WHERE sl.`TongSoLuong` = (
+    SELECT TongSoLuong FROM TEMP_SL 
+    ORDER BY TongSoLuong DESC
     LIMIT 1
 );
 -- Question 21
@@ -209,7 +228,7 @@ LIMIT 1;
 -- Question 23
 SELECT 
     c.`SoHoaDon`, 
-    GROUP_CONCAT(m.`TenHang` SEPARATOR ', ') as DanhSachMatHang, 
+    GROUP_CONCAT(m.`MaHang` SEPARATOR ', ') as DanhSachMatHang, 
     SUM(c.`SoLuong` * (`GiaBan` - `MucGiamGia`)) as Tien
 FROM `CHITIETDATHANG` c
     JOIN `MATHANG` m ON c.`MaHang` = m.`MaHang` 
@@ -259,7 +278,7 @@ SELECT
 FROM `MATHANG` m
     LEFT JOIN `CHITIETDATHANG` c ON m.`MaHang` = c.`MaHang`
     LEFT JOIN `DONDATHANG` d ON d.`SoHoaDon` = c.`SoHoaDon`
-GROUP BY m.`MaHang`, m.`TenHang`;
+GROUP BY m.`MaHang`;
 
 -- Question 26
 UPDATE `DONDATHANG` d1
@@ -285,7 +304,9 @@ UPDATE `KHACHHANG` kh
 SET 
     kh.`DiaChi` = n.`DiaChi`,
     kh.`DienThoai` = n.`DienThoai`,
-    kh.`Email` = n.`Email`;
+    kh.`Email` = n.`Email`,
+    kh.`Fax` = n.`Fax`;
+
 
 -- Question 30
 UPDATE `NHANVIEN` n
@@ -300,6 +321,24 @@ UPDATE `NHANVIEN` n
 SET n.`LuongCoBan` = n.`LuongCoBan` * 1.5;
 
 -- Question 31
+-- Solution 1:
+WITH TEMP_SL AS (
+    SELECT d.`MaNhanVien`,SUM(`SoLuong`) as TongSoLuong
+    FROM `CHITIETDATHANG` c
+        JOIN `DONDATHANG` d ON c.`SoHoaDon` = d.`SoHoaDon`
+    GROUP BY `MaNhanVien`
+) 
+UPDATE `NHANVIEN` n
+    JOIN `TEMP_SL` tsl ON n.`MaNhanVien` = tsl.`MaNhanVien`
+SET `PhuCap` = `PhuCap` + `LuongCoBan` / 2
+WHERE tsl.`TongSoLuong` = (
+    SELECT TongSoLuong
+    FROM TEMP_SL
+    ORDER BY TongSoLuong DESC
+    LIMIT 1
+);
+
+-- Solution 2:
 UPDATE `NHANVIEN` n
     JOIN (
         SELECT `MaNhanVien`
@@ -361,7 +400,7 @@ WHERE d.`MaKhachHang` IS NULL;
 -- Question 38
 DELETE m
 FROM `MATHANG` m
-    LEFT JOIN `CHITIETDATHANG` c ON c.`MATHANG` = m.`MATHANG`
+    LEFT JOIN `CHITIETDATHANG` c ON c.`MaHang` = m.`MaHang`
 WHERE m.`SoLuong` = 0 AND c.`MaHang` IS NULL;
 
 -- Question 39
@@ -379,7 +418,7 @@ SELECT
 FROM `DONDATHANG` d
     JOIN `KHACHHANG` kh ON d.`MaKhachHang` = kh.`MaKhachHang`
     JOIN `CHITIETDATHANG` c ON c.`SoHoaDon` = d.`SoHoaDon`
-GROUP BY kh.`MaKhachHang`, kh.`TenCongTy`
+GROUP BY kh.`MaKhachHang`
 HAVING COUNT(DISTINCT c.`MaHang`) >= 2 
     AND COUNT(CASE WHEN c.`MaHang` = 'MM01' THEN 1 END) = 0 
     AND COUNT(CASE WHEN c.`MaHang` = 'TP07' THEN 1 END) > 0;
