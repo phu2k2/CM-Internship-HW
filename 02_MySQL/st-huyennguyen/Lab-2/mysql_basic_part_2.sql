@@ -2,15 +2,14 @@
 select TenHang
 from MATHANG
 join NHACUNGCAP using(MaCongTy)
-where TenCongTy like '%Việt Tiến%';
+where TenCongTy like '%Công ty%Việt Tiến%';
 
 -- Cau 2 --
-select TenCongTy, DiaChi
+select distinct TenCongTy, DiaChi
 from NHACUNGCAP
 join MATHANG using(MaCongTy)
 join LOAIHANG using(MaLoaiHang)
-where TenLoaiHang = 'Thực phẩm'
-group by TenCongTy, DiaChi;
+where TenLoaiHang = 'Thực phẩm';
 
 -- Cau 3 --
 select TenGiaoDich
@@ -61,7 +60,7 @@ join KHACHHANG KH using(MaKhachHang)
 where DH.NoiGiaoHang = KH.DiaChi;
 
 -- Cau 10 --
-select TenHang
+select MH.MaHang, MH.TenHang
 from MATHANG MH
 left join CHITIETDATHANG CT using(MaHang)
 where CT.MaHang is null;
@@ -75,7 +74,7 @@ where DH.MaNhanVien is null;
 -- Cau 12 --
 select MaNhanVien, concat(Ho,' ',Ten) as TenNhanVien 
 from NHANVIEN
-where LuongCoBan = (select LuongCoBan from NHANVIEN order by LuongCoBan desc limit 1); 
+where LuongCoBan = (select max(LuongCoBan) from NHANVIEN); 
 
 -- Cau 13 --
 select KH.TenCongTy as KhachHang, DH.SoHoaDon, 

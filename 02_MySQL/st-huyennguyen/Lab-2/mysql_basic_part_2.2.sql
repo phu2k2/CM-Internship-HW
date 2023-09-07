@@ -35,19 +35,26 @@ set LuongCoBan = LuongCoBan * 1.5;
 
 -- Cau 31 --
 update NHANVIEN NV
-join (select DH.MaNhanVien 
+join (select MaNhanVien, sum(SoLuong) as SoLuongHang
 	from DONDATHANG DH 
 	join CHITIETDATHANG CT using(SoHoaDon)
 	group by MaNhanVien 
-	order by sum(SoLuong) desc limit 1
+	having SoLuongHang = (
+		select sum(SoLuong) as SoLuongHang
+		from CHITIETDATHANG CT
+		join DONDATHANG DH using(SoHoaDon)
+		group by MaNhanVien 
+		order by SoLuongHang desc limit 1)
 ) SL using(MaNhanVien)
 set PhuCap = PhuCap + LuongCoBan * 0.5;
 
 -- Cau 32 --
-update NHANVIEN NV
-left join DONDATHANG DH using(MaNhanVien)
+update NHANVIEN NV1
+left join (select MaNhanVien from NHANVIEN NV
+	join DONDATHANG DH using (MaNhanVien) 
+    where year(NgayDatHang) = 2007) NV2 using(MaNhanVien)
 set LuongCoBan = LuongCoBan * 3/4
-where year(NgayDatHang) = 2003 and DH.MaNhanVien is null;
+where NV2.MaNhanVien is null;
 
 -- Cau 33 --
 update DONDATHANG D1
@@ -106,6 +113,16 @@ having count(distinct CT.MaHang) >= 2
 	and count(case when MaHang = 'TP07' then 1 end) > 0
     and count(case when MaHang = 'MM01' then 1 end) = 0;
 
+-- Solution 2: FIND_IN_SET
+select KH.MaKhachHang, KH.TenCongTy, KH.TenGiaoDich
+from DONDATHANG DH
+join KHACHHANG KH using(MaKhachHang)
+join CHITIETDATHANG CT using(SoHoaDon)
+group by DH.MaKhachHang, KH.TenCongTy
+having count(distinct CT.MaHang) >= 2
+	and find_in_set('DT01',group_concat(MaHang))
+    and not find_in_set('MM01',group_concat(MaHang));
+	
 -- Cau 41 --
 select SoHoaDon
 from CHITIETDATHANG
