@@ -191,7 +191,7 @@ WHERE MaNhanVien IN (SELECT MaNhanVien FROM NhanVienBanDuocNhieuHangNhat);
 
 -- Cau 32: Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào?
 UPDATE NHANVIEN SET LuongCoBan = LuongCoBan - (LuongCoBan* 0.25)
-WHERE YEAR(NgayLamViec) = 2003 AND MaNhanVien NOT IN( 
+WHERE MaNhanVien NOT IN( 
 	SELECT NV.MaNhanVien FROM NHANVIEN NV JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien WHERE YEAR(DDH.NgayDathang) = 2003 
 );
 
@@ -201,7 +201,7 @@ ADD SoTien NUMERIC(38,2);
 UPDATE DONDATHANG DDH JOIN (SELECT CTDH.SoHoaDon, SUM((CTDH.GiaBan * CTDH.SoLuong - CTDH.SoLuong * CTDH.MucGiamGia)) as TienPhaiTra
 FROM CHITIETDATHANG CTDH
 GROUP BY CTDH.SoHoaDon) AS T ON DDH.SoHoaDon = T.SoHoaDon
-SET d.SoTien = T.TienPhaiTra;
+SET DDH.SoTien = T.TienPhaiTra;
 
 -- Câu 34: Xoá khỏi bảng NHANVIEN những nhân viên đã làm việc trong công ty quá 40 năm?
 DELETE FROM NHANVIEN WHERE TIMESTAMPDIFF(YEAR, NgayLamViec, CURDATE()) > 40;
