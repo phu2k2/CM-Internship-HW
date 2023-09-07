@@ -21,23 +21,19 @@ FROM DONDATHANG d JOIN KHACHHANG k ON d.MaKhachHang = k.MaKhachHang
 WHERE d.SoHoaDon = 1;
 
 ---- Câu 5 ----
-SELECT Ho, Ten, (LuongCoBan + PhuCap) AS Luong
+SELECT Ho, Ten,(LuongCoBan + IFNULL(PhuCap,0)) AS Luong
 FROM NHANVIEN ;
 
 ---- Câu 6 ----
-SELECT m.TenHang, (c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) as TienPhaiTra
+SELECT m.TenHang, c.SoLuong*(c.giaban - c.mucgiam) as TienPhaiTra
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN MATHANG m ON c.MaHang = m.MaHang
 WHERE d.SoHoaDon = 3;
 
 
 ---- Câu 7 ----
-SELECT 
-    k.TenCongTy, k.TenGiaoDich
-FROM
-    KHACHHANG k,
-    NHACUNGCAP n
-WHERE
-    k.TenGiaoDich = n.TenGiaoDich;	
+SELECT k.TenCongTy, k.TenGiaoDich
+FROM KHACHHANG k JOIN NHACUNGCAP n ON k.TenGiaoDich = n.TenGiaoDich	
+    
 
 ---- Câu 8 ----
 SELECT MaNhanVien, CONCAT(Ho, '', Ten) AS HoTen FROM NHANVIEN WHERE DAY(NgaySinh) IN(
@@ -64,8 +60,10 @@ FROM NHANVIEN n
 WHERE n.LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 
 ---- Câu 13 ----
-SELECT c.SoHoaDon, SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTra
+SELECT c.SoHoaDon, SUM((c.SoLuong*(c.giaban - c.mucgiam))) as TienPhaiTra, k.TenCongTy as KhachHang
 FROM CHITIETDATHANG c 
+JOIN DONDATHANG d ON c.SoHoaDon = d.SoHoaDon
+JOIN KHACHHANG k ON d.SoHoaDon = k.SoHoaDon
 GROUP BY c.SoHoaDon;    
 
 ---- Câu 14 ----
@@ -89,7 +87,7 @@ GROUP BY n.MaNhanVien;
 SELECT YEAR(d.NgayDatHang) AS Nam, MONTH(d.NgayDatHang) AS Thang, SUM(((c.SoLuong * c.GiaBan) - (c.SoLuong * c.MucGiamGia))) AS TongSoTien
 FROM NHACUNGCAP n JOIN MATHANG m ON n.MaCongTy = m.MaCongTy JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang JOIN DONDATHANG d ON d.SoHoaDon = c.SoHoaDon
 WHERE Nam = 2007
-GROUP BY YEAR(d.NgayDatHang), MONTH(d.NgayDatHang) ;
+GROUP BY MONTH(d.NgayDatHang) ;
 
 ---- Câu 18 ----
 SELECT n.MaCongTy, n.TenCongTy, SUM(c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia) - SUM(m.GiaHang * c.SoLuong ) as TongTienHangThuDuoc
@@ -103,29 +101,29 @@ FROM MATHANG m JOIN CHITIETDATHANG c ON c.MaHang = m.MaHang
 GROUP BY m.MaHang;
 
 ---- Câu 20 ----
-SELECT d.MaNhanVien, CONCAT(n.Ho , " ", n.Ten) AS HoTen, SUM(c.SoLuong) AS SoLuongBanDuoc
+WITH SOLUONGHANGHOA AS (
+	SELECT SUM(c.SoLuong) AS TongSoLuongTheoNhanVien	
+	FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN NHANVIEN n ON d.MaNhanVien = n.MaNhanVien
+    GROUP BY d.MaNhanVien
+) 
+
+SELECT n.MaNhanVien,n.Ho,n.Ten, SUM(c.SoLuong) AS SoLuongNhieuNhat
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon JOIN NHANVIEN n ON d.MaNhanVien = n.MaNhanVien
-GROUP BY d.MaNhanVien
-HAVING SoLuongBanDuoc = (
-  SELECT MAX(T.SoLuongBanDuoc)
-  FROM (
-   SELECT d.MaNhanVien, SUM(c.SoLuong) AS SoLuongBanDuoc	
-   FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-   GROUP BY d.MaNhanVien
-  ) AS T
-);
+GROUP BY n.MaNhanVien,n.Ho,n.Ten
+HAVING SoLuongNhieuNhat >= ALL(SELECT TongSoLuongTheoNhanVien FROM SOLUONGHANGHOA)
+
 
 ---- Câu 21 ----
-SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
-FROM CHITIETDATHANG c 
-GROUP BY c.SoHoaDon 
-HAVING TongSoLuong = (
- SELECT MIN(T.TongSoLuong) FROM(
-  SELECT c.SoHoaDon, SUM(c.SoLuong) AS TongSoLuong
-  FROM CHITIETDATHANG c 
-  GROUP BY c.SoHoaDon 
- ) AS T
-);
+WITH SOLUONGHANGHOA AS (
+	SELECT SUM(SoLuong) AS SoLuongNhoNhat	
+	FROM CHITIETDATHANG 
+    GROUP BY SoHoaDon
+) 
+
+SELECT SoHoaDon, SUM(SoLuong) AS total
+FROM CHITIETDATHANG
+GROUP BY SoHoaDon
+HAVING total <= ALL(SELECT SoLuongNhoNhat FROM SOLUONGHANGHOA)
 
 ---- Câu 22 ----
 SELECT SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTraNhieuNhat
@@ -156,7 +154,7 @@ SELECT c.MaHang, m.TenHang,
  COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 8 THEN c.SoLuong END), 0) Thang_8,
  COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 9 THEN c.SoLuong END), 0) Thang_9,
  COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 10 THEN c.SoLuong END), 0) Thang_10,
- COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 11 THEN c.SoLuong END), 0) Thang_11,
+ COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 11 THEN c.SoLxuong END), 0) Thang_11,
  COALESCE(sum(CASE WHEN MONTH(d.NgayDatHang) = 12 THEN c.SoLuong END), 0) Thang_12,
  SUM(c.SoLuong) Nam_2007
 FROM DONDATHANG d JOIN CHITIETDATHANG c JOIN MATHANG m ON d.SoHoaDon = c.SoHoaDon AND c.MaHang = m.MaHang
