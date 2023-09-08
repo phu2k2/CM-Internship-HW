@@ -169,8 +169,9 @@ WHERE NgayChuyenHang IS NULL;
 
 ---- Câu 27 ----
 UPDATE MATHANG
+JOIN NHACUNGCAP using(MaCongTy)
 SET SoLuong = SoLuong *2
-WHERE MaCongTy = 'VNM';
+WHERE TenCongTy = 'VINAMILK';
 
 ---- Câu 28 ----
 UPDATE DONDATHANG D
@@ -214,10 +215,13 @@ SET N.PhuCap = 1/2 * N.LuongCoBan;
 
 ---- Câu 32 ----
 UPDATE NHANVIEN N
-JOIN DONDATHANG D
-ON N.MaNhanVien = D.MaNhanVien
-SET N.LuongCoBan = 0.75*N.LuongCoban 
-WHERE YEAR(D.NgayGiaoHang)!=2003 ;	
+LEFT JOIN (
+    SELECT DISTINCT DDH.MaNhanVien
+    FROM DONDATHANG DDH
+    WHERE YEAR(DDH.NgayDatHang) = 2003
+    ) AS NV_2023 ON N.MaNhanVien = NV_2023.MaNhanVien
+SET N.LuongCoBan = N.LuongCoBan * 0.75
+WHERE NV_2023.MaNhanVien IS NULL;	
 
 ---- Câu 33 ----
 ALTER TABLE DONDATHANG
@@ -230,7 +234,7 @@ SET d.SoTien = T.TienPhaiTra;
 
 ---- Câu 34 ----
 DELETE FROM NHANVIEN
-WHERE ROUND(DATEDIFF(CURDATE(),NgayLamViec)/365,0) >= 40 ;
+WHERE TIMESTAMPDIFF(YEAR, ngaylamviec, NOW()) > 40; ;
 
 ---- Câu 35 ----
 DELETE FROM DONDATHANG
