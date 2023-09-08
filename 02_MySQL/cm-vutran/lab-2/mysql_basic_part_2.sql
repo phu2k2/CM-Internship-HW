@@ -79,8 +79,8 @@ WHERE YEAR(DDH.NgayDatHang) = 2007
 GROUP BY MH.MaHang ;
 
 -- Cau 19: Số lượng hàng còn lại của mỗi mặt hàng mà công ty đã có (tổng số lượng hàng hiện có và đã bán)?
-SELECT MH.MaHang, MH.TenHang,SUM(MH.SoLuong) - SUM(CTDH.SoLuong) AS TongSoHangHienCo, SUM(CTDH.SoLuong) AS TongSoHangDaBan
-FROM MATHANG MH JOIN CHITIETDATHANG CTDH ON CTDH.MaHang = MH.MaHang 
+SELECT MH.MaHang, MH.TenHang,IFNULL(MH.SoLuong, 0) - IFNULL(SUM(CTDH.SoLuong), 0) AS TongSoHangHienCo, IFNULL(SUM(CTDH.SoLuong), 0) AS TongSoHangDaBan
+FROM MATHANG MH LEFT JOIN CHITIETDATHANG CTDH ON CTDH.MaHang = MH.MaHang 
 GROUP BY MH.MaHang;
 
 -- Cau 20: Nhân viên nào của công ty bán được số lượng hàng nhiều nhất và số lượng hàng bán được của những nhân viên này là bao nhiêu? 
