@@ -54,7 +54,7 @@ FOR EACH ROW
 BEGIN
 
 	UPDATE DONDATHANG 
-	SET TongTien = IFNULL(TongTien,0) + IFNULL(NEW.SoLuong,0)*(IFNULL(NEW.GiaBan,0) - IFNULL(NEW.MucGiamGia),0)
+	SET TongTien = IFNULL(TongTien,0) + IFNULL(NEW.SoLuong,0)*(IFNULL(NEW.GiaBan,0) - IFNULL(NEW.MucGiamGia,0))
     WHERE SoHoaDon = NEW.SoHoaDon;
 END//
 DELIMITER ;
