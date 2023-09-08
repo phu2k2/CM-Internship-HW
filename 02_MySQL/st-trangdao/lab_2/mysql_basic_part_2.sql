@@ -7,7 +7,7 @@ JOIN `NHACUNGCAP` ON MATHANG.`MaCongTy`=NHACUNGCAP.`MaCongTy` AND TenCongTy LIKE
 
 -- QUESTION 2
 SELECT DISTINCT TenCongTy, DiaChi 
-FROM ( NHACUNGCAP JOIN MATHANG ON NHACUNGCAP.MaCongTy = MATHANG.MaCongTy) 
+FROM NHACUNGCAP JOIN MATHANG ON NHACUNGCAP.MaCongTy = MATHANG.MaCongTy 
 JOIN LOAIHANG ON LOAIHANG.MaLoaiHang = MATHANG.MaLoaiHang AND TenLoaiHang = 'Thực phẩm';
 
 
@@ -78,7 +78,8 @@ GROUP BY D.`SoHoaDon`;
 
 --QUESTION 14
 SELECT TenHang 
-FROM (DONDATHANG JOIN `CHITIETDATHANG` ON DONDATHANG.`SoHoaDon` = CHITIETDATHANG.`SoHoaDon` AND YEAR(NgayDatHang) = 2007)
+FROM DONDATHANG 
+JOIN `CHITIETDATHANG` ON DONDATHANG.`SoHoaDon` = CHITIETDATHANG.`SoHoaDon` AND YEAR(NgayDatHang) = 2007
 JOIN `MATHANG` ON CHITIETDATHANG.`MaHang` = MATHANG.`MaHang`
 GROUP BY CHITIETDATHANG.`MaHang`
 HAVING COUNT(*)=1; 
@@ -116,7 +117,8 @@ GROUP BY Thang;
 
 --QUESTION 18
 SELECT TenHang , SUM(C.SoLuong*(GiaBan - MucGiamGia - `GiaHang`)) AS TienLoi
-FROM (DONDATHANG JOIN `CHITIETDATHANG` AS C ON DONDATHANG.`SoHoaDon` = C.`SoHoaDon` AND YEAR(NgayDatHang) = 2007)
+FROM DONDATHANG 
+JOIN `CHITIETDATHANG` AS C ON DONDATHANG.`SoHoaDon` = C.`SoHoaDon` AND YEAR(NgayDatHang) = 2007
 JOIN `MATHANG` ON C.`MaHang` = MATHANG.`MaHang`
 GROUP BY C.`MaHang`
 
@@ -140,7 +142,6 @@ HAVING SoLuongBan = (SELECT SUM(C.SoLuong) AS SoLuongBan
                     LIMIT 1);
 
 
-
 --QUESTION 21
 SELECT SoHoaDon, SUM(`SoLuong`) AS SoLuongItNhat
 FROM `CHITIETDATHANG`
@@ -152,26 +153,17 @@ HAVING SUM(`SoLuong`)  = (SELECT SUM(SoLuong)
                           LIMIT 1);
 
 --QUESTION 22
--- Số tiền nhiều nhất mà mỗi khách hàng bỏ ra trong các đơn hàng
-SELECT KHACHHANG.`MaKhachHang`, KHACHHANG.`TenCongTy`, MAX(TongSoTien) as SoTienNhieuNhat 
-FROM `KHACHHANG` 
-LEFT JOIN(SELECT DONDATHANG.`MaKhachHang`, C.`SoHoaDon`, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) as TongSoTien
-    FROM `CHITIETDATHANG` AS C
-    JOIN `DONDATHANG` ON C.`SoHoaDon` = DONDATHANG.`SoHoaDon`
-    GROUP BY DONDATHANG.`SoHoaDon`
-    ) T ON KHACHHANG.`MaKhachHang` = T.`MaKhachHang`
-GROUP BY KHACHHANG.`MaKhachHang`, KHACHHANG.`TenCongTy`;
-
--- Số tiền của 1 khách hàng có đơn hàng có số tiền nhiều nhất
 SELECT TenCongTy, SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) as TongSoTien
 FROM `KHACHHANG`
 JOIN `DONDATHANG` ON KHACHHANG.`MaKhachHang` = DONDATHANG.`MaKhachHang`
 JOIN `CHITIETDATHANG` AS C ON DONDATHANG.`SoHoaDon` = C.`SoHoaDon`
 GROUP BY DONDATHANG.`SoHoaDon`
-HAVING TongSoTien = (SELECT MAX(SoLuongBan) FROM (SELECT SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) AS SoLuongBan
-                                                FROM DONDATHANG
-                                                JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
-                                                GROUP BY DONDATHANG.`SoHoaDon`) AS TH );
+HAVING TongSoTien = (SELECT SUM(C.SoLuong * (C.GiaBan - C.MucGiamGia)) AS SoLuongBan
+                    FROM DONDATHANG
+                    JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+                    GROUP BY DONDATHANG.`SoHoaDon` 
+                    ORDER BY SoLuongBan DESC 
+                    LIMIT 1 );
 
 --QUESTION 23
 SELECT C.`SoHoaDon`, GROUP_CONCAT(TenHang SEPARATOR '\n'), SUM(C.SoLuong*(GiaBan - MucGiamGia)) AS TienKHPhaiTra
@@ -251,15 +243,32 @@ JOIN (SELECT MaNhanVien
     HAVING SUM(CHITIETDATHANG.SoLuong) > 100) AS T ON T.`MaNhanVien` = NHANVIEN.`MaNhanVien`
 SET  `LuongCoBan`= `LuongCoBan` * 1.5;
 
+-- UPDATE NHANVIEN
+-- SET  `LuongCoBan`= `LuongCoBan` * 1.5
+-- WHERE `MaNhanVien` IN(SELECT MaNhanVien
+--                         FROM DONDATHANG 
+--                         JOIN CHITIETDATHANG ON DONDATHANG.SoHoaDon = CHITIETDATHANG.SoHoaDon AND YEAR(DONDATHANG.NgayDatHang) = 2003
+--                         GROUP BY MaNhanVien
+--                         HAVING SUM(CHITIETDATHANG.SoLuong) > 100);
+
 --QUESTION 31
+-- UPDATE NHANVIEN 
+-- JOIN  (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
+--     FROM DONDATHANG
+--     JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+--     GROUP BY DONDATHANG.MaNhanVien
+-- ) AS T ON NHANVIEN.MaNhanVien = T.MaNhanVien
+-- SET `PhuCap` = `LuongCoBan`* 0.5
+-- WHERE SoLuongBan = (SELECT  SUM(C.SoLuong) 
+--                             FROM DONDATHANG
+--                             JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
+--                             GROUP BY DONDATHANG.MaNhanVien
+--                             ORDER BY SUM(C.SoLuong) DESC
+--                             LIMIT 1);
+
 UPDATE NHANVIEN 
-JOIN  (SELECT DONDATHANG.MaNhanVien, SUM(C.SoLuong) AS SoLuongBan
-    FROM DONDATHANG
-    JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
-    GROUP BY DONDATHANG.MaNhanVien
-) AS T ON NHANVIEN.MaNhanVien = T.MaNhanVien
 SET `PhuCap` = `LuongCoBan`* 0.5
-WHERE SoLuongBan = (SELECT  SUM(C.SoLuong) 
+WHERE `MaNhanVien` IN(SELECT `MaNhanVien`
                             FROM DONDATHANG
                             JOIN CHITIETDATHANG AS C ON C.SoHoaDon = DONDATHANG.SoHoaDon
                             GROUP BY DONDATHANG.MaNhanVien
@@ -337,9 +346,10 @@ COUNT(CASE WHEN `MaHang`='DT01' THEN 1 END) > 0
 AND COUNT(CASE WHEN `MaHang`='DT02' THEN 1 END) > 0 
 AND COUNT(CASE WHEN `MaHang`='DT03' THEN 1 END) > 0 
 AND COUNT(CASE WHEN `MaHang`='DT04' THEN 1 END) > 0 
-AND 
-    (COUNT(CASE WHEN `MaHang`='DC01' THEN 1 END) = 0
-    OR COUNT(CASE WHEN `MaHang`='TP03' THEN 1 END) = 0);
+AND COUNT(CASE WHEN `MaHang`='DC01' THEN 1 END) = 0
+AND COUNT(CASE WHEN `MaHang`='TP03' THEN 1 END) = 0;
+
+
 
 
 
