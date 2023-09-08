@@ -311,11 +311,13 @@ FROM CHITIETDATHANG
 WHERE MaHang = MATHANG.MaHang);
 
 -- Câu 39
+-- Solution 1
 SELECT d.MaKhachHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
 GROUP BY d.MaKhachHang
 HAVING SUM(IF(MaHang = 'TP07', 1, 0)) >= 1 AND SUM(IF(MaHang <> 'TP07', 1, 0)) = 0;
 
+-- Solution 2
 SELECT ddh.MaKhachHang
 FROM DONDATHANG ddh JOIN CHITIETDATHANG ctdh ON ddh.SoHoaDon = ctdh.SoHoaDon
 GROUP BY d.MaKhachHang
@@ -332,7 +334,6 @@ AND SoLuongLoaiHang >= 2;
 -- Câu 41
 SELECT d.SoHoaDon, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-GROUP BY d.MaKhachHang 
-HAVING 
-JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DT01', '$.DT02', '$.DT03', '$.DT04') = 1
+GROUP BY d.SoHoaDon
+HAVING JSON_CONTAINS_PATH(CacMaLoaiHang, 'all' ,'$.DT01', '$.DT02', '$.DT03', '$.DT04') = 1
 AND NOT JSON_CONTAINS_PATH(CacMaLoaiHang, 'one','$.DC01', '$.TP03');
