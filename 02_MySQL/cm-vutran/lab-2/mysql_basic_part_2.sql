@@ -70,7 +70,7 @@ FROM NHANVIEN NV JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien GROUP BY 
 -- Cau 17: Tổng số tiền hàng mà công ty thu được trong mỗi tháng của năm 2007 (thời gian được tính theo ngày đặt hàng)? 
 SELECT YEAR(DDH.NgayDatHang) AS Nam, MONTH(DDH.NgayDatHang) AS Thang, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) AS TongSoTien
 FROM NHACUNGCAP NCC JOIN MATHANG MH ON NCC.MaCongTy = MH.MaCongTy JOIN CHITIETDATHANG CTDH ON CTDH.MaHang = MH.MaHang JOIN DONDATHANG DDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-GROUP BY YEAR(DDH.NgayDatHang), MONTH(DDH.NgayDatHang) HAVING Nam = 2007;
+GROUP BY MONTH(DDH.NgayDatHang) HAVING Nam = 2007;
 
 -- Cau 18: Tổng số tiền lời mà công ty thu được từ mỗi mặt hàng trong năm 2007? 
 SELECT MH.MaHang, MH.TenHang, SUM( CTDH.SoLuong *  (CTDH.GiaBan - CTDH.MucGiamGia) ) - SUM((CTDH.SoLuong * MH.GiaHang)) AS TongSoTien
