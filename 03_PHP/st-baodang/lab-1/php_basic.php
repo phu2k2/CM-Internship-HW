@@ -21,6 +21,8 @@ function correctSpacing($sentence) {
     return trim($result);
 }
 
+echo correctSpacing("The film   starts       at      midnight. ");
+
 // ====================================================================
 // PHP Array Return the First Element in an Array
 function getFirstValue($array) {
@@ -101,7 +103,7 @@ function evenValue_2($min, $max) {
 
 // Sử dụng SWITCH CASE để in ra số ngày trong tháng
 function dayOfMonth($month, $year) {
-    $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === $year % 100 && $year % 400 === 0);
+    $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
     switch ($month) {
         case 2:
             if($isLeapYear) return 29;
