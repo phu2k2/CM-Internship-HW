@@ -31,7 +31,7 @@ SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, (IFNULL(LuongCoBan,0) + IFNULL
 FROM NHANVIEN;
 
 -- Câu 6
-SELECT MaHang, TenHang, (ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS SoTienPhaiTra
+SELECT MaHang, TenHang, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS SoTienPhaiTra
 FROM DONDATHANG ddh JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 JOIN MATHANG USING(MaHang)
 WHERE ddh.SoHoaDon = 3;
@@ -69,13 +69,13 @@ SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, LuongCoBan
 FROM NHANVIEN WHERE LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 
 -- Câu 13
-SELECT ctdh.SoHoaDon, TenCongTy, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
+SELECT ctdh.SoHoaDon, TenCongTy, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS ThanhToan
 FROM KHACHHANG
 JOIN DONDATHANG ddh USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 GROUP BY ctdh.SoHoaDon;
 
-SELECT c.SoHoaDon, SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTra
+SELECT c.SoHoaDon, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) as TienPhaiTra
 FROM CHITIETDATHANG c 
 GROUP BY c.SoHoaDon;
 
@@ -89,7 +89,7 @@ GROUP BY mh.MaHang, mh.TenHang, NgayDatHang
 HAVING COUNT(ctdh.MaHang) = 1;
 
 -- Câu 15
-SELECT MaKhachHang, TenCongTy, TenGiaoDich, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
+SELECT MaKhachHang, TenCongTy, TenGiaoDich, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS ThanhToan
 FROM KHACHHANG
 JOIN DONDATHANG USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
@@ -102,14 +102,14 @@ LEFT JOIN DONDATHANG USING(MaNhanVien)
 GROUP BY MaNhanVien;
 
 -- Câu 17
-SELECT MONTH(NgayDatHang), SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS TongTien
+SELECT MONTH(NgayDatHang), SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS TongTien
 FROM DONDATHANG
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 WHERE YEAR(NgayDatHang) = 2007
 GROUP BY MONTH(NgayDatHang);
 
 -- Câu 18
-SELECT MaHang, TenHang, (SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) - SUM(ctdh.SoLuong * GiaBan)) AS TienLai
+SELECT MaHang, TenHang, (SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) - SUM(ctdh.SoLuong * GiaBan)) AS TienLai
 FROM MATHANG
 JOIN CHITIETDATHANG ctdh USING(MaHang)
 JOIN DONDATHANG USING(SoHoaDon)
