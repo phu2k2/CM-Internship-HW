@@ -21,6 +21,8 @@ function correctSpacing($sentence) {
     return trim($result);
 }
 
+// ====================================================================
+// PHP Array Return the First Element in an Array
 function getFirstValue($array) {
     $new_array = array_reverse($array);
     return array_pop($new_array);
