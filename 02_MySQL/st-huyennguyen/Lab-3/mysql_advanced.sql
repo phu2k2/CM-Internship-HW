@@ -52,9 +52,10 @@ CREATE TRIGGER after_CHITIETDATHANG_insert
 AFTER INSERT ON CHITIETDATHANG 
 FOR EACH ROW
 BEGIN
-	 UPDATE DONDATHANG 
-	 SET TongTien = IFNULL(TongTien,0) + NEW.SoLuong*(NEW.GiaBan - NEW.MucGiamGia)
-     WHERE SoHoaDon = NEW.SoHoaDon;
+
+	UPDATE DONDATHANG 
+	SET TongTien = IFNULL(TongTien,0) + IFNULL(NEW.SoLuong,0)*(IFNULL(NEW.GiaBan,0) - IFNULL(NEW.MucGiamGia),0)
+    WHERE SoHoaDon = NEW.SoHoaDon;
 END//
 DELIMITER ;
 
@@ -104,7 +105,7 @@ AFTER DELETE ON NHANVIENPHONGBAN
 FOR EACH ROW    
 BEGIN   
     UPDATE PHONGBAN         
-    SET SoLuongNhanVien = (IFNULL(SoLuongNhanVien,0) - 1)         
+    SET SoLuongNhanVien = SoLuongNhanVien - 1        
     WHERE MaPhongBan = OLD.MaPhongBan;     
 END//
 DELIMITER ;
