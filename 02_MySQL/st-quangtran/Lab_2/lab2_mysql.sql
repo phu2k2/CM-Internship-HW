@@ -320,7 +320,7 @@ HAVING SUM(IF(MaHang = 'TP07', 1, 0)) >= 1 AND SUM(IF(MaHang <> 'TP07', 1, 0)) =
 -- Solution 2
 SELECT ddh.MaKhachHang
 FROM DONDATHANG ddh JOIN CHITIETDATHANG ctdh ON ddh.SoHoaDon = ctdh.SoHoaDon
-GROUP BY d.MaKhachHang
+GROUP BY ddh.MaKhachHang
 HAVING COUNT(DISTINCT ctdh.MaHang) = 1 AND FIND_IN_SET('TP07',group_concat(MaHang)) > 0;
 
 -- Câu 40
