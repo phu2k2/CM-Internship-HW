@@ -10,6 +10,7 @@ BEGIN
    LIMIT 0,n) AS T ON n.MaNhanVien = T.MaNhanVien
  SET n.LuongCoBan = n.LuongCoBan + 500000;
 END //
+DELIMITER ;
 
 -- Câu 2
 DELIMITER //
@@ -17,16 +18,15 @@ CREATE FUNCTION TinhLuongNhanVien(ma_nhan_vien char(4))
 RETURNS DECIMAL(10, 2)
 BEGIN
     DECLARE luong DECIMAL(10, 2);
-    SELECT (LuongCoBan + PhuCap + T.TongTien * 0.1) INTO luong
-    FROM NHANVIEN d JOIN (
-     SELECT d.MaNhanVien, SUM(c.SoLuong * (c.GiaBan - c.MucGiamGia)) AS TongTien
-	 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-	 GROUP BY d.MaNhanVien
-    ) AS T ON d.MaNhanVien = T.MaNhanVien
-    WHERE d.MaNhanVien = ma_nhan_vien;
+    SELECT (LuongCoBan + PhuCap + SUM(c.SoLuong * (c.GiaBan - c.MucGiamGia)) * 0.1) INTO luong
+    FROM NHANVIEN n JOIN  DONDATHANG d ON n.MaNhanVien = d.MaNhanVien JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
+    GROUP BY d.MaNhanVien
+    HAVING d.MaNhanVien = ma_nhan_vien;
     RETURN luong;
-END; 
-SELECT TinhLuongNhanVien('A001')
+END //
+DELIMITER ;
+
+SELECT TinhLuongNhanVien('A001');
 
 -- Câu 3
 DROP TRIGGER IF EXISTS After_ChiTietDatHang_Insert;
@@ -35,16 +35,19 @@ DELIMITER //
  AFTER INSERT ON CHITIETDATHANG  
  FOR EACH ROW
 BEGIN
- UPDATE DONDATHANG 
- SET SoTien = SoTien + NEW.SoLuong * (NEW.GiaBan - New.MucGiamGia)
- WHERE SoHoaDon = NEW.SoHoaDon;
+ IF NEW.SoLuong IS NOT NUll AND NEW.GiaBan IS NOT NUll AND NEW.MucGiamGia IS NOT NUll THEN
+  UPDATE DONDATHANG 
+  SET SoTien = SoTien + NEW.SoLuong * (NEW.GiaBan - New.MucGiamGia)
+  WHERE SoHoaDon = NEW.SoHoaDon;
+ END IF;
 END //
+DELIMITER ;
 
 -- Câu 4
 CREATE TABLE PHONGBAN(
  MaPhongBan CHAR(4) primary key,
  TenPhongBan VARCHAR(50),
- SoThanhVien INT
+ SoThanhVien INT 
 );
 
 CREATE TABLE PHONGBAN_NHANVIEN(
@@ -75,6 +78,7 @@ BEGIN
  SET SoThanhVien = IFNULL(SoThanhVien,0) + 1
  WHERE MaPhongBan = NEW.MaPhongBan;
 END //
+DELIMITER ;
 
 DROP TRIGGER IF EXISTS Before_PhongBan_NhanVien_Delete;
 DELIMITER //
@@ -83,9 +87,10 @@ DELIMITER //
  FOR EACH ROW
 BEGIN
  UPDATE PHONGBAN 
- SET SoThanhVien = IFNULL(SoThanhVien,0) - 1
+ SET SoThanhVien = SoThanhVien - 1
  WHERE MaPhongBan = OLD.MaPhongBan;
 END //
+DELIMITER ;
 
 INSERT INTO `QLBH`.`PHONGBAN_NHANVIEN`(`MaPhongBan`,`MaNhanVien`)
 VALUES
@@ -108,6 +113,7 @@ BEGIN
   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Nhan vien phai tu 18 tuoi den 60";
  END IF;
 END //
+DELIMITER ;
 
 DROP TRIGGER IF EXISTS Before_NhanVien_Update;
 DELIMITER //
@@ -119,3 +125,4 @@ BEGIN
   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Nhan vien phai tu 18 tuoi den 60";
  END IF;
 END //
+DELIMITER ;
