@@ -1,5 +1,5 @@
 -- Câu 1: Công ty Việt Tiến đã cung cấp những mặt hàng nào?
-SELECT * FROM MATHANG WHERE MaCongTy = 'MVT';
+SELECT * FROM MATHANG m JOIN NHACUNGCAP n ON m.MaCongTy = n.MaCongTy WHERE n.TenCongTy like '%Việt Tiến';
 
 -- Câu 2: Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
 SELECT DISTINCT NHACUNGCAP.TenCongTy, NHACUNGCAP.DiaChi
