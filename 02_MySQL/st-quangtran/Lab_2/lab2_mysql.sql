@@ -2,7 +2,7 @@
 SELECT MaHang, TenHang, TenCongTy 
 FROM NHACUNGCAP 
 JOIN MATHANG USING(MaCongTy)
-WHERE n.TenCongTy = 'Công ty may mặc Việt Tiến';
+WHERE TenCongTy = 'Công ty may mặc Việt Tiến';
 
 -- Câu 2
 SELECT DISTINCT MaCongTy, TenCongTy, DiaChi 
@@ -32,7 +32,9 @@ FROM NHANVIEN;
 
 -- Câu 6
 SELECT MaHang, TenHang, (ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS SoTienPhaiTra
-FROM MATHANG JOIN CHITIETDATHANG ctdh USING(MaHang);
+FROM DONDATHANG ddh JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
+JOIN MATHANG USING(MaHang)
+WHERE ddh.SoHoaDon = 3;
 
 -- Câu 7
 SELECT MaKhachHang, kh.TenCongTy, kh.TenGiaoDich
@@ -67,11 +69,15 @@ SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, LuongCoBan
 FROM NHANVIEN WHERE LuongCoBan = (SELECT MAX(LuongCoBan) FROM NHANVIEN);
 
 -- Câu 13
-SELECT MaKhachHang, TenCongTy, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
+SELECT ctdh.SoHoaDon, TenCongTy, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS ThanhToan
 FROM KHACHHANG
 JOIN DONDATHANG ddh USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
-GROUP BY MaKhachHang, TenCongTy;
+GROUP BY ctdh.SoHoaDon;
+
+SELECT c.SoHoaDon, SUM((c.GiaBan * c.SoLuong - c.SoLuong * c.MucGiamGia)) as TienPhaiTra
+FROM CHITIETDATHANG c 
+GROUP BY c.SoHoaDon;
 
 -- Câu 14
 SELECT mh.MaHang, mh.TenHang, NgayDatHang
@@ -87,7 +93,7 @@ SELECT MaKhachHang, TenCongTy, TenGiaoDich, SUM(ctdh.SoLuong * GiaBan - ctdh.SoL
 FROM KHACHHANG
 JOIN DONDATHANG USING(MaKhachHang)
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
-GROUP BY MaKhachHang, TenCongTy, TenGiaoDich;
+GROUP BY MaKhachHang;
 
 -- Câu 16
 SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, COUNT(SoHoaDon) AS TongSoHoaDon
@@ -108,16 +114,15 @@ FROM MATHANG
 JOIN CHITIETDATHANG ctdh USING(MaHang)
 JOIN DONDATHANG USING(SoHoaDon)
 WHERE YEAR(NgayDatHang) = 2007
-GROUP BY MaHang, TenHang;
+GROUP BY MaHang;
 
 -- Câu 19
-SELECT mh.MaHang, mh.TenHang,mh.SoLuong AS TongSoLuong, IFNULL(SUM(ctdh.SoLuong),0) AS TongHangDaBan,mh.SoLuong - IFNULL(SUM(ctdh.SoLuong),0) AS SoLuongConLai
+SELECT mh.MaHang, mh.TenHang,mh.SoLuong AS TongSoLuong, IFNULL(SUM(ctdh.SoLuong),0) AS TongHangDaBan, mh.SoLuong - IFNULL(SUM(ctdh.SoLuong),0) AS SoLuongConLai
 FROM MATHANG mh
 LEFT JOIN CHITIETDATHANG ctdh USING(MaHang)
-GROUP BY mh.MaHang, mh.TenHang, mh.SoLuong;
+GROUP BY mh.MaHang;
 
 -- Câu 20
-
 SELECT MaNhanVien, CONCAT(Ho, ' ', Ten) AS HoTen, SUM(SoLuong) AS TongSoLuong
 FROM NHANVIEN 
 JOIN DONDATHANG USING(MaNhanVien)
@@ -149,20 +154,20 @@ HAVING SUM(SoLuong) = (
 );
 
 -- Câu 22 
-SELECT MAX(TongTien) AS SoTienNhieuNhat
-FROM (
-    SELECT dh.MaKhachHang, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS TongTien
-    FROM DONDATHANG dh
-    JOIN CHITIETDATHANG ctdh ON dh.SoHoaDon = ctdh.SoHoaDon
-    GROUP BY dh.MaKhachHang
-) AS Sub;
+SELECT kh.TenCongTy, ctdh.SoHoaDon, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS TongTien 
+FROM KHACHHANG kh
+JOIN DONDATHANG ddh USING(MaKhachHang)
+join CHITIETDATHANG ctdh USING(SoHoaDon)
+GROUP BY ctdh.SoHoaDon
+ORDER BY TongTien DESC
+LIMIT 1;
 
 -- Câu 23
-SELECT ddh.SoHoaDon, ctdh.MaHang, TenHang, SUM(ctdh.SoLuong * GiaBan - ctdh.SoLuong * MucGiamGia) AS TongTien
+SELECT ddh.SoHoaDon, ctdh.MaHang, TenHang, SUM(ctdh.SoLuong * (ctdh.GiaBan - ctdh.MucGiamGia)) AS TongTien
 FROM DONDATHANG ddh
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 JOIN MATHANG USING (MaHang)
-GROUP BY ddh.SoHoaDon, ctdh.MaHang, TenHang;
+GROUP BY ddh.SoHoaDon, ctdh.MaHang;
 
 -- Câu 24
 SELECT MaLoaiHang, TenLoaiHang, TenHang, SoLuong
@@ -196,7 +201,7 @@ FROM DONDATHANG
 JOIN CHITIETDATHANG ctdh USING(SoHoaDon)
 JOIN MATHANG USING(MaHang)
 WHERE YEAR(NgayDatHang) = 2007
-GROUP BY ctdh.MaHang, TenHang;
+GROUP BY ctdh.MaHang;
 
 -- Câu 26
 SET SQL_SAFE_UPDATES=0;
@@ -308,8 +313,13 @@ WHERE MaHang = MATHANG.MaHang);
 -- Câu 39
 SELECT d.MaKhachHang
 FROM DONDATHANG d JOIN CHITIETDATHANG c ON d.SoHoaDon = c.SoHoaDon
-GROUP BY d.MaKhachHang 
-HAVING SUM(CASE WHEN MaHang = 'TP07' THEN 1 ELSE 0 END) >= 1 AND SUM(CASE WHEN MaHang <> 'TP07' THEN 1 ELSE 0 END) = 0;
+GROUP BY d.MaKhachHang
+HAVING SUM(IF(MaHang = 'TP07', 1, 0)) >= 1 AND SUM(IF(MaHang <> 'TP07', 1, 0)) = 0;
+
+SELECT ddh.MaKhachHang
+FROM DONDATHANG ddh JOIN CHITIETDATHANG ctdh ON ddh.SoHoaDon = ctdh.SoHoaDon
+GROUP BY d.MaKhachHang
+HAVING COUNT(DISTINCT ctdh.MaHang) = 1 AND FIND_IN_SET('TP07',group_concat(MaHang)) > 0;
 
 -- Câu 40
 SELECT d.MaKhachHang, JSON_OBJECTAGG(c.MaHang, c.MaHang) AS CacMaLoaiHang, COUNT(d.MaKhachHang) AS SoLuongLoaiHang
