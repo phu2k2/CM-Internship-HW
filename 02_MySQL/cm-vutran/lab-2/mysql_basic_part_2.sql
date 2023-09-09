@@ -107,17 +107,10 @@ SELECT DDH.SoHoaDon, GROUP_CONCAT(MH.TenHang SEPARATOR ', ') AS CacMatHangDaMua,
 FROM DONDATHANG DDH JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon JOIN MATHANG MH ON CTDH.MaHang = MH.MaHang GROUP BY DDH.SoHoaDon ORDER BY DDH.SoHoaDon;
 
  -- Cau 24: Mỗi một loại hàng bao gồm những mặt hàng nào, tổng số lượng của mỗi loại và tổng số lượng của tất cả các mặt hàng hiện có trong cty?
-WITH TongSoLuongMoiLoai AS (
-	SELECT MH.MaLoaiHang, SUM(MH.SoLuong) AS TongSoLuong
-	FROM LOAIHANG LH JOIN MATHANG MH ON LH.MaLoaiHang = MH.MaLoaiHang GROUP BY MH.MaLoaiHang
-),
-TongSoLuongHienCoTrongCongTY AS (
-	SELECT MaCongTy, SUM(SoLuong) AS TongSoLuong FROM MATHANG GROUP BY MaCongTy
-)
-SELECT MH.MaLoaiHang, MH.MaHang, MH.TenHang, TSL.MaCongTy, T.TongSoLuong AS TongSoLuongMoiLoai, TSL.TongSoLuong AS TongSoLuongHienCoTrongCongTy
-FROM LOAIHANG LH JOIN MATHANG MH ON LH.MaLoaiHang = MH.MaLoaiHang 
-JOIN TongSoLuongMoiLoai T ON T.MaLoaiHang = MH.MaLoaiHang JOIN TongSoLuongHienCoTrongCongTY TSL ON MH.MaCongTy = TSL.MaCongTy;
-
+SELECT LH.TenLoaiHang, GROUP_CONCAT(MH.TenHang) AS MatHangTrongLoai,
+       SUM(MH.SoLuong) AS TongSoLuongTrongLoai,
+       (SELECT SUM(SoLuong) FROM MATHANG) AS TongSoLuongTatCaMatHang
+FROM MATHANG MH JOIN LOAIHANG LH ON MH.MaLoaiHang = LH.MaLoaiHang GROUP BY LH.TenLoaiHang;
 
 -- Cau 25: Thống kê trong năm 2007 mỗi một mặt hàng trong mỗi tháng và trong cả năm bán được với số lượng bao nhiêu? 
 -- (Yêu cầu kết quả hiểu thị dưới dạng bảng, hai cột đầu là mã hàng, tên hàng, các cột còn lại tương ứng từ tháng 1 đến tháng 12 và cả năm. 
@@ -174,20 +167,14 @@ ON Subquerry.MaNhanVien = NV.MaNhanVien
 SET LuongCoBan = LuongCoBan * 1.5;
 
 -- cau 31: Tăng phụ cấp lên bằng 50% lương cho những nhân viên bán được hàng nhiều nhất?	
-WITH SoLuongBanNhieuNhat AS( 
-	SELECT SUM(CTDH.SoLuong) AS SoLuongBan
-	FROM NHANVIEN NV JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien JOIN CHITIETDATHANG CTDH ON CTDH.SoHoaDon = DDH.SoHoaDon
-	GROUP BY NV.MaNhanVien ORDER BY SoLuongBan DESC LIMIT 1	
-),
-NhanVienBanDuocNhieuHangNhat AS (
-SELECT NV.MaNhanVien, SUM(CTDH.SoLuong) AS SoLuongBan
-	FROM NHANVIEN NV JOIN DONDATHANG DDH ON NV.MaNhanVien = DDH.MaNhanVien JOIN CHITIETDATHANG CTDH ON CTDH.SoHoaDon = DDH.SoHoaDon
-	GROUP BY NV.MaNhanVien HAVING SoLuongBan = (SELECT SoLuongBan FROM SoLuongBanNhieuNhat)
-)
-
-UPDATE NHANVIEN
-SET PhuCap = PhuCap * 0.5
-WHERE MaNhanVien IN (SELECT MaNhanVien FROM NhanVienBanDuocNhieuHangNhat);
+WITH SoLuongBanNhieuNhat AS (
+    SELECT DDH.MaNhanVien ,SUM(SoLuong) as TongSoLuong
+    FROM CHITIETDATHANG CTDH JOIN DONDATHANG DDH ON CTDH.SoHoaDon = DDH.SoHoaDon
+    GROUP BY DDH.MaNhanVien  ORDER BY TongSoLuong DESC LIMIT 1
+) 
+UPDATE NHANVIEN NV JOIN SoLuongBanNhieuNhat SLB ON NV.MaNhanVien = SLB.MaNhanVien
+SET NV.PhuCap = NV.PhuCap + (NV.LuongCoBan / 2)
+WHERE SLB.TongSoLuong = (SELECT TongSoLuong FROM SoLuongBanNhieuNhat);
 
 -- Cau 32: Giảm 25% lương của những nhân viên trong năm 2003 không lập được bất kỳ đơn đặt hàng nào?
 UPDATE NHANVIEN SET LuongCoBan = LuongCoBan - (LuongCoBan* 0.25)
@@ -235,14 +222,14 @@ JOIN CHITIETDATHANG CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
 GROUP BY KH.MaKhachHang HAVING COUNT(DISTINCT CTDH.MaHang) > 1 AND COUNT(CASE WHEN CTDH.MaHang='TP07' THEN 1 END) > 0 AND COUNT(CASE WHEN CTDH.MaHang='MM01' THEN 1 END) < 1;
 
 -- Câu 41: Select mã đơn hàng có mua cả DT01, DT02, DT03 và DT04 nhưng k dc mua DC01 hoặc TP03
-WITH GopChiTietDonHang AS (
-	SELECT CTDH.SoHoaDon, JSON_ARRAYAGG(CTDH.MaHang) AS MaHangArray
-    FROM CHITIETDATHANG CTDH
-    GROUP BY CTDH.SoHoaDon
-)
-SELECT DDH.SoHoaDon
-FROM DONDATHANG DDH
-JOIN GopChiTietDonHang CTDH ON DDH.SoHoaDon = CTDH.SoHoaDon
-WHERE JSON_CONTAINS(CTDH.MaHangArray, '["DT01", "DT02", "DT03", "DT04"]')
-AND NOT JSON_CONTAINS(CTDH.MaHangArray, '["DC01", "TP03"]');
-
+SELECT SoHoaDon 
+FROM CHITIETDATHANG
+GROUP BY SoHoaDon
+HAVING COUNT(CASE WHEN MaHang = 'DT01' THEN 1 END) > 0
+AND COUNT(CASE WHEN MaHang = 'DT02' THEN 1 END) > 0
+AND COUNT(CASE WHEN MaHang= 'DT03' THEN 1 END) > 0
+AND COUNT(CASE WHEN MaHang= 'DT04' THEN 1 END) > 0
+AND (
+    	COUNT(CASE WHEN MaHang = 'DC01' THEN 1 END) = 0 
+        OR COUNT(CASE WHEN MaHang = 'TP03' THEN 1 END) = 0
+);
