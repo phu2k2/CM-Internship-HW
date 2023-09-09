@@ -80,7 +80,7 @@
 
 
     // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
-    // For and heck MinMax
+    // For and check MinMax
     function evenNumber($a,$b)
     {
         if($a >= $b) {$max = $a; $min = $b;}
