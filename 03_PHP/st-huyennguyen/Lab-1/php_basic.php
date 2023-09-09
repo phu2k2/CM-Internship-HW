@@ -40,7 +40,7 @@
     // Write a program to remove an specific element by value from array in PHP
     function delItem($array, $delete_item)
     {
-        $key = array_search($delete_item,$array);
+        $key = array_search($delete_item, $array);
         if($key != false)
         {
             unset($array[$key]);
@@ -55,8 +55,8 @@
     // Create a function that takes a string and returns a string in which each character is repeated once
     function doubleChar($str) 
     {
-        $result ='';
-        for($i = 0; $i < strlen($str);$i++)
+        $result = "";
+        for($i = 0; $i < strlen($str); $i++)
         {
             $result.= str_repeat($str[$i], 2);
         }
@@ -70,7 +70,7 @@
     // How to check if an Array is a subnet of another Array?
     function subnetArr($array, $another_array)
     {
-        $i = count(array_intersect($array,$another_array));
+        $i = count(array_intersect($array, $another_array));
         if($i = count($array)) echo "It is a subnet\n";
         else echo "It is opposite\n";
     }
@@ -81,7 +81,7 @@
 
     // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
     // For and check MinMax
-    function evenNumber($a,$b)
+    function evenNumber($a, $b)
     {
         if($a >= $b) {$max = $a; $min = $b;}
         else {$max = $b; $min = $a;}
@@ -102,7 +102,7 @@
         do
         {
             if ($min % 2 == 0) echo "$min ";
-            $min ++;
+            $min++;
         }
         while ($min <= $max);
         echo "\n";
@@ -112,9 +112,9 @@
 
     // Sử dụng SWITCH CASE để in ra số ngày trong tháng 
     // switch case or condition:
-    function dayOfMonth($month,$year)
+    function dayOfMonth($month, $year)
     {
-        $checkLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
+        $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
         switch ($month) {
             case 2:
                 if($checkLeapYear) return "Tháng $month có 29 ngày\n";
@@ -146,9 +146,9 @@
     echo dayOfMonth(13,2023);
 
     // switch case check in array
-    function dayOfMonth_2($month,$year)
+    function dayOfMonth_2($month, $year)
     {
-        $checkLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
+        $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
         $month_31 = array ("1","3","5","7","8","10","12");
         $month_30 = array ("4","6","9","11");
         switch (true) {
@@ -172,6 +172,7 @@
     echo dayOfMonth_2(11,2024);
     echo dayOfMonth_2(23,2024);
 
+
     // Sử dụng IF ELSE để check 1 biến khác null 
     function checkNull($var)
     {
@@ -181,6 +182,7 @@
     checkNull(520);
     checkNull(null);
 
+    
     // Write a function to calculate the electricity bill use if-else conditions or switch case.
     function calculate_bill(int $units)
     {
@@ -208,3 +210,4 @@
         echo "Chi phí phải trả là $cost đồng\n";
     }
     calculate_bill(50);
+    calculate_bill(650);
