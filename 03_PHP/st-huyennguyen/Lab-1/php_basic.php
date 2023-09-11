@@ -196,10 +196,10 @@ function dayOfMonth2($month, $year)
                 $day = 28;
             }
             break;
-        case in_array($month, $oddMonth) == true:
+        case in_array($month, $oddMonth):
             $day = 31;
             break;
-        case in_array($month, $evenMonth) == true:
+        case in_array($month, $evenMonth):
             $day = 30;
             break;
         default:
@@ -207,7 +207,7 @@ function dayOfMonth2($month, $year)
     }
     return $day;
 }
-$month = 13;
+$month = 11;
 $year = 2024;
 $day = dayOfMonth($month, $year);
 if ($day == -1) {
