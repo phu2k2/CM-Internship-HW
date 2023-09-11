@@ -50,8 +50,7 @@ print_r(removeElement1($lits, $delete_item)) . "\n";
 // Ues array_search
 function removeElement2($array, $item)
 {
-    $key = array_search($item, $array);
-    if ($key !== false) {
+    while ($key = array_search($item,$array)) {
         unset($array[$key]);
     }
     return $array;
@@ -87,17 +86,16 @@ echo doubleChar("Hello World!") . "\n";
 echo doubleChar("1234!_ ") . "\n";
 
 /*Question 6*/
-$array = array('jan', 'feb', 'march', 'april', 'may');
+$array = array('jan', 'feb', 'march', 'april', 'may', 'may');
 $another_array = array('jan', 'may');
 // Use array_intersect
 function checkSubnet1($array, $another_array)
 {
-    $array1 = array_intersect($array, $another_array);
+    $array1 = array_intersect($another_array,$array);
     if (count($array1) === count($another_array)) {
         return true;
-    } else {
-        return false;
     }
+    return false;  
 }
 // Test Question 6 c1 
 echo checkSubnet1($array, $another_array) . "\n";
@@ -139,29 +137,38 @@ function checkSubnet4($array, $another_array)
     return true;
 }
 // Test Question 6 c4 
-echo checkSubnet3($array, $another_array) . "\n";
+echo checkSubnet4($array, $another_array) . "\n";
 
 /*Question 7*/
 // Question 7.1
 // Use for
 function evenValue1($min, $max)
 {
-    for ($min; $min <= $max; $min++) {
-        if ($min % 2 == 0) {
-            echo $min . "\n";
-        }
+    if ($min % 2 == 0 && $min <= $max) {
+        echo $min . "\n";
+        $min += 2;
+    } else {
+        $min += 1;
+    }
+    for ($min; $min <= $max; $min += 2) {
+        echo $min . "\n";
     }
 }
 // Test Question 7.1 c1
 echo evenValue1(20, 50) . "\n";
+
 // Use do while
 function evenValue2($min, $max)
 {
+    if ($min % 2 == 0 && $min <= $max) {
+        echo $min . "\n";
+        $min += 2;
+    } else {
+        $min += 1;
+    }
     do {
-        if ($min % 2 == 0) {
-            echo $min . "\n";
-        }
-        $min++;
+        echo $min . "\n";
+        $min += 2;
     } while ($min <= $max);
 }
 // Test Question 7.1 c2
@@ -178,24 +185,19 @@ function numberOfDays($month, $year)
         case 8:
         case 10:
         case 12:
-            echo "Tháng $month của $year có 31 ngày";
-            break;
+            return "Tháng $month của $year có 31 ngày";
         case 4:
         case 6:
         case 9:
         case 11:
-            echo "Tháng $month của $year có 30 ngày";
-            break;
+           return "Tháng $month của $year có 30 ngày";
         case 2:
             if ($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0) {
-                echo "Tháng $month của $year có 29 ngày";
+                return "Tháng $month của $year có 29 ngày";
             } else {
-                echo "Tháng $month của $year có 28 ngày";
+                return "Tháng $month của $year có 28 ngày";
             }
-            break;
         default:
-            echo "Không tồn tại";
-            break;
     }
 }
 // Test Question 7.2
@@ -203,6 +205,7 @@ echo numberOfDays(2, 2000) . "\n";
 echo numberOfDays(2, 2100) . "\n";
 echo numberOfDays(1, 2023) . "\n";
 echo numberOfDays(4, 2002) . "\n";
+echo numberOfDays(13, 2002) . "\n";
 
 //Question 7.3
 function checkNull($variable)
@@ -224,11 +227,12 @@ function calculateBill($units)
     $price_tires = [[50, 1728], [50, 1786], [100, 2074], [100, 2612], [100, 2919]];
     foreach ($price_tires as $value) {
         list($tier, $cost) = $value;
-        if ($units > 0) {
-            $tier_cost = min($units, $tier) * $cost;
-            $bill += $tier_cost;
-            $units -= $tier;
+        if ($units <= 0) {
+            break;
         }
+        $tier_cost = min($units, $tier) * $cost;
+        $bill += $tier_cost;
+        $units -= $tier;
     }
     if ($units > 0) {
         $bill += $units * 3015;
