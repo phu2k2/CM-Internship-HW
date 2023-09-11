@@ -36,19 +36,9 @@ function getFirstValue2($array)
     return array_shift($array);
 }
 
-echo getFirstValue([1, 2, 3]) . "\n";
-echo getFirstValue([80, 5, 100]) . "\n";
-echo getFirstValue([-500, 0, 50]) . "\n";
-
-echo getFirstValue2([1, 2, 3]) . "\n";
-echo getFirstValue2([80, 5, 100]) . "\n";
-echo getFirstValue2([-500, 0, 50]) . "\n";
-
-
-
 // ====================================================================
 // PHP Array (Remove specific element by value from array)
-$list = array('jan', 'feb', 'march', 'april', 'may');
+$list = array('jan', 'feb', 'march', 'april', 'may', 'april');
 $deleteItem = 'april';
 
 function removeValue($array, ...$value)
@@ -59,7 +49,7 @@ function removeValue($array, ...$value)
 
 function removeValue2($array, $value)
 {
-    if (($key = array_search($value, $array)) !== false)
+    while ($key = array_search($value, $array))
         unset($array[$key]);
     return $array;
 }
@@ -92,7 +82,7 @@ $anotherArray = array('jan', 'may');
 
 function isSubArray($array, $subArray)
 {
-    if (count(array_intersect($array, $subArray)) == count($subArray))
+    if (count(array_intersect($subArray, $array)) == count($subArray))
         return true;
     return false;
 }
@@ -101,24 +91,27 @@ function isSubArray2($array, $subArray)
 {
     return empty(array_diff($subArray, $array));
 }
-
 // ====================================================================
 // PHP IF ELSE, FOR DO WHILE, SWITCH
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
 function evenValue($min, $max)
 {
-    for ($i = $min; $i <= $max; $i++) {
-        if ($i % 2 == 0) {
-            echo "$i ";
-        }
+    if ($min % 2 !== 0 && $min <= $max) {
+        $min++;
+    }
+    for ($i = $min; $i <= $max; $i+=2) {
+        echo "$i ";
     }
 }
 
 function evenValue2($min, $max)
 {
-    do {
-        if ($min % 2 == 0) echo "$min ";
+    if ($min % 2 !== 0 && $min <= $max) {
         $min++;
+    }
+    do {
+        echo "$min ";
+        $min+= 2;
     } while ($min <= $max);
 }
 
@@ -147,8 +140,6 @@ function dayOfMonth($month, $year)
             return -1;
     }
 }
-
-echo dayOfMonth(12, 2012);
 
 // Sử dụng IF ELSE để check 1 biến khác null
 function checkNull($variable)
