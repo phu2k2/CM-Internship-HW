@@ -1,26 +1,30 @@
 <?php
 $min = 10;
-$max = 200;
+$max = 50;
 function useForLoop($min, $max) {
+    $result = '';
     for($i=$min;$i<=$max;$i++){
         if($i%2==0){
-            echo $i.' ';
+            $result.= $i.' ';
         }
     }
+    return $result;
 }
-useForLoop($min, $max);
+echo useForLoop($min, $max);
 echo "\n";
 
 function useDoWhileLoop($min, $max) {
+    $result = '';
     $i = $min;
     do{
         if($i%2==0){
-            echo $i.' ';
+            $result.= $i.' ';
         }
         $i++;
     }while($i<=$max);
+    return $result;
 }
-useDoWhileLoop($min, $max);
+echo useDoWhileLoop($min, $max);
 echo "\n";
 
 function getDayOfMonth($month, $year) {
