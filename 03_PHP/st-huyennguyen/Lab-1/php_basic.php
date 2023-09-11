@@ -71,14 +71,18 @@ function subnetArr($array, $anotherArray)
     $newAnother = array_unique($anotherArray);
     $checkSub = array_intersect($newArray, $newAnother);
     if (count($checkSub) == count($newAnother)) {
-        return "true";
+        return true;
     }
-    return "false";
+    return false;
 }
 
 $array = array('jan', 'feb', 'march', 'april', 'may', 'may');
 $anotherArray = array('jan', 'may', 'nov');
-echo subnetArr($array, $anotherArray) . "\n";
+if (subnetArr($array, $anotherArray) == true) {
+    echo "true\n";
+} else {
+    echo "false\n";
+}
 
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
 // For + if
@@ -139,12 +143,14 @@ echo "\n";
 function dayOfMonth($month, $year)
 {
     $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
+    $day = 0;
     switch ($month) {
         case 2:
             if ($checkLeapYear) {
-                return "Tháng $month có 29 ngày\n";
+                $day = 29;
+            } else {
+                $day = 28;
             }
-            return "Tháng $month có 28 ngày\n";
             break;
         case 1:
         case 3:
@@ -153,23 +159,27 @@ function dayOfMonth($month, $year)
         case 8:
         case 10:
         case 12:
-            return "Tháng $month có 31 ngày\n";
+            $day = 31;
             break;
         case 4:
         case 6:
         case 9:
         case 11:
-            return "Tháng $month có 30 ngày\n";
+            $day = 30;
             break;
         default:
-            return "Không có tháng $month\n";
-            break;
+            $day = -1;
     }
+    return $day;
 }
-echo dayOfMonth(2, 2023);
-echo dayOfMonth(9, 2023);
-echo dayOfMonth(8, 2023);
-echo dayOfMonth(13, 2023);
+$month = 2;
+$year = 2024;
+$day = dayOfMonth($month, $year);
+if ($day == -1) {
+    echo "Không có tháng $month\n";
+} else {
+    echo "Tháng $month có $day ngày\n";
+}
 
 // switch case check in array
 function dayOfMonth2($month, $year)
@@ -177,28 +187,34 @@ function dayOfMonth2($month, $year)
     $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
     $oddMonth = ["1", "3", "5", "7", "8", "10", "12"];
     $evenMonth = ["4", "6", "9", "11"];
+    $day = 0;
     switch (true) {
         case $month == 2:
             if ($checkLeapYear) {
-                return "Tháng $month có 29 ngày\n";
+                $day = 29;
+            } else {
+                $day = 28;
             }
-            return "Tháng $month có 28 ngày\n";
             break;
         case in_array($month, $oddMonth) == true:
-            return "Tháng $month có 31 ngày\n";
+            $day = 31;
             break;
         case in_array($month, $evenMonth) == true:
-            return "Tháng $month có 30 ngày\n";
+            $day = 30;
             break;
         default:
-            return "Không có tháng $month\n";
-            break;
+            $day = -1;
     }
+    return $day;
 }
-echo dayOfMonth2(2, 2024);
-echo dayOfMonth2(12, 2024);
-echo dayOfMonth2(11, 2024);
-echo dayOfMonth2(23, 2024);
+$month = 13;
+$year = 2024;
+$day = dayOfMonth($month, $year);
+if ($day == -1) {
+    echo "Không có tháng $month\n";
+} else {
+    echo "Tháng $month có $day ngày\n";
+}
 
 // Sử dụng IF ELSE để check 1 biến khác null 
 function checkNull($var)
