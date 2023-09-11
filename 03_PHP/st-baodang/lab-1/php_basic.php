@@ -1,7 +1,8 @@
 <?php
 
 // PHP using recursive function
-function recursive() {
+function recursive()
+{
 
     static $num = 0;
 
@@ -11,12 +12,12 @@ function recursive() {
         recursive();
     }
     $num -= 1;
-
 }
 
 // ====================================================================
 // PHP function (Fix the Spacing)
-function correctSpacing($sentence) {
+function correctSpacing($sentence)
+{
     $result = preg_replace('/\s+/', ' ', $sentence);
     return trim($result);
 }
@@ -24,12 +25,14 @@ function correctSpacing($sentence) {
 
 // ====================================================================
 // PHP Array Return the First Element in an Array
-function getFirstValue($array) {
-    $new_array = array_reverse($array);
-    return array_pop($new_array);
+function getFirstValue($array)
+{
+    $newArray = array_reverse($array);
+    return array_pop($newArray);
 }
 
-function getFirstValue_2($array) {
+function getFirstValue2($array)
+{
     return array_shift($array);
 }
 
@@ -37,30 +40,34 @@ echo getFirstValue([1, 2, 3]) . "\n";
 echo getFirstValue([80, 5, 100]) . "\n";
 echo getFirstValue([-500, 0, 50]) . "\n";
 
-echo getFirstValue_2([1, 2, 3]) . "\n";
-echo getFirstValue_2([80, 5, 100]) . "\n";
-echo getFirstValue_2([-500, 0, 50]) . "\n";
+echo getFirstValue2([1, 2, 3]) . "\n";
+echo getFirstValue2([80, 5, 100]) . "\n";
+echo getFirstValue2([-500, 0, 50]) . "\n";
 
 
 
 // ====================================================================
 // PHP Array (Remove specific element by value from array)
 $list = array('jan', 'feb', 'march', 'april', 'may');
-$delete_item = 'april';
+$deleteItem = 'april';
 
-function removeValue($array, ...$value) {
+function removeValue($array, ...$value)
+{
     $result = array_diff($array, $value);
     return $result;
 }
 
-function removeValue_2($array, $value) {
-    if (($key = array_search($value, $array)) !== false) unset($array[$key]);
+function removeValue2($array, $value)
+{
+    if (($key = array_search($value, $array)) !== false)
+        unset($array[$key]);
     return $array;
 }
 
-function removeValue_3($array, $value) {
-    foreach($array as $key => $tag_value) {
-        if ($tag_value === $value) {
+function removeValue3($array, $value)
+{
+    foreach ($array as $key => $tagValue) {
+        if ($tagValue === $value) {
             unset($array[$key]);
         }
     }
@@ -69,7 +76,8 @@ function removeValue_3($array, $value) {
 
 // ====================================================================
 // PHP Array (Repeating Letter)
-function doubleChar($str) {
+function doubleChar($str)
+{
     $result = "";
     for ($i = 0; $i < strlen($str); $i++) {
         $result .= $str[$i] . $str[$i];
@@ -80,21 +88,25 @@ function doubleChar($str) {
 // ====================================================================
 // PHP Array (check if an Array is a subnet of another Array)
 $array = array('jan', 'feb', 'march', 'april', 'may');
-$another_array = array('jan', 'may');
+$anotherArray = array('jan', 'may');
 
-function isSubArray($array, $sub_array) {
-    if (count(array_intersect($array, $sub_array)) == count($sub_array)) return true;
+function isSubArray($array, $subArray)
+{
+    if (count(array_intersect($array, $subArray)) == count($subArray))
+        return true;
     return false;
 }
 
-function isSubArray_2($array, $sub_array) {
-    return empty(array_diff($sub_array, $array));
+function isSubArray2($array, $subArray)
+{
+    return empty(array_diff($subArray, $array));
 }
 
 // ====================================================================
 // PHP IF ELSE, FOR DO WHILE, SWITCH
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
-function evenValue($min, $max) {
+function evenValue($min, $max)
+{
     for ($i = $min; $i <= $max; $i++) {
         if ($i % 2 == 0) {
             echo "$i ";
@@ -102,20 +114,21 @@ function evenValue($min, $max) {
     }
 }
 
-function evenValue_2($min, $max) {
-    
+function evenValue2($min, $max)
+{
     do {
-        if($min % 2 == 0) echo "$min ";
+        if ($min % 2 == 0) echo "$min ";
         $min++;
     } while ($min <= $max);
 }
 
 // Sử dụng SWITCH CASE để in ra số ngày trong tháng
-function dayOfMonth($month, $year) {
+function dayOfMonth($month, $year)
+{
     $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
     switch ($month) {
         case 2:
-            if($isLeapYear) return 29;
+            if ($isLeapYear) return 29;
             return 28;
         case 4:
         case 6:
@@ -138,7 +151,8 @@ function dayOfMonth($month, $year) {
 echo dayOfMonth(12, 2012);
 
 // Sử dụng IF ELSE để check 1 biến khác null
-function checkNull($variable) {
+function checkNull($variable)
+{
     if (is_null($variable)) echo "Bien truyen vao null";
     else echo "Bien truyen vao khac null";
 }
@@ -153,7 +167,8 @@ function checkNull($variable) {
  * For until about next 	- 3015 đồng/kWh
  * $bill = $units * cost (for first 50kWh = 50 * 1728)
  */
-function calculate_bill(int $unit) {
+function calculateBill(int $unit)
+{
     $result = 0;
     switch (true) {
         case $unit > 400:
@@ -173,7 +188,6 @@ function calculate_bill(int $unit) {
             $unit = 50;
         default:
             $result += ($unit) * 1728;
-            
     }
 
     return $result;
