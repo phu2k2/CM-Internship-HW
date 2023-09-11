@@ -5,4 +5,4 @@ function checkSubArray($array, $anotherArray) {
 }
 $array = array('jan', 'feb', 'march', 'april', 'may');
 $anotherArray = array('jan', 'may',);
-echo checkSubArray($array, $anotherArray)? 'True' : 'False';
+echo checkSubArray($array, $anotherArray) ? 'True' : 'False';
