@@ -11,7 +11,6 @@ function correctSpacing1($sentence)
 function correctSpacing2($sentence)
 {
     $pattern = explode(" ", $sentence);
-
     $pattern = array_filter($pattern, 'strlen');
     return implode(" ", $pattern);
 }
@@ -24,7 +23,5 @@ function correctSpacing3($sentence)
     foreach ($pattern as $key => $value)
         if ($value !== "")
             $resultArr[] = ($value);
-
     return implode(" ", $resultArr);
 }
-

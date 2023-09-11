@@ -1,13 +1,14 @@
 <?php
-$lits = array('jan', 'feb', 'march', 'april', 'may');
+$lits = array('jan', 'feb', 'march', 'april', 'april', 'may');
 $delete_item = 'april';
 
 function removeSpecificEle($arr, $del)
 {
-    $key = array_search($del, $arr);
+    $newArr = array_unique($arr);
+    $key = array_search($del, $newArr);
     if ($key != null) {
-        unset($arr[$key]);
+        unset($newArr[$key]);
     }
-    return $arr;
+    return $newArr;
 }
 var_dump(removeSpecificEle($lits, $delete_item));

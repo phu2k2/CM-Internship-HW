@@ -1,6 +1,6 @@
 <?php
 function getFirstValue($array)
 {
-    return $array[0];
+    return array_shift($array);
 }
-
+echo getFirstValue([]);

@@ -59,4 +59,3 @@ function checkNullVar($var)
         echo "Variable is null!";
     echo "Variable is not null";
 }
-
