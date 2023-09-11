@@ -1,12 +1,13 @@
 <?php
-    $lits = array('jan', 'feb', 'march', 'april', 'may');
-    $delete_item = 'april';
+$lits = array('jan', 'feb', 'march', 'april', 'may');
+$delete_item = 'april';
 
-    function removeSpecificEle($arr,$del){
-        $key = array_search($del,$arr);
-        if($key != null){
-            unset($arr[$key]);
-        }
-        return $arr;
+function removeSpecificEle($arr, $del)
+{
+    $key = array_search($del, $arr);
+    if ($key != null) {
+        unset($arr[$key]);
     }
-    var_dump(removeSpecificEle($lits,$delete_item));
+    return $arr;
+}
+var_dump(removeSpecificEle($lits, $delete_item));

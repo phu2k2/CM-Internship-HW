@@ -1,4 +1,6 @@
 <?php
-    function getFirstValue($array) {
-        return $array[0];
-    }
+function getFirstValue($array)
+{
+    return $array[0];
+}
+
