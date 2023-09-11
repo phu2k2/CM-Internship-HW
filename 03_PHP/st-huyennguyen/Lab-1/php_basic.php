@@ -1,16 +1,16 @@
 <?php
 // Write a function have to use recursive function
-function recursive()
+function recursive($num)
 {
     static $i = 0;
     $i++;
-    if ($i < 5) {
+    if ($i < $num) {
         echo "Hello World!\n";
-        recursive();
+        recursive($num);
     }
     $i--;
 }
-recursive();
+recursive(5);
 
 // All words should be separated by one space and trim it
 function correctSpacing($sentence)
@@ -32,17 +32,24 @@ echo "Giá trị đầu tiên của mảng là " . getFirstValue([80, 5, 100]) .
 echo "Giá trị đầu tiên của mảng là " . getFirstValue([-500, 0, 50]) . "\n";
 
 // Write a program to remove an specific element by value from array in PHP
+// Xoa cac phan tu trung khop
 function deleteItem($array, $deleteItem)
 {
-    $key = array_search($deleteItem, $array);
-    if ($key != false) {
+    while ($key = array_search($deleteItem, $array)) {
         unset($array[$key]);
     }
     return $array;
 }
-$list = array('jan', 'feb', 'march', 'april', 'may');
+
+// Array_diff: tra ve cac phan tu khac nhau
+function deleteItem2($array, ...$deleteItem)
+{
+    return array_diff($array, $deleteItem);
+}
+
+$list = array('jan', 'feb', 'march', 'april', 'may', 'april');
 $deleteItem = 'april';
-echo var_dump(deleteItem($list, $deleteItem)) . "\n";
+echo var_dump(deleteItem($list, $deleteItem));
 
 // Create a function that takes a string and returns a string in which each character is repeated once
 function doubleChar($str)
@@ -60,34 +67,70 @@ echo doubleChar("1234!_ ") . "\n";
 // How to check if an Array is a subnet of another Array?
 function subnetArr($array, $anotherArray)
 {
-    $countSub = count(array_intersect($array, $anotherArray));
-    if ($countSub = count($array)) return true;
-    else return false;
+    $newArray = array_unique($array);
+    $newAnother = array_unique($anotherArray);
+    $checkSub = array_intersect($newArray, $newAnother);
+    if (count($checkSub) == count($newAnother)) {
+        return "true";
+    }
+    return "false";
 }
-$array = array('jan', 'feb', 'march', 'april', 'may');
-$anotherArray = array('jan', 'may');
+
+$array = array('jan', 'feb', 'march', 'april', 'may', 'may');
+$anotherArray = array('jan', 'may', 'nov');
 echo subnetArr($array, $anotherArray) . "\n";
 
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
-// For
+// For + if
 function evenNumber($min, $max)
 {
-    for ($min; $min <= $max; $min++) {
-        if ($min % 2 == 0) echo "$min ";
+    if ($min % 2 == 0 && $min <= $max) {
+        echo "$min ";
+        $min += 2;
+    } else {
+        $min += 1;
+    }
+    for ($min; $min <= $max; $min += 2) {
+        echo "$min ";
     }
 }
 evenNumber(10, 20);
 echo "\n";
 
-// Do while
 function evenNumber2($min, $max)
 {
+    for ($min; $min <= $max; $min++) {
+        if ($min % 2 == 0) {
+            echo "$min ";
+        }
+    }
+}
+
+// Do while
+function evenNumber3($min, $max)
+{
+    if ($min % 2 == 0 && $min <= $max) {
+        echo "$min ";
+        $min += 2;
+    } else {
+        $min += 1;
+    }
     do {
-        if ($min % 2 == 0) echo "$min ";
+        echo "$min ";
+        $min += 2;
+    } while ($min <= $max);
+}
+
+function evenNumber4($min, $max)
+{
+    do {
+        if ($min % 2 == 0) {
+            echo "$min ";
+        }
         $min++;
     } while ($min <= $max);
 }
-evenNumber2(10, 47);
+evenNumber3(10, 47);
 echo "\n";
 
 
@@ -98,7 +141,9 @@ function dayOfMonth($month, $year)
     $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
     switch ($month) {
         case 2:
-            if ($checkLeapYear) return "Tháng $month có 29 ngày\n";
+            if ($checkLeapYear) {
+                return "Tháng $month có 29 ngày\n";
+            }
             return "Tháng $month có 28 ngày\n";
             break;
         case 1:
@@ -134,7 +179,9 @@ function dayOfMonth2($month, $year)
     $evenMonth = ["4", "6", "9", "11"];
     switch (true) {
         case $month == 2:
-            if ($checkLeapYear) return "Tháng $month có 29 ngày\n";
+            if ($checkLeapYear) {
+                return "Tháng $month có 29 ngày\n";
+            }
             return "Tháng $month có 28 ngày\n";
             break;
         case in_array($month, $oddMonth) == true:
@@ -156,11 +203,13 @@ echo dayOfMonth2(23, 2024);
 // Sử dụng IF ELSE để check 1 biến khác null 
 function checkNull($var)
 {
-    if (is_null($var)) echo "Đây là giá trị Null\n";
-    else echo "$var không phải là giá trị Null\n";
+    if (is_null($var)) {
+        return "Đây là giá trị Null\n";
+    }
+    return "$var không phải là giá trị Null\n";
 }
-checkNull(520);
-checkNull(null);
+echo checkNull(520);
+echo checkNull(null);
 
 // Write a function to calculate the electricity bill use if-else conditions or switch case.
 function calculateBill(int $units)
