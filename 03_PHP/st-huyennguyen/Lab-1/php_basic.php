@@ -66,7 +66,7 @@ function subnetArr($array, $anotherArray)
 }
 $array = array('jan', 'feb', 'march', 'april', 'may');
 $anotherArray = array('jan', 'may');
-echo subnetArr($array, $anotherArray)."\n";
+echo subnetArr($array, $anotherArray) . "\n";
 
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
 // For
@@ -130,14 +130,14 @@ echo dayOfMonth(13, 2023);
 function dayOfMonth2($month, $year)
 {
     $checkLeapYear = ($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0);
-    $oldMonth = ["1", "3", "5", "7", "8", "10", "12"];
+    $oddMonth = ["1", "3", "5", "7", "8", "10", "12"];
     $evenMonth = ["4", "6", "9", "11"];
     switch (true) {
         case $month == 2:
             if ($checkLeapYear) return "Tháng $month có 29 ngày\n";
             return "Tháng $month có 28 ngày\n";
             break;
-        case in_array($month, $oldMonth) == true:
+        case in_array($month, $oddMonth) == true:
             return "Tháng $month có 31 ngày\n";
             break;
         case in_array($month, $evenMonth) == true:
@@ -188,5 +188,5 @@ function calculateBill(int $units)
     }
     return $cost;
 }
-echo "Chi phí phải trả là ".calculateBill(50)." đồng\n";
-echo "Chi phí phải trả là ".calculateBill(650)." đồng\n";
+echo "Chi phí phải trả là " . calculateBill(50) . " đồng\n";
+echo "Chi phí phải trả là " . calculateBill(650) . " đồng\n";
