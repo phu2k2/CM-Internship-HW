@@ -42,7 +42,7 @@ DELIMITER ;
 
  -- Câu 3 ----
 ALTER TABLE DONDATHANG
-ADD COLUMN TongTien DECIMAL() DEFAULT 0 ;
+ADD COLUMN TongTien DECIMAL(10,2) DEFAULT 0 ;
 
 
 DELIMITER //
@@ -72,11 +72,22 @@ CREATE TABLE CHITIETPHONGBAN(
 ); 
 
 DELIMITER //
-CREATE TRIGGER UpdateSoLuongNhanVien AFTER INSERT ON CHITIETPHONGBAN
+CREATE TRIGGER updateSoLuongNhanVien AFTER INSERT ON CHITIETPHONGBAN
 FOR EACH ROW
 BEGIN
 	UPDATE PHONGBAN 
     SET SoLuongNhanVien = SoLuongNhanVien + 1
+    WHERE MaPhongBan = NEW.MaPhongBan;
+END //
+DELIMITER ; 
+
+
+DELIMITER //
+CREATE TRIGGER deleteSoLuongNhanVien AFTER INSERT ON CHITIETPHONGBAN
+FOR EACH ROW
+BEGIN
+	UPDATE PHONGBAN 
+    SET SoLuongNhanVien = SoLuongNhanVien - 1
     WHERE MaPhongBan = NEW.MaPhongBan;
 END //
 DELIMITER ; 
@@ -86,35 +97,40 @@ DELIMITER ;
 
 # Insert NhanVien
 DELIMITER //
-CREATE TRIGGER InsertNhanVien 
+CREATE TRIGGER checkAgeForInsertEmployee
 BEFORE INSERT ON NHANVIEN
 FOR EACH ROW
 BEGIN
-		IF (TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) < 18 OR 
-			TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) > 60
-            )THEN
-            SIGNAL SQLSTATE '45000' 
-			SET MESSAGE_TEXT = 'NhanVien phai tu 18 tuoi den 60';
-		END IF;
+	IF (
+		TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) < 18 OR 
+		TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) > 60
+    	)
+	THEN
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'NhanVien phai tu 18 tuoi den 60';
+	END IF;
 END;
 //
 DELIMITER ; 
 
 #UpdateNhanVien
 DELIMITER //
-CREATE TRIGGER UpdateNhanVien 
+CREATE TRIGGER checkAgeForUpdateEmployee
 BEFORE UPDATE ON NHANVIEN
 FOR EACH ROW
 BEGIN
-		IF (TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) < 18 OR 
-			TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) > 60
-            )THEN
-            SIGNAL SQLSTATE '45000' 
-			SET MESSAGE_TEXT = 'NhanVien phai tu 18 tuoi den 60';
-		END IF;
+	IF (
+		TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) < 18 OR 
+		TIMESTAMPDIFF(YEAR, New.NgaySinh, NOW()) > 60
+        )
+	THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'NhanVien phai tu 18 tuoi den 60';
+	END IF;
 END;
 //
-DELIMITER ; 
+DELIMITER ;
+
 
 
 
