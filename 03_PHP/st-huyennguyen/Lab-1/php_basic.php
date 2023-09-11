@@ -1,5 +1,4 @@
 <?php
-
     // Write a function have to use recursive function
     function recursive()
     {
