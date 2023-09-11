@@ -1,16 +1,14 @@
 <?php
 // Write a function have to use recursive function
-function recursive($num)
+function recursive($i)
 {
-    static $i = 0;
-    $i++;
-    if ($i < $num) {
+    if ($i < 5) {
         echo "Hello World!\n";
-        recursive($num);
+        $i++;
+        return recursive($i);
     }
-    $i--;
 }
-recursive(5);
+recursive(0);
 
 // All words should be separated by one space and trim it
 function correctSpacing($sentence)
