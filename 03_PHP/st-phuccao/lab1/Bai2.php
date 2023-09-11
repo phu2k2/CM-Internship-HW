@@ -1,9 +1,11 @@
 <?php
-function removeSpace($sentence) {
+
+function removeSpace($sentence)
+{
     // Chia chuỗi thành các từ riêng biệt
     $words = explode(" ", $sentence);
     // Loại bỏ các từ trống
-    $words = array_filter($words, 'strlen');
+    $words = array_filter($words, "strlen");
     // Ghép lại các từ bằng một khoảng trắng
     $corrected = implode(" ", $words);
     return $corrected;

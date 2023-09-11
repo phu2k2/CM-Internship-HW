@@ -1,4 +1,5 @@
 <?php
+
     $min = 1;
     $max = 10;
     for ($i = $min; $i <= $max; $i++) {

@@ -1,6 +1,8 @@
 <?php
-function getFirstValue($array) {
-	return $array[0];
+
+function getFirstValue($array)
+{
+    return $array[0];
 }
 echo getFirstValue([1, 2, 3]);
 echo "<br/>";
