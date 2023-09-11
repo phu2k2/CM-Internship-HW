@@ -177,28 +177,26 @@ echo evenValue2(31, 81) . "\n";
 // Question 7.2
 function numberOfDays($month, $year)
 {
-    switch ($month) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-            return "Tháng $month của $year có 31 ngày";
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-           return "Tháng $month của $year có 30 ngày";
-        case 2:
+    $month31 = [1,3,5,7,8,10,12];
+    $month30 = [4,6,9,11];
+    switch (true) {
+        case in_array($month,$month31):
+            $result =  "Tháng $month của $year có 31 ngày";
+            break;
+        case in_array($month,$month30):
+            $result =  "Tháng $month của $year có 30 ngày";
+            break;
+        case in_array($month,[2]):
             if ($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0) {
-                return "Tháng $month của $year có 29 ngày";
+                $result =  "Tháng $month của $year có 29 ngày";
             } else {
-                return "Tháng $month của $year có 28 ngày";
+                $result =  "Tháng $month của $year có 28 ngày";
             }
+            break;
         default:
+            $result =  "Không tồn tại";
     }
+    return $result;
 }
 // Test Question 7.2
 echo numberOfDays(2, 2000) . "\n";
