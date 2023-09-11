@@ -1,5 +1,7 @@
 <?php
 
+    // Prints the even value of a given minimum maximum value range
+    // Using for
     $min = 1;
     $max = 10;
     for ($i = $min; $i <= $max; $i++) {
@@ -7,6 +9,7 @@
             echo $i . " "; // In ra các số chẵn
         }
     }
+    // Using do while
     $i = $min;
     do {
         if ($i % 2 == 0) {
@@ -15,8 +18,8 @@
         $i++;
     } while ($i <= $max);
 
+    // Use SWITCH CASE to print out the number of days in the month
     $month = 2;
-
     switch ($month) {
         case 1:
         case 3:
@@ -39,6 +42,8 @@
         default:
             echo "Không phải là một tháng hợp lệ.";
     }
+    
+    //check Null value
     $myVariable = "Some value";
     if ($myVariable !== null) {
         echo "Biến không phải là null.";

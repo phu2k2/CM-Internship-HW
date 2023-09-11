@@ -8,9 +8,8 @@ print_r($lits);
 
 //Method 2: Using array_search()
 $valueToRemove = "march";
-$key = array_search($valueToRemove, $lits);
-if ($key !== false) {
-    unset($lits[$key]);
+while ($key = array_search($valueToRemove, $list)) {
+    unset($list[$key]);
 }
 print_r($lits);
 
