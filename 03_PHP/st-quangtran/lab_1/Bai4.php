@@ -12,7 +12,7 @@ print_r(removeElementArrayDiff($lits, $delete_item));
 // Solution 2: Use array_search
 function removeElementArraySearch($array, $item) {
     $key = array_search($item, $array);
-    if($key !== false) {
+    if(!$key) {
         unset($array[$key]);
     }
     return $array;

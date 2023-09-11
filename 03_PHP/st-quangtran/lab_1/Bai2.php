@@ -6,7 +6,7 @@ function correctSpacing($string) {
     $result = implode(' ', $filteredWords);
     return $result;
 }
-echo correctSpacing("The film   starts       at      midnight. ") ."\n";
-echo correctSpacing("The     waves were crashing  on the     shore.   ") ."\n";
-echo correctSpacing(" Always look on    the bright   side of  life.") ."\n";
+echo correctSpacing("The film   starts       at      midnight. ") . "\n";
+echo correctSpacing("The     waves were crashing  on the     shore.   ") . "\n";
+echo correctSpacing(" Always look on    the bright   side of  life.") . "\n";
 ?>

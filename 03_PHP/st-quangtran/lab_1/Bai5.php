@@ -7,7 +7,7 @@ function doubleChar($str) {
     }
     return $newString;
 }
-echo doubleChar("String") ."\n"; 
-echo doubleChar("Hello World!") ."\n"; 
-echo doubleChar("1234!_ ") ."\n";
+echo doubleChar("String") . "\n"; 
+echo doubleChar("Hello World!") . "\n"; 
+echo doubleChar("1234!_ ") . "\n";
 ?>

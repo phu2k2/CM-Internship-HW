@@ -1,13 +1,8 @@
 <?php 
 // Question 1: PHP using recursive function print 1 -> 10
-function recursive() {
-    static $result = 1;
-    $condition = 10;
-    echo $result.' ';
-    while($result < $condition) {
-        $result++;
-        recursive();
-    }
+function recursiveFactorial($n) {
+    if($n == 1) return 1;
+    return($n * recursiveFactorial($n - 1));
 }
-recursive();
+echo recursiveFactorial(4);
 ?>

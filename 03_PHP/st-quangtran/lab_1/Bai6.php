@@ -5,10 +5,10 @@ $another_array = array('jan', 'may');
 function isSubArray($array, $another_array) {
     $intersection = array_intersect($another_array, $array);
     if(count($intersection) === count($another_array)){
-        return True;
+        return true;
     } else {
-        return False;
+        return false;
     }
 }
-echo isSubArray($array,$another_array)."\n";
+echo isSubArray($array,$another_array) . "\n";
 ?>

@@ -9,7 +9,7 @@ function printEvenNumberFor($min, $max) {
         }
     }
 }
-printEvenNumberFor(1,100);
+printEvenNumberFor(1, 100);
 // 1.2 Use While
 function printEvenNumberDoWhile($min, $max) {
     do {
@@ -36,16 +36,13 @@ function getDaysOfMonth($month, $year) {
 		case 4:
 		case 6:
 		case 9:
-		case 11:	
+		case 11:
             $days = 30;
-			break;
+            break;
         case 2:
             $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
-            if($isLeapYear){ 
-                $days = 29;
-            } else {
-                $days = 28;
-            }
+            $days = 28;
+            if($isLeapYear) $days = 29;
             break;
         default:
             $days = -1;
@@ -55,9 +52,9 @@ function getDaysOfMonth($month, $year) {
 }
 $days = getDaysOfMonth(4, 2014);
 if($days != -1) {
-    echo "Number of days in the month: {$days}" ."\n";
+    echo "Number of days in the month: {$days}" . "\n";
 } else {
-    echo 'Not Valid' ."\n";
+    echo 'Not Valid' . "\n";
 }
 
 // 3. Check variable not null
@@ -68,6 +65,6 @@ function isNull($variable) {
         echo 'Variable is not null';
     }
 }
-echo isNull(null) ."\n";
-echo isNull(55) ."\n";
+echo isNull(null) . "\n";
+echo isNull(55) . "\n";
 ?>
