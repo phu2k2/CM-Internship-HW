@@ -22,28 +22,33 @@ function calculateElectricityBill($units) {
 
 //solution 2
 function calculateElectricityBill2($units) {
-    $range = [50, 50, 100, 100, 100];
-    $unitLimits = [50, 100, 200, 300, 400];
-    $unitRates = [1728, 1786, 2074, 2612, 2919, 3015];
+    $costRange = [
+        ['range' => 50, 'cost' => 1728],
+        ['range' => 50, 'cost' => 1786],
+        ['range' => 100, 'cost' => 2074],
+        ['range' => 100, 'cost' => 2612],
+        ['range' => 100, 'cost' => 2919],
+    ];
     $totalBill = 0;
-    
-    if($units <= 50){
-        return $units * 1728;
-    }
-    for ($i = 0; $i < count($unitLimits); $i++) {
-        if ($units <= $unitLimits[$i]) {
-            $totalBill += ($units - $unitLimits[$i - 1]) * $unitRates[$i];
+
+    foreach ($costRange as $range) {
+        $rangeUnits = min($units, $range['range']);
+        $totalBill += $rangeUnits * $range['cost'];
+        $units -= $rangeUnits;
+
+        if ($units <= 0) {
             break;
-        } else {
-            $totalBill += $range[$i] * $unitRates[$i];
         }
+    }
+    if ($units > 0) {
+        $totalBill += $units * 3015;
     }
     return $totalBill;
 }
-$units = 320;
+$units = 600;
 
 $billAmount = calculateElectricityBill($units);
 echo "Solution 1|your electricity bill for $units kWh is: $billAmount VND\n";
 
 $billAmount = calculateElectricityBill2($units);
-echo "Solution 2|your electricity bill for $units kWh is: $billAmount VND";
+echo "Solution 2|your electricity bill for $units kWh is: $billAmount VND\n";

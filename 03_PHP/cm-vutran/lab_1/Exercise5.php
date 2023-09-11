@@ -4,6 +4,6 @@ function doubleChar($str){
     foreach($arr as &$value){
         $value = $value.$value;
     }
-    echo implode($arr);
+    return implode($arr);
 }
-doubleChar('String!_ ');
+echo doubleChar('String!_ ');

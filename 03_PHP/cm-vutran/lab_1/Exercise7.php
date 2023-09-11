@@ -1,7 +1,7 @@
 <?php
 $min = 10;
 $max = 200;
-function useForLoop ($min, $max) {
+function useForLoop($min, $max) {
     for($i=$min;$i<=$max;$i++){
         if($i%2==0){
             echo $i.' ';
@@ -11,19 +11,19 @@ function useForLoop ($min, $max) {
 useForLoop($min, $max);
 echo "\n";
 
-function useDoWhileLoop ($min, $max) {
+function useDoWhileLoop($min, $max) {
     $i = $min;
-do{
-    if($i%2==0){
-        echo $i.' ';
-    }
-    $i++;
-}while($i<=$max);
+    do{
+        if($i%2==0){
+            echo $i.' ';
+        }
+        $i++;
+    }while($i<=$max);
 }
 useDoWhileLoop($min, $max);
 echo "\n";
 
-function getDayOfMonth ($month, $year) {
+function getDayOfMonth($month, $year) {
     switch ($month) {
         case 1: 
         case 3: 
@@ -41,10 +41,9 @@ function getDayOfMonth ($month, $year) {
             $days = 30;
             break;
         case 2: 
+            $days = 28; 
             if (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0) {
                 $days = 29; 
-            } else {
-                $days = 28; 
             }
             break;
         default:
@@ -58,11 +57,11 @@ function getDayOfMonth ($month, $year) {
     }
 }
 $month = 2; 
-$year = 2023; 
+$year = 2016; 
 getDayOfMonth($month, $year);
 
 
-function checkVariableNull ($myVar) {
+function checkVariableNull($myVar) {
     if (is_null($myVar)) {
         echo "Variable is null.\n";
     } else {
