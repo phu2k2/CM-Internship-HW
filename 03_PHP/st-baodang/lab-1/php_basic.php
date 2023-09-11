@@ -21,7 +21,6 @@ function correctSpacing($sentence) {
     return trim($result);
 }
 
-echo correctSpacing("The film   starts       at      midnight. ");
 
 // ====================================================================
 // PHP Array Return the First Element in an Array
@@ -33,6 +32,16 @@ function getFirstValue($array) {
 function getFirstValue_2($array) {
     return array_shift($array);
 }
+
+echo getFirstValue([1, 2, 3]) . "\n";
+echo getFirstValue([80, 5, 100]) . "\n";
+echo getFirstValue([-500, 0, 50]) . "\n";
+
+echo getFirstValue_2([1, 2, 3]) . "\n";
+echo getFirstValue_2([80, 5, 100]) . "\n";
+echo getFirstValue_2([-500, 0, 50]) . "\n";
+
+
 
 // ====================================================================
 // PHP Array (Remove specific element by value from array)
@@ -108,12 +117,17 @@ function dayOfMonth($month, $year) {
         case 2:
             if($isLeapYear) return 29;
             return 28;
-        case 4 || 6 || 9 || 11:
+        case 4:
+        case 6:
+        case 9:
+        case 11:
             return 30;
         default:
             return 31;
     }
 }
+
+echo dayOfMonth(12, 2012);
 
 // Sử dụng IF ELSE để check 1 biến khác null
 function checkNull($variable) {
