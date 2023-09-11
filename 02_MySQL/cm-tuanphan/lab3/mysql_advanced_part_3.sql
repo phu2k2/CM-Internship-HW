@@ -43,7 +43,7 @@ BEGIN
 	WHERE DONDATHANG.MaNhanVien = EmployeeID
 	GROUP BY DONDATHANG.MaNhanVien;
 
-    RETURN (BaseSalary + PhuCap + TongHoaHong);
+    RETURN COALESCE(BaseSalary + PhuCap + TongHoaHong, 0);
 END;
 //
 DELIMITER ;
