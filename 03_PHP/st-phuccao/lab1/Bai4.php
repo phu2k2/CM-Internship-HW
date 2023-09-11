@@ -1,21 +1,27 @@
 <?php
 
 //Method 1: Using array_diff()
-$lits = ["jan", "feb", "march", "april", "may"];
+$list = ["jan", "feb", "march", "april", "may"];
 $delete_item = "april";
-$lits = array_diff($lits, [$delete_item]);
-print_r($lits);
+function removeItem1($list,$delete_item)
+{
+    return array_diff($list, [$delete_item]);
+}
 
 //Method 2: Using array_search()
-$valueToRemove = "march";
-while ($key = array_search($valueToRemove, $list)) {
-    unset($list[$key]);
+function removeItem2($list,$delete_item)
+{
+    while ($key = array_search($delete_item, $list)) {
+        unset($list[$key]);
+    }
 }
-print_r($lits);
 
 //Method 3 :
-foreach ($lits as $key => $value) {
-    if ($value == $delete_item) {
-        unset($lits[$key]);
+function removeItem3($list,$delete_item)
+{
+    foreach ($list as $key => $value) {
+        if ($value == $delete_item) {
+            unset($lits[$key]);
+        }
     }
 }
