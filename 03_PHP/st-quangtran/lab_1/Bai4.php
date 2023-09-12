@@ -5,17 +5,19 @@ $delete_item = 'april';
 
 // Solution 1: Use array_diff
 function removeElementArrayDiff($array, $item) {
-    return array_diff($array,[$item]);
+    $newArray = array_unique($array);
+    return array_diff($newArray,[$item]);
 }
 print_r(removeElementArrayDiff($lits, $delete_item));
 
 // Solution 2: Use array_search
 function removeElementArraySearch($array, $item) {
-    $key = array_search($item, $array);
+    $newArray = array_unique($array);
+    $key = array_search($item, $newArray);
     if(!$key) {
-        unset($array[$key]);
+        unset($newArray[$key]);
     }
-    return $array;
+    return $newArray;
 }
 print_r(removeElementArraySearch($lits, $delete_item));
 
