@@ -12,7 +12,7 @@ function recursive($n)
 echo recursive(5);
 
 // Fix the Spacing
-function correctSpacing($sentence){
+function correctSpacing($sentence) {
 	return trim(preg_replace('/\s+/', ' ', $sentence));
 }
 
@@ -31,7 +31,7 @@ $delete_item = 'april';
 print_r(array_diff($lits,[$delete_item]));
 
 // Repeating letter 
-function doubleChar($str){
+function doubleChar($str) {
 	$str_arr = str_split($str);
     foreach ($str_arr as $iter) {
         echo $iter .= $iter;   
@@ -40,7 +40,7 @@ function doubleChar($str){
 doubleChar("String");
 
 // How to check if an Array is a subnet of another Array?
-function isSubnetArr($array, $another_array){
+function isSubnetArr($array, $another_array) {
 
     $result = array_intersect($array, $another_array);
     return count($result) < count($array) ? "True" : "False";
@@ -50,7 +50,7 @@ $another_array = array('jan', 'may');
 echo isSubnetArr($array , $another_array);
 
 // Sử dụng FOR and DO WHILE in ra giá trị chẵn của 1 khoảng giá trị min max cho trước
-function minMaxEvens($min_value, $max_value){
+function minMaxEvens($min_value, $max_value) {
     for ($i = $min_value; $i <= $max_value; $i++) {
         if ($i % 2 == 0) {
             echo $i . "\n";
@@ -61,7 +61,7 @@ minMaxEvens(10 , 30);
 
 
 // Sử dụng SWITCH CASE để in ra số ngày trong tháng 
-function dateCountInMonth($month){
+function dateCountInMonth($month) {
     switch ($month) {
         case 1:
             echo "Tháng 1 có 31 ngày.";
@@ -106,7 +106,7 @@ function dateCountInMonth($month){
 dateCountInMonth(12);
 
 // Sử dụng IF ELSE để check 1 biến khác null 
-function checkNULL($error){
+function checkNULL($error) {
     if ($error) {
         echo 'not null';
     }
