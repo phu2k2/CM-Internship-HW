@@ -5,7 +5,6 @@ function printEvenNum1($min, $max)
 {
     $evenNum = array();
     for ($i = $min; $i <= $max; $i++) {
-
         if ($i % 2 == 0)
             $evenNum[] = $i;
     }
@@ -56,6 +55,6 @@ function dayInMonth($month, $year)
 function checkNullVar($var)
 {
     if ($var !== null)
-        echo "Variable is null!";
-    echo "Variable is not null";
+        echo "Variable is not null!";
+    echo "Variable is null!";
 }
