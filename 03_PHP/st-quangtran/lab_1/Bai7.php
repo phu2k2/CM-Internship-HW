@@ -1,17 +1,19 @@
-<?php 
+<?php
 // Question 7: PHP IF ELSE, FOR DO WHILE, SWITCH
 // 1. Use FOR and DO WHILE to print the even value of a given min max range
 // 1.1 Use For
-function printEvenNumberFor($min, $max) {
-    for($i = $min; $i <= $max; $i++){
-        if($i % 2 === 0){
+function printEvenNumberFor($min, $max)
+{
+    for ($i = $min; $i <= $max; $i++) {
+        if($i % 2 === 0) {
             echo $i . ' ';
         }
     }
 }
 printEvenNumberFor(1, 100);
 // 1.2 Use While
-function printEvenNumberDoWhile($min, $max) {
+function printEvenNumberDoWhile($min, $max)
+{
     do {
         if($min % 2 === 0) {
             echo $min . ' ';
@@ -19,10 +21,11 @@ function printEvenNumberDoWhile($min, $max) {
         $min++;
     } while($min <= $max);
 }
-printEvenNumberDoWhile(1,100);
+printEvenNumberDoWhile(1, 100);
 
 // 2. print day of month use Switch Case
-function getDaysOfMonth($month, $year) {
+function getDaysOfMonth($month, $year)
+{
     switch($month) {
         case 1:
         case 3:
@@ -31,35 +34,30 @@ function getDaysOfMonth($month, $year) {
         case 8:
         case 10:
         case 12:
-            $days = 31;
-            break;
+            return 31;
         case 4:
         case 6:
         case 9:
         case 11:
-            $days = 30;
-            break;
+            return 30;
         case 2:
             $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
-            $days = 28;
-            if($isLeapYear) $days = 29;
-            break;
+            if ($isLeapYear) return 29;
+            return 28;
         default:
-            $days = -1;
-            break;
     }
-    return $days;
 }
-$days = getDaysOfMonth(4, 2014);
-if($days != -1) {
+$days = getDaysOfMonth(12, 2012);
+if ($days) {
     echo "Number of days in the month: {$days}" . "\n";
 } else {
     echo 'Not Valid' . "\n";
 }
 
 // 3. Check variable not null
-function isCheckNull($variable) {
-    if (is_null($variable)) {
+function isCheckNull($variable)
+{
+    if(is_null($variable)) {
         echo 'Variable is null';
     } else {
         echo 'Variable is not null';
@@ -67,4 +65,3 @@ function isCheckNull($variable) {
 }
 echo isCheckNull(null) . "\n";
 echo isCheckNull(55) . "\n";
-?>

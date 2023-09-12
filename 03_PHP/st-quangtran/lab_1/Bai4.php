@@ -23,7 +23,7 @@ print_r(removeElementArraySearch($lits, $delete_item));
 
 // Solution 3: Use Foreach
 function removeElementForeach($array, $item) {
-    foreach($array as $key=>$value) {
+    foreach($array as $key => $value) {
         if($value == $item) {
             unset($array[$key]);
         }
@@ -31,4 +31,3 @@ function removeElementForeach($array, $item) {
     return $array;
 }
 print_r(removeElementForeach($lits, $delete_item));
-?>
