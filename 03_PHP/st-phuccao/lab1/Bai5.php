@@ -6,5 +6,5 @@ function doubleChar($str)
     for ($i = 0; $i < strlen($str); $i++) {
         $rs = $rs . $str[$i] . $str[$i];
     }
-    echo $rs;
+    return $rs;
 }

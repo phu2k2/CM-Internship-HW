@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Solution 1 :
 function calculate_bill_1(int $units)
@@ -32,7 +32,7 @@ function calculate_bill_1(int $units)
     return $total_bill;
 }
 
-$units = 180;
+$units = 40;
 $bill = calculate_bill($units);
 echo "Hóa đơn tiền điện cho $units kWh là: $bill đồng";
 
@@ -40,26 +40,37 @@ echo "Hóa đơn tiền điện cho $units kWh là: $bill đồng";
 function calculate_bill(int $units)
 {
     // Định nghĩa mảng giới hạn và giá trị tương ứng
-    $range = [50, 50, 100, 100, 100];
-    $rate_limits = [50, 100, 200, 300, 400];
-    $rate_values = [1728, 1786, 2074, 2612, 2919, 3015];
+    $rates = [
+        ['range' => 50, 'limit' => 50, 'value' => 1728],
+        ['range' => 50, 'limit' => 100, 'value' => 1786],
+        ['range' => 100, 'limit' => 200, 'value' => 2074],
+        ['range' => 100, 'limit' => 300, 'value' => 2612],
+        ['range' => 100, 'limit' => 400, 'value' => 2919],
+        ['range' => null, 'limit' => null, 'value' => 3015],
+    ];
+
     $total_bill = 0;
     $remaining_units = $units;
+
     // Duyệt qua mảng giới hạn và tính tổng hóa đơn
-    for ($i = 0; $i < count($rate_limits); $i++) {
+    foreach ($rates as $rate) {
         if ($remaining_units <= 0) {
             break;
         }
-        if ($remaining_units <= $rate_limits[$i]) {
-            $total_bill +=
-                ($remaining_units - $rate_limits[$i - 1]) * $rate_values[$i];
+        $range = $rate['range'];
+        $limit = $rate['limit'];
+        $value = $rate['value'];
+        if ($limit === null || $remaining_units <= $limit) {
+            $total_bill += ($remaining_units % $limit) * $value;
             break;
         } else {
-            $total_bill += $range[$i] * $rate_values[$i];
+            $total_bill += $range * $value;
+            echo $total_bill;
         }
     }
     return $total_bill;
 }
-$units = 101;
+
+$units = 40;
 $bill = calculate_bill($units);
 echo "Hóa đơn tiền điện cho $units kWh là: $bill đồng";

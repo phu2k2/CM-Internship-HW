@@ -16,6 +16,9 @@ function evenValue($min, $max)
 // Using do while
 function evenValue1($min, $max)
 {
+    if ($min > $max) {
+        return; // Khi $min lớn hơn $max, không có số chẵn nào để in ra
+    }
     $i = $min;
     do {
         if ($i % 2 == 0) {

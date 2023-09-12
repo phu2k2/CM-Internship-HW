@@ -10,8 +10,12 @@ function removeSpace($sentence)
     $corrected = implode(" ", $words);
     return $corrected;
 }
-echo removeSpace("The film   starts    at      midnight. ");
+function removeSpaceUsingRegrex($sentence) {
+    $corrected = preg_replace('/\s+/', ' ', $sentence);
+    return trim($corrected);
+}
+echo removeSpaceUsingRegrex("The film   starts    at      midnight. ");
 echo "<br/>";
-echo removeSpace("The     waves were crashing  on the     shore.   ");
+echo removeSpaceUsingRegrex("The     waves were crashing  on the     shore.   ");
 echo "<br/>";
-echo removeSpace(" Always look on    the bright   side of  life.");
+echo removeSpaceUsingRegrex(" Always look on    the bright   side of  life.");

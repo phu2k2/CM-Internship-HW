@@ -1,14 +1,12 @@
 <?php
 
-$counter = 0;
-function recursive()
+function recursive($counter)
 {
-    global $counter;
     if ($counter >= 5) {
         return;
     }
     echo "Lần đệ quy thứ " . ($counter + 1) . "\n";
     $counter++;
-    recursive();
+    recursive($counter);
 }
-recursive();
+recursive(0);
