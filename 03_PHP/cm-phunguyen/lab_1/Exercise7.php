@@ -55,6 +55,6 @@ function dayInMonth($month, $year)
 function checkNullVar($var)
 {
     if ($var !== null)
-        echo "Variable is not null!";
-    echo "Variable is null!";
+        return "Variable is not null!";
+    return "Variable is null!";
 }
