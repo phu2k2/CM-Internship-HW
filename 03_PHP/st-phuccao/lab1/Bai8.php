@@ -41,12 +41,12 @@ function calculate_bill(int $units)
 {
     // Định nghĩa mảng giới hạn và giá trị tương ứng
     $rates = [
-        ['range' => 50, 'limit' => 50, 'value' => 1728],
-        ['range' => 50, 'limit' => 100, 'value' => 1786],
-        ['range' => 100, 'limit' => 200, 'value' => 2074],
-        ['range' => 100, 'limit' => 300, 'value' => 2612],
-        ['range' => 100, 'limit' => 400, 'value' => 2919],
-        ['range' => null, 'limit' => null, 'value' => 3015],
+        ["range" => 50, "limit" => 50, "value" => 1728],
+        ["range" => 50, "limit" => 100, "value" => 1786],
+        ["range" => 100, "limit" => 200, "value" => 2074],
+        ["range" => 100, "limit" => 300, "value" => 2612],
+        ["range" => 100, "limit" => 400, "value" => 2919],
+        ["range" => null, "limit" => null, "value" => 3015],
     ];
 
     $total_bill = 0;
@@ -57,9 +57,9 @@ function calculate_bill(int $units)
         if ($remaining_units <= 0) {
             break;
         }
-        $range = $rate['range'];
-        $limit = $rate['limit'];
-        $value = $rate['value'];
+        $range = $rate["range"];
+        $limit = $rate["limit"];
+        $value = $rate["value"];
         if ($limit === null || $remaining_units <= $limit) {
             $total_bill += ($remaining_units % $limit) * $value;
             break;

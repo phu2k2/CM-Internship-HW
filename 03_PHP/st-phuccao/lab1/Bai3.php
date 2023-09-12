@@ -2,11 +2,10 @@
 
 function getFirstValue($array)
 {
-    if (!empty($array)) {
-        return $array[0];
-    } else {
+    if (empty($array)) {
         return null;
     }
+    return $array[0];
 }
 echo getFirstValue([1, 2, 3]);
 echo "<br/>";
