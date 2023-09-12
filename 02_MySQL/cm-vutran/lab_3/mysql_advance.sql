@@ -57,11 +57,7 @@ DELIMITER ;
 SELECT TinhLuongNhanVien("T001") AS LuongNhanVienT001;
 
 -- 3: Tạo thêm cột tổng tiền trong bảng hoá đơn. Tạo hàm trigger để update tổng tiền trong hoá đơn khi chi tiết hoá đơn được tạo.  
-ALTER TABLE DONDATHANG
-ADD TongTien DECIMAL(10, 2);
-
-ALTER TABLE DONDATHANG
-ALTER TongTien SET DEFAULT 0;
+ALTER TABLE dondathang ADD TongTien DECIMAL(15,2) DEFAULT '0';
 
 UPDATE DONDATHANG DDH
 SET DDH.TongTien = (
