@@ -34,20 +34,26 @@ function getDaysOfMonth($month, $year)
         case 8:
         case 10:
         case 12:
-            return 31;
+            $days = 31;
+            break;
         case 4:
         case 6:
         case 9:
         case 11:
-            return 30;
+            $days = 30;
+            break;
         case 2:
             $isLeapYear = ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
-            if ($isLeapYear) return 29;
-            return 28;
+            $days = 28;
+            if ($isLeapYear) {
+                $days = 29;
+            }
+            break;
         default:
     }
+    return $days;
 }
-$days = getDaysOfMonth(12, 2012);
+$days = getDaysOfMonth(2, 2014);
 if ($days) {
     echo "Number of days in the month: {$days}" . "\n";
 } else {

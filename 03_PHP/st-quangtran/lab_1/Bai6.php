@@ -6,8 +6,6 @@ function isSubArray($array, $another_array) {
     $intersection = array_intersect($another_array, $array);
     if(count($intersection) === count($another_array)){
         return true;
-    } else {
-        return false;
     }
 }
 echo isSubArray($array,$another_array) . "\n";
