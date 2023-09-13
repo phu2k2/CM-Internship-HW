@@ -1,6 +1,6 @@
 -- Câu 1. Tạo procedure thực hiện tăng lương cơ bản thêm 500.000 cho (n) bạn nhân viên bán hàng có tổng số lượng hàng hóa bán ra nhiều nhất. với n là data input đầu vào.
 DELIMITER //
-CREATE PROCEDURE UpdateNhanVien(IN n INT)
+CREATE PROCEDURE UpdateNhanVien(n INT)
 BEGIN
     UPDATE NHANVIEN
     SET LuongCoBan = LuongCoBan + 500000
@@ -45,6 +45,7 @@ SELECT LUONGNHANVIEN('T001');
 ALTER TABLE DONDATHANG
 ADD COLUMN TongTien DECIMAL(10, 2);
 
+DROP TRIGGER IF EXISTS UpdateTongTien;
 DELIMITER //
 CREATE TRIGGER UpdateTongTien
 AFTER INSERT ON CHITIETDATHANG
@@ -56,7 +57,6 @@ BEGIN
 END //
 DELIMITER ;
 
-DROP TRIGGER IF EXISTS UpdateTongTien;
 SELECT * FROM DONDATHANG;
 
 -- Câu 4 Tạo thêm bảng phòng ban và bảng trung gian để nối nhân viên với phòng ban (Quan hệ n-n). Tạo triggers cập nhập số thành viên khi gán nhân viên vào phòng ban hoặc xóa nhân viên khỏi phòng ban
