@@ -144,11 +144,7 @@ function dayOfMonth($month, $year)
     $day = 0;
     switch ($month) {
         case 2:
-            if ($checkLeapYear) {
-                $day = 29;
-            } else {
-                $day = 28;
-            }
+            $day = $checkLeapYear ? 29 : 28;
             break;
         case 1:
         case 3:
@@ -188,11 +184,7 @@ function dayOfMonth2($month, $year)
     $day = 0;
     switch (true) {
         case $month == 2:
-            if ($checkLeapYear) {
-                $day = 29;
-            } else {
-                $day = 28;
-            }
+            $day = $checkLeapYear ? 29 : 28;
             break;
         case in_array($month, $oddMonth):
             $day = 31;
