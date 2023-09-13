@@ -1,32 +1,32 @@
 <?php
 // Solution 1: preg_match
-function matchFormat($regex)
+function matchFormat($variable)
 {
     $regexMail = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
     $regexUrl = "/^([a-z][a-z0-9+.-]*):(?:\\/\\/((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=(\\[[0-9A-F:.]{2,}\\]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$/i";
-    if (empty($regex)) {
+    if (empty($variable)) {
         throw new Exception("Empty variable", 400);
     }
-    if (gettype($regex) != 'string') {
+    if (gettype($variable) != 'string') {
         throw new Exception("The variable is not of datatype string", 500);
     }
-    if (preg_match($regexMail, $regex) || preg_match($regexUrl, $regex)) {
+    if (preg_match($regexMail, $variable) || preg_match($regexUrl, $variable)) {
         return true;
     }
     throw new Exception("Variable does not match Email or Url", 422);
 }
 
 // Solution 2: filter_var
-function matchFormat2($regex)
+function matchFormat2($variable)
 {
     switch (true) {
-        case empty($regex):
+        case empty($variable):
             throw new Exception("Empty variable", 400);
             break;
-        case gettype($regex) != 'string':
+        case gettype($variable) != 'string':
             throw new Exception("The variable is not of datatype string", 500);
             break;
-        case (filter_var($regex, FILTER_VALIDATE_EMAIL) || filter_var($regex, FILTER_VALIDATE_URL)):
+        case (filter_var($variable, FILTER_VALIDATE_EMAIL) || filter_var($variable, FILTER_VALIDATE_URL)):
             return true;
         default:
             throw new Exception("Variable does not match Email or Url", 422);
@@ -34,26 +34,18 @@ function matchFormat2($regex)
 }
 
 // Test solution 1
-try {
-    $regex = "https://www.php.net/manual/en/filter.examples.validation.php";
-    if (matchFormat($regex)) {
-        echo "true";
+function testHandle($input)
+{
+    try {
+        if (matchFormat2($input)) {
+            echo "true";
+        }
+    } catch (\Exception $e) {
+        $message = $e->getMessage();
+        $code = $e->getCode();
+        echo "Error: [Code $code] $message";
     }
-} catch (\Exception $e) {
-    $message = $e->getMessage();
-    $code = $e->getCode();
-    echo "Error: [Code $code] $message";
 }
+testHandle("https://www.php.net/manual/en/filter.examples.validation.php");
 echo "\n";
-
-// Test solution 2
-try {
-    $regex = 500;
-    if (matchFormat2($regex)) {
-        echo "true";
-    }
-} catch (\Exception $e) {
-    $message = $e->getMessage();
-    $code = $e->getCode();
-    echo "Error: [Code $code] $message";
-}
+testHandle(500);

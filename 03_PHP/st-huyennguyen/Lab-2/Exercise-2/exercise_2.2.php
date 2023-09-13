@@ -10,12 +10,16 @@ function readProfile()
     echo "\t\t<th>age</th>\n";
     echo "\t</tr>\n";
     while (!feof($readProfile)) {
-        $line = explode(',', rtrim(fgets($readProfile), "\n"));
-        echo "\t<tr>\n";
-        foreach ($line as $value) {
-            echo "\t\t<td>$value</td>\n";
+        $line = fgetcsv($readProfile, 1000, ",");
+        if($line != false) {
+            echo "\t<tr>\n";
+            foreach ($line as $value) {
+                echo "\t\t<td>$value</td>\n";
+            }
+            echo "\t</tr>\n";
+        } else {
+            continue;
         }
-        echo "\t</tr>\n";
     }
     echo "</table>\n";
     fclose($readProfile);

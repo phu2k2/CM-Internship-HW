@@ -1,7 +1,7 @@
 <?php
 // Solution 1: switch - case
 // check filter is empty
-function isFilter($data, $filter)
+function filterData($data, $filter)
 {
     if (!empty($filter)) {
         return count(array_filter($data, $filter));
@@ -23,7 +23,7 @@ function checkDataType(int|float|string|array $data, string $filter): int
             $result = strlen($data);
             break;
         case 'array':
-            $result = isFilter($data, $filter);
+            $result = filterData($data, $filter);
             break;
         default:
             break;
@@ -43,7 +43,7 @@ function checkDataType2(int|float|string|array $data, string $filter): int
         'integer' => $data,
         'double' => round($data, 0),
         'string' => strlen($data),
-        'array' => isFilter($data, $filter),
+        'array' => filterData($data, $filter),
     };
     return $result;
 }

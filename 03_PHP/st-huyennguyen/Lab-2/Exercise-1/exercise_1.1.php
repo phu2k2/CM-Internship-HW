@@ -7,4 +7,3 @@ function isWeekend($date)
     }
     return false;
 }
-

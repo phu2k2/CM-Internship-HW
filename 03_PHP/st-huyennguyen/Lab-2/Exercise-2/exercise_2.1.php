@@ -1,5 +1,5 @@
 <?php
-function creteFile($name, $description)
+function createFile($name, $description)
 {
     $myProfile = fopen(__DIR__ . "/myprofile.txt", "w");
     fwrite($myProfile, $name);
@@ -9,4 +9,4 @@ function creteFile($name, $description)
 
 $name = "My fullname is Nguyen Thi Cam Huyen\n";
 $description = "I'm 22 years old. I like reading, drawing and crocheting.\n";
-creteFile($name, $description);
+createFile($name, $description);
