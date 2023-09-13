@@ -11,7 +11,13 @@ function countDataType(array $items)
     $dataType = array_map(function ($value) {
         return gettype($value);
     }, $items);
-    $result = array_count_values($dataType);
+    $result = [];
+    foreach($dataType as $value) {
+        if(!isset($result[$value])) {
+            $result[$value] = 0;
+        }
+        $result[$value] += 1;
+    }
     return $result;
 }
 

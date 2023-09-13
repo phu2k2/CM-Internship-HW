@@ -1,15 +1,16 @@
 <?php
 // Kiểm tra $date có phải là ngày chủ nhật không?
-function isWeekend(DateTime $date)
+function isWeekend(string $date)
 {
-    return $date->format("D") === "Sun";
+    return date('D',strtotime($date)) === "Sun";
 }
 
 // Kiểm tra xem hôm nay có lịch hẹn không
 function checkMeeting()
 {
-    if (date('d') != 12) {
-        $day = date('d') < 20 ? 20 - date('d') : 20 + date('t') - date('d');
+    $meetingDay = 20;
+    if (date('d') != $meetingDay) {
+        $day = date('d') < $meetingDay ? $meetingDay - date('d') : $meetingDay + date('t') - date('d');
         echo "Cách lần gặp kế tiếp còn $day ngày";
     } elseif (date('D') === "Sun") {
         echo "Có lịch hẹn vào ngày hôm nay";

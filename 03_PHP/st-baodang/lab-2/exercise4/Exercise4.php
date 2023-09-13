@@ -7,9 +7,11 @@ function validate($str)
 {
     if (empty($str)) {
         throw new Exception("Biến truyền vào rỗng", 400);
-    } elseif (!is_string($str)) {
+    }
+    if (!is_string($str)) {
         throw new Exception("Biến truyền vào không phải kiểu String", 500);
-    } elseif (!filter_var($str, FILTER_VALIDATE_EMAIL) && !preg_match($GLOBALS['urlRegex'], $str)) {
+    }
+    if (!filter_var($str, FILTER_VALIDATE_EMAIL) && !preg_match($GLOBALS['urlRegex'], $str)) {
         throw new Exception("Xác minh thất bại", 422);
     }
 }
