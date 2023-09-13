@@ -1,4 +1,5 @@
 <?php
+define('day', 20);
 
 function isWeekend()
 {
@@ -7,15 +8,15 @@ function isWeekend()
 
 function isDay20()
 {
-    return date('d') == 20;
+    return date('d') == day;
 }
 
 function distanceWithDay20()
 {
-    if (date('d') < 20) {
-        return 20 - date('d');
+    if (date('d') < day) {
+        return day - date('d');
     }
-    return 20 + date('t') - date('d');
+    return day + date('t') - date('d');
 }
 
 function nearestSunDay()
@@ -24,17 +25,16 @@ function nearestSunDay()
     return $nextSunday;
 }
 
-
 function checkSchedule($currentDate)
 {
     echo "Ngày hiện tại: $currentDate \n";
 
-    if (!isDay20($currentDate)) {
-        echo "Hôm nay không phải là ngày 20.\n";
-        $distanceDay = distanceWithDay20($currentDate);
-        echo "Còn $distanceDay ngày nữa sẽ đến ngày 20 gần nhất\n";
+    if (!isDay20()) {
+        echo "Hôm nay không phải là ngày " .day .".\n";
+        $distanceDay = distanceWithDay20();
+        echo "Còn $distanceDay ngày nữa sẽ đến ngày " . day . " gần nhất\n";
     } else {
-        echo "Hôm nay là ngày 20.\n";
+        echo "Hôm nay là ngày " . day .".\n";
         if (isWeekend()) {
             echo "Hôm nay là cuối tuần. Bạn có lịch hẹn vào ngày hôm nay.";
         } else {
