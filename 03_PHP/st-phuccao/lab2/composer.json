@@ -1,8 +1,8 @@
 {
-    "name": "phucchp/lab2",
+    "name": "phucchp/be-intern-2023-labs",
     "autoload": {
         "psr-4": {
-            "Phucchp\\Lab2\\": "src/"
+            "Phucchp\\BeIntern2023Labs\\": "src/"
         }
     },
     "authors": [
