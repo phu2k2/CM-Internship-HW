@@ -1,5 +1,5 @@
 <?php
-function creteFile($name,$description)
+function creteFile($name, $description)
 {
     $myProfile = fopen(__DIR__ . "/myprofile.txt", "w");
     fwrite($myProfile, $name);
