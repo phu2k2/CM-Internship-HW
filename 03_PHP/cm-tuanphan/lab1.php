@@ -23,7 +23,7 @@ echo correctSpacing(" Always look on    the bright   side of  life.");
 // Return the First Element in an Array?
 function getFirstValue($array)
 {
-    return $array[0];
+    return $array[0] ?? [];
 }
 
 // Remove specific element by value from array
@@ -34,19 +34,20 @@ print_r(array_diff($lits, [$delete_item]));
 // Repeating letter 
 function doubleChar($str)
 {
-    $str_arr = str_split($str);
-    foreach ($str_arr as $iter) {
-        echo $iter .= $iter;
-    }
+  $str_arr = str_split($str);
+  foreach ($str_arr as &$iter) {
+    $iter .= $iter;
+  }
+  unset($iter);
+  return implode($str_arr);
 }
-doubleChar("String");
+echo doubleChar("String");
 
 // How to check if an Array is a subnet of another Array?
 function isSubnetArr($array, $another_array)
 {
-
     $result = array_intersect($array, $another_array);
-    return count($result) < count($array) ? "True" : "False";
+    return count($result) < count($array);
 }
 $array = array('jan', 'feb', 'march', 'april', 'may');
 $another_array = array('jan', 'may');
@@ -65,62 +66,40 @@ minMaxEvens(10, 30);
 
 
 // Sử dụng SWITCH CASE để in ra số ngày trong tháng 
-function dateCountInMonth($month)
+function daysInMonth($month, $year)
 {
     switch ($month) {
-        case 1:
-            echo "Tháng 1 có 31 ngày.";
-            break;
         case 2:
-            echo "Tháng 2 có 28 hoặc 29 ngày, tùy theo năm.";
-            break;
-        case 3:
-            echo "Tháng 3 có 31 ngày.";
-            break;
+            if (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0)) {
+                return 29;
+            } else {
+                return 28;
+            }
         case 4:
-            echo "Tháng 4 có 30 ngày.";
-            break;
-        case 5:
-            echo "Tháng 5 có 31 ngày.";
-            break;
         case 6:
-            echo "Tháng 6 có 30 ngày.";
-            break;
-        case 7:
-            echo "Tháng 7 có 31 ngày.";
-            break;
-        case 8:
-            echo "Tháng 8 có 31 ngày.";
-            break;
         case 9:
-            echo "Tháng 9 có 30 ngày.";
-            break;
-        case 10:
-            echo "Tháng 10 có 31 ngày.";
-            break;
         case 11:
-            echo "Tháng 11 có 30 ngày.";
-            break;
-        case 12:
-            echo "Tháng 12 có 31 ngày.";
-            break;
+            return 30; 
         default:
-            echo "Tháng không hợp lệ.";
+            return 31; 
     }
 }
-dateCountInMonth(12);
+function dateCountInMonth($month, $year)
+{
+    $days = daysInMonth($month, $year);
+    echo "Tháng $month năm $year có $days ngày.";
+}
+
+dateCountInMonth(2, 2024);
+
+
 
 // Sử dụng IF ELSE để check 1 biến khác null 
 function checkNULL($error)
 {
-    if ($error) {
-        echo 'not null';
-    } else {
-        echo 'null';
-    }
+    echo empty($error) ? "This variable is null" : "This variable is not null";
 }
-$error = null;
-checkNULL($error);
+checkNULL(null);
 
 function calculate_bill(int $units)
 {
