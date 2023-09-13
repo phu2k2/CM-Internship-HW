@@ -5,11 +5,11 @@ echo '<tr><th>ID</th><th>Name</th><th>Age</th></tr>';
 
 while (!feof($file)) {
     $line = fgets($file);
-    $data = explode(', ', $line);
+    $data = explode(',', $line);
     if (count($data) == 3) {
-        $id = $data[0];
-        $name = $data[1];
-        $age = $data[2];
+        $id = trim($data[0]);
+        $name = trim($data[1]);
+        $age = trim($data[2]);
         echo "<tr><td>$id</td><td>$name</td><td>$age</td></tr>";
     }
 }

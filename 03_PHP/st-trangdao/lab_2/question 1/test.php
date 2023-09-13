@@ -2,11 +2,12 @@
 //use include
 include 'weekend.php';
 
-echo isWeekend(new DateTime('2023-07-09'));
+$date = date('Y-m-d',strtotime("last Sunday"));
+echo isWeekend($date);
 checkDay20AndMeeting();
 
-//use require
-require 'weekend.php';
+// //use require
+// require 'weekend.php';
 
-echo isWeekend(new DateTime('2023-07-09'));
-checkDay20AndMeeting();
+// echo isWeekend(new DateTime('2023-07-09'));
+// checkDay20AndMeeting();
