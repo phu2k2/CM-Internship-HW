@@ -63,10 +63,9 @@ function calculate_bill(int $units)
         if ($limit === null || $remaining_units <= $limit) {
             $total_bill += ($remaining_units % $limit) * $value;
             break;
-        } else {
-            $total_bill += $range * $value;
-            echo $total_bill;
         }
+        $total_bill += $range * $value;
+        echo $total_bill;
     }
     return $total_bill;
 }
