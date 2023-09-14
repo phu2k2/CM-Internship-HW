@@ -3,12 +3,12 @@
 // Xử lý case nếu như $data là array
 function arrayHandle($data, $filter)
 {
-    if (is_null($filter)) {
-        return count($data);
+    if ($filter) {
+        return count(array_filter($data, function ($value) use ($filter) {
+            return str_contains($value, $filter);
+        }));
     }
-    return count(array_filter($data, function ($value) use ($filter) {
-        return str_contains($value, $filter);
-    }));
+    return count($data);
 }
 
 // Trả về kết quả dựa trên kiểu dữ liệu của $data

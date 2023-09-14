@@ -13,10 +13,7 @@ function countDataType(array $items)
     }, $items);
     $result = [];
     foreach($dataType as $value) {
-        if(!isset($result[$value])) {
-            $result[$value] = 0;
-        }
-        $result[$value] += 1;
+        $result[$value] = isset($result[$value]) ? $result[$value] + 1 : 1;
     }
     return $result;
 }
