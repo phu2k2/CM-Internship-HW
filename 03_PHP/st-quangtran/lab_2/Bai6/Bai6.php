@@ -10,7 +10,7 @@ function processData(int|float|string|array $data, ?string $filter = null): int 
         return strlen($data);
     }
     if (is_array($data)) {
-        if (!empty($filter) && is_string($filter)) {
+        if ($filter) {
             $filteredArray = array_filter($data, fn($element) => strpos($element, $filter) !== false);
             return count($filteredArray);
         } else {
