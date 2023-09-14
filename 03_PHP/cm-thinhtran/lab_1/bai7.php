@@ -1,26 +1,31 @@
 <?php
 	function getEvenValuesUsingFor($min, $max){
-		for ($i = $min + 1; $i < $max; $i++){
-			if($i % 2 == 0){
-				echo $i." ";
-			}
+		if ($min % 2 == 0 && $min <= $max) {
+			echo $min . "\n";
+			$min += 2;
+		} else {
+			$min += 1;
+		}
+		for ($min; $min <= $max; $min += 2) {
+			echo $min . "\n";
 		}
 	}
 
 	function getEvenValuesUsingDoWhile($min, $max){
-		$i = $min + 1;
-		do{
-			if($i % 2 == 0){
-				echo $i." ";
-			}
-			$i++;
-		}while($i < $max);
+		if ($min % 2 == 0 && $min <= $max) {
+			echo $min . "\n";
+			$min += 2;
+		} else {
+			$min += 1;
+		}
+		do {
+			echo $min . "\n";
+			$min += 2;
+		} while ($min <= $max);
 	}
 
 	function isLeapYear($year){
-		if ($year % 400 == 0 || ($year % 4 == 0 && $year % 100 != 0)) 
-			return true; 
-		return false;
+		return ($year % 400 == 0 || ($year % 4 == 0 && $year % 100 != 0)) ;
 	}
 
 	function getAmountOfDaysOfMonth($year, $month){
@@ -49,12 +54,11 @@
 	}
 
 	function isNull($check){
-		if($check == null) return true;
-		else return false;
+		return $check == null;
 	}
 
 	$min = 0;
-	$max = 5;
+	$max = 9;
 	print_r("Get even number:\n");
 	print_r(getEvenValuesUsingFor($min, $max));
 	print_r("\n");

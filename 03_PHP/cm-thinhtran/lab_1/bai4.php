@@ -8,7 +8,19 @@
     }
     return $new_list;
   }
-  $list = array('jan', 'feb', 'march', 'april', 'may');
+
+  // Updated Solution
+  function deleteSpecifyItem2($array, $delete_item)
+  {
+      foreach ($array as $key => $value) {
+          if ($value === $delete_item) {
+              unset($array[$key]);
+          }
+      }
+      return $array;
+  }
+
+  $list = array('jan', 'feb', 'march', 'april','april', 'may');
   $delete_item = 'april';
-  print_r(deleteSpecifyItem($list, $delete_item));
+  print_r(deleteSpecifyItem2($list, $delete_item));
 ?>

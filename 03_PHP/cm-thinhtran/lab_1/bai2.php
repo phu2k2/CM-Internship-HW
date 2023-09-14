@@ -5,5 +5,4 @@
 	}
 	$str = "       The film   starts       at      midnight.        ";
 	print_r(correctSpacing($str));
-    
 ?>  

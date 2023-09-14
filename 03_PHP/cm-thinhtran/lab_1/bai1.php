@@ -1,13 +1,12 @@
 <?php
-	function recursive(){
-		static $count = 0;
+	function recursive($count){
 		if($count < 10){
-			$count++;
-			echo "call recursive\n";
-			return recursive();
+			echo "call recursive turn $count\n";
+			return recursive(++$count);
 		}
 		echo "final count value: ".$count;
 	}
-	recursive();
 
+	$count = 0;
+	recursive($count);
 ?>

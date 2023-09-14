@@ -1,8 +1,8 @@
 <?php
   function doubleChar($str) {
     $new_str = "";
-    foreach(str_split($str) as $char){
-      $new_str = $new_str.str_repeat((string)$char,2);
+    for ($i = 0; $i < strlen($str); $i++) {
+      $new_str = $new_str.str_repeat($str[$i],2);
     }
     return $new_str;
   }
