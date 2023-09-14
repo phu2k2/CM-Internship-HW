@@ -42,7 +42,16 @@ SELECT calcSalary('A001')
 
 -- Question 3
 ALTER TABLE `DONDATHANG`
-ADD TongTien DECIMAL(15,2);
+ADD TongTien DECIMAL(15,2) DEFAULT 0;
+
+UPDATE `DONDATHANG` ddh
+    JOIN (
+        SELECT `SoHoaDon`, SUM(IFNULL(`SoLuong` * (`GiaBan` - IFNULL(`MucGiamGia`,0)),0)) as TongTien 
+        FROM `CHITIETDATHANG`
+        GROUP BY `SoHoaDon`
+    ) tt ON ddh.`SoHoaDon` = tt.`SoHoaDon`
+SET ddh.`TongTien` = tt.`TongTien`
+WHERE ddh.`SoHoaDon` = tt.`SoHoaDon`;
 
 DELIMITER $$
 
@@ -51,7 +60,7 @@ CREATE TRIGGER calBillSum
     ON `CHITIETDATHANG` FOR EACH ROW
 BEGIN
     UPDATE `DONDATHANG` 
-    SET `TongTien` = IFNULL(`TongTien`, 0) + IFNULL(NEW.`SoLuong` * (NEW.`GiaBan` - IFNULL(NEW.`MucGiamGia`,0)),0)
+    SET `TongTien` = `TongTien` + IFNULL(NEW.`SoLuong` * (NEW.`GiaBan` - IFNULL(NEW.`MucGiamGia`,0)),0)
     WHERE `SoHoaDon` = NEW.`SoHoaDon`;
 END $$
 
