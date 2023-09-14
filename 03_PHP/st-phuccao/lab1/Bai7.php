@@ -16,16 +16,12 @@ function evenValue($min, $max)
 // Using do while
 function evenValue1($min, $max)
 {
-    if ($min > $max) {
-        return; // Khi $min lớn hơn $max, không có số chẵn nào để in ra
-    }
-    $i = $min;
-    do {
-        if ($i % 2 == 0) {
-            echo $i . " "; // In ra các số chẵn
+    while ($min <= $max) {
+        if ($min % 2 == 0) {
+            echo $min . " "; // In ra các số chẵn
         }
-        $i++;
-    } while ($i <= $max);
+        $min++;
+    }
 }
 
 // Use SWITCH CASE to print out the number of days in the month
