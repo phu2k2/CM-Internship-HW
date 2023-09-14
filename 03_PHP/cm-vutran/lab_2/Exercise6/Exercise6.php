@@ -6,7 +6,7 @@ function handle($filter, $array)
     }));
 }
 
-function name(int|float|string|array $data, ?string $filter = null): int
+function name(int|float|string|array $data, $filter = null): int
 {
     $type = gettype($data);
     switch ($type) {
@@ -17,10 +17,7 @@ function name(int|float|string|array $data, ?string $filter = null): int
         case 'string':
             return strlen($data);
         case 'array':
-            if ($filter) {
-                return handle($filter, $data);
-            }
-            return count($data);
+            return $filter ? handle($filter, $data) : count($data);
     }
 }
 
