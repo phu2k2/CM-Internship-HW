@@ -13,6 +13,7 @@ function checkFormat($string)
     if (filter_var($string, FILTER_VALIDATE_URL)) {
         return 'url';
     }
+    throw new Exception("Không phù hợp với định dạng Email hoặc URL", 422);
 }
 try {
     $string = 2;
