@@ -1,8 +1,8 @@
 <?php
 
-function isSunday(DateTime $date)
+function isWeekend(string $date)
 {
-    return $date->format("w") === "0";
+    return date('N', strtotime($date))==7;
 }
 
 function checkSchedule($currentDate)
@@ -24,7 +24,7 @@ function checkSchedule($currentDate)
         $daysLeft = $interval->days;
         echo "Số ngày còn lại đến ngày 20 gần nhất : " . $daysLeft . " ngày.\n";
     } else {
-        if (isSunday($currentDate)) {
+        if (isWeekend($currentDate->format('Y-m-d'))) {
             echo "Hôm nay bạn có lịch hẹn.\n";
         } else {
             $remainingDays = 7 - $currentDate->format("w");
@@ -36,14 +36,15 @@ function checkSchedule($currentDate)
 }
 
 // Tạo một đối tượng DateTime từ một ngày
-$dateToCheck = new DateTime("2023-08-20");
+$dateToCheck = '2023-09-17';
 // Kiểm tra ngày có phải cuối tuần hay không
-if (isSunday($dateToCheck)) {
-    echo "Ngày " . $dateToCheck->format("Y-m-d") . " là ngày cuối tuần.\n";
+if (isWeekend($dateToCheck)) {
+    echo "Ngày " . $dateToCheck. " là ngày cuối tuần.\n";
 } else {
-    echo "Ngày " . $dateToCheck->format("Y-m-d") . " không phải là ngày cuối tuần.\n";
+    echo "Ngày " . $dateToCheck. " không phải là ngày cuối tuần.\n";
 }
 
 // Lấy ngày hiện tại
 $currentDate = new DateTime();
+
 checkSchedule($currentDate);
