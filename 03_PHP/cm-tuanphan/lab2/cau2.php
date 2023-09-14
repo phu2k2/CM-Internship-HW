@@ -21,11 +21,10 @@ if (file_exists($csvFile) && is_readable($csvFile)) {
             echo "<td>{$data[2]}</td>";
             echo "</tr>";
         }
-        fclose($file);
         echo "</table>";
     } else {
         echo "Không mở được file csv";
     }
+    fclose($file);
 }
-
 

@@ -26,3 +26,4 @@ try {
     echo "Exception caught: " . $e->getMessage() . " (Code: " . $e->getCode() . ")";
 }
 ?>
+

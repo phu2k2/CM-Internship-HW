@@ -8,5 +8,3 @@ $itemRemoval = function($arr, $filterLength) {
 };
 print_r($itemRemoval($array, $filterLength));
 
-
-

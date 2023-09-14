@@ -24,4 +24,5 @@ function typeHint($data, $filter) {
 $data = 3.14159;
 $filter = null;
 $result = typeHint($data, $filter);
-print_r($result); 
+print_r($result);
+

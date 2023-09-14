@@ -7,9 +7,19 @@
     }
     //echo isWeekend("2023-09-18");
 
-    function meetingScheduled($dayMet) {
+    function meetingScheduled() {
+        $dayMet = 20;
+        $currentDay = date('d');
+        $day_left = 0;
+    
         if (date("d") != $dayMet) {
-            echo "Còn " . (date('d') < $dayMet ? $dayMet - date('d') : date('t') - date('d') + $dayMet) . " ngày là đến ngày hẹn";
+            if ($currentDay < $dayMet) {
+                $day_left = $dayMet - $currentDay;
+            }
+            else {
+                $day_left = date('t') - $currentDay + $dayMet;
+            }
+            echo "Còn " . $day_left . " ngày là đến ngày hẹn";
         }
         else {
             echo "Hôm nay là ngày 20";
@@ -19,9 +29,9 @@
             else {
                 $day_left = abs(date('w') - 7);
                 echo "Còn $day_left là đến ngày CN tiếp theo \n";
-                echo "Lịch hẹn sẽ dời đến ngày " . date('Y-m-' . date('d') + $day_left);
+                echo "Lịch hẹn sẽ dời đến ngày " . date('Y-m-' . $currentDay + $day_left);
             }
         }
     }
+    meetingScheduled();
 
-    meetingScheduled(20);

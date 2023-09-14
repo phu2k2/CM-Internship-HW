@@ -1,5 +1,5 @@
 <?php
-    $items = [1,2,0,"string",[1], true, null];
+    $items = [];
     function type_detect_callback($item){
         if (is_string($item)) {
             return "string";
@@ -21,4 +21,6 @@
         }
     }
     print_r(array_count_values(array_map("type_detect_callback", $items)));
+
+    
     
