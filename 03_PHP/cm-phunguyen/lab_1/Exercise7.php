@@ -1,6 +1,6 @@
 <?php
-#Bài1.
-#Cách 1: Dùng for
+//Bài1.
+//Cách 1: Dùng for
 function printEvenNum1($min, $max)
 {
     $evenNum = array();
@@ -11,7 +11,7 @@ function printEvenNum1($min, $max)
     return $evenNum;
 }
 
-#Cách 2: Dùng Do While
+//Cách 2: Dùng Do While
 function printEvenNum2($min, $max)
 {
     $evenNum = array();
@@ -23,7 +23,7 @@ function printEvenNum2($min, $max)
     return $evenNum;
 }
 
-#Bài2:
+//Bài2:
 function dayInMonth($month, $year)
 {
     $month31 = [1, 3, 5, 7, 8, 10, 12];
@@ -51,10 +51,10 @@ function dayInMonth($month, $year)
     return $day;
 }
 
-#Bài 3:
+//Bài 3:
 function checkNullVar($var)
 {
-    if ($var !== null)
+    if (!is_null($var))
         return "Variable is not null!";
     return "Variable is null!";
 }
