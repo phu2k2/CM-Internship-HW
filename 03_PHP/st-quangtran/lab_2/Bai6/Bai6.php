@@ -1,5 +1,5 @@
 <?php 
-function processData(int|float|string|array $data, ?string $filter = null): int {
+function processData(int|float|string|array $data, string $filter = null): int {
     if (is_int($data)) {
         return $data;
     }
@@ -11,7 +11,7 @@ function processData(int|float|string|array $data, ?string $filter = null): int 
     }
     if (is_array($data)) {
         if ($filter) {
-            $filteredArray = array_filter($data, fn($element) => strpos($element, $filter) !== false);
+            $filteredArray = array_filter($data, fn($element) => str_contains($element, $filter));
             return count($filteredArray);
         } else {
             return count($data);
@@ -23,5 +23,5 @@ function processData(int|float|string|array $data, ?string $filter = null): int 
 echo processData(7.2);
 echo processData(55);
 echo processData('code');
-echo processData(['a', 'b', 'c'],'a');
+echo processData(['a', 'b', 'c', 'a'],'a');
 ?>

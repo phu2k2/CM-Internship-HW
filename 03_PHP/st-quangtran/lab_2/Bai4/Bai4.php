@@ -1,6 +1,6 @@
 <?php
 function validateString($input) {
-    if(empty($input)) {
+    if(!$input) {
         throw new Exception('Biến truyền vào rỗng', 400);
     }
 
@@ -29,5 +29,6 @@ function Input($input){
 }
 $input = "http://www.geeksforgeeks.org";
 $input = "duyquang@gmail.com";
+$input = "aaaaaaaaaa";
 Input($input);
 ?>
