@@ -37,15 +37,14 @@ function matchFormat2($variable)
 function testHandle($input)
 {
     try {
-        if (matchFormat2($input)) {
-            echo "true";
-        }
+        echo matchFormat2($input);
     } catch (\Exception $e) {
         $message = $e->getMessage();
         $code = $e->getCode();
         echo "Error: [Code $code] $message";
     }
 }
-testHandle("https://www.php.net/manual/en/filter.examples.validation.php");
+$input = "https://www.php.net/manual/en/filter.examples.validation.php";
+testHandle($input);
 echo "\n";
 testHandle(500);

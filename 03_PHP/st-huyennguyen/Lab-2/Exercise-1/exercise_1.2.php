@@ -1,10 +1,11 @@
 <?php
 require 'exercise_1.1.php';
-function checkCurrentDate()
+function meetingSchedule()
 {
+    define("checkDay","20");
     $currentDate = date("Y-m-d");
     $day = date("d");
-    if ($day == 20) {
+    if ($day == checkDay) {
         $checkWeekend = isWeekend($currentDate);
         if ($checkWeekend) {
             return "Bạn có lịch hẹn vào ngày hôm nay";
@@ -13,14 +14,14 @@ function checkCurrentDate()
             return "Lịch hẹn sẽ dời đến ngày $nextWeekend";
         }
     } else {
-        if ($day < 20) {
-            $diff = 20 - $day;
+        if ($day < checkDay) {
+            $diff = checkDay - $day;
         } else {
-            $diff = date("t") + 20 - $day;
+            $diff = date("t") + checkDay - $day;
         }
         $nextDay20 = date("d-m-Y", strtotime(date("Y-m-d") . "+ $diff days"));
         return "Từ ngày hiện tại đến ngày 20 gần nhất là ngày $nextDay20 cách $diff ngày";
     }
 }
 
-echo checkCurrentDate();
+echo meetingSchedule();
