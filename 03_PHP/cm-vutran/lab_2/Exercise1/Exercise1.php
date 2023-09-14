@@ -1,9 +1,9 @@
 <?php
 define('day', 20);
 
-function isWeekend()
+function isWeekend($date)
 {
-    return date('w') == 0;
+    return date('w', strtotime($date)) == 0;
 }
 
 function isDay20()
@@ -35,7 +35,7 @@ function checkSchedule($currentDate)
         echo "Còn $distanceDay ngày nữa sẽ đến ngày " . day . " gần nhất\n";
     } else {
         echo "Hôm nay là ngày " . day .".\n";
-        if (isWeekend()) {
+        if (isWeekend($currentDate)) {
             echo "Hôm nay là cuối tuần. Bạn có lịch hẹn vào ngày hôm nay.";
         } else {
             $sundayDate = nearestSunDay();

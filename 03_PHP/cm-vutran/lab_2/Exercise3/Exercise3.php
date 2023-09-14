@@ -19,5 +19,5 @@ function countDataTypes($items)
     return arrayCountValues($countArray);
 }
 
-$items = [1, 2, 2.0, "string", [1], 2, true, null];
+$items = [];
 print_r(countDataTypes($items));

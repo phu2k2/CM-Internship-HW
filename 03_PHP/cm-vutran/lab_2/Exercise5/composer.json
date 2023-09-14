@@ -11,7 +11,7 @@
         "phpunit/phpunit": "10.2.7"
     },
     "require": {
-        "guzzlehttp/guzzle": "^7.5.0",
-        "fakerphp/faker": "^1.20.0"
+        "guzzlehttp/guzzle": "~7.5.0",
+        "fakerphp/faker": "<1.20.0"
     }
 }
