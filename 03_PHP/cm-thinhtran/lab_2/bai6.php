@@ -1,11 +1,11 @@
 <?php
-    function handle($data, $filter) {
+    function checkElementInArray(array $data, string $filter = null): int {
         return count(array_filter($data,function ($element) use ($filter) {
             return strpos(strval($element), strval($filter)) !== false;
         }));
     }
-    
-    function typeHint(int|float|string|array $data, $filter = null) : int{
+
+    function typeHint(int|float|string|array $data, string $filter = null) : int {
         if( is_int($data)){
             return $data;
         }
@@ -17,15 +17,12 @@
         }
         if( is_array($data)){
             if(is_string($filter)){
-                return handle($data, $filter);
+                return checkElementInArray($data, $filter);
             }
-            else{
-                return count($data);
-            }
+            return count($data);
         }
     }
 
     $data = [1,"null","null",4];
     $filter = "null";
     print_r(typeHint($data, $filter));
-?>

@@ -27,4 +27,3 @@ Ngoài việc học tập và làm việc với công nghệ thông tin, tôi c�
     }
     echo '</table>';
     fclose($file);
-?>

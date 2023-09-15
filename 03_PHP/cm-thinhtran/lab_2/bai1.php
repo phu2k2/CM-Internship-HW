@@ -1,9 +1,9 @@
 <?php
-    function isWeekend($date) {
-        return ($date->format("w") == 0 ? true : false) ;
+    function isWeekend(DateTime $date): bool {
+        return $date->format("w") == 0;
     }
 
-    function getNearestSunday($date){
+    function getNearestSunday(DateTime $date): DateTime {
         $dateNew = new DateTime($date->format("Y-m-d"));
         do{
             if(isWeekend($dateNew)){
@@ -13,7 +13,18 @@
         }while(true);
     }
 
-    function getNextDateWithSpecifyDay($date, $day){
+    // Updated function
+    function getNearestSunday1(DateTime $date): DateTime {
+        $dateNew = new DateTime($date->format("Y-m-d"));
+        if($dateNew->format("w") == 0) {
+            return $dateNew;
+        }
+        $dateAdd = 7-$dateNew->format("w");
+        return $dateNew->modify("+$dateAdd day");
+    }
+
+
+    function getNextDateWithSpecifyDay(DateTime $date, string|int $day): DateTime {
         $dateNew = new DateTime($date->format("Y-m-d"));
         do{
             if($dateNew->format("d") == $day){
@@ -23,7 +34,21 @@
         }while(true);
     }
 
-    function validateMeetDate($date, $meetDay){
+    // Updated function
+    function getNextDateWithSpecifyDay1(Datetime $date, string|int $day): DateTime{
+		$diffDay = $day - $date->format('d');
+		switch (true) {
+			case $diffDay == 0:
+				return $date;
+			case $diffDay > 0:
+				return $date->modify("+$diffDay day");
+			default:
+				$diffDay = $date->format('t') + $diffDay;
+				return $date->modify("+$diffDay day");
+		}
+    }
+
+    function validateMeetDate(DateTime $date, string|int $meetDay){
         if($date->format("d") == $meetDay){
             if(isWeekend($date)){
                 print_r("Have meet today!!");
@@ -39,9 +64,25 @@
         }
     }
 
+    // Updated function
+    function validateMeetDate1(DateTime $date, string|int $meetDay){
+        switch (true) {
+			case $date->format('d') < $meetDay:
+				echo $meetDay - $date->format('d') . " ngày nữa đến ngày $meetDay.\n";
+				break;
+			case $date->format('d') > $meetDay:
+				echo $date->format('t') - $date->format('d') + $meetDay . " ngày nữa đến ngày $meetDay kế tiếp.\n";
+				break;
+			case $date->format('N') === '7':
+				echo "Have meet today!!\n";
+				break;
+			default:
+				echo "Lịch hẹn sẽ dời đến ngày " . getNearestSunday1($date)->format("Y-m-d") . "\n";
+		}
+    }
+
     $dateInString = "2023-09-10";
     $date = new DateTime($dateInString);
     $meetDay = 20;
     echo "Ngày ". $date->format("Y-m-d")." có phải là chủ nhật: ".isWeekend($date)."\n";
-    validateMeetDate($date, $meetDay);
-?>
+    validateMeetDate1($date, $meetDay);
