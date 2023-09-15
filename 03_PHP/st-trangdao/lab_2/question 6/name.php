@@ -11,16 +11,15 @@ function name(int|float|string|array $data, string $filter = null)
         case 'array':
             if (empty($filter)) {
                 return count($data);
-            } else {
-                return count(
-                    array_filter(
-                        $data,
-                        function ($item) use ($filter) {
-                            return strpos($item, $filter) !== false;
-                        }
-                    )
-                );
             }
+            return count(
+                array_filter(
+                    $data,
+                    function ($item) use ($filter) {
+                        return strpos($item, $filter) !== false;
+                    }
+                )
+            );
         default:
             return "Không tồn tại ";
     }
