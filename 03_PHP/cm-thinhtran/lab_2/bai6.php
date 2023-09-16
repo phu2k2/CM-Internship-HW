@@ -1,7 +1,7 @@
 <?php
-    function checkElementInArray(array $data, string $filter = null): int {
+    function countInArray(array $data, string $filter = null): int {
         return count(array_filter($data,function ($element) use ($filter) {
-            return strpos(strval($element), strval($filter)) !== false;
+            return strval($element) === strval($filter);
         }));
     }
 
@@ -17,7 +17,7 @@
         }
         if( is_array($data)){
             if(is_string($filter)){
-                return checkElementInArray($data, $filter);
+                return countInArray($data, $filter);
             }
             return count($data);
         }

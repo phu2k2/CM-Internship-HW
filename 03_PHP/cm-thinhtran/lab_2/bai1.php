@@ -12,19 +12,6 @@
         return $dateNew->modify("+$dateAdd day");
     }
 
-    function getNextDateWithSpecifyDay(Datetime $date, string|int $day): DateTime{
-		$diffDay = $day - $date->format('d');
-		switch (true) {
-			case $diffDay == 0:
-				return $date;
-			case $diffDay > 0:
-				return $date->modify("+$diffDay day");
-			default:
-				$diffDay = $date->format('t') + $diffDay;
-				return $date->modify("+$diffDay day");
-		}
-    }
-
     function validateMeetDate(DateTime $date, string|int $meetDay){
         switch (true) {
 			case $date->format('d') < $meetDay:
