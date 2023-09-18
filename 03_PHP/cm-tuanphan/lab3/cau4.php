@@ -7,9 +7,9 @@ class ParentClass {
 
 final class ChildClass extends ParentClass {
     // Outcome: Cannot override final method ParentClass::myMethod()
-    public function myMethod() {
+    // public function myMethod() {
         
-    }
+    // }
 }
 
 // Outcome: Class GrandChildClass cannot extend final class ChildClass

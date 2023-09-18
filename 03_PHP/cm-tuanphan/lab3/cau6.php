@@ -5,7 +5,12 @@
         {
             echo "This is callName 1" . PHP_EOL;
         }
+        public function callNameWithOutEOL()
+        {
+            echo "This is callName 1";
+        }
     }
+
     trait B
     {
         public function callName()
@@ -16,24 +21,23 @@
 
     class useTraitCallName
     {
-        use callName, callName2
+        use A, B
         {
-            callName::callName insteadof callName2;
-            callName::callName as callName1;
-            callName2::callName as callName2; 
+            B::callName insteadof A;
         }
 
-        public function useMethodOneFromTrait1()
+        public function methodOneUseMethodTwoTraitA()
         {
-            return $this->callName1();
+            return $this->callNameWithOutEOL();
         }
     
-        public function useMethodTwoFromTrait2()
+        public function methodTwoUseMethodOneTraitB()
         {
-            return $this->callName2();
+            return $this->callName();
         }
     }
+    
     $obj = new useTraitCallName();
-    echo $obj->useMethodOneFromTrait1(); 
-    echo $obj->useMethodTwoFromTrait2(); 
+    echo $obj->methodOneUseMethodTwoTraitA(); 
+    echo $obj->methodTwoUseMethodOneTraitB(); 
 
