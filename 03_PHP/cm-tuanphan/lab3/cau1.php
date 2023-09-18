@@ -23,7 +23,7 @@ class Vehicle
     }
 }
 
-$vehical = new Vehicle("Tesla" , "Model O" , 2019);
-echo $vehical;
-echo $vehical->toString();
+$vehicle = new Vehicle("Tesla" , "Model O" , 2019);
+echo $vehicle;
+echo $vehicle->toString();
 
