@@ -4,7 +4,7 @@
     }
 
     function getNearestSunday(DateTime $date): DateTime {
-        $dateNew = new DateTime($date->format("Y-m-d"));
+        $dateNew = clone $date;
         if($dateNew->format("w") == 0) {
             return $dateNew;
         }
