@@ -1,5 +1,6 @@
-<?php 
-function writeFile($fileName){
+<?php
+function writeFile($fileName)
+{
     $content = 'Hello, I am Tran Duy Quang. I am programmer.';
     $file = fopen($fileName, 'w');
     fwrite($file, $content);
@@ -7,4 +8,3 @@ function writeFile($fileName){
 }
 $fileName = 'myprofile.txt';
 writeFile($fileName);
-?>
