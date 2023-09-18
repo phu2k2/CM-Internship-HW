@@ -26,9 +26,15 @@ class Vehicle
             $this->$key = $value;
         }
     }
+
+    public function __toString()
+    {
+        return "{brand=$this->brand,model=$this->model,year=$this->year}";
+    }
 }
 
 $vehicle = new Vehicle("Mes", "MEX132", "2024");
 echo $vehicle->__get("brand") . PHP_EOL;
 echo $vehicle->__set("brand", "Mercedes");
 echo $vehicle->__get("brand");
+echo $vehicle->__toString();

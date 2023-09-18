@@ -41,6 +41,11 @@ class Vehicle
     {
         $this->year = $year;
     }
+
+    public function toString()
+    {
+        return "{brand=$this->brand,model=$this->model,year=$this->year}";
+    }
 }
 
 $vehicle = new Vehicle("Mes", "MEX132", "2024");
