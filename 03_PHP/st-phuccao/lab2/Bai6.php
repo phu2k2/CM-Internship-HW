@@ -14,9 +14,8 @@ function processData(int | float | string | array $data, string $filter = null) 
                 return strpos($item, $filter) !== false;
             });
             return count($filteredArray);
-        } else {
-            return count($data);
         }
+        return count($data);
     } else {
         throw new InvalidArgumentException("Không hỗ trợ kiểu dữ liệu này");
     }
