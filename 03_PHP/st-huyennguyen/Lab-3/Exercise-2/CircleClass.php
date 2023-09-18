@@ -1,4 +1,5 @@
 <?php
+
 class Circle extends Shape implements Resizable
 {
     private $radius;
@@ -13,7 +14,13 @@ class Circle extends Shape implements Resizable
         return $this->radius;
     }
 
-    public function resize($amount = null)
+    /**
+     * Function: resize radius
+     * Change the size of the circle radius with coefficient $amount(datatype int|float)
+     * Default $amount = 0 : the size does not change 
+     * With $amount > 0: $radius = $radius * $amount
+     */
+    public function resize(float|int $amount = 0)
     {
         if ($amount > 0) {
             return $this->radius *= $amount;

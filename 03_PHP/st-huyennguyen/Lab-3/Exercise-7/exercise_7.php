@@ -1,4 +1,5 @@
 <?php
+
 $newVehicle = new class
 {
     private $brand = "Ferrari";

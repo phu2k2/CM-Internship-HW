@@ -1,4 +1,5 @@
 <?php
+
 trait Parent1
 {
     public function one()

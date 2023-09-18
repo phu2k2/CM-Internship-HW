@@ -1,4 +1,5 @@
 <?php
+
 trait FavouriteSubjest
 {
     private $subject;

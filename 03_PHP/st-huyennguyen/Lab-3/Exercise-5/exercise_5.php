@@ -1,4 +1,5 @@
 <?php
+
 require("Trait.php");
 
 class Notification
@@ -26,4 +27,3 @@ $notice->setFriend("A");
 $notice->setSubject("Sinh hoc");
 $notice->callNameFriend();
 $notice->callName();
-

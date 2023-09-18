@@ -1,8 +1,9 @@
 <?php
+
 class Logger
 {
     private static $logCount = 0;
-    
+
     public function __construct()
     {
         self::$logCount += 1;
@@ -12,7 +13,6 @@ class Logger
     {
         return self::$logCount;
     }
-
 }
 
 echo Logger::totalLogCount(), PHP_EOL;

@@ -1,4 +1,5 @@
 <?php
+
 class Vehicle
 {
     private $brand;
@@ -9,7 +10,6 @@ class Vehicle
     {
         $this->$name = $value;
     }
-
 
     public function __get($name)
     {
