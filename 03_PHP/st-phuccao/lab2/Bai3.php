@@ -13,10 +13,6 @@ function countDataType1(array $items)
         }
     }
 
-    if (empty($result)) {
-        return [];
-    }
-
     return $result;
 }
 
