@@ -31,12 +31,12 @@ class MyClass {
         B::methodOne insteadof A; 
     }
 
-    public function method1()
+    public function callMethodOne()
     {
         return $this->methodTwo();
     }
 
-    public function method2()
+    public function callMethodTwo()
     {
         return $this->methodOne();
     }
@@ -44,6 +44,6 @@ class MyClass {
 
 $myObject = new MyClass();
 
-echo $myObject->method1() . PHP_EOL;
+echo $myObject->callMethodOne() . PHP_EOL;
 
-echo $myObject->method2() . PHP_EOL;
+echo $myObject->callMethodTwo() . PHP_EOL;
