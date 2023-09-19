@@ -10,7 +10,7 @@ function checkSchedule($currentDate)
     // Lấy ngày trong tháng hiện tại
     $dayOfMonth = (int) $currentDate->format("d");
     // Kiểm tra xem ngày hiện tại có phải là ngày 20 không
-    if ($dayOfMonth != 19) {
+    if ($dayOfMonth != 20) {
         echo "Hôm nay là ngày $dayOfMonth, không phải ngày 20 của tháng.\n";
         if ($dayOfMonth < 20) {
             // Lấy ngày 20 của tháng hiện tại
