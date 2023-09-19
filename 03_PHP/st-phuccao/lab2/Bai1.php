@@ -10,7 +10,7 @@ function checkSchedule($currentDate)
     // Lấy ngày trong tháng hiện tại
     $dayOfMonth = (int) $currentDate->format("d");
     // Kiểm tra xem ngày hiện tại có phải là ngày 20 không
-    if ($dayOfMonth != 20) {
+    if ($dayOfMonth != 19) {
         echo "Hôm nay là ngày $dayOfMonth, không phải ngày 20 của tháng.\n";
         if ($dayOfMonth < 20) {
             // Lấy ngày 20 của tháng hiện tại
@@ -28,7 +28,7 @@ function checkSchedule($currentDate)
             echo "Hôm nay bạn có lịch hẹn.\n";
         } else {
             $remainingDays = 7 - $currentDate->format("w");
-            $nextSundayTimestamp = time() + $remainingDays * 24 * 60 * 60;
+            $nextSundayTimestamp = $currentDate->getTimestamp() + $remainingDays * 24 * 60 * 60;
             $nextSundayFormatted = date("Y-m-d", $nextSundayTimestamp);
             echo "Lịch hẹn sẽ dời đến ngày $nextSundayFormatted.";
         }
