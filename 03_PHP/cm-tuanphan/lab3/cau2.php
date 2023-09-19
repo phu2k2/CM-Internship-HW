@@ -31,4 +31,3 @@ $square = new Square(5);
 echo "Square Area: " . $square->calculateArea() . PHP_EOL;
 $square->resize(10);
 echo "Square Area: " . $square->calculateArea() . PHP_EOL;
-

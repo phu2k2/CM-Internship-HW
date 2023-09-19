@@ -14,4 +14,3 @@ final class ChildClass extends ParentClass {
 
 // Outcome: Class GrandChildClass cannot extend final class ChildClass
 class GrandChildClass extends ChildClass {}
-

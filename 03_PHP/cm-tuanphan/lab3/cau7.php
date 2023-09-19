@@ -27,4 +27,3 @@ $vehicle = new class("Tesla", "Model O", 2019)
 
 echo $vehicle;
 echo $vehicle->toString();
-

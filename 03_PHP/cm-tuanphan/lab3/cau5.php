@@ -27,4 +27,3 @@
     $obj = new useTraitCallName();
     echo $obj->callName1(); 
     echo $obj->callName2(); 
-

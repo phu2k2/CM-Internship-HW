@@ -9,4 +9,3 @@ class Logger
     }   
 }
 Logger::showLogCount();
-

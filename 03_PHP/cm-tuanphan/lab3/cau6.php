@@ -40,4 +40,3 @@
     $obj = new useTraitCallName();
     echo $obj->methodOneUseMethodTwoTraitA(); 
     echo $obj->methodTwoUseMethodOneTraitB(); 
-
