@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamp('delivery_date');
             $table->timestamp('shipping_date');
             $table->string('destination', 80);
-            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('employee_id')->references('employee_id')->on('employees')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('employee_id')->references('employee_id')->on('employees');
             $table->timestamps();
         });
     }
