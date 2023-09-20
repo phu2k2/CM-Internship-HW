@@ -17,18 +17,11 @@ class Rectangle extends Shape implements Resizable
      */
     public function resize(float $width = 0, float $length = 0)
     {
-        $flag = false;
-        if ($length > 0) {
-            $this->length = $length;
-            $flag = true;
-        }
-        if ($width > 0) {
-            $this->width = $width;
-            $flag = true;
-        }
-        if (!$flag) {
+        if (!($length > 0) || !($width > 0)) {
             throw new Exception("Vui lòng nhập đầu vào hợp lệ");
         }
+        $this->width = $width;
+        $this->length = $length;
     }
 
     public function calculateArea()

@@ -1,4 +1,5 @@
 <?php
+
 class Vehicle
 {
     private $brand;

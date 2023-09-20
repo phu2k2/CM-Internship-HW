@@ -1,4 +1,5 @@
 <?php
+
 class Logger
 {
     static private $logCount = 0;

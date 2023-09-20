@@ -1,5 +1,6 @@
 <?php
 require('Traits.php');
+
 class User
 {
     use Say, Whisper {

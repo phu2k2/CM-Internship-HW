@@ -1,4 +1,5 @@
 <?php
+
 class Kitty
 {
     private $tailLength;

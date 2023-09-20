@@ -1,4 +1,5 @@
 <?php
+
 trait Say
 {
     public function callName($name)
