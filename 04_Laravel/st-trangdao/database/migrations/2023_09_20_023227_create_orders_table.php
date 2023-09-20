@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('order_date');
             $table->timestamp('delivery_date');
             $table->timestamp('shipping_date');
-            $table->string('destination',80);
+            $table->string('destination', 80);
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')

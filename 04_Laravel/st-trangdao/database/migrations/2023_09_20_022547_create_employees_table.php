@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->char('employee_id',1)->unique();
-            $table->string('last_name',40);
-            $table->string('first_name',10);
+            $table->char('employee_id', 1)->unique();
+            $table->string('last_name', 40);
+            $table->string('first_name', 10);
             $table->timestamp('birthday');
             $table->timestamp('start_date');
-            $table->string('address',60);
-            $table->string('phone',15)->unique();
-            $table->unsignedDecimal('base_saraly',10,2);
-            $table->unsignedDecimal('allowance',10,2);
+            $table->string('address', 60);
+            $table->string('phone', 15)->unique();
+            $table->unsignedDecimal('base_saraly', 10, 2);
+            $table->unsignedDecimal('allowance', 10, 2);
             $table->timestamps();
         });
     }
