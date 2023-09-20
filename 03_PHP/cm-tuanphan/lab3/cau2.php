@@ -12,21 +12,28 @@ abstract class Shape
 
 class Square extends Shape implements Resizable
 {
-    private $factor; 
+    private $factor;
 
-    public function __construct($factor){
+    // Constructor to initialize the side length of the square.
+    public function __construct($factor)
+    {
         $this->factor = $factor;
     }
 
-    public function resize($factor) {
+    // Implement the 'resize' method from the Resizable interface.
+    public function resize($factor)
+    {
         $this->factor = $factor;
     }
 
-    public function calculateArea() {
+    // Implement the 'calculateArea' method to calculate the area of the square.
+    public function calculateArea()
+    {
         return $this->factor * $this->factor;
     }
 }
 
+// Create an instance of the Square class with an initial side length of 5.
 $square = new Square(5);
 echo "Square Area: " . $square->calculateArea() . PHP_EOL;
 $square->resize(10);

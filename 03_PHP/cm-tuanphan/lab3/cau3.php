@@ -1,4 +1,5 @@
 <?php
+
 class Logger
 {
     public static $logCount;
@@ -6,6 +7,6 @@ class Logger
     {
         self::$logCount++;
         echo "Total log count " . self::$logCount;
-    }   
+    }
 }
 Logger::showLogCount();

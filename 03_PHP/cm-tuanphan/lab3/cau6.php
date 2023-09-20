@@ -1,42 +1,26 @@
 <?php
-    trait A
-    {
-        public function callName()
-        {
-            echo "This is callName 1" . PHP_EOL;
-        }
-        public function callNameWithOutEOL()
-        {
-            echo "This is callName 1";
-        }
+
+require("cau6_TraitA.php");
+require("cau6_TraitB.php");
+
+class useTraitCallName
+{
+    use cau6_TraitA, cau6_TraitB {
+        cau6_TraitA::two as private ChildOne;
+        cau6_TraitB::one as private ChildTwo;
     }
 
-    trait B
+    public function one()
     {
-        public function callName()
-        {
-            echo "This is callName 2";
-        }
+        return $this->ChildOne();
     }
 
-    class useTraitCallName
+    public function two()
     {
-        use A, B
-        {
-            B::callName insteadof A;
-        }
-
-        public function methodOneUseMethodTwoTraitA()
-        {
-            return $this->callNameWithOutEOL();
-        }
-    
-        public function methodTwoUseMethodOneTraitB()
-        {
-            return $this->callName();
-        }
+        return $this->ChildTwo();
     }
-    
-    $obj = new useTraitCallName();
-    echo $obj->methodOneUseMethodTwoTraitA(); 
-    echo $obj->methodTwoUseMethodOneTraitB(); 
+}
+
+$obj = new useTraitCallName();
+echo $obj->one();
+echo $obj->two();

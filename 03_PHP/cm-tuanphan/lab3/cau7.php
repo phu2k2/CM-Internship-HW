@@ -15,14 +15,15 @@ $vehicle = new class("Tesla", "Model O", 2019)
 
     public function __toString()
     {
-        return $this->brand . " " . $this->model . " " . $this->year . " -- Magic Method from Anonymous Class\n";
+        return $this->brand . " " . $this->model . " " . $this->year .
+        " -- Magic Method from Anonymous Class\n";
     }
 
     public function toString()
     {
-        return $this->brand . " " . $this->model . " " . $this->year . " -- Normal Method from Anonymous Class";
+        return $this->brand . " " . $this->model . " " . $this->year .
+        " -- Normal Method from Anonymous Class";
     }
-
 };
 
 echo $vehicle;
