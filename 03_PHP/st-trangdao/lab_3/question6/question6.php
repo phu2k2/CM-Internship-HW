@@ -1,4 +1,5 @@
 <?php
+
 trait A
 {
 
@@ -6,17 +7,20 @@ trait A
     {
         echo "Trang \n";
     }
+
     private function fun2()
     {
         echo "listen to music \n";
     }
 }
+
 trait B
 {
     private function fun1()
     {
         echo "Chang \n";
     }
+
     private function fun2()
     {
         echo "read book \n";
@@ -28,15 +32,18 @@ class Chill
         A::fun2 as funA;
         B::fun1 as funB;
     }
+
     function fun1()
     {
         $this->funA();
     }
+
     function fun2()
     {
-        $this->funb();
+        $this->funB();
     }
 }
+
 $class = new Chill();
 $class->fun1();
 $class->fun2();

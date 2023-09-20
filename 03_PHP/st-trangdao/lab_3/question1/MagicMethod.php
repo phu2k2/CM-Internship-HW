@@ -5,6 +5,7 @@ class Vehicle2
     private $brand;
     private $model;
     private $year;
+
     function __set($key, $value)
     {
         if (property_exists($this, $key)) {
@@ -13,6 +14,7 @@ class Vehicle2
             die('Không tồn tại thuộc tính');
         }
     }
+
     function __get($key)
     {
         if (property_exists($this, $key)) {
@@ -22,6 +24,7 @@ class Vehicle2
         }
     }
 }
+
 $class1 = new Vehicle2();
 //set
 $class1->brand = 'Yamaha';

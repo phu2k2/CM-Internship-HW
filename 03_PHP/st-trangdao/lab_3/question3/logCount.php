@@ -1,19 +1,23 @@
 <?php
+
 class Loggger
 {
     private static $logCount = 0;
-    function __construct()
+    public static function log($message)
     {
-        self::$logCount += 1;
+        echo $message.PHP_EOL;
+        self::$logCount ++;
     }
+
     public static function totalLogCount()
     {
         return self::$logCount;
     }
 }
-echo Loggger::totalLogCount() . PHP_EOL;
+
 $class = new Loggger();
 echo Loggger::totalLogCount() . PHP_EOL;
-$class = new Loggger();
-$class = new Loggger();
+$class->log('message');
+echo Loggger::totalLogCount() . PHP_EOL;
+$class->log('message');
 echo Loggger::totalLogCount() . PHP_EOL;
