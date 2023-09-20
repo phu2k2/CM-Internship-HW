@@ -10,13 +10,16 @@ class Square extends Shape implements Resizable
         $this->side = $side;
     }
 
-    public function resize($side = null)
+    /**
+     * Resize square's side.
+     */
+    public function resize(float $side = 0)
     {
-        if ($side < 0) {
-            throw new Exception("Đầu vào phải lớn hơn hoặc bằng 0");
-        }
-        if (!is_null($side)) {
+
+        if ($side > 0) {
             $this->side = $side;
+        } else {
+            throw new Exception("Vui lòng nhập đầu vào hợp lệ");
         }
     }
 
@@ -29,4 +32,6 @@ class Square extends Shape implements Resizable
 $square = new Square(20);
 echo $square->calculateArea() . PHP_EOL;
 $square->resize(5);
-echo $square->calculateArea();
+echo $square->calculateArea() . PHP_EOL;
+$square->resize(-1);
+echo $square->calculateArea() . PHP_EOL;

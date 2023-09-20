@@ -12,16 +12,22 @@ class Rectangle extends Shape implements Resizable
         $this->width = $width;
     }
 
-    public function resize($width = null, $length = null)
+    /**
+     * Resize rectangle's width or length if possible.
+     */
+    public function resize(float $width = 0, float $length = 0)
     {
-        if ($width < 0 || $length < 0) {
-            throw new Exception("Đầu vào phải lớn hơn hoặc bằng 0");
-        }
-        if (!is_null($length)) {
+        $flag = false;
+        if ($length > 0) {
             $this->length = $length;
+            $flag = true;
         }
-        if (!is_null($width)) {
+        if ($width > 0) {
             $this->width = $width;
+            $flag = true;
+        }
+        if (!$flag) {
+            throw new Exception("Vui lòng nhập đầu vào hợp lệ");
         }
     }
 
@@ -33,5 +39,7 @@ class Rectangle extends Shape implements Resizable
 
 $rec = new Rectangle(20, 4);
 echo $rec->calculateArea() . PHP_EOL;
-$rec->resize(null, 5);
+$rec->resize(0, 7);
+echo $rec->calculateArea() . PHP_EOL;
+$rec->resize(-1, 5);
 echo $rec->calculateArea();
