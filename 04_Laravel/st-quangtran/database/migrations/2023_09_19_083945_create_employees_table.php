@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name', 40);
             $table->string('first_name', 10);
             $table->timestamp('birthday')->nullable();
-            $table->timestamp('start_date', $precision = 0)->nullable();
+            $table->timestamp('start_date')->nullable();
             $table->string('address', 60);
             $table->string('phone', 15);
             $table->decimal('base_salary', 10, 2);
