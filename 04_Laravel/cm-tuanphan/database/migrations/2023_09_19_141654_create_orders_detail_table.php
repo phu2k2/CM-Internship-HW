@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orderdetails', function (Blueprint $table) {
-            $table->unsignedBigInteger('InvoiceNumber');
-            $table->char('ProductCode', 4);
-            $table->decimal('UnitPrice', 10, 2);
-            $table->integer('Quantity');
-            $table->decimal('DiscountAmount', 10, 2);
+            $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->char('product_id', 4);
+            $table->decimal('price', 10, 2);
+            $table->integer('amount');
+            $table->decimal('discount', 10, 2);
             $table->timestamps();
     
-            $table->foreign('InvoiceNumber')->references('InvoiceNumber')->on('orders');
-            $table->foreign('ProductCode')->references('ProductCode')->on('products');
+            $table->foreign('invoice_id')->references('invoice_id')->on('orders');
+            $table->foreign('product_id')->references('product_id')->on('products');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orderdetail');
+        Schema::dropIfExists('orderdetails');
     }
 };
