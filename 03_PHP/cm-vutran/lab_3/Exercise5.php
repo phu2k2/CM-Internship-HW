@@ -18,14 +18,10 @@ trait Trait2
 
 class Hello
 {
-    use Trait1 {
+    use Trait1, Trait2 {
         Trait1::callName insteadof Trait2;
-    }
-
-    use Trait2 {
         Trait2::callName as trait2Name;
     }
-
 }
 
 $hello = new Hello();

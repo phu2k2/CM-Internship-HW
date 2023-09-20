@@ -28,12 +28,9 @@ trait TraitB
 
 class Hello
 {
-    use TraitA {
-        TraitA::method2 insteadOf TraitB;
-    }
-
-    use TraitB {
-        TraitB::method1 insteadOf TraitA;
+    use TraitA, TraitB {
+        TraitA::method2 insteadof TraitB;
+        TraitB::method1 insteadof TraitA;
     }
 
     function hello1()
@@ -48,5 +45,5 @@ class Hello
 }
 
 $hello = new Hello();
-echo $hello->hello1()."\n";
+echo $hello->hello1() . "\n";
 echo $hello->hello2();
