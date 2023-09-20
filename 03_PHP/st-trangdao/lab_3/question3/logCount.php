@@ -5,8 +5,8 @@ class Loggger
     private static $logCount = 0;
     public static function log($message)
     {
-        echo $message.PHP_EOL;
-        self::$logCount ++;
+        echo $message . PHP_EOL;
+        self::$logCount++;
     }
 
     public static function totalLogCount()

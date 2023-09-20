@@ -1,9 +1,11 @@
 <?php
+
 include 'InterfaceAndAbstract.php';
 
 class Square extends Shape implements Resizable
 {
     private $a;
+
     public function resize(float $a = 0)
     {
         if (!($a > 0)) {

@@ -23,12 +23,12 @@ class Move
         Trait1::callName as callNameTrait1;
     }
 
-    function move()
+    public function move()
     {
         $this->callName();
     }
 
-    function moveTrait1()
+    public function moveTrait1()
     {
         $this->callNameTrait1();
     }

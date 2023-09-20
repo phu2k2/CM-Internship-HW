@@ -1,4 +1,5 @@
 <?php
+
 include 'InterfaceAndAbstract.php';
 
 class Trapezoid extends Shape implements Resizable
@@ -16,6 +17,7 @@ class Trapezoid extends Shape implements Resizable
         $this->width = $width;
         $this->height = $height;
     }
+
     public function calculateArea()
     {
         return ($this->length + $this->width) * $this->height / 2;

@@ -1,37 +1,37 @@
 <?php
-//normal method
+
 class Vehicle1
 {
     private $brand;
     private $model;
     private $year;
 
-    function setBrand($brand)
+    public function setBrand($brand)
     {
         $this->brand = $brand;
     }
 
-    function getBrand()
+    public function getBrand()
     {
         return $this->brand;
     }
 
-    function setModel($model)
+    public function setModel($model)
     {
         $this->model = $model;
     }
 
-    function getModel()
+    public function getModel()
     {
         return $this->model;
     }
 
-    function setYear($year)
+    public function setYear($year)
     {
         $this->year = $year;
     }
 
-    function getYear()
+    public function getYear()
     {
         return $this->year;
     }

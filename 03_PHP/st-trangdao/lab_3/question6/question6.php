@@ -2,7 +2,6 @@
 
 trait A
 {
-
     private function fun1()
     {
         echo "Trang \n";
@@ -33,12 +32,12 @@ class Chill
         B::fun1 as funB;
     }
 
-    function fun1()
+    public function fun1()
     {
         $this->funA();
     }
 
-    function fun2()
+    public function fun2()
     {
         $this->funB();
     }
