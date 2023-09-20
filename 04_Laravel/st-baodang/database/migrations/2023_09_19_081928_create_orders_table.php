@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->char('employee_id');
+            $table->char('employee_id', 4);
             $table->timestamp('order_date');
             $table->timestamp('delivery_date');
             $table->timestamp('shipping_date');
