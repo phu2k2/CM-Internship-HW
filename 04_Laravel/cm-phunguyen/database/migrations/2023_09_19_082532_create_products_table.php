@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('unit', 10);
             $table->decimal('price', 10, 2);
             $table->timestamps();
-            $table->foreign('company_id')->references('company_id')->on('suppliers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('category_id')->references('category_id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('company_id')->references('company_id')->on('suppliers');
+            $table->foreign('category_id')->references('category_id')->on('categories');
         });
     }
 
