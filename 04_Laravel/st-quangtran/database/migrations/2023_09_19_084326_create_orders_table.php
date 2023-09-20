@@ -16,12 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->char('employee_id', 4);
             $table->timestamp('order_date');
-            $table->timestamp('delivery_date')->nullable();
-            $table->timestamp('shipping_date')->nullable();
+            $table->timestamp('delivery_date');
+            $table->timestamp('shipping_date');
             $table->string('destination', 80);
             $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('employee_id')->references('employee_id')->on('employees');
         });
     }
 
