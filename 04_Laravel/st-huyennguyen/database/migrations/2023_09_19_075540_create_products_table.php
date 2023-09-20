@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('amount');
             $table->string('unit', 10);
             $table->decimal('price', 10, 2);
-            $table->foreign('company_id')->references('company_id')->on('suppliers');
-            $table->foreign('category_id')->references('category_id')->on('categories');
+            $table->foreign('company_id')->references('company_id')->on('suppliers')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('category_id')->references('category_id')->on('categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
