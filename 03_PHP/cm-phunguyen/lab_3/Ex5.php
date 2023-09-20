@@ -1,4 +1,5 @@
 <?php
+
 trait Message1
 {
     public function callName()
@@ -21,6 +22,6 @@ class A
     }
 }
 
-//test
+/** * Test */
 $myObj = new A();
 echo "Ham callName cho Trait Message1 : " . $myObj->callName() . "\n Ham callName cho Trait Message2" . $myObj->callName2();

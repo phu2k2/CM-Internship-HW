@@ -1,4 +1,5 @@
 <?php
+
 interface Resizable
 {
     public function resize($percentage);
@@ -17,10 +18,14 @@ class Rectangle extends Shape implements Resizable
         $this->width = $width;
         $this->height = $height;
     }
+
+    /** * Tính diện tích của hình chữ nhật  */
     public function calculateArea()
     {
         return $this->width * $this->height;
     }
+
+    /** * Đặt lại kích cỡ của các thuộc tính */
     public function resize($percentage)
     {
         $this->width *= $percentage/100;
@@ -28,7 +33,6 @@ class Rectangle extends Shape implements Resizable
     }
 
 }
-
 
 //Test 
 $rectangle = new Rectangle(12,17);

@@ -1,4 +1,5 @@
 <?php
+
 class A
 {
     final public function a()
@@ -8,4 +9,5 @@ class A
 }
 final class B extends A
 {
+    
 }
