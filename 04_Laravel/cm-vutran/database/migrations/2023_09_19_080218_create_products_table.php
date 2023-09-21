@@ -11,29 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->char('product_id', 4)->unique();
-            $table->string('product_name', 30);
-            $table->char('company_id', 3);
-            $table->char('category_id', 2);
-            $table->integer('amount');
-            $table->string('unit', 10);
-            $table->decimal('price', 10, 2);
-            $table->timestamps();
+        if (!Schema::hasTable('products')) {
+            Schema::create('products', function (Blueprint $table) {
+                $table->id();
+                $table->char('product_id', 4)->unique();
+                $table->string('product_name', 30);
+                $table->char('company_id', 3);
+                $table->char('category_id', 2);
+                $table->integer('amount');
+                $table->string('unit', 10);
+                $table->decimal('price', 10, 2);
+                $table->timestamps();
 
-            $table->foreign('category_id')
-            ->references('category_id')
-            ->on('categories')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                $table->foreign('category_id')
+                    ->references('category_id')
+                    ->on('categories');
 
-            $table->foreign('company_id')
-            ->references('company_id')
-            ->on('suppliers')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-        });
+                $table->foreign('company_id')
+                    ->references('company_id')
+                    ->on('suppliers');
+            });
+        }
     }
 
     /**
