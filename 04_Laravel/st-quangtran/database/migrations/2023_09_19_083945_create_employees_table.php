@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->char('employee_id', 4)->unique();
-            $table->string('last_name', 40);
-            $table->string('first_name', 10);
-            $table->timestamp('birthday');
-            $table->timestamp('start_date');
-            $table->string('address', 60);
-            $table->string('phone', 15);
-            $table->decimal('base_salary', 10, 2);
-            $table->decimal('allowance', 10, 2);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable("employees")) {
+            Schema::create('employees', function (Blueprint $table) {
+                $table->id();
+                $table->char('employee_id', 4)->unique();
+                $table->string('last_name', 40);
+                $table->string('first_name', 10);
+                $table->timestamp('birthday');
+                $table->timestamp('start_date');
+                $table->string('address', 60);
+                $table->string('phone', 15);
+                $table->decimal('base_salary', 10, 2);
+                $table->decimal('allowance', 10, 2);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

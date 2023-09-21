@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string('company_name', 50);
-            $table->string('transaction_name', 20);
-            $table->string('address', 50);
-            $table->string('email', 30);
-            $table->string('phone', 15);
-            $table->string('fax', 15);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable("customers")) {
+            Schema::create('customers', function (Blueprint $table) {
+                $table->id();
+                $table->string('company_name', 50);
+                $table->string('transaction_name', 20);
+                $table->string('address', 50);
+                $table->string('email', 30);
+                $table->string('phone', 15);
+                $table->string('fax', 15);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
