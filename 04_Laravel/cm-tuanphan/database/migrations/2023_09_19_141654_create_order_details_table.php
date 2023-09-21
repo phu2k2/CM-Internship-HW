@@ -19,9 +19,9 @@ return new class extends Migration
             $table->integer('amount');
             $table->decimal('discount', 10, 2);
             $table->timestamps();
-    
-            $table->foreign('invoice_id')->references('invoice_id')->on('orders');
-            $table->foreign('product_id')->references('product_id')->on('products');
+            
+            $table->foreign('invoice_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

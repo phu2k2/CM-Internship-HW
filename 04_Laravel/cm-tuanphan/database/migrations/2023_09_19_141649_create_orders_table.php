@@ -21,8 +21,12 @@ return new class extends Migration
             $table->string('destination', 80);
             $table->timestamps();
     
-            $table->foreign('customer_id')->references('customer_id')->on('customers');
-            $table->foreign('employee_id')->references('employee_id')->on('employees');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('employee_id')
+            ->references('employee_id')
+            ->on('employees')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
