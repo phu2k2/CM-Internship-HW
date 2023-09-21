@@ -1,4 +1,5 @@
 <?php
+
 trait Students
 {
     public function callName()

@@ -1,4 +1,5 @@
 <?php
+
 trait TraitA
 {
     public function methodOneA()
@@ -36,6 +37,7 @@ class MyClass
     {
         $this->methodTwoA();
     }
+    
     public function useMethodOneFromTraitB()
     {
         $this->methodOneB();

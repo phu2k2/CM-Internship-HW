@@ -1,4 +1,5 @@
 <?php
+
 $myVehicle = new class("Toyota", "Camry", 2022)
 {
     private $brand;
