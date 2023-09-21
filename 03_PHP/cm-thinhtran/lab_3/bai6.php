@@ -1,38 +1,49 @@
 <?php
-    trait TraitA {
-        public function methodOne() {
+    trait TraitA 
+    {
+        public function methodOne() 
+        {
             echo "Method One of Trait A" . PHP_EOL;
         }
-        public function methodTwo() {
+        public function methodTwo() 
+        {
             echo "Method Two of Trait A" . PHP_EOL;
         }
     }
 
-    trait TraitB {
-        public function methodOne() {
+    trait TraitB 
+    {
+        public function methodOne() 
+        {
             echo "Method One of Trait B" . PHP_EOL;
         }
-        public function methodTwo() {
+        public function methodTwo()
+        {
             echo "Method Two of Trait B" . PHP_EOL;
         }
     }
 
-    class MyClass {
-        use TraitA{
+    class MyClass 
+    {
+        use TraitA
+        {
             TraitA::methodTwo insteadOf TraitB;
         } 
         
-        use TraitB{
+        use TraitB
+        {
             TraitB::methodOne insteadOf TraitA;
         }
 
 
 
-        public function useMethodTwoOfTraitA() {
+        public function useMethodTwoOfTraitA() 
+        {
             $this->methodTwo(); 
         }
 
-        public function useMethodOneOfTraitB() {
+        public function useMethodOneOfTraitB() 
+        {
             $this->methodOne(); 
         }
     }

@@ -14,21 +14,25 @@
         private $a;
         private $b;
 
-        public function __construct($a, $b) {
+        public function __construct($a, $b) 
+        {
             $this->a = $a;
             $this->b = $b;
         }
 
-        public function resize(){
+        public function resize()
+        {
             $this->a = $this->a / 2;
             $this->b = $this->b / 2;
         }
 
-        public function calculateArea(){
+        public function calculateArea()
+        {
             return $this->a * $this->b;
         }
 
-        public function __toString(){
+        public function __toString()
+        {
             return $this->a . " " . $this->b;
         }
     }
@@ -39,27 +43,29 @@
         private $b;
         private $c;
 
-        public function __construct($a, $b, $c) {
+        public function __construct($a, $b, $c) 
+        {
             $this->a = $a;
             $this->b = $b;
             $this->c = $c;
         }
 
-        public function resize(){
+        public function resize()
+        {
             $this->a = $this->a / 2;
             $this->b = $this->b / 2;
         }
 
-        public function calculateArea(){
+        public function calculateArea()
+        {
             return $this->a * $this->b * $this->c;
         }
 
-        public function __toString(){
+        public function __toString()
+        {
             return $this->a . " " . $this->b . " " . $this->c;
         }
-
     }
-
 
     $class1 = new Class1(1,2);
     $class2 = new Class2(1,2,3);
