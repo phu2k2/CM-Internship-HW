@@ -21,6 +21,7 @@ return new class extends Migration
                 $table->decimal('discount', 10, 2);
                 $table->foreign('invoice_id')->references('id')->on('orders');
                 $table->foreign('product_id')->references('product_id')->on('products');
+                $table->timestamps();
             });
         }
     }
