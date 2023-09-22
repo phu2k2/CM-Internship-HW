@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\SuppliesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+Route::resource('customers', CustomersController::class)->except(
+    ['show']
+);
+
+Route::resource('categories', CategoriesController::class)->except(
+    ['show']
+);
+
+Route::resource('supplies', SuppliesController::class)->except(
+    ['show']
+);
+
+Route::resource('employees', EmployeesController::class)->except(
+    ['show']
+);
