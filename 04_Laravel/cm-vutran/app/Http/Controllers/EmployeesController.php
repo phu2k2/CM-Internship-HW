@@ -164,11 +164,7 @@ class EmployeesController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-        // $validated = $request->validated();
-        // $success = "Add Employee Sucessfully!!";
-        $request->session()->flash('success', 'Add Employee successful!');
-        // return view('employees.create', compact('success'));
-        return redirect()->route('employees.index');
+       //
     }
 
     /**
@@ -184,14 +180,7 @@ class EmployeesController extends Controller
      */
     public function edit(string $id)
     {
-        if (!in_array($id, $this->data)) {
-            abort(404);
-        }
 
-        $filteredEmployees = array_filter($this->data, function($employee) use ($id) {
-            return $employee['id'] == $id;
-        });
-        dd($filteredEmployees);
     }
 
     /**

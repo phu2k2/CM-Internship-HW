@@ -58,9 +58,7 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $request->session()->flash('success', 'Add Category successful!');
-        // return view('employees.create', compact('success'));
-        return redirect()->route('categories.index');
+        //
     }
 
     /**
