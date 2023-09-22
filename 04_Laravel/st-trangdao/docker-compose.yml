@@ -11,4 +11,3 @@ services:
       MYSQL_DATABASE: SALES
       MYSQL_USER: anime
       MYSQL_PASSWORD: anime1234
-  
