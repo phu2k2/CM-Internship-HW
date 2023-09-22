@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CustomersController as customers;
+use App\Http\Controllers\SuppliersController as suppliers;
+use App\Http\Controllers\CategoriesController as categories;
+use App\Http\Controllers\EmployeesController as employees;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view("admin.index");
+    });
+
+    Route::resource('employees', employees::class)->name('*', 'employees');
+    Route::resource('categories' , categories::class)->name('*', 'categories');
+    Route::resource('suppliers' , suppliers::class)->name('*', 'suppliers');
+    Route::resource('customers' , customers::class)->name('*', 'customers');
 });
