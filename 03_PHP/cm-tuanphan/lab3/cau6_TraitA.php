@@ -6,6 +6,7 @@ trait cau6_TraitA
     {
         echo "method one of trait A";
     }
+    
     public function two()
     {
         echo "method two of trait A";

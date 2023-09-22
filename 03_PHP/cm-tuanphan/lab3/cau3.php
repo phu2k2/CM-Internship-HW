@@ -3,6 +3,7 @@
 class Logger
 {
     public static $logCount;
+    
     public static function showLogCount()
     {
         self::$logCount++;
