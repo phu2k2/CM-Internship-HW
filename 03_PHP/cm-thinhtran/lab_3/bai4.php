@@ -1,14 +1,14 @@
 <?php
-    class ParentClass 
+class ParentClass
+{
+    final public function speak()
     {
-        final public function speak() 
-        {
-            echo "Hello";
-        }
+        echo "Hello";
     }
-    
-    final class ChildClass extends ParentClass 
-    {
-        // public function speak() {}
-    }
+}
+
+final class ChildClass extends ParentClass
+{
+    // public function speak() {}
+}
     // class GrandChildClass extends ChildClass {}
