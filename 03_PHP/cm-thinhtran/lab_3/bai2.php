@@ -79,4 +79,3 @@
     $class2->resize();
     echo PHP_EOL."After resize: ".$class2;
     echo PHP_EOL."Area: ".$class2->calculateArea();
-?>

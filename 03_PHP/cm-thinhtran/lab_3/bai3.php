@@ -20,4 +20,3 @@
     $logger->log("message1");
     $logger->log("message1");
     Logger::showLogCount();
-?>

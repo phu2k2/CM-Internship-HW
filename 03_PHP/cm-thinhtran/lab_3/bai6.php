@@ -51,4 +51,3 @@
     $myObject = new MyClass();
     $myObject->useMethodTwoOfTraitA(); 
     $myObject->useMethodOneOfTraitB();
-?>

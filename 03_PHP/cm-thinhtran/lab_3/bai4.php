@@ -12,4 +12,3 @@
         // public function speak() {}
     }
     // class GrandChildClass extends ChildClass {}
-?>

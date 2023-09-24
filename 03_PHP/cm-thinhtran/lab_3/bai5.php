@@ -29,5 +29,4 @@
     
     $myObject = new MyClass();
     $myObject->callName();
-    $myObject->aliasCallName(); 
-?>
+    $myObject->aliasCallName();

@@ -27,4 +27,3 @@
     echo $vehicle1;
     echo "\n";
     echo $vehicle1->log();
-?>
