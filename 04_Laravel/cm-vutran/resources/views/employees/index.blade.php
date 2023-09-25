@@ -11,11 +11,6 @@
             Add Employee
         </a>
     </div>
-    @if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
-    @endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>

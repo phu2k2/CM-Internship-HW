@@ -164,7 +164,7 @@ class EmployeesController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-       //
+       
     }
 
     /**

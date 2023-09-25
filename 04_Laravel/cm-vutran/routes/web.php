@@ -21,18 +21,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::resource('customers', CustomersController::class)->except(
-    ['show']
-);
+Route::resource('customers', CustomersController::class);
 
-Route::resource('categories', CategoriesController::class)->except(
-    ['show']
-);
+Route::resource('categories', CategoriesController::class);
 
-Route::resource('supplies', SuppliesController::class)->except(
-    ['show']
-);
+Route::resource('supplies', SuppliesController::class);
 
-Route::resource('employees', EmployeesController::class)->except(
-    ['show']
-);
+Route::resource('employees', EmployeesController::class);
