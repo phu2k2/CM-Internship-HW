@@ -15,21 +15,21 @@
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Họ" name="last_name"/>
+                <input class="form-control" value="{{$editingEmployee->last_name}}" placeholder="Họ" name="last_name"/>
                 <label>Họ</label>
-                <input class="form-control" placeholder="Tên" name="first_name"/>
+                <input class="form-control" value="{{$editingEmployee->first_name}}" placeholder="Tên" name="first_name"/>
                 <label>Sinh nhật</label>
-                <input class="form-control" placeholder="Sinh nhật" name="birthday"/>
+                <input type="date" class="form-control" value="{{$editingEmployee->birthday}}" placeholder="Sinh nhật" name="birthday"/>
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                <input type="date" class="form-control" value="{{$editingEmployee->start_date}}" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
                 <label>Địa chỉ</label>
-                <input type="date" class="form-control" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control" value="{{$editingEmployee->address}}" placeholder="Địa chỉ" name="address"/>
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
+                <input class="form-control" value="{{$editingEmployee->phone}}" placeholder="Số điện thoại" name="phone"/>
                 <label>Lương cứng</label>
-                <input class="form-control" placeholder="Lương cứng" name="base_salary"/>
+                <input class="form-control" value="{{$editingEmployee->base_salary}}" placeholder="Lương cứng" name="base_salary"/>
                 <label>Trợ cấp</label>
-                <input class="form-control" placeholder="Trợ cấp" name="allowance"/>
+                <input class="form-control" value="{{$editingEmployee->allowance}}" placeholder="Trợ cấp" name="allowance"/>
             </form>
         </div>
         <div class="modal-footer">

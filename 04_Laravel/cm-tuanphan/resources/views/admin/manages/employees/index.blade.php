@@ -122,7 +122,7 @@
                                         <span class="text-xs font-weight-bold">{{$employee->allowance}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <button class="btn btn-success">Edit</button>
+                                        <a href="{{ route('employees.edit', ['employee'=>$employee->employee_id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger">Xóa</button>
                                     </td>
                                 </tr>  

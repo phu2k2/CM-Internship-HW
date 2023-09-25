@@ -107,7 +107,7 @@
                                         <span class="text-xs font-weight-bold">{{$customer->fax}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <button class="btn btn-success">Edit</button>
+                                        <a href="{{ route('customers.edit', ['customer'=>$customer->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger">Xóa</button>
                                     </td>
                                 </tr>                                    

@@ -4,7 +4,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCategoryModal">Edit danh mục sản phẩm {{ $categoryID }}</h1>
+          <h1 class="modal-title fs-5" id="addCategoryModal">Edit danh mục sản phẩm</h1>
         </div>
         <div class="modal-body">
             @if ($errors->any() || Route::is('categories.edit'))
@@ -14,9 +14,9 @@
                 @csrf
                 @method("PUT")
                 <label>ID danh mục</label>
-                <input class="form-control" placeholder="ID danh mục" name="category_id"/>
+                <input class="form-control" value="{{$editingCategory->category_id}}" placeholder="ID danh mục" name="category_id"/>
                 <label>Tên danh mục</label>
-                <input class="form-control" placeholder="Tên danh mục" name="category_name"/>
+                <input class="form-control" value="{{$editingCategory->category_name}}" placeholder="Tên danh mục" name="category_name"/>
             </form>
         </div>
         <div class="modal-footer">

@@ -15,17 +15,17 @@
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Tên công ty" name="company_name"/>
+                <input class="form-control" value="{{$editingSupplier->company_name}}" placeholder="Tên công ty" name="company_name"/>
                 <label>Tên giao dịch</label>
-                <input class="form-control" placeholder="Tên giao dịch" name="transaction_name"/>
+                <input class="form-control" value="{{$editingSupplier->transaction_name}}" placeholder="Tên giao dịch" name="transaction_name"/>
                 <label>Địa chỉ</label>
-                <input class="form-control" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control" value="{{$editingSupplier->address}}" placeholder="Địa chỉ" name="address"/>
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
+                <input class="form-control" value="{{$editingSupplier->phone}}" placeholder="Số điện thoại" name="phone"/>
                 <label>Số fax</label>
-                <input class="form-control" placeholder="Số fax" name="fax">
+                <input class="form-control" value="{{$editingSupplier->fax}}" placeholder="Số fax" name="fax">
                 <label>Địa chỉ email</label>
-                <input class="form-control" placeholder="Địa chỉ email" name="email" />
+                <input class="form-control" value="{{$editingSupplier->email}}" placeholder="Địa chỉ email" name="email" />
             </form>
         </div>
         <div class="modal-footer">

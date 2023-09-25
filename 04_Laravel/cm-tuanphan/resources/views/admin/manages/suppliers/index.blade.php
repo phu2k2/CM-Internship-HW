@@ -90,13 +90,13 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$supplier->address}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->phone_number}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->phone}}</p>
                                     </td>
                                     <td>
                                         <span class="text-xs font-weight-bold">{{$supplier->fax}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <button class="btn btn-success">Edit</button>
+                                        <a href="{{ route('suppliers.edit', ['supplier'=>$supplier->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger">Xóa</button>
                                     </td>
                                 </tr>  

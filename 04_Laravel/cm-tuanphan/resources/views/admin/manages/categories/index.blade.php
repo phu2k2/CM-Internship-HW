@@ -68,7 +68,7 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$category->category_name}}</p>
                                     </td>
                                     <td class="align-middle">
-                                        <button class="btn btn-success">Edit</button>
+                                        <a href="{{ route('categories.edit', ['category'=>$category->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger">Xóa</button>
                                     </td>
                                 </tr>  
