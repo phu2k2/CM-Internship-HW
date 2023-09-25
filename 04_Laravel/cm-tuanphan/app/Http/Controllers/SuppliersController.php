@@ -23,4 +23,15 @@ class SuppliersController extends Controller
     {
         dd($res->all());
     }
+
+    public function edit(string $supplierID)
+    {
+        $suppliers = Supplier::get();
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "supplierID"));
+    }
+
+    public function update(Request $res, string $id)
+    {
+        dd($res->all());
+    }
 }

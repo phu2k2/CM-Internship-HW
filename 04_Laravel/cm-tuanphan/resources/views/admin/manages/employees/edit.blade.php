@@ -1,38 +1,40 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModal" aria-hidden="true">
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addEmployeeModal">Thêm nhân viên</h1>
+          <h1 class="modal-title fs-5" id="addEmployeeModal">Edit nhân viên</h1>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
+            @if ($errors->any() || Route::is('employees.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
             @endif
-            <form action="{{ route('employees.store') }}" id="addEmployeeForm">
+            <form method="post" action="{{ route('employees.update' , ['employee' => $employeeID ]) }}" id="addEmployeeForm">
+                @csrf
+                @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Họ"/>
+                <input class="form-control" placeholder="Họ" name="last_name"/>
                 <label>Họ</label>
-                <input class="form-control" placeholder="Tên"/>
+                <input class="form-control" placeholder="Tên" name="first_name"/>
                 <label>Sinh nhật</label>
-                <input class="form-control" placeholder="Sinh nhật"/>
+                <input class="form-control" placeholder="Sinh nhật" name="birthday"/>
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control" placeholder="Ngày bắt đầu làm việc"/>
+                <input type="date" class="form-control" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
                 <label>Địa chỉ</label>
-                <input type="date" class="form-control" placeholder="Địa chỉ"/>
+                <input type="date" class="form-control" placeholder="Địa chỉ" name="address"/>
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại"/>
+                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
                 <label>Lương cứng</label>
-                <input class="form-control" placeholder="Lương cứng"/>
+                <input class="form-control" placeholder="Lương cứng" name="base_salary"/>
                 <label>Trợ cấp</label>
-                <input class="form-control" placeholder="Trợ cấp"/>
+                <input class="form-control" placeholder="Trợ cấp" name="allowance"/>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="addEmployeeForm">Thêm nhân viên</button>
+            <a href="{{ route('employees.index') }}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>       
+            <button type="submit" class="btn btn-primary" form="addEmployeeForm">Edit nhân viên</button>
         </div>
       </div>
     </div>

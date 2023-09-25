@@ -6,7 +6,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="addSupplierModal">Thêm nhà cung cấp</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             @if ($errors->any())
@@ -14,20 +13,22 @@
             @endif
             <form action="{{ route('suppliers.store') }}" id="addSupplierForm">
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Tên công ty"/>
+                <input class="form-control" placeholder="Tên công ty" name="company_name"/>
                 <label>Tên giao dịch</label>
-                <input class="form-control" placeholder="Tên giao dịch"/>
+                <input class="form-control" placeholder="Tên giao dịch" name="transaction_name"/>
                 <label>Địa chỉ</label>
-                <input class="form-control" placeholder="Địa chỉ"/>
+                <input class="form-control" placeholder="Địa chỉ" name="address"/>
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại"/>
+                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
                 <label>Số fax</label>
-                <input class="form-control" placeholder="Số fax"/>
+                <input class="form-control" placeholder="Số fax" name="fax">
+                <label>Địa chỉ email</label>
+                <input class="form-control" placeholder="Địa chỉ email" name="email" />
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="type" class="btn btn-primary" form="addSupplierForm">Thêm nhà cung cấp</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="type" class="btn btn-primary" form="addSupplierForm">Thêm nhà cung cấp</button>
         </div>
       </div>
     </div>

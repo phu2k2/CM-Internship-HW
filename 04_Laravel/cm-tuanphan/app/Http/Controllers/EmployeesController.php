@@ -23,4 +23,15 @@ class EmployeesController extends Controller
     {
         dd($res->all());
     }
+
+    public function edit(string $employeeID)
+    {
+        $employees = Employee::get();
+        return view("admin.manages.employees.edit" , compact("employees" , "employeeID"));
+    }
+
+    public function update(Request $res, string $id)
+    {
+        dd($res->all());
+    }
 }

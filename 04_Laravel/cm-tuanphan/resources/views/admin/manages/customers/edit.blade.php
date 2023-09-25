@@ -1,18 +1,19 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModal" aria-hidden="true">
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCustomerModal">Thêm khách hàng</h1>
+          <h1 class="modal-title fs-5" id="addCustomerModal">Edit khách hàng</h1>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
+            @if ($errors->any() || Route::is('customers.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addCustomerModal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('customers.store') }}" id="addCustomerForm">
+            <form method="post" action="{{ route('customers.update' , ['customer' => $customerID ]) }}" id="addCustomerForm">
                 @csrf
+                @method("PUT")
                 <label>Tên công ty</label>
                 <input class="form-control" placeholder="Tên công ty" name="company_name"/>
                 <label>Tên giao dịch</label>
@@ -26,8 +27,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="addCustomerForm">Thêm khách hàng</button>
+            <a href="{{ route('customers.index') }}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+            <button type="submit" class="btn btn-primary" form="addCustomerForm">Edit khách hàng</button>
         </div>
       </div>
     </div>

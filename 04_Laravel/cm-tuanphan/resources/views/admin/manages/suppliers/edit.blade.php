@@ -1,18 +1,19 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModal" aria-hidden="true">
+<div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCustomerModal">Thêm khách hàng</h1>
+          <h1 class="modal-title fs-5" id="addSupplierModal">Edit nhà cung cấp</h1>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
-            @section('modalTrigger')document.querySelector('[data-bs-target="#addCustomerModal"]').click();@endsection
+            @if ($errors->any() || Route::is('suppliers.edit'))
+            @section('modalTrigger')document.querySelector('[data-bs-target="#addSupplierModal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('customers.store') }}" id="addCustomerForm">
+            <form method="post" action="{{ route('suppliers.update' , ['supplier' => $supplierID ]) }}" id="addSupplierForm">
                 @csrf
+                @method("PUT")
                 <label>Tên công ty</label>
                 <input class="form-control" placeholder="Tên công ty" name="company_name"/>
                 <label>Tên giao dịch</label>
@@ -20,14 +21,16 @@
                 <label>Địa chỉ</label>
                 <input class="form-control" placeholder="Địa chỉ" name="address"/>
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone_number"/>
+                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
                 <label>Số fax</label>
-                <input class="form-control" placeholder="Số fax" name="fax"/>
+                <input class="form-control" placeholder="Số fax" name="fax">
+                <label>Địa chỉ email</label>
+                <input class="form-control" placeholder="Địa chỉ email" name="email" />
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="addCustomerForm">Thêm khách hàng</button>
+            <a href="{{ route('suppliers.index') }}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+            <button type="submit" class="btn btn-primary" form="addSupplierForm">Edit nhà cung cấp</button>
         </div>
       </div>
     </div>
@@ -41,19 +44,10 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Danh sách khách hàng</h6>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Thêm khách hàng</button>
+                    <h6>Nhà cung cấp</h6>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Thêm nhà cung cấp</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
@@ -76,41 +70,38 @@
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Số fax</th>
-
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Hành động</th>
-
-
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                    <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
-                            <tbody> 
-                                @foreach ($customers as $index => $customer)
+                            <tbody>
+                                @foreach ($suppliers as $index => $supplier)
                                 <tr>
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->company_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->company_name}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->transaction_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->transaction_name}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->address}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->address}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->phone_number}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->phone_number}}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$customer->fax}}</span>
+                                        <span class="text-xs font-weight-bold">{{$supplier->fax}}</span>
                                     </td>
                                     <td class="align-middle">
                                         <button class="btn btn-success">Edit</button>
                                         <button class="btn btn-danger">Xóa</button>
                                     </td>
-                                </tr>                                    
+                                </tr>  
                                 @endforeach
                             </tbody>
                         </table>

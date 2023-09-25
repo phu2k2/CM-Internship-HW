@@ -1,17 +1,18 @@
 @extends('admin.layouts.layout1')
 @section('modal')
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModal" aria-hidden="true">
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCategoryModal">Thêm danh mục sản phẩm</h1>
+          <h1 class="modal-title fs-5" id="addCategoryModal">Edit danh mục sản phẩm {{ $categoryID }}</h1>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
+            @if ($errors->any() || Route::is('categories.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addCategoryModal"]').click();@endsection
             @endif
-            <form id="addCategoryForm" method="post" action="{{ route('categories.store') }}">
+            <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $categoryID ]) }}">
                 @csrf
+                @method("PUT")
                 <label>ID danh mục</label>
                 <input class="form-control" placeholder="ID danh mục" name="category_id"/>
                 <label>Tên danh mục</label>
@@ -19,8 +20,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" type="submit" form="addCategoryForm">Thêm danh mục</button>
+            <a href="{{ route('categories.index') }}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+            <button class="btn btn-primary" type="submit" form="addCategoryForm">Edit danh mục</button>
         </div>
       </div>
     </div>
