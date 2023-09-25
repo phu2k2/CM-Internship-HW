@@ -12,7 +12,7 @@
 <div class="col-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Hoverable Rows</h4>
+            <h4 class="card-title">List Customers</h4>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
