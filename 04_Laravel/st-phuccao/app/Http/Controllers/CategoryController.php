@@ -19,13 +19,11 @@ class CategoryController extends Controller
             'category_id' => '02',
             'category_name' => 'Category 2',
             'create_at' => '1/1/2020'
-
         ],
         [
             'category_id' => '03',
             'category_name' => 'Category 3',
             'create_at' => '1/1/2021'
-
         ],
     ];
 
