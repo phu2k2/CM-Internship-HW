@@ -1,5 +1,6 @@
 <?php
-$vehicle1 = new class("brand1", "model1", "year1")
+
+$vehicle1 = new class ("brand1", "model1", "year1")
 {
     private $brand;
     private $model;

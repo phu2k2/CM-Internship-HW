@@ -1,4 +1,5 @@
 <?php
+
 class ParentClass
 {
     final public function speak()
