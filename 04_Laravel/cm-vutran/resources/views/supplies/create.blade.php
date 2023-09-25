@@ -4,17 +4,11 @@
 
 @section('content')
         <!-- Modal Body -->
+    <form id="supplyForm" action="{{ route('supplies.store') }}" method="POST">
+      @csrf
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Add Supply</h2>
-
-        @isset($success)
-            <div class="alert alert-success" role="alert">
-            {{ $success }}
-            </div>
-        @endisset
-          <!-- Employee Form -->
-          <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
-            @csrf
+          <!-- supply Form -->
             <div class="mb-3">
               <label for="inputName" class="form-label">Company Name</label>
               <input value="{{ old('company_name') }}" type="text" class="form-control" id="inputName" name="company_name">
@@ -33,7 +27,7 @@
 
             <div class="mb-3">
               <label for="inputOffice" class="form-label">Address</label>
-              <input value="{{ old('address') }}" type="text" class="form-control" id="inputOffice" name="addres">
+              <input value="{{ old('address') }}" type="text" class="form-control" id="inputOffice" name="address">
             @error('address')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -66,7 +60,7 @@
         <!-- Modal Footer -->
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Add Employee</button>
+            <button type="submit" class="btn btn-primary" id="addsupplyBtn">Add supply</button>
         </div>
         
     </form>

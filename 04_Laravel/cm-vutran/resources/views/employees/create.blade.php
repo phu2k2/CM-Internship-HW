@@ -4,17 +4,12 @@
 
 @section('content')
         <!-- Modal Body -->
+      <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
+        @csrf
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Add employee</h2>
 
-        @isset($success)
-            <div class="alert alert-success" role="alert">
-            {{ $success }}
-            </div>
-        @endisset
           <!-- Employee Form -->
-          <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
-            @csrf
             <div class="mb-3">
               <label for="inputName" class="form-label">Name</label>
               <input value="{{ old('name') }}" type="text" class="form-control" id="inputName" name="name">

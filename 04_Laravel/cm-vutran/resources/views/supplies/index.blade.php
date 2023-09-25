@@ -7,9 +7,15 @@
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Supplies Management
-        <a class="btn btn-primary mx-5" href="{{ route('supplies.create') }}">Add Supplie</a>
-
+        <a class="btn btn-primary mx-5" href="{{ route('supplies.create') }}">
+            Add Supply
+        </a>
     </div>
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>
@@ -39,19 +45,26 @@
                 </tr>
             </tfoot>
             <tbody>
-                @foreach ($supplies as $supplie)
+                @foreach ($supplies as $supply)
                 <tr>
                     {{-- <td>{{ $supplie['Id'] }}</td> --}}
-                    <td>{{ $supplie['companyId'] }}</td>
-                    <td>{{ $supplie['companyName'] }}</td>
-                    <td>{{ $supplie['transactionName'] }}</td>
-                    <td>{{ $supplie['address'] }}</td>
-                    <td>{{ $supplie['email'] }}</td>
-                    <td>{{ $supplie['phoneNumber'] }}</td>
-                    <td>{{ $supplie['fax'] }}</td>
+                    <td>{{ $supply['companyId'] }}</td>
+                    <td>{{ $supply['companyName'] }}</td>
+                    <td>{{ $supply['transactionName'] }}</td>
+                    <td>{{ $supply['address'] }}</td>
+                    <td>{{ $supply['email'] }}</td>
+                    <td>{{ $supply['phoneNumber'] }}</td>
+                    <td>{{ $supply['fax'] }}</td>
                     <td>
-                        <a class="btn btn-success" href="">Edit</a>
-                        <a class="btn btn-danger" href="">Delete</a>
+                        <div class="d-flex">
+                            <a class="btn btn-success mx-3" href="{{ route('supplies.edit', ['supply' => $supply['id']]) }}">Edit</a>
+                            <form method="POST" action="{{ route('supplies.destroy', ['supply' => $supply['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this supply?')">
+                                @csrf
+                                @method('DELETE')
+                            
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

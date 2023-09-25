@@ -59,7 +59,6 @@ class CategoriesController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $request->session()->flash('success', 'Add Category successful!');
-        // return view('employees.create', compact('success'));
         return redirect()->route('categories.index');
     }
 
@@ -74,24 +73,44 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $Id)
+    public function edit(string $id)
     {
-        //
+        $category = collect($this->data)->where('id', $id)->first();
+
+        if (empty($category)) {
+            abort(404);
+        }
+
+        return view('categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $Id)
+    public function update(Request $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Update Category successful!');
+        return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $Id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Delete Category successful!');
+        return redirect()->route('categories.index');
     }
 }

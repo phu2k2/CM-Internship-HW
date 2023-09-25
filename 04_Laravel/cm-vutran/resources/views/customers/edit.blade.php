@@ -1,0 +1,64 @@
+@extends('layout.app')
+
+@section('title', 'Edit Customer')
+
+@section('content')
+        <!-- Modal Body -->
+    <form  action="{{ route('customers.update', ['customer' => $customer['id'] ]) }}" method="POST">
+        <div class="p-5" style="width: 60%:">
+            <h2 class="text-center">Edit Customer</h2>
+
+          <!-- Employee Form -->
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label for="inputName" class="form-label">Transaction Name</label>
+                <input value="{{ old('transaction_name', $customer['transactionName']) }}" type="text" class="form-control" id="inputName" name="transaction_name">
+                @error('transaction_name')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+  
+              <div class="mb-3">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input value="{{ old('address', $customer['address']) }}" type="text" class="form-control" id="inputAddress" name="address">
+                @error('address')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+  
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input value="{{ old('email', $customer['email']) }}" type="email" class="form-control" id="inputEmail" name="email">
+                @error('email')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+  
+              <div class="mb-3">
+                <label for="inputPhone" class="form-label">Phone Number</label>
+                <input value="{{ old('phone_number', $customer['phoneNumber']) }}" type="text" class="form-control" id="inputPhone" name="phone_number">
+                @error('phone_number')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+  
+              <div class="mb-3">
+                <label for="inputFax" class="form-label">Fax</label>
+                <input value="{{ old('fax', $customer['fax']) }}" type="text" class="form-control" id="inputFax" name="fax">
+                @error('fax')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+        </div>
+        
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Edit Customer</button>
+        </div>
+        
+    </form>
+     
+ 
+@endsection

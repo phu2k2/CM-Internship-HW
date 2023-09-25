@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateSupplyRequest;
 use Illuminate\Http\Request;
 
 class SuppliesController extends Controller
@@ -212,7 +213,7 @@ class SuppliesController extends Controller
             'fax' => '111-222-3333',
         ],
     ];
-    
+
     public function index()
     {
         $supplies = $this->data;
@@ -230,9 +231,10 @@ class SuppliesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSupplyRequest $request)
     {
-        //
+        $request->session()->flash('success', 'Add Supply successful!');
+        return redirect()->route('supplies.index');
     }
 
     /**
@@ -246,24 +248,44 @@ class SuppliesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $Id)
+    public function edit(string $id)
     {
-        //
+        $supply = collect($this->data)->where('id', $id)->first();
+
+        if (empty($supply)) {
+            abort(404);
+        }
+
+        return view('supplies.edit', compact('supply'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $Id)
+    public function update(CreateSupplyRequest $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Update Supply successful!');
+        return redirect()->route('supplies.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $Id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Delete Supply successful!');
+        return redirect()->route('supplies.index');
     }
 }

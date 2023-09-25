@@ -164,10 +164,7 @@ class EmployeesController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-        // $validated = $request->validated();
-        // $success = "Add Employee Sucessfully!!";
         $request->session()->flash('success', 'Add Employee successful!');
-        // return view('employees.create', compact('success'));
         return redirect()->route('employees.index');
     }
 
@@ -184,29 +181,42 @@ class EmployeesController extends Controller
      */
     public function edit(string $id)
     {
-        if (!in_array($id, $this->data)) {
+        $employee = collect($this->data)->where('id', $id)->first();
+
+        if (empty($employee)) {
             abort(404);
         }
 
-        $filteredEmployees = array_filter($this->data, function($employee) use ($id) {
-            return $employee['id'] == $id;
-        });
-        dd($filteredEmployees);
+        return view('employees.edit', compact('employee'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateEmployeeRequest $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Update Employee successful!');
+        return redirect()->route('employees.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Delete Employee successful!');
+        return redirect()->route('employees.index');
     }
 }

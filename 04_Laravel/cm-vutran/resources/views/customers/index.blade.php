@@ -7,11 +7,15 @@
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Customers Management
-        <button type="button" class="btn btn-primary mx-5" data-bs-toggle="modal" data-bs-target="#myModal">
+        <a class="btn btn-primary mx-5" href="{{ route('customers.create') }}">
             Add Customer
-        </button>
-
+        </a>
     </div>
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>
@@ -50,8 +54,16 @@
                     <td>{{ $customer['phoneNumber'] }}</td>
                     <td>{{ $customer['fax'] }}</td>
                     <td>
-                        <a class="btn btn-success" href="">Edit</a>
-                        <a class="btn btn-danger" href="">Delete</a>
+                        <div class="d-flex">
+                            <a class="btn btn-success mx-3" href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">Edit</a>
+                            <form method="POST" action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                                @csrf
+                                @method('DELETE')
+                            
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        
                     </td>
                 </tr>
                 @endforeach

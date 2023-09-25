@@ -4,16 +4,11 @@
 
 @section('content')
         <!-- Modal Body -->
+    <form  action="{{ route('categories.store') }}" method="POST">
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Add Category</h2>
 
-        @isset($success)
-            <div class="alert alert-success" role="alert">
-            {{ $success }}
-            </div>
-        @endisset
           <!-- Employee Form -->
-          <form  action="{{ route('categories.store') }}" method="POST">
             @csrf
             <div class="mb-3">
               <label for="inputName" class="form-label">Category Name</label>
@@ -32,5 +27,4 @@
         
     </form>
      
- 
 @endsection

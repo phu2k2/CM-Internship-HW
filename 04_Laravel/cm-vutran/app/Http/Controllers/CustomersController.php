@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCustomerRequest;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -11,7 +12,7 @@ class CustomersController extends Controller
      */
 
 
-     private $data = [
+    private $data = [
         [
             'id' => 1,
             'companyId' => 'ABC123',
@@ -294,15 +295,16 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCustomerRequest $request)
     {
-        //
+        $request->session()->flash('success', 'Add Customer successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -316,24 +318,44 @@ class CustomersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $Id)
+    public function edit(string $id)
     {
-        //
+        $customer = collect($this->data)->where('id', $id)->first();
+
+        if (empty($customer)) {
+            abort(404);
+        }
+
+        return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $Id)
+    public function update(CreateCustomerRequest $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Update Customer successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $Id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $index = array_search($id, array_column($this->data, 'id'));
+
+        if ($index === false) {
+            abort(404);
+        }
+
+        $request->session()->flash('success', 'Delete Customer successful!');
+        return redirect()->route('customers.index');
     }
 }
