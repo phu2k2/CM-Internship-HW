@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\SuppliersController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/', function () {
+        return view('welcome');
+    }
+);
+
+Route::group(
+    ['prefix' => 'admin'], function () {
+        Route::get(
+            '/', function () {
+                return view('admin.pages.dashboard');
+            }
+        )->name('admin.dashboard');
+
+        Route::resource('customers', CustomersController::class);
+        Route::resource('suppliers', SuppliersController::class);
+        Route::resource('categories', CategoriesController::class);
+        Route::resource('employees', EmployeesController::class);
+    }
+);
