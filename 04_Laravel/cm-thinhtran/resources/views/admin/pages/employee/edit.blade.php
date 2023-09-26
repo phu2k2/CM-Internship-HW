@@ -3,47 +3,6 @@
 
 @section('content')
 
-{{-- <div class="container mt-5">
-    <h1>Edit Customer Information</h1>
-    <form action="update.php" method="POST">
-        <div class="mb-3">
-            <label for="id" class="form-label">ID</label>
-            <input type="text" class="form-control" id="id" name="id" value="123" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="company_name" class="form-label">Company Name</label>
-            <input type="text" class="form-control" id="company_name" name="company_name" value="ABC Inc.">
-        </div>
-        <div class="mb-3">
-            <label for="short_name" class="form-label">Short Name</label>
-            <input type="text" class="form-control" id="short_name" name="short_name" value="ABC">
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" value="New York">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="info@abc.com">
-        </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" value="(123) 456-7890">
-        </div>
-        <div class="mb-3">
-            <label for="other_info" class="form-label">Other Information</label>
-            <textarea class="form-control" id="other_info" name="other_info" rows="3">Additional information goes here.</textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"> --}}
-
-{{-- @endsection --}}
-
-
 <div class="container-fluid py-4">
     <div class="row">
       <div class="col-12">
@@ -51,35 +10,64 @@
             <div class="card-body px-0 pt-0 pb-2">
             <div class="container mt-5">
                 <h1>Edit Customer Information</h1>
-                <form action="{{route('customers.update', ['customer' => $editCustomer['id']])}}" method="PUT">
+                <form action="{{route('employees.update', ['employee' => $editEmployee['id']])}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" name="id" value="{{$editCustomer['id']}}" readonly>
+                        <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{old('employee_id',$editEmployee['employee_id'])}}" readonly>
+                        @error('employee_id')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="company_name" class="form-label">Company Name</label>
-                        <input type="text" class="form-control" id="company_name" name="company_name" value="{{$editCustomer['company_name']}}">
+                        <label for="company_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{old('last_name',$editEmployee['last_name'])}}">
+                        @error('last_name')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="short_name" class="form-label">Short Name</label>
-                        <input type="text" class="form-control" id="short_name" name="short_name" value="{{$editCustomer['short_name']}}">
+                        <label for="short_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{old('first_name',$editEmployee['first_name'])}}">
+                        @error('first_name')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" name="city" value="{{$editCustomer['city']}}">
+                        <label for="city" class="form-label">Birthday</label>
+                        <input type="datetime-local" class="form-control" id="birthday" name="birthday" value="{{old('birthday',$editEmployee['birthday'])}}">
+                        @error('birthday')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{$editCustomer['email']}}">
+                        <label for="email" class="form-label">Start date</label>
+                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{old('start_date',$editEmployee['start_date'])}}">
+                        @error('start_date')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Address</label>
+                        <input type="tel" class="form-control" id="address" name="address" value="{{old('address',$editEmployee['address'])}}">
+                        @error('address')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" value="{{$editCustomer['phone']}}">
+                        <input type="tel" class="form-control" id="phone" name="phone" value="{{old('phone',$editEmployee['phone'])}}">
+                        @error('phone')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="other_info" class="form-label">Other Information</label>
-                        <textarea class="form-control" id="other_info" name="other_info" rows="3">Additional information goes here.</textarea>
+                        <label for="phone" class="form-label">Base Salary</label>
+                        <input type="tel" class="form-control" id="base_salary" name="base_salary" value="{{old('base_salary',$editEmployee['base_salary'])}}">
+                        @error('base_salary')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>

@@ -3,47 +3,6 @@
 
 @section('content')
 
-{{-- <div class="container mt-5">
-    <h1>Edit Customer Information</h1>
-    <form action="update.php" method="POST">
-        <div class="mb-3">
-            <label for="id" class="form-label">ID</label>
-            <input type="text" class="form-control" id="id" name="id" value="123" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="company_name" class="form-label">Company Name</label>
-            <input type="text" class="form-control" id="company_name" name="company_name" value="ABC Inc.">
-        </div>
-        <div class="mb-3">
-            <label for="short_name" class="form-label">Short Name</label>
-            <input type="text" class="form-control" id="short_name" name="short_name" value="ABC">
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" value="New York">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="info@abc.com">
-        </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" value="(123) 456-7890">
-        </div>
-        <div class="mb-3">
-            <label for="other_info" class="form-label">Other Information</label>
-            <textarea class="form-control" id="other_info" name="other_info" rows="3">Additional information goes here.</textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"> --}}
-
-{{-- @endsection --}}
-
-
 <div class="container-fluid py-4">
     <div class="row">
       <div class="col-12">
@@ -51,35 +10,57 @@
             <div class="card-body px-0 pt-0 pb-2">
             <div class="container mt-5">
                 <h1>Edit Customer Information</h1>
-                <form action="{{route('customers.update', ['customer' => $editCustomer['id']])}}" method="PUT">
+                <form action="{{route('customers.update', ['customer' => $editCustomer['id']])}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" name="id" value="{{$editCustomer['id']}}" readonly>
+                        <input type="text" class="form-control" id="id" name="id" value="{{old('id',$editCustomer['id'])}}" readonly>
+                        @error('id')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="company_name" class="form-label">Company Name</label>
-                        <input type="text" class="form-control" id="company_name" name="company_name" value="{{$editCustomer['company_name']}}">
+                        <input type="text" class="form-control" id="company_name" name="company_name" value="{{old('company_name',$editCustomer['company_name'])}}">
+                        @error('company_name')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="short_name" class="form-label">Short Name</label>
-                        <input type="text" class="form-control" id="short_name" name="short_name" value="{{$editCustomer['short_name']}}">
+                        <input type="text" class="form-control" id="short_name" name="short_name" value="{{old('short_name',$editCustomer['short_name'])}}">
+                        @error('short_name')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" name="city" value="{{$editCustomer['city']}}">
+                        <input type="text" class="form-control" id="city" name="city" value="{{old('city',$editCustomer['city'])}}">
+                        @error('city')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{$editCustomer['email']}}">
+                        <input type="email" class="form-control" id="email" name="email" value="{{old('email',$editCustomer['email'])}}">
+                        @error('email')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" value="{{$editCustomer['phone']}}">
+                        <input type="tel" class="form-control" id="phone" name="phone" value="{{old('phone',$editCustomer['phone'])}}">
+                        @error('phone')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="other_info" class="form-label">Other Information</label>
-                        <textarea class="form-control" id="other_info" name="other_info" rows="3">Additional information goes here.</textarea>
+                        <textarea class="form-control" id="other_info" name="other_info" rows="3" value="{{old('other_info',$editCustomer['other_info'])}}">Additional information goes here.</textarea>
+                        @error('other_info')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>

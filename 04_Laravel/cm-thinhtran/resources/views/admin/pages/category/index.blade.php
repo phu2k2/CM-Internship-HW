@@ -58,7 +58,6 @@
         </div>
       </div>
 
-
         <!-- The Modal Add Customer-->
         <div class="modal fade" id="AddCategoryModal">
             <div class="modal-dialog modal-lg">
@@ -77,11 +76,17 @@
                             <div class="mb-3">
                                 <label for="id">ID:</label>
                                 <input type="text" class="form-control" id="category_id" name="category_id">
+                                @error('category_id')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_name">Category Name:</label>
                                 <input type="text" class="form-control" id="category_name" name="category_name">
-                        </div>
+                                @error('category_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
                         <!-- Modal Footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -125,4 +130,11 @@
         </div>
       </footer>
     </div>
+    @if($errors->any())
+        <script>
+            $(document).ready(function () {
+                $('#AddCategoryModal').modal('show');
+            });
+        </script>
+    @endif
 @endsection

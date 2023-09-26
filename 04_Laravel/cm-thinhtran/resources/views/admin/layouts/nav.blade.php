@@ -17,7 +17,7 @@
                     Route::is('suppliers.index') ? 'Supplier' : '';
                 }}
                 {{
-                    Route::is('categories.index') ? 'Sategories' : '';
+                    Route::is('categories.index') ? 'Categories' : '';
                 }}
             </li>
           </ol>

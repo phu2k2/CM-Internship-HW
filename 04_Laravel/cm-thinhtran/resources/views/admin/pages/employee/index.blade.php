@@ -11,7 +11,7 @@
                     <h6>Employees</h6>
                   </div>
                   <div class="card-header pb-0 ">
-                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddCustomerModal">
+                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddEmployeeModal">
                         Add employee
                     </button>
                  </div>
@@ -84,7 +84,7 @@
 
 
         <!-- The Modal Add Customer-->
-        <div class="modal fade" id="AddCustomerModal">
+        <div class="modal fade" id="AddEmployeeModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
@@ -94,45 +94,72 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{route('customers.store')}}" method="POST">
+                    <form action="{{route('employees.store')}}" method="POST">
                         @csrf
                     <!-- Modal Body -->
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="id" name="id">
+                                <input type="text" class="form-control" id="employee_id" name="employee_id">
+                                @error('employee_id')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_name">Last Name:</label>
                                 <input type="text" class="form-control" id="last_name" name="last_name">
+                                @error('last_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="short_name">First Name:</label>
                                 <input type="text" class="form-control" id="first_name" name="first_name">
+                                @error('first_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="city">Birthday:</label>
                                 <input type="datetime-local" class="form-control" id="birthday" name="birthday">
+                                @error('birthday')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="city">Start date:</label>
                                 <input type="datetime-local" class="form-control" id="start_date" name="start_date">
+                                @error('start_date')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email">Address:</label>
                                 <input type="email" class="form-control" id="address" name="address">
+                                @error('address')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Phone:</label>
                                 <input type="tel" class="form-control" id="phone" name="phone">
+                                @error('phone')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Base salary:</label>
                                 <input type="tel" class="form-control" id="base_salary" name="base_salary">
+                                @error('base_salary')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Allowance:</label>
                                 <input type="tel" class="form-control" id="allowance" name="allowance">
+                                @error('allowance')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
 
                         </div>
@@ -179,4 +206,11 @@
         </div>
       </footer>
     </div>
+    @if($errors->any())
+        <script>
+            $(document).ready(function () {
+                $('#AddEmployeeModal').modal('show');
+            });
+        </script>
+    @endif
 @endsection

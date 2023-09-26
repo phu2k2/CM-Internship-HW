@@ -8,11 +8,11 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between" >
                 <div class="card-header pb-0">
-                    <h6>Suppliers</h6>
+                    <h6>Customers</h6>
                   </div>
                   <div class="card-header pb-0 ">
-                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddSupplierModal">
-                        Add suppliers
+                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddCustomerModal">
+                        Add customer
                     </button>
                  </div>
             </div>
@@ -24,47 +24,39 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transaction</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">City</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fax</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($suppliers as $supplier)
+                    @foreach ($customers as $customer)
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$supplier['company_id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{$customer['id']}}</h6>
                             </div>
                         </div>
                     </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['company_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$customer['company_name']}} - {{$customer['short_name']}}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{$customer['city']}}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['transaction_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$customer['email']}}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['address']}}</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['email']}}</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['phone']}}</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['fax']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$customer['phone']}}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('suppliers.edit', ['supplier' => $supplier['company_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{route('customers.edit', ['customer' => $customer['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
 
-                        <a href="{{route('suppliers.destroy', ['supplier' => $supplier['company_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{route('customers.destroy', ['customer' => $customer['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>
@@ -80,7 +72,7 @@
 
 
         <!-- The Modal Add Customer-->
-        <div class="modal fade" id="AddSupplierModal">
+        <div class="modal fade" id="AddCustomerModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
@@ -90,37 +82,58 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{route('suppliers.store')}}" method="POST">
+                    <form action="{{route('customers.store')}}" method="POST">
                         @csrf
                     <!-- Modal Body -->
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="company_id" name="company_id">
+                                <input type="text" class="form-control" id="id" name="id" value="{{ old('id') }}">
+                                @error('id')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_name">Company Name:</label>
-                                <input type="text" class="form-control" id="company_name" name="company_name">
+                                <input type="text" class="form-control" id="company_name" name="company_name" value="{{ old('company_name') }}">
+                                @error('company_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="short_name">Transaction Name:</label>
-                                <input type="text" class="form-control" id="transaction_name" name="transaction_name">
+                                <label for="short_name">Short Name:</label>
+                                <input type="text" class="form-control" id="short_name" name="short_name" value="{{ old('short_name') }}">
+                                @error('short_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="city">Address:</label>
-                                <input type="text" class="form-control" id="address" name="address">
+                                <label for="city">City:</label>
+                                <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}">
+                                @error('city')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Phone:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone">
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{ old('phone') }}">
+                                @error('phone')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="other_info">Fax:</label>
-                                <textarea class="form-control" id="fax" name="fax"></textarea>
+                                <label for="other_info">Other Information:</label>
+                                <textarea class="form-control" id="other_info" name="other_info"></textarea>
+                                @error('other_info')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
                         <!-- Modal Footer -->
@@ -132,6 +145,7 @@
                 </div>
             </div>
         </div>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -165,4 +179,11 @@
         </div>
       </footer>
     </div>
+    @if($errors->any())
+        <script>
+            $(document).ready(function () {
+                $('#AddCustomerModal').modal('show');
+            });
+        </script>
+    @endif
 @endsection
