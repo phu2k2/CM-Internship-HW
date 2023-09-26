@@ -3,11 +3,10 @@
 @section('title', 'Add Supply')
 
 @section('content')
-        <!-- Modal Body -->
+
         <form >
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Add Supply</h2>
-          <!-- Employee Form -->
             <div class="mb-3">
               <label for="inputName" class="form-label">Company Name</label>
               <input type="text" class="form-control" id="inputName" name="company_name">

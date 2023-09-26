@@ -3,7 +3,7 @@
 @section('title', 'Add Employee')
 
 @section('content')
-        <!-- Modal Body -->
+
         <form >
             @csrf
         <div class="p-5" style="width: 60%:">
@@ -42,5 +42,4 @@
         
     </form>
      
- 
 @endsection
