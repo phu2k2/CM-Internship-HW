@@ -24,7 +24,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ URL::to('employee') }}">
                     <span class="menu-title">Employees</span>
-                    <i class="mdi mdi-chart-bar menu-icon"></i>
+                    <i class="mdi mdi-contacts menu-icon""></i>
                 </a>
             </li>
         </ul>

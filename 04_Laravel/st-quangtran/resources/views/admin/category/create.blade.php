@@ -6,28 +6,31 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
-
                         <div class="card-body">
-                            <form method="post" action="{{ URL::to('/store') }}">
+                            <form method="post" action="{{ URL::to('category/store') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="companyName"> Category ID </label>
-                                    <input type="text" id="companyName" class="form-control" placeholder="Company Name ">
+                                    <label for="categoryId"> Category ID </label>
+                                    <input type="text" id="categoryId" name="categoryId" class="form-control"
+                                        placeholder="Category ID" value="{{ old('categoryId') }}">
+                                    @error('categoryId')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="transactionName">Category Name</label>
-                                    <input type="text" class="form-control" id="transactionName"
-                                        placeholder="Transaction Name">
+                                    <label for="categoryName">Category Name</label>
+                                    <input type="text" class="form-control" id="categoryName" placeholder="Category Name"
+                                        value="{{ old('categoryName') }}">
+                                    @error('categoryName')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
 
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 

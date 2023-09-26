@@ -8,37 +8,26 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form>
+                            <form method="POST" action="{{ URL::to('category/update', ['id' => $category['id']]) }}">
+                                @csrf
+                                @method('PUT')
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput"> Company Name </label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Company Name ">
+                                    <label for="categoryId"> Category ID </label>
+                                    <input type="text" id="categoryId" name="categoryId" class="form-control"
+                                        placeholder="Category ID" value="{{ old('categoryId', $category['categoryId']) }}">
+                                    @error('categoryId')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput2">Transaction Name</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput2"
-                                        placeholder="Transaction Name">
+                                    <label for="categoryName"> Category ID </label>
+                                    <input type="text" id="categoryName" name="categoryName" class="form-control"
+                                        placeholder="Category ID"
+                                        value="{{ old('categoryName', $category['categoryName']) }}">
+                                    @error('categoryName')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput2">Email</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput2"
-                                        placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput">Address</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Address">
-                                </div>
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput">Phone</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Phone">
-                                </div>
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput">Fax</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Fax">
-                                </div>
-
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
 

@@ -8,36 +8,58 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form>
+                            <form method="POST" action="{{ URL::to('customer/update', ['id' => $customer['id']]) }}">
+                                @csrf
+                                @method('PUT')
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput"> Company Name </label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Company Name ">
+                                    <label for="companyId"> Company ID </label>
+                                    <input type="text" class="form-control" id="companyId" name="companyId"
+                                        placeholder="Company Name" value="{{ old('companyId', $customer['companyId']) }}">
+                                    @error('companyId')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput2">Transaction Name</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput2"
-                                        placeholder="Transaction Name">
+                                    <label for="transactionName">Transaction Name</label>
+                                    <input type="text" class="form-control" id="transactionName" name="transactionName"
+                                        placeholder="Transaction Name"
+                                        value="{{ old('transactionName', $customer['transactionName']) }}">
+                                    @error('transactionName')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput2">Email</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput2"
-                                        placeholder="Email">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        placeholder="Email" value="{{ old('email', $customer['email']) }}">
+                                    @error('email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Address</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Address">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        placeholder="Address" value="{{ old('address', $customer['address']) }}">
+                                    @error('address')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Phone</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput"
-                                        placeholder="Phone">
+                                    <label for="phoneNumber">Phone</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                        placeholder="Phone" value="{{ old('phoneNumber', $customer['phoneNumber']) }}">
+                                    @error('phoneNumber')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Fax</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Fax">
+                                    <label for="fax">Fax</label>
+                                    <input type="text" class="form-control" id="fax" name="fax"
+                                        placeholder="Fax" value="{{ old('fax', $customer['fax']) }}">
+                                    @error('fax')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <button type="submit" class="btn btn-info">Submit</button>

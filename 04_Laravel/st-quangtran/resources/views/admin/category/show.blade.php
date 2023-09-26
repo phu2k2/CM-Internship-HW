@@ -9,7 +9,7 @@
                         <div class="card-body" style="align-items: center">
                             <div class="row">
                                 <div class="col-9">
-                                    <h4 class="card-title">Management Customer</h4>
+                                    <h4 class="card-title">Categories Management Categories</h4>
                                 </div>
                                 <div class="col-3">
                                     <a class="btn btn-success" href="{{ URL::to('category/insert') }}"
@@ -23,19 +23,15 @@
                                         <th> ID </th>
                                         <th> Company ID </th>
                                         <th> Category Name </th>
-                                        <th> Created At </th>
-                                        <th> Update At </th>
                                         <th> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category as $item)
+                                    @foreach ($categories as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['category_id'] }}</td>
-                                            <td>{{ $item['category_name'] }}</td>
-                                            <td>{{ $item['created_at'] }}</td>
-                                            <td>{{ $item['updated_at'] }}</td>
+                                            <td>{{ $item['categoryId'] }}</td>
+                                            <td>{{ $item['categoryName'] }}</td>
                                             <td>
                                                 <a href="{{ URL::to('category/update/' . $item['id']) }}"
                                                     class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
@@ -55,11 +51,12 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['category_name'] }}"</b>!
+                                                                    <b>"{{ $item['categoryName'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <a {{-- <a href="{{ URL::to('delete/' . $item['id']) }}" --}} class="btn btn-danger">Yes</a>
+                                                                <a href="{{ URL::to('delete/' . $item['id']) }}"
+                                                                    class="btn btn-danger">Yes</a>
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close</button>
                                                             </div>

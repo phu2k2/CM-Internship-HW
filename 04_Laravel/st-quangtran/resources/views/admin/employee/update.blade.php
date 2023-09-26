@@ -7,21 +7,36 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{ URL::to('/store') }}">
+                            <form method="post" action="{{ URL::to('employee/update', ['id' => $employee['id']]) }}">
                                 @csrf
+                                @method('PUT')
                                 <div class="form-group">
-                                    <label for="transactionName">Employee ID</label>
-                                    <input type="text" class="form-control" placeholder="Employee ID">
+                                    <label for="employeeId">Employee ID</label>
+                                    <input type="text" class="form-control" id="employeeId" name="employeeId"
+                                        placeholder="Employee ID" value="{{ old('employeeId', $employee['employeeId']) }}">
+                                    @error('employeeId')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col">
-                                            <label for="transactionName">Last Name</label>
-                                            <input type="text" class="form-control" placeholder="Last name">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" name="lastName"
+                                                placeholder="Last Name"
+                                                value="{{ old('lastName', $employee['lastName']) }}">
+                                            @error('lastName')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col">
-                                            <label for="transactionName">First Name</label>
-                                            <input type="text" class="form-control" placeholder="First name">
+                                            <label for="firstName">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName"
+                                                placeholder="First Name"
+                                                value="{{ old('firstName', $employee['firstName']) }}">
+                                            @error('firstName')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -29,29 +44,46 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="transactionName">Birthday</label>
-                                            <input type="datetime-local" class="form-control">
+                                            <input type="date" class="form-control" id="birthday" name="birthday"
+                                                value="{{ old('birthday', $employee['birthday']) }}">
+                                            @error('birthday')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col">
                                             <label for="transactionName">Start Date</label>
-                                            <input type="datetime-local" class="form-control">
+                                            <input type="date" class="form-control" id="startDate" name="startDate"
+                                                value="{{ old('startDate', $employee['startDate']) }}">
+                                            @error('startDate')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col">
-                                            <label for="transactionName">Base Salary</label>
-                                            <input type="number" class="form-control" placeholder="Base Salary">
+                                            <label for="baseSalary">Base Salary</label>
+                                            <input type="number" class="form-control" id="baseSalary" name="baseSalary"
+                                                placeholder="Base Salary"
+                                                value="{{ old('baseSalary', $employee['baseSalary']) }}">
+                                            @error('baseSalary')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col">
                                             <label for="transactionName">Allowance</label>
-                                            <input type="number" class="form-control" placeholder="Allowance">
+                                            <input type="number" class="form-control" id="allowance" name="allowance"
+                                                placeholder="Allowance"
+                                                value="{{ old('allowance', $employee['allowance']) }}">
+                                            @error('allowance')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
-
                         </div>
                     </div>
                 </div>

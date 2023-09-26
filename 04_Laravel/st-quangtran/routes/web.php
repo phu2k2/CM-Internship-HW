@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', function () {
-    return view("admin.customer.show");
+    return view("admin.pages.dashboard");
 });
 
 //customer
@@ -30,16 +30,20 @@ Route::get("customer", [CustomerController::class, "index"]);
 
 Route::get("/customer/insert", [CustomerController::class, "create"]);
 
-Route::post('/store', [CustomerController::class, 'store']);
+Route::post("customer/store", [CustomerController::class, 'store']);
 
-Route::get("/customer/update/{id}", [CustomerController::class, "edit"]);
+Route::put("/customer/update/{id}", [CustomerController::class, "update"]);
+
+Route::get("customer/update/{id}", [CustomerController::class, "edit"]);
 
 //category
 Route::get("category", [CategoryController::class, "index"]);
 
 Route::get("category/insert", [CategoryController::class, "create"]);
 
-Route::post('/store', [CategoryController::class, 'store']);
+Route::post("category/store", [CategoryController::class, 'store']);
+
+Route::put("/category/update/{id}", [CategoryController::class, "update"]);
 
 Route::get("/category/update/{id}", [CategoryController::class, "edit"]);
 
@@ -48,7 +52,9 @@ Route::get("employee", [EmployeeController::class, "index"]);
 
 Route::get("employee/insert", [EmployeeController::class, "create"]);
 
-Route::post('/store', [EmployeeController::class, 'store']);
+Route::post("employee/store", [EmployeeController::class, 'store']);
+
+Route::put("/employee/update/{id}", [EmployeeController::class, "update"]);
 
 Route::get("employee/update/{id}", [EmployeeController::class, "edit"]);
 
@@ -57,6 +63,8 @@ Route::get("supplier", [SupplierController::class, "index"]);
 
 Route::get("supplier/insert", [SupplierController::class, "create"]);
 
-Route::post('/store', [SupplierController::class, 'store']);
+Route::post("supplier/store", [SupplierController::class, 'store']);
+
+Route::put("/supplier/update/{id}", [SupplierController::class, "update"]);
 
 Route::get("supplier/update/{id}", [SupplierController::class, "edit"]);
