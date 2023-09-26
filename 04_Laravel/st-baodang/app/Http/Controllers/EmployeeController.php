@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest\DeleteEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\StoreEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +17,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = DB::table('employees')->get();
+
         return view('sections.employee.index', compact('employees'));
     }
 
@@ -28,7 +32,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
         $isStored = DB::table('employees')->insert([
             'employee_id' => $request->input('employee_id'),
@@ -43,7 +47,7 @@ class EmployeeController extends Controller
         ]);
 
         if ($isStored) {
-            session()->flash('status', 'Đã thêm dữ liệu thành công');
+            session()->flash('success', 'Đã thêm dữ liệu thành công');
         }
 
         return redirect()->route('employee.index');
@@ -55,6 +59,7 @@ class EmployeeController extends Controller
     public function show(string $id)
     {
         $employee = DB::table('employees')->where('id', $id)->first();
+
         return view('sections.employee.show', compact('employee'));
     }
 
@@ -64,13 +69,14 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         $employee = DB::table('employees')->where('id', $id)->first();
+
         return view('sections.employee.edit', compact('employee'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         DB::table('employees')
             ->where('id', $id)
@@ -92,8 +98,13 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        //
+        $records = DB::table('employees')->delete($id);
+        if ($records) {
+            session()->flash('success', 'Đã xóa dữ liệu thành công');
+        }
+
+        return redirect()->route('employee.index');
     }
 }

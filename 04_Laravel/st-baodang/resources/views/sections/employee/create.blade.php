@@ -15,27 +15,57 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="employee_id">Employee ID</label>
-                    <input name="employee_id" type="text" class="form-control" id="employee_id"
+                    <input value="{{ old('employee_id') }}" name="employee_id" type="text" class="form-control"
+                           id="employee_id"
                            placeholder="ST97"/>
+                    @error('employee_id')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">Full Name</label>
                     <div class="input-group">
-                        <input name="first_name" placeholder="First Name" type="text" aria-label="First name"
+                        <input value="{{ old('first_name') }}" name="first_name" placeholder="First Name" type="text"
+                               aria-label="First name"
                                class="form-control">
-                        <input name="last_name" placeholder="Last Name" type="text" aria-label="Last name"
+                        <input value="{{ old('last_name') }}" name="last_name" placeholder="Last Name" type="text"
+                               aria-label="Last name"
                                class="form-control">
+                        @error('first_name')
+                        <div class="invalid-feedback" style="display:block;">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                        @error('last_name')
+                        <div class="invalid-feedback" style="display:block;">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="birthday" class="form-label">Birthday</label>
-                    <input name="birthday" class="form-control" type="datetime-local" value="2021-06-18T12:30:00"
+                    <input name="birthday" class="form-control" type="datetime-local"
+                           value="{{old('start_date', \Carbon\Carbon::now())}}"
                            id="birthday">
+                    @error('birthday')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="start_date" class="form-label">Start date</label>
-                    <input name="start_date" class="form-control" type="datetime-local" value="2021-06-18T12:30:00"
+                    <input name="start_date" class="form-control" type="datetime-local"
+                           value="{{old('start_date', \Carbon\Carbon::now())}}"
                            id="start_date">
+                    @error('start_date')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Address</label>
@@ -44,7 +74,12 @@
                         style="resize: none"
                         id="address"
                         class="form-control"
-                        placeholder="363 Nguyễn Hữu Thọ, Khuê Trung, Cẩm Lệ, Đà Nẵng"></textarea>
+                        placeholder="363 Nguyễn Hữu Thọ, Khuê Trung, Cẩm Lệ, Đà Nẵng">{{ old('address') }}</textarea>
+                    @error('address')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="phone">Phone No</label>
@@ -53,7 +88,14 @@
                         type="text"
                         id="phone"
                         class="form-control phone-mask"
-                        placeholder="0236 3626 989"/>
+                        placeholder="0236 3626 989"
+                        value="{{ old('phone') }}"
+                    />
+                    @error('phone')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="base_salary">Base salary</label>
@@ -63,7 +105,14 @@
                             type="number"
                             id="base_salary"
                             class="form-control"
-                            placeholder="4000000"/>
+                            placeholder="4000000"
+                            value="{{ old('base_salary') }}"
+                        />
+                        @error('base_salary')
+                        <div class="invalid-feedback" style="display:block;">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
 
@@ -75,7 +124,14 @@
                             type="number"
                             id="allowance"
                             class="form-control"
-                            placeholder="0"/>
+                            placeholder="0"
+                            value="{{ old('allowance', 0) }}"
+                        />
+                        @error('allowance')
+                        <div class="invalid-feedback" style="display:block;">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
 

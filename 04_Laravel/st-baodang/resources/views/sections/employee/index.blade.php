@@ -2,6 +2,19 @@
 
 @section('content')
 
+    @error('id')
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        {{ $message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @enderror
+    @if(Session::has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <h4 class="py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Employees</h4>
 
     <div class="card">
@@ -38,12 +51,41 @@
                                 <div class="dropdown-menu" style="">
                                     <a class="dropdown-item" href="{{ route('employee.edit', $employee->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" href="{{ route('employee.destroy', $employee->id) }}"><i
+                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                       data-bs-target="#modalCenter{{$employee->id}}"><i
                                             class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    <div class="mt-3">
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalCenter{{$employee->id}}" tabindex="-1" aria-hidden="true"
+                             style="display: none;">
+                            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalCenterTitle">Are you sure?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input style="display: none" name="id" value="{{ $employee->id }}">
+                                        <div class="modal-body mx-auto">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Yes</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                 </tbody>
             </table>

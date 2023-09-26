@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
+use App\Http\Requests\SupplierRequest\StoreSupplierRequest;
+use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +16,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = DB::table('suppliers')->get();
+
         return view('sections.supplier.index', compact('suppliers'));
     }
 
@@ -27,7 +31,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSupplierRequest $request)
     {
         $isStored = DB::table('suppliers')->insert([
             'company_id' => $request->input('company_id'),
@@ -38,9 +42,8 @@ class SupplierController extends Controller
             'phone' => $request->input('phone'),
             'fax' => $request->input('fax')
         ]);
-
         if ($isStored) {
-            session()->flash('status', 'Đã thêm dữ liệu thành công');
+            session()->flash('success', 'Đã thêm dữ liệu thành công');
         }
 
         return redirect()->route('supplier.index');
@@ -51,7 +54,10 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        $supplier = DB::table('suppliers')->where('id', $id)->first();
+        $supplier = DB::table('suppliers')
+            ->where('id', $id)
+            ->first();
+
         return view('sections.supplier.show', compact('supplier'));
     }
 
@@ -60,14 +66,17 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = DB::table('suppliers')->where('id', $id)->first();
+        $supplier = DB::table('suppliers')
+            ->where('id', $id)
+            ->first();
+
         return view('sections.supplier.edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
         DB::table('suppliers')
             ->where('id', $id)
@@ -80,14 +89,20 @@ class SupplierController extends Controller
                 'phone' => $request->input('phone'),
                 'fax' => $request->input('fax')
             ]);
+
         return redirect()->route('supplier.show', $id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        //
+        $records = DB::table('suppliers')->delete($id);
+        if ($records) {
+            session()->flash('success', 'Đã xóa dữ liệu thành công');
+        }
+
+        return redirect()->route('supplier.index');
     }
 }

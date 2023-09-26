@@ -16,19 +16,31 @@
                 @method('PUT')
                 <div class="mb-3">
                     <label for="cur_id" class="form-label"># {{ $category->id }}</label>
-
+                    <input style="display: none" name="id" value="{{ $category->id }}">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category_id">Category ID</label>
-                    <input value="{{ $category->category_id }}" name="category_id" type="text" class="form-control"
+                    <input value="{{ old('category_id', $category->category_id) }}" name="category_id" type="text"
+                           class="form-control"
                            id="category_id"
                            placeholder="MP"/>
+                    @error('category_id')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category_name">Category Name</label>
-                    <input value="{{ $category->category_name }}" name="category_name" type="text" class="form-control"
+                    <input value="{{ old('category_name', $category->category_name) }}" name="category_name" type="text"
+                           class="form-control"
                            id="category_name"
                            placeholder="Mỹ phẩm"/>
+                    @error('category_name')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary" type="button">Cancel</a>
