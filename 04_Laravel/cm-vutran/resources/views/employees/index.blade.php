@@ -12,29 +12,38 @@
             Add Employee
         </a>
     </div>
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>last_name</th>
+                    <th>first_name</th>
+                    <th>birthday</th>
+                    <th>start_date</th>
+                    <th>address</th>
+                    <th>phone date</th>
+                    <th>base_salary</th>
+                    <th>allowance</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
-                <tr>
+                <tr> 
                     <th>STT</th>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>last_name</th>
+                    <th>first_name</th>
+                    <th>birthday</th>
+                    <th>start_date</th>
+                    <th>address</th>
+                    <th>phone</th>
+                    <th>base_salary</th>
+                    <th>allowance</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -42,12 +51,14 @@
                 @foreach ($employees as $employee)  
                     <tr>
                         <td>{{ $loop->index+1 }}</td>
-                        <td>{{ $employee['name'] }}</td>
-                        <td>{{ $employee['position'] }}</td>
-                        <td>{{ $employee['office'] }}</td>
-                        <td>{{ $employee['age'] }}</td>
-                        <td>{{ $employee['startDate'] }}</td>
-                        <td>{{ $employee['salary'] }}</td>
+                        <td>{{ $employee['last_name'] }}</td>
+                        <td>{{ $employee['first_name'] }}</td>
+                        <td>{{ $employee['birthday'] }}</td>
+                        <td>{{ $employee['start_date'] }}</td>
+                        <td>{{ $employee['address'] }}</td>
+                        <td>{{ $employee['phone'] }}</td>
+                        <td>{{ $employee['base_salary'] }}</td>
+                        <td>{{ $employee['allowance'] }}</td>
                         <td>
                             <div class="d-flex">
                                 <a class="btn btn-success mx-3" href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">Edit</a>

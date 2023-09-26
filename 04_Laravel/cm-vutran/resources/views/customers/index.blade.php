@@ -21,8 +21,7 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>company_id</th>
+                    <th>ID</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -33,8 +32,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th>STT</th>
-                    <th>company_name</th>
+                    <th>ID</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -47,8 +45,7 @@
                 
                 @foreach ($customers as $customer)
                 <tr>
-                    <td>{{ $loop->index+1 }}</td>
-                    <td>{{ $customer['companyId'] }}</td>
+                    <td>{{ $customer['id'] }}</td>
                     <td>{{ $customer['transactionName'] }}</td>
                     <td>{{ $customer['address'] }}</td>
                     <td>{{ $customer['email'] }}</td>
@@ -76,4 +73,3 @@
 </div>
 
 @endsection
-    

@@ -8,7 +8,15 @@
         @csrf
         <div class="p-5" style="width: 60%:">
           <h2 class="text-center">Add customer</h2>
-          
+
+          <div class="mb-3">
+            <label for="inputName" class="form-label">Company Name</label>
+            <input value="{{ old('company_name') }}" type="text" class="form-control" id="inputName" name="company_name">
+            @error('company_name')
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+
             <div class="mb-3">
               <label for="inputName" class="form-label">Transaction Name</label>
               <input value="{{ old('transaction_name') }}" type="text" class="form-control" id="inputName" name="transaction_name">
