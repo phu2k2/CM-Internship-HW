@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
-@section('PageName')
+@section('pageName')
    <a href="#">Add Customer</a>
 @endsection
 
-@section('Title')
+@section('title')
    <a href="#">Add Customer</a>
 @endsection
 
@@ -12,10 +12,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4" method="POST" action="{{ route('customers.store') }}">
+            <form class="form-horizontal mt-4">
                 <div class="form-group">
                     <label>Company Name</label>
-                    <input type="text" class="form-control" id="company_name" name="company_name">
+                    <input type="text" class="form-control" value="">
                 </div>
                 <div class="form-group">
                     <label>Transaction Name</label>

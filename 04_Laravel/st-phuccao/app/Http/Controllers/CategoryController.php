@@ -29,7 +29,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('admin.category.index', ['data' => $this->categoriesData]);
+        return view('admin.category.index', ['categories' => $this->categoriesData]);
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.add');
+        return view('admin.category.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string $id)
     {
         //
     }
@@ -72,7 +72,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, string $id)
     {
         
     }
@@ -80,14 +80,13 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         foreach ($this->categoriesData as $key => $value) {
-            if ($value['category_id'] == $id) {
+            if ($value['category_id'] === $id) {
                 unset($this->categoriesData[$key]);
             }
         }
-        $data = $this->categoriesData;
-        return view('admin.category.index', compact('data'));
+        return redirect()->route('categories.index');
     }
 }

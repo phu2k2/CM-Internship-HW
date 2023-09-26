@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
-@section('PageName')
+@section('pageName')
    <a href="#">Add Employee</a>
 @endsection
 
-@section('Title')
+@section('title')
    <a href="#">Add Employee</a>
 @endsection
 

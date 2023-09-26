@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-
     private $companyData = [
         [
             'company_id' => 'C001',
@@ -105,7 +104,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('admin.supplier.index', ['data' => $this->companyData]);
+        return view('admin.supplier.index', ['suppliers' => $this->companyData]);
     }
 
     /**
@@ -113,7 +112,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.supplier.add');
+        return view('admin.supplier.create');
     }
 
     /**

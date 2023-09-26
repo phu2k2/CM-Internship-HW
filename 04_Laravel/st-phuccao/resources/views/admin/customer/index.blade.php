@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
-@section('PageName')
+@section('pageName')
    <a href="#">Customers</a>
 @endsection
 
-@section('Title')
+@section('title')
    <a href="#">Customer</a>
 @endsection
 
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($data as $item)
+                @foreach ($customers as $item)
                     <tr>
                         <th scope="row">{{$loop->index}}</th>
                         <td>{{ $item['customer_id'] }}</td>

@@ -64,7 +64,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">@yield('PageName','Home Page')</h4>
+                        <h4 class="page-title">@yield('pageName','Home Page')</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -74,7 +74,7 @@
                                         <a href="#">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        @yield('Title','')  
+                                        @yield('title','')  
                                     </li>
                                 </ol>
                             </nav>

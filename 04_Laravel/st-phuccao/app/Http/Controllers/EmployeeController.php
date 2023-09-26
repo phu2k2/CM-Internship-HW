@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-
     private $employeeData = [
         [
             'employee_id' => 'E001',
@@ -70,7 +69,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('admin.employee.index', ['data' => $this->employeeData]);
+        return view('admin.employee.index', ['employees' => $this->employeeData]);
     }
 
     /**
@@ -78,7 +77,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('admin.employee.add');
+        return view('admin.employee.create');
     }
 
     /**

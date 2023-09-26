@@ -37,7 +37,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('admin.customer.index', ['data' => $this->customerData]);
+        return view('admin.customer.index', ['customers' => $this->customerData]);
     }
 
     /**
@@ -45,7 +45,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('admin.customer.add');
+        return view('admin.customer.create');
     }
 
     /**
