@@ -33,6 +33,7 @@ class CategoryController extends Controller
             'category_name' => 'Dụng cụ học tập',
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */

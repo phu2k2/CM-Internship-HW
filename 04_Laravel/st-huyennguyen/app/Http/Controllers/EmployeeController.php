@@ -116,6 +116,7 @@ class EmployeeController extends Controller
             'allowance' => 500000
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */

@@ -68,6 +68,7 @@ class SupplierController extends Controller
             'email' => 'golden@vietnam.com'
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
