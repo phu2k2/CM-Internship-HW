@@ -64,6 +64,30 @@
       </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteSupplierModal" tabindex="-1" aria-labelledby="deleteSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteSupplierModalLabel">Bạn có chắc là muốn xóa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    Hành động này không thể hoàn tác !!!
+                </div>
+                <form method="post" id="deleteSupplierForm">
+                    @csrf
+                    @method("DELETE")
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" form="deleteSupplierForm" class="btn btn-danger">Vẫn xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -128,7 +152,11 @@
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('suppliers.edit', ['supplier'=>$supplier->id]) }}" class="btn btn-success">Edit</a>
-                                        <button class="btn btn-danger">Xóa</button>
+                                        <button class="btn btn-danger" onclick="(function() {
+                                            var deleteSupplierModal = new bootstrap.Modal(document.getElementById('deleteSupplierModal'), {});
+                                            deleteSupplierModal.show();
+                                            document.getElementById('deleteSupplierForm').action = '{{route('suppliers.destroy' , ['supplier' => $supplier->id])}}';
+                                        })();">Xóa</button>
                                     </td>
                                 </tr>  
                                 @endforeach

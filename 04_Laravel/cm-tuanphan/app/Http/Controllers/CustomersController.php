@@ -36,4 +36,9 @@ class CustomersController extends Controller
     {
         dd($res->all());
     }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Customer With ID ' . $id . ' Successfully');
+    }
 }

@@ -36,6 +36,21 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
+
+    {{-- Toast Notification HTML --}}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToastNotification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Thông báo</strong>
+                <small>Ngay bây giờ</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastNotificationMessage">
+                
+            </div>
+        </div>
+    </div>
+
     @yield('modal')
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
     @include('admin.partials.sidebar')
@@ -152,6 +167,21 @@
     <script>
         @yield('modalTrigger')
     </script>
-</body>
 
+    <!-- Toast Notification -->
+    <script>
+        const toastNotification = document.getElementById('liveToastNotification')
+        const toast = new bootstrap.Toast(toastNotification)
+        function notify(msg){
+            document.getElementById('toastNotificationMessage').innerHTML = msg;
+            toast.show();
+        }
+    </script>
+
+    <script>
+        @if(session('success'))
+            notify('{{ session('success') }}');
+        @endif
+    </script>
+</body>
 </html>

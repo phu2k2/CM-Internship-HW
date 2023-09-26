@@ -36,4 +36,9 @@ class CategoriesController extends Controller
     {
         dd($res->all());
     }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Category With ID ' . $id . ' Successfully');
+    }
 }

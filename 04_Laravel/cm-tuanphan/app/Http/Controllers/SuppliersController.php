@@ -36,4 +36,9 @@ class SuppliersController extends Controller
     {
         dd($res->all());
     }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Supplier With ID ' . $id . ' Successfully');
+    }
 }

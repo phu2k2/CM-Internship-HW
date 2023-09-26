@@ -36,4 +36,9 @@ class EmployeesController extends Controller
     {
         dd($res->all());
     }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Employee With ID ' . $id . ' Successfully');
+    }
 }
