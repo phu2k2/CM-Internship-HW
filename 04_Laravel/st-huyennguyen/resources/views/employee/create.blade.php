@@ -9,41 +9,74 @@
         @csrf
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Employee ID</label>
-            <input name="employee_id" class="form-control" type="text" placeholder="Enter employee ID">
+            @error('employee_id')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="employee_id" class="form-control" type="text" value="{{ old('employee_id') }}"
+                placeholder="Enter employee ID">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Last Name</label>
-            <input name="last_name" class="form-control" type="text" placeholder="Enter last name">
+            @error('last_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="last_name" class="form-control" type="text" value="{{ old('last_name') }}"
+                placeholder="Enter last name">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">First Name</label>
-            <input name="first_name" class="form-control" type="text" placeholder="Enter first name">
+            @error('first_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="first_name" class="form-control" type="text" value="{{ old('first_name') }}"
+                placeholder="Enter first name">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Birthday</label>
+            @error('birthday')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
             <input name="birthday" class="form-control" data-provide="datepicker" id="datepicker" type="text"
-                placeholder="Enter birthday">
+                value="{{ old('birthday') }}" placeholder="Enter birthday">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Start Date</label>
+            @error('start_date')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
             <input name="start_date" class="form-control" data-provide="datepicker" id="startpicker" type="text"
-                placeholder="Enter start work date">
+                value="{{ old('start_date') }}" placeholder="Enter start work date">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Address</label>
-            <input name="address" class="form-control" type="text" placeholder="Enter address">
+            @error('address')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="address" class="form-control" type="text" value="{{ old('address') }}"
+                placeholder="Enter address">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Phone</label>
-            <input name="phone" class="form-control" type="text" placeholder="Enter phone">
+            @error('phone')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="phone" class="form-control" type="text"value="{{ old('phone') }}" placeholder="Enter phone">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Base Salary</label>
-            <input name="base_salary" class="form-control" type="number" placeholder="Enter base salary">
+            @error('base_salary')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="base_salary" class="form-control" type="number" value="{{ old('base_salary') }}"
+                placeholder="Enter base salary">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Allowance</label>
-            <input name="allowance" class="form-control" type="number" placeholder="Enter allowance">
+            @error('allowance')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="allowance" class="form-control" type="number" value="{{ old('allowance') }}"
+                placeholder="Enter allowance">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

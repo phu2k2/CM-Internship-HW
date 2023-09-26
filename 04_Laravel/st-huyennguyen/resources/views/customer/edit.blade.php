@@ -8,29 +8,48 @@
     <form action="{{ route('customers.update', ['customer' => $customer['id']]) }}" method="POST">
         @method('PUT')
         @csrf
+        <input type="hidden" name="id" value="{{ $customer['id'] }}">
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Company Name</label>
-            <input name="company_name" class="form-control" type="text" value="{{ $customer['company_name'] }}">
+            @error('company_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="company_name" class="form-control" type="text" value="{{ old('company_id', $customer['company_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Transaction Name</label>
-            <input name="transaction_name" class="form-control" type="text" value="{{ $customer['transaction_name'] }}">
+            @error('transaction_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="transaction_name" class="form-control" type="text" value="{{ old('transaction_name', $customer['transaction_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Address</label>
-            <input name="address" class="form-control" type="text" value="{{ $customer['address'] }}">
+            @error('address')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="address" class="form-control" type="text" value="{{ old('address', $customer['address']) }}">
         </div>
         <div class="form-group">
             <label for="example-email-input" class="form-control-label">Email</label>
-            <input name="email" class="form-control" type="email" value="{{ $customer['email'] }}">
+            @error('email')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="email" class="form-control" type="email" value="{{ old('email', $customer['email']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Phone</label>
-            <input name="phone" class="form-control" type="text" value="{{ $customer['phone'] }}">
+            @error('phone')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="phone" class="form-control" type="text" value="{{ old('phone', $customer['phone']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Fax</label>
-            <input name="fax" class="form-control" type="text" value="{{ $customer['fax'] }}">
+            @error('fax')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="fax" class="form-control" type="text" value="{{ old('fax', $customer['fax']) }}">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

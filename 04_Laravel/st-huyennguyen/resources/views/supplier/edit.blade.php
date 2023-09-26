@@ -8,33 +8,58 @@
     <form action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}" method="POST">
         @method('PUT')
         @csrf
+        <input type="hidden" name="id" value="{{ $supplier['id'] }}">
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Company ID</label>
-            <input name="company_id" class="form-control" type="text" value="{{ $supplier['company_id'] }}">
+            @error('company_id')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="company_id" class="form-control" type="text"
+                value="{{ old('company_id', $supplier['company_id']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Company Name</label>
-            <input name="company_name" class="form-control" type="text" value="{{ $supplier['company_name'] }}">
+            @error('company_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="company_name" class="form-control" type="text"
+                value="{{ old('company_name', $supplier['company_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Transaction Name</label>
-            <input name="transaction_name" class="form-control" type="text" value="{{ $supplier['transaction_name'] }}">
+            @error('transaction_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="transaction_name" class="form-control" type="text"
+                value="{{ old('transaction_name', $supplier['transaction_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Address</label>
-            <input name="address" class="form-control" type="text" value="{{ $supplier['address'] }}">
+            @error('address')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="address" class="form-control" type="text" value="{{ old('address', $supplier['address']) }}">
         </div>
         <div class="form-group">
             <label for="example-email-input" class="form-control-label">Email</label>
-            <input name="email" class="form-control" type="email" value="{{ $supplier['email'] }}">
+            @error('email')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="email" class="form-control" type="email" value="{{ old('email', $supplier['email']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Phone</label>
-            <input name="phone" class="form-control" type="text" value="{{ $supplier['phone'] }}">
+            @error('phone')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="phone" class="form-control" type="text" value="{{ old('phone', $supplier['phone']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Fax</label>
-            <input name="fax" class="form-control" type="text" value="{{ $supplier['fax'] }}">
+            @error('fax')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="fax" class="form-control" type="text" value="{{ old('fax', $supplier['fax']) }}">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

@@ -8,13 +8,22 @@
     <form action="{{ route('categories.update', ['category' => $category['id']]) }}" method="POST">
         @method('PUT')
         @csrf
+        <input type="hidden" name="id" value="{{ $category['id'] }}">
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Category ID</label>
-            <input name="category_id" class="form-control" type="text" value="{{ $category['category_id'] }}">
+            @error('category_id')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="category_id" class="form-control" type="text"
+                value="{{ old('category_id', $category['category_id']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Category Name</label>
-            <input name="category_name" class="form-control" type="text" value="{{ $category['category_name'] }}">
+            @error('category_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="category_name" class="form-control" type="text"
+                value="{{ old('category_name', $category['category_name']) }}">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

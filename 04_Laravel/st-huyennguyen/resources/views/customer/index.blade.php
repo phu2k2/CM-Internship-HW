@@ -98,6 +98,7 @@
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf
+                                                <input type="hidden" name="id" value="{{ $customer['id'] }}">
                                                 <button type="button" class="btn bg-gradient-danger btn-block mb-3"
                                                     onclick="destroyCategory({{ $customer['id'] }})">
                                                     <i class="far fa-trash-alt ms-auto"></i>

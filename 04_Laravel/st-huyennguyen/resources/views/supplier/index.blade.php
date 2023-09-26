@@ -99,12 +99,13 @@
                                                 <i class="fas fa-pencil-alt ms-auto cursor-pointer"></i>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <form id="destroy{{ $supplier['id'] }}"
                                                 action="{{ route('suppliers.destroy', ['supplier' => $supplier['id']]) }}"
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf
+                                                <input type="hidden" name="id" value="{{ $supplier['id'] }}">
                                                 <button type="button" class="btn bg-gradient-danger btn-block mb-3"
                                                     onclick="destroyCategory({{ $supplier['id'] }})">
                                                     <i class="far fa-trash-alt ms-auto"></i>
