@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\employee\StoreRequest;
+use App\Http\Requests\employee\UpdateRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -83,7 +85,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -112,7 +114,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         //
     }

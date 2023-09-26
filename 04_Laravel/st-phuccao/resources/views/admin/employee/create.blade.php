@@ -12,43 +12,67 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4">
+            <form class="form-horizontal mt-4" method="POST" action="{{ route('employees.store') }}">
+                @csrf 
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" value="">
+                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                    @error('last_name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control"  value="">
+                    <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+                    @error('first_name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Birthday</label>
-                    <input type="text" class="form-control"  value="">
+                    <input type="text" class="form-control" name="birthday" value="{{ old('birthday') }}">
+                    @error('birthday')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Start Date</label>
-                    <input type="text" class="form-control"  value="">
+                    <label for="start_date">Start Date</label>
+                    <input type="text" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date') }}">
+                    @error('start_date')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control"  value="">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+                    @error('address')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="form-control"  value="">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}">
+                    @error('phone')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Base Salary</label>
-                    <input type="text" class="form-control"  value="">
+                    <label for="base_salary">Base Salary</label>
+                    <input type="text" class="form-control @error('base_salary') is-invalid @enderror" id="base_salary" name="base_salary" value="{{ old('base_salary') }}">
+                    @error('base_salary')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Allowance</label>
-                    <input type="text" class="form-control"  value="">
+                    <label for="allowance">Allowance</label>
+                    <input type="text" class="form-control @error('allowance') is-invalid @enderror" id="allowance" name="allowance" value="{{ old('allowance') }}">
+                    @error('allowance')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-                                
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <button class="btn btn-success text-white">Add</button>
+                        <button class="btn btn-success text-white" type="submit">Add</button>
                     </div>
                 </div>               
             </form>
