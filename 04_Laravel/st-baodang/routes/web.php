@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\CustomerController;
+use \App\Http\Controllers\SupplierController;
+use \App\Http\Controllers\CategoryController;
+use \App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('', function () {
+    return view('index');
+})->name('index');
+Route::resource('customer', CustomerController::class);
+Route::resource('supplier', SupplierController::class);
+Route::resource('category', CategoryController::class);
+Route::resource('employee', EmployeeController::class);
