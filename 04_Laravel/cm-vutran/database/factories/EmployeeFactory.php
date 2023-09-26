@@ -25,7 +25,7 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName,
             'birthday' => $this->faker->dateTimeBetween('-40 years', '-18 years')->format('Y-m-d H:i:s'),
             'start_date' => $this->faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d H:i:s'),
-            'address' => Str::limit($this->faker->address, 40),
+            'address' => $this->faker->streetAddress,
             'phone' => Str::limit($this->faker->phoneNumber, 10),
             'base_salary' => $this->faker->randomFloat(2, 30000, 90000),
             'allowance' => $this->faker->randomFloat(2, 1000, 5000),
