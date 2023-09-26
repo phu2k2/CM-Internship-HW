@@ -29,7 +29,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::get();
         $editingEmployee = Employee::findOrFail($employeeID);
-        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee"));
+        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee", "employeeID"));
     }
 
     public function update(EmployeeRequest $res, string $id)

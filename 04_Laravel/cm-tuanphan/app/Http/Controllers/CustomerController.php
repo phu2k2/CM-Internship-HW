@@ -29,7 +29,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::get();
         $editingCustomer = Customer::findOrFail($customerID);
-        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer"));
+        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer", "customerID"));
     }
 
     public function update(CustomerRequest $res, string $id)

@@ -29,7 +29,7 @@ class CategoryController extends Controller
     {
         $categories = Category::get();
         $editingCategory = Category::findOrFail($categoryID);
-        return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
+        return view("admin.manages.categories.edit" , compact("categories", "editingCategory", "categoryID"));
     }
 
     public function update(CategoryRequest $res, string $id)

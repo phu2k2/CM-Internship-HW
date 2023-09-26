@@ -29,7 +29,7 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::get();
         $editingSupplier = Supplier::findOrFail($supplierID);
-        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier"));
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier", "supplierID"));
     }
 
     public function update(SupplierRequest $res, string $id)
