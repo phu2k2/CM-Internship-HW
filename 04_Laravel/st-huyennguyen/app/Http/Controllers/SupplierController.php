@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SupplierRequest\CreateSupplierRequest;
 use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
 use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -76,7 +77,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->data;
+        $suppliers = Supplier::paginate(15);
         return view('supplier.index', compact('suppliers'));
     }
 

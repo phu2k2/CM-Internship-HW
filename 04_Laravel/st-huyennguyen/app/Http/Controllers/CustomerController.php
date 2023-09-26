@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest\CreateCustomerRequest;
 use App\Http\Requests\CustomerRequest\DeleteCustomerRequest;
 use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -73,7 +74,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = $this->data;
+        $customers = Customer::paginate(15);
         return view('customer.index', compact('customers'));
     }
 

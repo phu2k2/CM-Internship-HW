@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeeRequest\CreateEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -124,7 +125,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = $this->data;
+        $employees = Employee::paginate(15);
         return view('employee.index', compact('employees'));
     }
 
