@@ -4,7 +4,7 @@
 
 @section('content')
         <!-- Modal Body -->
-    <form  action="{{ route('categories.store') }}" method="POST">
+        <form  action="{{ route('categories.store') }}" method="POST">
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Add Category</h2>
 

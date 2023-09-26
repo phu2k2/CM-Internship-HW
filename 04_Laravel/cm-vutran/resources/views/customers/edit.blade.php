@@ -3,14 +3,12 @@
 @section('title', 'Edit Customer')
 
 @section('content')
-        <!-- Modal Body -->
+
     <form  action="{{ route('customers.update', ['customer' => $customer['id'] ]) }}" method="POST">
+      @csrf
+      @method('PUT')
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Edit Customer</h2>
-
-          <!-- Employee Form -->
-            @csrf
-            @method('PUT')
             <div class="mb-3">
                 <label for="inputName" class="form-label">Transaction Name</label>
                 <input value="{{ old('transaction_name', $customer['transactionName']) }}" type="text" class="form-control" id="inputName" name="transaction_name">
@@ -60,5 +58,4 @@
         
     </form>
      
- 
 @endsection

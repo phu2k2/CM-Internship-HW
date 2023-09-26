@@ -3,12 +3,12 @@
 @section('title', 'Edit Employee')
 
 @section('content')
-            <!-- Modal Body -->
+
     <form id="employeeForm" action="{{ route('employees.update', ['employee' => $employee['id']]) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Edit employee</h2>
-            @method('PUT')
             <div class="mb-3">
             <label for="inputName" class="form-label">Name</label>
             <input value="{{ old('name', $employee['name']) }}" type="text" class="form-control" id="inputName" name="name">

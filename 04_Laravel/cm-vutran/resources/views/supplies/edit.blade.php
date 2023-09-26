@@ -3,14 +3,12 @@
 @section('title', 'Add Supply')
 
 @section('content')
-        <!-- Modal Body -->
+
     <form id="supplyForm" action="{{ route('supplies.update', ['supply' => $supply['id'] ]) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="p-5" style="width: 60%:">
             <h2 class="text-center">Edit Supply</h2>
-
-          <!-- supply Form -->
-            @method('PUT')
             <div class="mb-3">
               <label for="inputName" class="form-label">Company Name</label>
               <input value="{{ old('company_name', $supply['companyName'] ) }}" type="text" class="form-control" id="inputName" name="company_name">
