@@ -7,7 +7,7 @@ use App\Models\Customer;
 use View;
 use App\Http\Requests\CustomersRequest;
 
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     public function __construct()
     {

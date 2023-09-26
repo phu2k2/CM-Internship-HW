@@ -7,7 +7,7 @@ use App\Models\Category;
 use View;
 use App\Http\Requests\CategoriesRequest;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     public function __construct()
     {

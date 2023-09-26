@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use View;
 
-class SuppliersController extends Controller
+class SupplierController extends Controller
 {
     public function __construct()
     {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use View;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct()
     {
