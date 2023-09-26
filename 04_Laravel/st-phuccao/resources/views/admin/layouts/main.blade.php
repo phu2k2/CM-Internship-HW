@@ -43,18 +43,14 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        @section('header')
-            @include('admin.layout.header') <!-- Include your header content here -->
-        @show
+        @include('admin.layouts.header') <!-- Include your header content here -->
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        @section('sidebar')
-            @include('admin.layout.sidebar') <!-- Include your sidebar content here -->
-        @show
+        @include('admin.layouts.sidebar') <!-- Include your sidebar content here -->
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -131,9 +127,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            @section('footer')
-                @include('admin.layout.footer') <!-- Include your footer content here -->
-            @show
+            @include('admin.layouts.footer') <!-- Include your footer content here -->
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('admin.layouts.main')
 
 @section('PageName')
    <a href="#">Edit Category</a>

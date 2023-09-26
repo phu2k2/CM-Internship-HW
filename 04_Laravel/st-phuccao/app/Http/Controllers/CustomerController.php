@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    private $CustomerData = [
+    private $customerData = [
         [
             'customer_id' => 1,
             'company_name' => 'Company A',
@@ -37,8 +37,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data = $this->CustomerData;
-        return view('admin.customers_manage.index', compact('data'));
+        return view('admin.customer.index', ['data' => $this->customerData]);
     }
 
     /**
@@ -46,7 +45,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('admin.customers_manage.add_customer');
+        return view('admin.customer.add');
     }
 
     /**
@@ -60,7 +59,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         //
     }
@@ -68,21 +67,21 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        foreach ($this->CustomerData as $key => $value) {
+        foreach ($this->customerData as $key => $value) {
             if ($value['customer_id'] == $id) {
                 $customer = $value;
             }
         }
         
-        return view('admin.customers_manage.edit_customer', compact('customer'));
+        return view('admin.customer.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -90,7 +89,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

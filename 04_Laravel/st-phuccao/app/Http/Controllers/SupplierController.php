@@ -23,7 +23,7 @@ class SupplierController extends Controller
             'transaction_name' => 'Transaction 2',
             'address' => '456 Elm St, City B',
             'phone' => '555-555-5555',
-            'fax' => null, // Fax có thể null, vì đã được định nghĩa là nullable()
+            'fax' => null, // Fax can be null, because it is defined as nullable()
             'email' => 'companyb@example.com',
         ],
         [
@@ -105,8 +105,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $data = $this->companyData;
-        return view('admin.suppliers_manage.index', compact('data'));
+        return view('admin.supplier.index', ['data' => $this->companyData]);
     }
 
     /**
@@ -114,7 +113,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.suppliers_manage.add_supplier');
+        return view('admin.supplier.add');
     }
 
     /**
@@ -144,7 +143,7 @@ class SupplierController extends Controller
             }
         }
 
-        return view('admin.suppliers_manage.edit_supplier', compact('supplier'));
+        return view('admin.supplier.edit', compact('supplier'));
     }
 
     /**

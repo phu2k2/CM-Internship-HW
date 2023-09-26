@@ -1,33 +1,31 @@
-@extends('admin.index')
+@extends('admin.layouts.main')
 
 @section('PageName')
-   <a href="#">Customers</a>
+   <a href="#">Suppliers</a>
 @endsection
 
 @section('Title')
-   <a href="#">Customer</a>
+   <a href="#">Supplier</a>
 @endsection
 
 @section('content')
 <div class="col-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">List Customers</h4>
+            <h4 class="card-title">List Suppliers</h4>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Customer ID</th>
+                        <th scope="col">Company ID</th>
                         <th scope="col">Company Name</th>
                         <th scope="col">Transaction Name</th>
                         <th scope="col">Address</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Fax</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Updated At</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
 
@@ -37,17 +35,16 @@
                 @foreach ($data as $item)
                     <tr>
                         <th scope="row">{{$loop->index}}</th>
-                        <td>{{ $item['customer_id'] }}</td>
+                        <td>{{ $item['company_id'] }}</td>
                         <td>{{ $item['company_name'] }}</td>
                         <td>{{ $item['transaction_name'] }}</td>
                         <td>{{ $item['address'] }}</td>
-                        <td>{{ $item['email'] }}</td>
                         <td>{{ $item['phone'] }}</td>
                         <td>{{ $item['fax'] }}</td>
-                        <td>{{ $item['created_at'] }}</td>
-                        <td>{{ $item['updated_at'] }}</td>
+                        <td>{{ $item['email'] }}</td>
+
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('customers.edit', ['customer' => $item['customer_id']]) }}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('suppliers.edit', ['supplier' => $item['company_id']]) }}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-account-edit"></i>
                                 <span class="hide-menu">Edit</span>
@@ -61,14 +58,14 @@
                             </a>
                         </td>
                     </tr>
-                @endforeach
+                @endforeach 
                 </tbody>
             </table>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <button class="btn btn-success text-white"><a href="{{ route('customers.create') }}">Add Customer</a></button>
+                    <button class="btn btn-success text-white"> <a href="{{ route('suppliers.create') }}">Add Supplier</a> </button>
                 </div>
-            </div> 
+            </div>   
         </div>
     </div>
 </div>

@@ -29,8 +29,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $data = $this->categoriesData;
-        return view('admin.categories_manage.index', compact('data'));
+        return view('admin.category.index', ['data' => $this->categoriesData]);
     }
 
     /**
@@ -38,7 +37,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories_manage.add_category');
+        return view('admin.category.add');
     }
 
     /**
@@ -52,7 +51,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         //
     }
@@ -60,21 +59,20 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        $isEdit = true;
         foreach ($this->categoriesData as $key => $value) {
             if ($value['category_id'] == $id) {
                 $category = $value;
             }
         }
-        return view('admin.categories_manage.edit_category', compact('category'));
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
         
     }
@@ -82,7 +80,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         foreach ($this->categoriesData as $key => $value) {
             if ($value['category_id'] == $id) {
@@ -90,6 +88,6 @@ class CategoryController extends Controller
             }
         }
         $data = $this->categoriesData;
-        return view('admin.categories_manage.index', compact('data'));
+        return view('admin.category.index', compact('data'));
     }
 }

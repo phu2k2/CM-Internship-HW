@@ -70,8 +70,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $data = $this->employeeData;
-        return view('admin.employees_manage.index', compact('data'));
+        return view('admin.employee.index', ['data' => $this->employeeData]);
     }
 
     /**
@@ -79,7 +78,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('admin.employees_manage.add_employee');
+        return view('admin.employee.add');
     }
 
     /**
@@ -108,7 +107,7 @@ class EmployeeController extends Controller
                 $employee = $value;
             }
         }
-        return view('admin.employees_manage.edit_employee', compact('employee'));
+        return view('admin.employee.edit', compact('employee'));
     }
 
     /**
