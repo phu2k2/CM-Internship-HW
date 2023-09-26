@@ -7,7 +7,7 @@ use App\Models\Customer;
 use View;
 use App\Http\Requests\CustomerRequest;
 
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     public function __construct()
     {
@@ -29,7 +29,7 @@ class CustomersController extends Controller
     {
         $customers = Customer::get();
         $editingCustomer = Customer::findOrFail($customerID);
-        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer" , "customerID"));
+        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer"));
     }
 
     public function update(CustomerRequest $res, string $id)

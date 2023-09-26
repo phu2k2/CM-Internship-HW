@@ -7,7 +7,7 @@ use App\Models\Category;
 use View;
 use App\Http\Requests\CategoryRequest;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     public function __construct()
     {
@@ -29,7 +29,7 @@ class CategoriesController extends Controller
     {
         $categories = Category::get();
         $editingCategory = Category::findOrFail($categoryID);
-        return view("admin.manages.categories.edit" , compact("categories", "editingCategory", "categoryID"));
+        return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
     }
 
     public function update(CategoryRequest $res, string $id)

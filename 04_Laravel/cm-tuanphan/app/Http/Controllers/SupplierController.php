@@ -7,7 +7,7 @@ use App\Models\Supplier;
 use View;
 use App\Http\Requests\SupplierRequest;
 
-class SuppliersController extends Controller
+class SupplierController extends Controller
 {
     public function __construct()
     {
@@ -29,7 +29,7 @@ class SuppliersController extends Controller
     {
         $suppliers = Supplier::get();
         $editingSupplier = Supplier::findOrFail($supplierID);
-        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier" , "supplierID"));
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier"));
     }
 
     public function update(SupplierRequest $res, string $id)

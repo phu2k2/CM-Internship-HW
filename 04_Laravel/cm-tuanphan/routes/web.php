@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\CustomersController as customers;
-use App\Http\Controllers\SuppliersController as suppliers;
-use App\Http\Controllers\CategoriesController as categories;
-use App\Http\Controllers\EmployeesController as employees;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +18,17 @@ use App\Http\Controllers\EmployeesController as employees;
 |
 */
 
+Route::get('/' , function() {
+    return "Thís is homepage";
+})->name("index");
+
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view("admin.index");
+        return redirect()->route("employees.index");
     });
 
-    Route::resource('employees', employees::class)->name('*', 'employees');
-    Route::resource('categories' , categories::class)->name('*', 'categories');
-    Route::resource('suppliers' , suppliers::class)->name('*', 'suppliers');
-    Route::resource('customers' , customers::class)->name('*', 'customers');
+    Route::resource('employees', EmployeeController::class)->name('*', 'employees');
+    Route::resource('categories' , CategoryController::class)->name('*', 'categories');
+    Route::resource('suppliers' , SupplierController::class)->name('*', 'suppliers');
+    Route::resource('customers' , CustomerController::class)->name('*', 'customers');
 });

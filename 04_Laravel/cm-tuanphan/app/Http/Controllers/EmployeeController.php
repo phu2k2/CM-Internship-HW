@@ -7,7 +7,7 @@ use App\Models\Employee;
 use View;
 use App\Http\Requests\EmployeeRequest;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct()
     {
@@ -29,7 +29,7 @@ class EmployeesController extends Controller
     {
         $employees = Employee::get();
         $editingEmployee = Employee::findOrFail($employeeID);
-        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee", "employeeID"));
+        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee"));
     }
 
     public function update(EmployeeRequest $res, string $id)

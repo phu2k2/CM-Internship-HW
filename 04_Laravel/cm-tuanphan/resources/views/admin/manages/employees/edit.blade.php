@@ -14,7 +14,7 @@
             <form method="post" action="{{ route('employees.update' , ['employee' => $employeeID ]) }}" id="addEmployeeForm">
                 @csrf
                 @method("PUT")
-                <label>Tên công ty</label>
+                <label>Tên nhân viên</label>
                 <input class="form-control" value="{{old('last_name') ? old('last_name') : $editingEmployee->last_name}}" placeholder="Họ" name="last_name"/>
                 @error('last_name')
                 <div class="invalid-feedback">

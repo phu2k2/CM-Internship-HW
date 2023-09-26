@@ -13,7 +13,7 @@
             @endif
             <form method="POST" action="{{ route('employees.store') }}" id="addEmployeeForm">
                 @csrf
-                <label>Tên công ty</label>
+                <label>Tên nhân viên</label>
                 <input class="form-control @error('last_name') is-invalid @enderror" placeholder="Họ" name="last_name"/>
                 @error('last_name')
                 <div class="invalid-feedback">
