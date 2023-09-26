@@ -12,19 +12,15 @@
             @csrf
             <div class="mb-3">
               <label for="inputName" class="form-label">Category Name</label>
-              <input value="{{ old('category_name') }}" type="text" class="form-control" id="inputName" name="category_name">
-              @error('category_name')
-                    <div class="text-danger">{{ $message }}</div>
-              @enderror
+              <input type="text" class="form-control" id="inputName" name="category_name">
             </div>
         </div>
         
-        <!-- Modal Footer -->
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Add Category</button>
         </div>
         
-    </form>
+        </form>
      
 @endsection

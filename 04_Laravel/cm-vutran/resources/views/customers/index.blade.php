@@ -3,6 +3,7 @@
 @section('title', 'Customers Management')
 
 @section('content')
+
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -74,53 +75,5 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Add Record</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="transaction_name" class="form-label">Transaction Name:</label>
-                        <input type="text" class="form-control" id="transaction_name" name="transaction_name">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address:</label>
-                        <input type="text" class="form-control" id="address" name="address">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="phone_number" class="form-label">Phone Number:</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fax" class="form-label">Fax:</label>
-                        <input type="text" class="form-control" id="fax" name="fax">
-                    </div>
-                </form>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 @endsection
+    

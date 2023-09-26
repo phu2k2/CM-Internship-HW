@@ -10,18 +10,12 @@
             <h2 class="text-center">Add Supply</h2>
             <div class="mb-3">
               <label for="inputName" class="form-label">Company Name</label>
-              <input value="{{ old('company_name') }}" type="text" class="form-control" id="inputName" name="company_name">
-              @error('company_name')
-                    <div class="text-danger">{{ $message }}</div>
-              @enderror
+              <input type="text" class="form-control" id="inputName" name="company_name">
             </div>
 
             <div class="mb-3">
-              <label for="inputPosition" class="form-label">Transaction Name</label>
-              <input value="{{ old('transaction_name') }}" type="text" class="form-control" id="inputPosition" name="transaction_name">
-              @error('transaction_name')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
+              <label for="inputTransaction " class="form-label">Transaction Name</label>
+              <input type="text" class="form-control" id="inputTransaction " name="transaction_name">
             </div>
 
             <div class="mb-3">
@@ -33,26 +27,17 @@
             </div>
 
             <div class="mb-3">
-              <label for="inputAge" class="form-label">Email</label>
-              <input value="{{ old('email') }}" type="email" class="form-control" id="inputAge" name="email">
-              @error('email')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+              <label for="inputEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="inputEmail" name="email">
             </div>
 
             <div class="mb-3">
-              <label for="inputStartDate" class="form-label">Phone Number</label>
-              <input value="{{ old('phone_number') }}" type="text" class="form-control" id="inputStartDate" name="phone_number">
-              @error('phone_number')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+              <label for="inputPhone" class="form-label">Phone Number</label>
+              <input type="text" class="form-control" id="inputPhone" name="phone_number">
             </div>
             <div class="mb-3">
-              <label for="inputSalary" class="form-label">Fax</label>
-              <input value="{{ old('fax') }}" type="text" class="form-control" id="inputSalary" name="fax">
-              @error('fax')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <label for="inputFax" class="form-label">Fax</label>
+              <input type="text" class="form-control" id="inputFax" name="fax">
             </div>
         </div>
         
