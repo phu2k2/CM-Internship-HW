@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("layouts.auth");
+})->name('mainPage');
+Route::prefix('admin')->group(function () {
+    Route::resource('customers', CustomersController::class);
+    Route::resource('suppliers', SuppliersController::class);
+    Route::resource('categories', CategoriesController::class);
+    Route::resource('employees', EmployeeController::class);
+    Route::resource('user', UserController::class);
 });
