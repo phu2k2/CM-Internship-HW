@@ -41,11 +41,16 @@
                                 </a>
                             </td>
                             <td>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href=""
-                                    aria-expanded="false">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categories.destroy', ['category' => $item['category_id']]) }}"
+                                    aria-expanded="false"
+                                    onclick="event.preventDefault(); document.getElementById('delete-form-{{ $item['category_id'] }}').submit();">
                                     <i class="mdi mdi-account-remove"></i>
                                     <span class="hide-menu">Delete</span>
                                 </a>
+                                <form id="delete-form-{{ $item['category_id'] }}" action="{{ route('categories.destroy', ['category' => $item['category_id']]) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             </td>
                         </tr>
                     @endforeach

@@ -84,6 +84,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        foreach ($this->categoriesData as $key => $value) {
+            if ($value['category_id'] == $id) {
+                unset($this->categoriesData[$key]);
+            }
+        }
+        $data = $this->categoriesData;
+        return view('admin.categories_manage.index', compact('data'));
     }
 }
