@@ -15,15 +15,40 @@
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control" value="{{$editingCustomer->company_name}}" placeholder="Tên công ty" name="company_name"/>
+                <input class="form-control @error('company_name') is-invalid @enderror" value="{{ old('company_name') ? old('company_name') : $editingCustomer->company_name}}" placeholder="Tên công ty" name="company_name"/>
+                @error('company_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Tên giao dịch</label>
-                <input class="form-control" value="{{$editingCustomer->transaction_name}}" placeholder="Tên giao dịch" name="transaction_name"/>
+                <input class="form-control @error('transaction_name') is-invalid @enderror" value="{{ old('transaction_name') ? old('transaction_name') : $editingCustomer->transaction_name}}" placeholder="Tên giao dịch" name="transaction_name"/>
+                @error('transaction_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input class="form-control" value="{{$editingCustomer->address}}" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control @error('address') is-invalid @enderror" value="{{ old('address') ? old('address') : $editingCustomer->address}}" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" value="{{$editingCustomer->phone_number}}" placeholder="Số điện thoại" name="phone_number"/>
+                <input class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') ? old('phone_number') : $editingCustomer->phone_number}}" placeholder="Số điện thoại" name="phone_number"/>
+                @error('phone_number')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số fax</label>
-                <input class="form-control" value="{{$editingCustomer->fax}}" placeholder="Số fax" name="fax"/>
+                <input class="form-control @error('fax') is-invalid @enderror" value="{{ old('fax') ? old('fax') : $editingCustomer->fax}}" placeholder="Số fax" name="fax"/>
+                @error('fax')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">
@@ -46,15 +71,6 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Thêm khách hàng</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>

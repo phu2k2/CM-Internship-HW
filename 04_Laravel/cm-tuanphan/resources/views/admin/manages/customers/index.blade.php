@@ -14,15 +14,40 @@
             <form method="post" action="{{ route('customers.store') }}" id="addCustomerForm">
                 @csrf
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Tên công ty" name="company_name"/>
+                <input class="form-control @error('company_name') is-invalid @enderror" placeholder="Tên công ty" name="company_name"/>
+                @error('company_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Tên giao dịch</label>
-                <input class="form-control" placeholder="Tên giao dịch" name="transaction_name"/>
+                <input class="form-control @error('transaction_name') is-invalid @enderror" placeholder="Tên giao dịch" name="transaction_name"/>
+                @error('transaction_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input class="form-control" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone_number"/>
+                <input class="form-control @error('phone_number') is-invalid @enderror" placeholder="Số điện thoại" name="phone_number"/>
+                @error('phone_number')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số fax</label>
-                <input class="form-control" placeholder="Số fax" name="fax"/>
+                <input class="form-control @error('fax') is-invalid @enderror" placeholder="Số fax" name="fax"/>
+                @error('fax')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">
@@ -45,15 +70,6 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Thêm khách hàng</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>

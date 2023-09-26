@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use View;
-use App\Http\Requests\CustomersRequest;
+use App\Http\Requests\CustomerRequest;
 
 class CustomersController extends Controller
 {
@@ -20,7 +20,7 @@ class CustomersController extends Controller
         return view("admin.manages.customers.index" , compact("customers"));
     }
 
-    public function store(Request $res)
+    public function store(CustomerRequest $res)
     {
         dd($res->all());
     }
@@ -32,7 +32,7 @@ class CustomersController extends Controller
         return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer" , "customerID"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(CustomerRequest $res, string $id)
     {
         dd($res->all());
     }

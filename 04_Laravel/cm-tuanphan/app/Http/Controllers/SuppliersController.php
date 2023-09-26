@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use View;
+use App\Http\Requests\SupplierRequest;
 
 class SuppliersController extends Controller
 {
@@ -19,7 +20,7 @@ class SuppliersController extends Controller
         return view("admin.manages.suppliers.index" , compact("suppliers"));
     }
 
-    public function store(Request $res)
+    public function store(SupplierRequest $res)
     {
         dd($res->all());
     }
@@ -28,10 +29,10 @@ class SuppliersController extends Controller
     {
         $suppliers = Supplier::get();
         $editingSupplier = Supplier::findOrFail($supplierID);
-        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier" ,  "supplierID"));
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier" , "supplierID"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(SupplierRequest $res, string $id)
     {
         dd($res->all());
     }

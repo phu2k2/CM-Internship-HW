@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use View;
-use App\Http\Requests\CategoriesRequest;
+use App\Http\Requests\CategoryRequest;
 
 class CategoriesController extends Controller
 {
@@ -20,7 +20,7 @@ class CategoriesController extends Controller
         return view("admin.manages.categories.index" , compact("categories"));
     }
 
-    public function store(Request $res)
+    public function store(CategoryRequest $res)
     {
         dd($res->all());
     }
@@ -32,7 +32,7 @@ class CategoriesController extends Controller
         return view("admin.manages.categories.edit" , compact("categories", "editingCategory", "categoryID"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(CategoryRequest $res, string $id)
     {
         dd($res->all());
     }

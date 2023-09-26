@@ -27,7 +27,7 @@ class EmployeeRequest extends FormRequest
             'birthday' => 'required|date',
             'start_date' => 'required|date',
             'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:15', // You can adjust the max length as needed
+            'phone' => 'required|string|max:15',
             'base_salary' => 'required|numeric',
             'allowance' => 'required|numeric',
         ];
@@ -43,7 +43,7 @@ class EmployeeRequest extends FormRequest
             'start_date.required' => 'Vui lòng nhập Ngày bắt đầu làm việc.',
             'start_date.date' => 'Ngày bắt đầu làm việc phải là một ngày hợp lệ.',
             'address.required' => 'Vui lòng nhập Địa chỉ.',
-            'phone_number.required' => 'Vui lòng nhập Số điện thoại.',
+            'phone.required' => 'Vui lòng nhập Số điện thoại.',
             'base_salary.required' => 'Vui lòng nhập Lương cứng.',
             'base_salary.numeric' => 'Lương cứng phải là một số.',
             'allowance.required' => 'Vui lòng nhập Trợ cấp.',

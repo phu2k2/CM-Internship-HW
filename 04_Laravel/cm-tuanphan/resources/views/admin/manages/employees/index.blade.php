@@ -11,23 +11,64 @@
             @if ($errors->any())
             @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
             @endif
-            <form action="{{ route('employees.store') }}" id="addEmployeeForm">
+            <form method="POST" action="{{ route('employees.store') }}" id="addEmployeeForm">
+                @csrf
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Họ"/>
+                <input class="form-control @error('last_name') is-invalid @enderror" placeholder="Họ" name="last_name"/>
+                @error('last_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Họ</label>
-                <input class="form-control" placeholder="Tên"/>
+                <input class="form-control @error('first_name') is-invalid @enderror" placeholder="Tên" name="first_name"/>
+                @error('first_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Sinh nhật</label>
-                <input class="form-control" placeholder="Sinh nhật"/>
+                <input class="form-control @error('birthday') is-invalid @enderror" placeholder="Sinh nhật" name="birthday"/>
+                @error('birthday')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control" placeholder="Ngày bắt đầu làm việc"/>
+                <input type="date" class="form-control @error('start_date') is-invalid @enderror" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                @error('start_date')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input type="date" class="form-control" placeholder="Địa chỉ"/>
+                <input type="date" class="form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại"/>
+                <input class="form-control @error('phone') is-invalid @enderror" placeholder="Số điện thoại" name="phone"/>
+                @error('phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Lương cứng</label>
-                <input class="form-control" placeholder="Lương cứng"/>
+                <input class="form-control @error('base_salary') is-invalid @enderror" placeholder="Lương cứng" name="base_salary"/>
+                @error('base_salary')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Trợ cấp</label>
-                <input class="form-control" placeholder="Trợ cấp"/>
+                <input class="form-control @error('allowance') is-invalid @enderror" placeholder="Trợ cấp" name="allowance"/>
+                @error('allowance')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">

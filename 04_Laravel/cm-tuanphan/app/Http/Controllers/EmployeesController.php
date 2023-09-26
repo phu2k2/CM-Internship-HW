@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use View;
+use App\Http\Requests\EmployeeRequest;
 
 class EmployeesController extends Controller
 {
@@ -19,7 +20,7 @@ class EmployeesController extends Controller
         return view("admin.manages.employees.index" , compact("employees"));
     }
 
-    public function store(Request $res)
+    public function store(EmployeeRequest $res)
     {
         dd($res->all());
     }
@@ -31,7 +32,7 @@ class EmployeesController extends Controller
         return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee", "employeeID"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(EmployeeRequest $res, string $id)
     {
         dd($res->all());
     }

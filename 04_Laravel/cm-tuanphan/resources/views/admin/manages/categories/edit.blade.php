@@ -14,9 +14,19 @@
                 @csrf
                 @method("PUT")
                 <label>ID danh mục</label>
-                <input class="form-control" value="{{$editingCategory->category_id}}" placeholder="ID danh mục" name="category_id"/>
+                <input class="form-control @error('category_id') is-invalid @enderror" value="{{ old('category_id') ? old('category_id') : $editingCategory->category_id}}" placeholder="ID danh mục" name="category_id"/>
+                @error('category_id')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Tên danh mục</label>
-                <input class="form-control" value="{{$editingCategory->category_name}}" placeholder="Tên danh mục" name="category_name"/>
+                <input class="form-control @error('category_name') is-invalid @enderror" value="{{ old('category_name') ? old('category_name') : $editingCategory->category_name}}" placeholder="Tên danh mục" name="category_name"/>
+                @error('category_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">

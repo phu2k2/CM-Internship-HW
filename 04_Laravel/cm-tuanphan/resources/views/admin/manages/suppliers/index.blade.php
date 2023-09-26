@@ -11,19 +11,50 @@
             @if ($errors->any())
             @section('modalTrigger')document.querySelector('[data-bs-target="#addSupplierModal"]').click();@endsection
             @endif
-            <form action="{{ route('suppliers.store') }}" id="addSupplierForm">
+            <form method="POST" action="{{ route('suppliers.store') }}" id="addSupplierForm">
+                @csrf
                 <label>Tên công ty</label>
-                <input class="form-control" placeholder="Tên công ty" name="company_name"/>
+                <input class="form-control @error('company_name') is-invalid @enderror" placeholder="Tên công ty" name="company_name"/>
+                @error('company_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Tên giao dịch</label>
-                <input class="form-control" placeholder="Tên giao dịch" name="transaction_name"/>
+                <input class="form-control @error('transaction_name') is-invalid @enderror" placeholder="Tên giao dịch" name="transaction_name"/>
+                @error('transaction_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input class="form-control" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
+                <input class="form-control @error('phone') is-invalid @enderror" placeholder="Số điện thoại" name="phone"/>
+                @error('phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số fax</label>
-                <input class="form-control" placeholder="Số fax" name="fax">
+                <input class="form-control @error('fax') is-invalid @enderror" placeholder="Số fax" name="fax">
+                @error('fax')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ email</label>
-                <input class="form-control" placeholder="Địa chỉ email" name="email" />
+                <input class="form-control @error('email') is-invalid @enderror" placeholder="Địa chỉ email" name="email" />
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">

@@ -15,21 +15,61 @@
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control" value="{{$editingEmployee->last_name}}" placeholder="Họ" name="last_name"/>
+                <input class="form-control" value="{{old('last_name') ? old('last_name') : $editingEmployee->last_name}}" placeholder="Họ" name="last_name"/>
+                @error('last_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Họ</label>
-                <input class="form-control" value="{{$editingEmployee->first_name}}" placeholder="Tên" name="first_name"/>
+                <input class="form-control" value="{{old('first_name') ? old('first_name') : $editingEmployee->first_name}}" placeholder="Tên" name="first_name"/>
+                @error('first_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Sinh nhật</label>
-                <input type="date" class="form-control" value="{{$editingEmployee->birthday}}" placeholder="Sinh nhật" name="birthday"/>
+                <input type="date" class="form-control" value="{{ old('birthday') ? old('birthday') : $editingEmployee->birthday}}" placeholder="Sinh nhật" name="birthday"/>
+                @error('birthday')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control" value="{{$editingEmployee->start_date}}" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                <input type="date" class="form-control" value="{{ old('start_date') ? old('start_date') : $editingEmployee->start_date}}" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                @error('start_date')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input class="form-control" value="{{$editingEmployee->address}}" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control" value="{{ old('address') ? old('address') : $editingEmployee->address}}" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" value="{{$editingEmployee->phone}}" placeholder="Số điện thoại" name="phone"/>
+                <input class="form-control" value="{{ old('phone') ? old('phone') : $editingEmployee->phone}}" placeholder="Số điện thoại" name="phone"/>
+                @error('phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Lương cứng</label>
-                <input class="form-control" value="{{$editingEmployee->base_salary}}" placeholder="Lương cứng" name="base_salary"/>
+                <input class="form-control" value="{{ old('base_salary') ? old('base_salary') : $editingEmployee->base_salary}}" placeholder="Lương cứng" name="base_salary"/>
+                @error('base_salary')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Trợ cấp</label>
-                <input class="form-control" value="{{$editingEmployee->allowance}}" placeholder="Trợ cấp" name="allowance"/>
+                <input class="form-control" value="{{ old('allowance') ? old('allowance') : $editingEmployee->allowance}}" placeholder="Trợ cấp" name="allowance"/>
+                @error('allowance')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">
