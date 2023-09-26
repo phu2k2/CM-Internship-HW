@@ -45,7 +45,6 @@
                     <label>Allowance</label>
                     <input type="text" class="form-control"  value="{{ $employee['allowance'] }}">
                 </div>
-                                
                 <div class="form-group">
                     <div class="col-sm-12">
                         <button class="btn btn-success text-white">Update</button>

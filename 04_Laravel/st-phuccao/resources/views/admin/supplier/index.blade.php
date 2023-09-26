@@ -28,7 +28,6 @@
                         <th scope="col">Fax</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +41,6 @@
                         <td>{{ $item['phone'] }}</td>
                         <td>{{ $item['fax'] }}</td>
                         <td>{{ $item['email'] }}</td>
-
                         <td>
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('suppliers.edit', ['supplier' => $item['company_id']]) }}"
                                 aria-expanded="false">
