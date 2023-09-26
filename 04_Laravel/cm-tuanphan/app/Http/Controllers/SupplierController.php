@@ -27,7 +27,7 @@ class SupplierController extends Controller
     public function edit(string $supplierID)
     {
         $suppliers = Supplier::get();
-        return view("admin.manages.suppliers.edit" , compact("suppliers" , "supplierID"));
+        return view("admin.manages.suppliers.edit" , compact("suppliers"));
     }
 
     public function update(Request $res, string $id)

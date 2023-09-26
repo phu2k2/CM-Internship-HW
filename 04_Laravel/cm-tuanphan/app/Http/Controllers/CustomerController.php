@@ -28,7 +28,7 @@ class CustomerController extends Controller
     public function edit(string $customerID)
     {
         $customers = Customer::get();
-        return view("admin.manages.customers.edit" , compact("customers" , "customerID"));
+        return view("admin.manages.customers.edit" , compact("customers"));
     }
     
     public function update(Request $res, string $id)

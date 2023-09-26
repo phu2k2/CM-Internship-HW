@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     public function edit(string $employeeID)
     {
         $employees = Employee::get();
-        return view("admin.manages.employees.edit" , compact("employees" , "employeeID"));
+        return view("admin.manages.employees.edit" , compact("employees"));
     }
 
     public function update(Request $res, string $id)

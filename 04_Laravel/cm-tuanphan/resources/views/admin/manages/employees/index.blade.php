@@ -12,7 +12,7 @@
             @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
             @endif
             <form action="{{ route('employees.store') }}" id="addEmployeeForm">
-                <label>Tên công ty</label>
+                <label>Tên nhân viên</label>
                 <input class="form-control" placeholder="Họ"/>
                 <label>Họ</label>
                 <input class="form-control" placeholder="Tên"/>

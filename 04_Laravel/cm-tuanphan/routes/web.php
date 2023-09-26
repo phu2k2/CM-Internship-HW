@@ -18,9 +18,13 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
+Route::get('/' , function() {
+    return "Thís is homepage";
+})->name("index");
+
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view("admin.index");
+        return redirect()->route("employees.index");
     });
 
     Route::resource('employees', EmployeeController::class)->name('*', 'employees');

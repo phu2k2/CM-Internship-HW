@@ -14,7 +14,7 @@
             <form method="post" action="{{ route('employees.update' , ['employee' => $employeeID ]) }}" id="addEmployeeForm">
                 @csrf
                 @method("PUT")
-                <label>Tên công ty</label>
+                <label>Tên nhân viên</label>
                 <input class="form-control" placeholder="Họ" name="last_name"/>
                 <label>Họ</label>
                 <input class="form-control" placeholder="Tên" name="first_name"/>
