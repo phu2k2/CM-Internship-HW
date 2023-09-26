@@ -1,8 +1,8 @@
-$( function() {
+$(function() {
     $('#datepicker').datepicker({
-        language: "es",
-        autoclose: true,
-        format: 'yyyy/mm/dd'
+        format: 'yyyy-mm-dd'
     });
-  }
-);
+    $('#startpicker').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+});
