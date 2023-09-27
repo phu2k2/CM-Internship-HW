@@ -12,10 +12,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = [];
-
         for ($i = 0; $i < 10; $i++) {
-            $customer[] = [
+            $customers[] = [
                 'id' => rand(1, 1000),
                 'company_name' => 'Company ' . $i,
                 'transaction_name' => 'Transaction ' . $i,
@@ -27,7 +25,8 @@ class CustomerController extends Controller
                 'updated_at' => now()->subDays(rand(1, 365))->format('Y-m-d')
             ];
         }
-        return view("admin.customer.show", ['customer' => $customer]);
+
+        return view("admin.customer.index", ['customers' => $customers]);
     }
 
     /**
@@ -41,7 +40,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCustomerRequest $request)
+    public function store(Request $request)
     {
     }
 
@@ -56,9 +55,9 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        return view('admin.customer.update', ['id' => $id]);
+        return view('admin.customer.edit', ['id' => $id]);
     }
 
     /**
@@ -72,7 +71,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

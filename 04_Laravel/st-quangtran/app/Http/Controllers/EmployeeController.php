@@ -11,10 +11,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = [];
-
-        for ($i = 1; $i <= 10; $i++) {
-            $employee = [
+        for ($i = 0; $i < 10; $i++) {
+            $employees[] = [
                 'ID' => $i,
                 'Employee ID' => rand(1000, 9999),
                 'Last Name' => 'Last Name ' . $i,
@@ -28,10 +26,9 @@ class EmployeeController extends Controller
                 'Created At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
                 'Updated At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
             ];
-
-            $employees[] = $employee;
         }
-        return view("admin.employee.show", ['employees' => $employees]);
+
+        return view("admin.employee.index", ['employees' => $employees]);
     }
 
     /**
@@ -61,9 +58,9 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        return view('admin.employee.update', ['id' => $id]);
+        return view('admin.employee.edit', ['id' => $id]);
     }
 
     /**
@@ -77,7 +74,7 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

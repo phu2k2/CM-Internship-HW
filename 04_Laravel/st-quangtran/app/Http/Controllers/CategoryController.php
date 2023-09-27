@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         for ($i = 0; $i < 10; $i++) {
-            $category[] = [
+            $categories[] = [
                 'id' => $i + 1,
                 'category_id' => rand(1, 1000),
                 'category_name' => 'Category ' . $i,
@@ -20,7 +20,8 @@ class CategoryController extends Controller
                 'updated_at' => now()->subDays(rand(1, 365))->format('Y-m-d'),
             ];
         }
-        return view("admin.category.show", ['category' => $category]);
+
+        return view("admin.category.index", ['categories' => $categories]);
     }
 
     /**
@@ -50,9 +51,9 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        return view("admin.category.create", ['id' => $id]);
+        return view("admin.category.edit", ['id' => $id]);
     }
 
     /**
@@ -66,7 +67,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

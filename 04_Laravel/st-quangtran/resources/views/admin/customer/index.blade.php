@@ -12,32 +12,40 @@
                                     <h4 class="card-title">Management Customer</h4>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-success" href="{{ URL::to('category/insert') }}"
+                                    <a class="btn btn-success" href="{{ route('customers.create') }}"
                                         style="padding: 5px 30px">Add
-                                        Category</a>
+                                        Customer</a>
                                 </div>
                             </div>
-                            <table class="table table-striped">
+                            <table class="table table-responsive" style=" overflow: auto;">
                                 <thead>
                                     <tr>
                                         <th> ID </th>
-                                        <th> Company ID </th>
-                                        <th> Category Name </th>
+                                        <th> Company Name </th>
+                                        <th> Transaction Name </th>
+                                        <th> Address </th>
+                                        <th> Email </th>
+                                        <th> Phone</th>
+                                        <th> Fax </th>
                                         <th> Created At </th>
                                         <th> Update At </th>
                                         <th> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category as $item)
+                                    @foreach ($customers as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['category_id'] }}</td>
-                                            <td>{{ $item['category_name'] }}</td>
+                                            <td>{{ $item['company_name'] }}</td>
+                                            <td>{{ $item['transaction_name'] }}</td>
+                                            <td>{{ $item['address'] }}</td>
+                                            <td>{{ $item['email'] }}</td>
+                                            <td>{{ $item['phone'] }}</td>
+                                            <td>{{ $item['fax'] }}</td>
                                             <td>{{ $item['created_at'] }}</td>
                                             <td>{{ $item['updated_at'] }}</td>
                                             <td>
-                                                <a href="{{ URL::to('category/update/' . $item['id']) }}"
+                                                <a href="{{ route('customers.edit', $item['id']) }}"
                                                     class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
                                                         class="fa-solid fa-pen"></i>
                                                 </a>
@@ -55,11 +63,11 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['category_name'] }}"</b>!
+                                                                    <b>"{{ $item['company_name'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <a {{-- <a href="{{ URL::to('delete/' . $item['id']) }}" --}} class="btn btn-danger">Yes</a>
+                                                                <a class="btn btn-danger">Yes</a>
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close</button>
                                                             </div>
@@ -74,8 +82,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 
@@ -85,10 +91,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

@@ -11,10 +11,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $customer = [];
-
         for ($i = 0; $i < 10; $i++) {
-            $customer[] = [
+            $suppliers[] = [
                 'id' => rand(1, 1000),
                 'company_name' => 'Company ' . $i,
                 'transaction_name' => 'Transaction ' . $i,
@@ -26,7 +24,8 @@ class SupplierController extends Controller
                 'updated_at' => now()->subDays(rand(1, 365))->format('Y-m-d')
             ];
         }
-        return view("admin.supplier.show", ['customer' => $customer]);
+
+        return view("admin.supplier.index", ['suppliers' => $suppliers]);
     }
 
     /**
@@ -34,7 +33,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.customer.update');
+        return view('admin.customer.create');
     }
 
     /**
@@ -56,9 +55,9 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        return view('admin.customer.update', ['id' => $id]);
+        return view('admin.customer.edit', ['id' => $id]);
     }
 
     /**
@@ -72,7 +71,7 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

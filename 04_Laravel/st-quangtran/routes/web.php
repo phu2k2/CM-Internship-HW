@@ -26,37 +26,13 @@ Route::get('dashboard', function () {
 });
 
 //customer
-Route::get("customer", [CustomerController::class, "index"]);
-
-Route::get("/customer/insert", [CustomerController::class, "create"]);
-
-Route::post('/store', [CustomerController::class, 'store']);
-
-Route::get("/customer/update/{id}", [CustomerController::class, "edit"]);
+Route::resource("customers", CustomerController::class);
 
 //category
-Route::get("category", [CategoryController::class, "index"]);
-
-Route::get("category/insert", [CategoryController::class, "create"]);
-
-Route::post('/store', [CategoryController::class, 'store']);
-
-Route::get("/category/update/{id}", [CategoryController::class, "edit"]);
+Route::resource("categories", CategoryController::class);
 
 //employee
-Route::get("employee", [EmployeeController::class, "index"]);
-
-Route::get("employee/insert", [EmployeeController::class, "create"]);
-
-Route::post('/store', [EmployeeController::class, 'store']);
-
-Route::get("employee/update/{id}", [EmployeeController::class, "edit"]);
+Route::resource("employees", EmployeeController::class);
 
 //supplier
-Route::get("supplier", [SupplierController::class, "index"]);
-
-Route::get("supplier/insert", [SupplierController::class, "create"]);
-
-Route::post('/store', [SupplierController::class, 'store']);
-
-Route::get("supplier/update/{id}", [SupplierController::class, "edit"]);
+Route::resource("suppliers", SupplierController::class);
