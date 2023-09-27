@@ -56,72 +56,38 @@ class SupplierController extends Controller
             'fax' => '555-555-5555',
         ],
     ];
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $suppliers = $this->data;
-
-        return view('admin.supplier.show', compact('suppliers'));
+        return view("admin.supplier.index", ['suppliers' => $suppliers]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view("admin.supplier.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreSupplierRequest $request)
     {
         return redirect()->route('admin.supplier.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
-        $supplier = null;
-        foreach ($this->data as $item) {
-            if ($item['id'] == $id) {
-                $supplier = $item;
-                break;
-            }
-        }
-        if (!$supplier) {
-            abort(404);
-        }
-
-        return view('admin.supplier.update', compact('supplier'));
+        return view('admin.customer.edit', ['id' => $id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateSupplierRequest $request, string $id)
     {
         return redirect()->route('admin.customer.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        //
     }
 }

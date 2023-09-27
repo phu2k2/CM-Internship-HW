@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Customers Management</h4>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-success" href="{{ URL::to('customer/insert') }}"
+                                    <a class="btn btn-success" href="{{ route('suppliers.create') }}"
                                         style="padding: 5px 30px">Add
                                         Customer</a>
                                 </div>
@@ -21,7 +21,7 @@
                                 <thead>
                                     <tr>
                                         <th> ID </th>
-                                        <th> Company ID </th>
+                                        <th> Company Name </th>
                                         <th> Transaction Name </th>
                                         <th> Address </th>
                                         <th> Email </th>
@@ -41,9 +41,8 @@
                                             <td>{{ $item['phoneNumber'] }}</td>
                                             <td>{{ $item['fax'] }}</td>
                                             <td>
-                                                <a href="{{ URL::to('customer/update/' . $item['id']) }}"
-                                                    class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
-                                                        class="fa-solid fa-pen"></i>
+                                                <a href="{{ route('customers.edit', $item['id']) }}" class="btn btn-warning"
+                                                    style="padding: 0.25rem 0.5rem"><i class="fa-solid fa-pen"></i>
                                                 </a>
                                                 <a class="btn btn-danger" data-toggle="modal"
                                                     style="padding: 0.25rem 0.5rem"

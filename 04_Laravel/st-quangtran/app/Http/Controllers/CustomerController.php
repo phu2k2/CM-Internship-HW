@@ -57,9 +57,6 @@ class CustomerController extends Controller
         ],
     ];
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $customers = $this->data;
@@ -67,61 +64,30 @@ class CustomerController extends Controller
         return view('admin.customer.index', compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view("admin.customer.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCustomerRequest $request)
     {
         return redirect()->route('customers.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
-        $customer = null;
-        foreach ($this->data as $item) {
-            if ($item['id'] == $id) {
-                $customer = $item;
-                break;
-            }
-        }
-        if (!$customer) {
-            abort(404);
-        }
-
-        return view('admin.customer.update', compact('customer'));
+        return view('admin.customer.edit', ['id' => $id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCustomerRequest $request, string $id)
     {
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        //
     }
 }

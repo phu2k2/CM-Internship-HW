@@ -33,7 +33,7 @@
                                             <td>{{ $item['categoryId'] }}</td>
                                             <td>{{ $item['categoryName'] }}</td>
                                             <td>
-                                                <a href="{{ URL::to('category/update/' . $item['id']) }}"
+                                                <a href="{{ route('categories.edit', $item['id']) }}"
                                                     class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
                                                         class="fa-solid fa-pen"></i>
                                                 </a>
@@ -71,8 +71,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 
@@ -82,9 +80,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
 

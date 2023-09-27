@@ -101,9 +101,27 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = $this->data;
+        $employees = [];
 
-        return view("admin.employee.index", compact('employees'));
+        for ($i = 1; $i <= 10; $i++) {
+            $employee = [
+                'ID' => $i,
+                'Employee ID' => rand(1000, 9999),
+                'Last Name' => 'Last Name ' . $i,
+                'First Name' => 'First Name ' . $i,
+                'Birthday' => date('Y-m-d', strtotime('-' . rand(18, 60) . ' years')),
+                'Start Day' => date('Y-m-d', strtotime('-' . rand(1, 10) . ' years')),
+                'Address' => 'Address ' . $i,
+                'Phone' => '123-456-' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'Base Salary' => rand(30000, 80000),
+                'Allowance' => rand(1000, 5000),
+                'Created At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
+                'Updated At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
+            ];
+
+            $employees[] = $employee;
+        }
+        return view("admin.employee.show", ['employees' => $employees]);
     }
 
     /**
@@ -133,20 +151,9 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        $employee = null;
-        foreach ($this->data as $item) {
-            if ($item['id'] == $id) {
-                $employee = $item;
-                break;
-            }
-            if (!$employee) {
-                abort(404);
-            }
-        }
-
-        return view('admin.employee.update', compact('employee'));
+        return view('admin.employee.update', ['id' => $id]);
     }
 
     /**
@@ -160,7 +167,7 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteEmployeeRequest $request, string $id)
+    public function destroy(string $id)
     {
         //
     }
