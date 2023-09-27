@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class EmployeesController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     private $data = [
         [
             'id' => '1',
@@ -50,6 +53,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $employees = $this->data;
+
         return view('employees.index', compact('employees'));
     }
 
@@ -67,6 +71,7 @@ class EmployeesController extends Controller
     public function store(CreateEmployeeRequest $request)
     {
         $request->session()->flash('success', 'Add Employee successful!');
+        
         return redirect()->route('employees.index');
     }
 
@@ -119,6 +124,7 @@ class EmployeesController extends Controller
         }
 
         $request->session()->flash('success', 'Delete Employee successful!');
+
         return redirect()->route('employees.index');
     }
 }

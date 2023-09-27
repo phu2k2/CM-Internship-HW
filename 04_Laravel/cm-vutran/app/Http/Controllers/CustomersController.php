@@ -10,9 +10,7 @@ class CustomersController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
-    private $data = [
+     private $data = [
         [
             'id' => 1,
             'companyName' => 'ABC123',
@@ -284,9 +282,11 @@ class CustomersController extends Controller
             'fax' => '111-222-3333',
         ],
     ];
+
     public function index()
     {
         $customers = $this->data;
+        
         return view('customers.index', compact('customers'));
     }
 
@@ -304,6 +304,7 @@ class CustomersController extends Controller
     public function store(CreateCustomerRequest $request)
     {
         $request->session()->flash('success', 'Add Customer successful!');
+
         return redirect()->route('customers.index');
     }
 
@@ -341,6 +342,7 @@ class CustomersController extends Controller
         }
 
         $request->session()->flash('success', 'Update Customer successful!');
+
         return redirect()->route('customers.index');
     }
 
@@ -356,6 +358,7 @@ class CustomersController extends Controller
         }
 
         $request->session()->flash('success', 'Delete Customer successful!');
+        
         return redirect()->route('customers.index');
     }
 }

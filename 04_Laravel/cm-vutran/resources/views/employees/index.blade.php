@@ -3,7 +3,6 @@
 @section('title', 'Employees Management')
 
 @section('content')
-
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -34,7 +33,7 @@
                 </tr>
             </thead>
             <tfoot>
-                <tr> 
+                <tr>
                     <th>STT</th>
                     <th>last_name</th>
                     <th>first_name</th>
@@ -48,35 +47,37 @@
                 </tr>
             </tfoot>
             <tbody>
-                @foreach ($employees as $employee)  
-                    <tr>
-                        <td>{{ $loop->index+1 }}</td>
-                        <td>{{ $employee['last_name'] }}</td>
-                        <td>{{ $employee['first_name'] }}</td>
-                        <td>{{ $employee['birthday'] }}</td>
-                        <td>{{ $employee['start_date'] }}</td>
-                        <td>{{ $employee['address'] }}</td>
-                        <td>{{ $employee['phone'] }}</td>
-                        <td>{{ $employee['base_salary'] }}</td>
-                        <td>{{ $employee['allowance'] }}</td>
-                        <td>
-                            <div class="d-flex">
-                                <a class="btn btn-success mx-3" href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">Edit</a>
-                                <form method="POST" action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this employee?')">
-                                    @csrf
-                                    @method('DELETE')
-                                
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                           
-                        </td>
-                    </tr>
+                @foreach ($employees as $employee)
+                <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $employee['last_name'] }}</td>
+                    <td>{{ $employee['first_name'] }}</td>
+                    <td>{{ $employee['birthday'] }}</td>
+                    <td>{{ $employee['start_date'] }}</td>
+                    <td>{{ $employee['address'] }}</td>
+                    <td>{{ $employee['phone'] }}</td>
+                    <td>{{ $employee['base_salary'] }}</td>
+                    <td>{{ $employee['allowance'] }}</td>
+                    <td>
+                        <div class="d-flex">
+                            <a class="btn btn-success mx-3"
+                                href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">Edit</a>
+                            <form method="POST"
+                                action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+
+                    </td>
+                </tr>
                 @endforeach
-               
+
             </tbody>
         </table>
     </div>
 </div>
-
 @endsection

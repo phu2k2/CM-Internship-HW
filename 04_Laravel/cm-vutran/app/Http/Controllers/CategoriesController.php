@@ -10,7 +10,6 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     private $data = [
         [
             'id' => 1,
@@ -37,11 +36,12 @@ class CategoriesController extends Controller
             'categoryId' => 'cat005',
             'categoryName' => 'Category E',
         ],
-        // Add more rows as needed
     ];
+
     public function index()
     {
         $categories = $this->data;
+
         return view('categories.index', compact('categories'));
     }
 
@@ -59,6 +59,7 @@ class CategoriesController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $request->session()->flash('success', 'Add Category successful!');
+        
         return redirect()->route('categories.index');
     }
 
@@ -96,6 +97,7 @@ class CategoriesController extends Controller
         }
 
         $request->session()->flash('success', 'Update Category successful!');
+
         return redirect()->route('categories.index');
     }
 
@@ -111,6 +113,7 @@ class CategoriesController extends Controller
         }
 
         $request->session()->flash('success', 'Delete Category successful!');
+
         return redirect()->route('categories.index');
     }
 }

@@ -10,7 +10,6 @@ class SuppliesController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     private $data = [
         [
             'id' => 1,
@@ -217,6 +216,7 @@ class SuppliesController extends Controller
     public function index()
     {
         $supplies = $this->data;
+        
         return view('supplies.index', compact('supplies'));
     }
 
@@ -234,6 +234,7 @@ class SuppliesController extends Controller
     public function store(CreateSupplyRequest $request)
     {
         $request->session()->flash('success', 'Add Supply successful!');
+        
         return redirect()->route('supplies.index');
     }
 
@@ -271,6 +272,7 @@ class SuppliesController extends Controller
         }
 
         $request->session()->flash('success', 'Update Supply successful!');
+
         return redirect()->route('supplies.index');
     }
 
@@ -286,6 +288,7 @@ class SuppliesController extends Controller
         }
 
         $request->session()->flash('success', 'Delete Supply successful!');
+
         return redirect()->route('supplies.index');
     }
 }

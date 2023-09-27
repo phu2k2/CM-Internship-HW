@@ -3,7 +3,6 @@
 @section('title', 'Customers Management')
 
 @section('content')
-
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -42,7 +41,7 @@
                 </tr>
             </tfoot>
             <tbody>
-                
+
                 @foreach ($customers as $customer)
                 <tr>
                     <td>{{ $customer['id'] }}</td>
@@ -53,23 +52,25 @@
                     <td>{{ $customer['fax'] }}</td>
                     <td>
                         <div class="d-flex">
-                            <a class="btn btn-success mx-3" href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">Edit</a>
-                            <form method="POST" action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                            <a class="btn btn-success mx-3"
+                                href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">Edit</a>
+                            <form method="POST"
+                                action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                 @csrf
                                 @method('DELETE')
-                            
+
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-                        
+
                     </td>
                 </tr>
                 @endforeach
-                
-               
+
+
             </tbody>
         </table>
     </div>
 </div>
-
 @endsection
