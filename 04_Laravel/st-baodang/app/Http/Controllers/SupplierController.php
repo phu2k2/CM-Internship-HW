@@ -6,8 +6,6 @@ use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
 use App\Http\Requests\SupplierRequest\StoreSupplierRequest;
 use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -69,7 +67,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::find($id);
         $isUpdated = $supplier->update($request->validated());
-        if($isUpdated) {
+        if ($isUpdated) {
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 

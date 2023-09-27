@@ -6,8 +6,6 @@ use App\Http\Requests\EmployeeRequest\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\StoreEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use App\Models\Employee;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
