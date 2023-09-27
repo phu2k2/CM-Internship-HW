@@ -39,7 +39,6 @@
 </div>
 @endsection
 
-
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
@@ -134,7 +133,5 @@
             </div>
         </div>
     </div>
-
-
 </div>
 @endsection
