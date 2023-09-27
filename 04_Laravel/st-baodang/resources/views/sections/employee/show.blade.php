@@ -38,13 +38,13 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Birthday</label>
                 <div class="col-sm-10">
-                    <p>{{ $employee->birthday }}</p>
+                    <p>{{ date('d-m-Y', strtotime($employee->birthday)) }}</p>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Start date</label>
                 <div class="col-sm-10">
-                    <p>{{ $employee->start_date }}</p>
+                    <p>{{ date('d-m-Y', strtotime($employee->start_date)) }}</p>
                 </div>
             </div>
             <div class="row mb-3">

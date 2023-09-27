@@ -15,13 +15,25 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="category_id">Category ID</label>
-                    <input name="category_id" type="text" class="form-control" id="category_id"
+                    <input value="{{ old('category_id') }}" name="category_id" type="text" class="form-control"
+                           id="category_id"
                            placeholder="MP"/>
+                    @error('category_id')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category_name">Category Name</label>
-                    <input name="category_name" type="text" class="form-control" id="category_name"
-                           placeholder="Mỹ Phẩm"/>
+                    <input value="{{ old('category_name') }}" name="category_name" type="text" class="form-control"
+                           id="category_name"
+                           placeholder="Mỹ phẩm"/>
+                    @error('category_name')
+                    <div class="invalid-feedback" style="display:block;">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
 

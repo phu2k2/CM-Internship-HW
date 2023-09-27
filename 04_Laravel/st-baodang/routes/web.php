@@ -16,7 +16,7 @@ use \App\Http\Controllers\EmployeeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('', function () {
+Route::get('/', function () {
     return view('index');
 })->name('index');
 Route::resource('customer', CustomerController::class);

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest\DeleteCategoryRequest;
+use App\Http\Requests\CategoryRequest\StoreCategoryRequest;
+use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = DB::table('categories')->get();
+
         return view('sections.category.index', compact('categories'));
     }
 
@@ -27,7 +31,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $isStored = DB::table('categories')->insert([
             'category_id' => $request->input('category_id'),
@@ -35,7 +39,7 @@ class CategoryController extends Controller
         ]);
 
         if ($isStored) {
-            session()->flash('status', 'Đã thêm dữ liệu thành công');
+            session()->flash('success', 'Đã thêm dữ liệu thành công');
         }
 
         return redirect()->route('category.index');
@@ -47,6 +51,7 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = DB::table('categories')->where('id', $id)->first();
+
         return view('sections.category.show', compact('category'));
     }
 
@@ -56,13 +61,14 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = DB::table('categories')->where('id', $id)->first();
+
         return view('sections.category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         DB::table('categories')
             ->where('id', $id)
@@ -70,14 +76,20 @@ class CategoryController extends Controller
                 'category_id' => $request->input('category_id'),
                 'category_name' => $request->input('category_name')
             ]);
+
         return redirect()->route('category.show', $id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        //
+        $records = DB::table('categories')->delete($id);
+        if ($records) {
+            session()->flash('success', 'Đã xóa dữ liệu thành công');
+        }
+
+        return redirect()->route('category.index');
     }
 }
