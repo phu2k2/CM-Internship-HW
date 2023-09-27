@@ -13,11 +13,8 @@ function destroyCategory(id) {
                 function() {
                 }
             },
-            confirm: {
-                btnClass: 'btn-danger',
-                function() {
-                    document.getElementById("destroy" + id).submit();
-                }
+            confirm: function() {
+                document.getElementById("destroy" + id).submit();
             }
         }
     });

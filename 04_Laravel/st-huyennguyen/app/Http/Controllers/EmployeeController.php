@@ -142,7 +142,8 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-        //
+        session()->flash('message', 'Create new employee was successful!');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -176,7 +177,8 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Update the employee was successful!');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -184,6 +186,7 @@ class EmployeeController extends Controller
      */
     public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Delete the employee was successful!');
+        return redirect()->route('employees.index');
     }
 }
