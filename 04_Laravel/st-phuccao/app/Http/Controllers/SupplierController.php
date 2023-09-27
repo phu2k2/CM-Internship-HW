@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Supplier\StoreRequest;
-use App\Http\Requests\Supplier\UpdateRequest;
+use App\Http\Requests\Supplier\StoreSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -120,7 +120,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreSupplierRequest $request)
     {
         //
     }
@@ -150,7 +150,7 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
         //
     }
