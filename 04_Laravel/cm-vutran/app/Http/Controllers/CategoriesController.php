@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -10,37 +11,10 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private $data = [
-        [
-            'id' => 1,
-            'categoryId' => 'cat001',
-            'categoryName' => 'Category A',
-        ],
-        [
-            'id' => 2,
-            'categoryId' => 'cat002',
-            'categoryName' => 'Category B',
-        ],
-        [
-            'id' => 3,
-            'categoryId' => 'cat003',
-            'categoryName' => 'Category C',
-        ],
-        [
-            'id' => 4,
-            'categoryId' => 'cat004',
-            'categoryName' => 'Category D',
-        ],
-        [
-            'id' => 5,
-            'categoryId' => 'cat005',
-            'categoryName' => 'Category E',
-        ],
-    ];
 
     public function index()
     {
-        $categories = $this->data;
+        $categories = Category::get();
 
         return view('categories.index', compact('categories'));
     }
@@ -58,6 +32,7 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+
         $request->session()->flash('success', 'Add Category successful!');
         
         return redirect()->route('categories.index');
@@ -76,26 +51,30 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        $category = collect($this->data)->where('id', $id)->first();
+        $category = Category::find($id);
 
-        if (empty($category)) {
+        if (!$category) {
             abort(404);
         }
-
+        
         return view('categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateCategoryRequest $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
-
-        if ($index === false) {
+        $category = Category::find($id);
+        
+        if (!$category) {
             abort(404);
         }
-
+    
+        $validatedData = $request->validated();
+        
+        $category->update($validatedData);
+    
         $request->session()->flash('success', 'Update Category successful!');
 
         return redirect()->route('categories.index');
@@ -106,12 +85,13 @@ class CategoriesController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
+        $category = Category::find($id);
 
-        if ($index === false) {
+        if (!$category) {
             abort(404);
         }
 
+        $category->delete();
         $request->session()->flash('success', 'Delete Category successful!');
 
         return redirect()->route('categories.index');

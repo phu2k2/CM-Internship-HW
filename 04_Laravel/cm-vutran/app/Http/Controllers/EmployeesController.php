@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEmployeeRequest;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeesController extends Controller
@@ -10,49 +11,9 @@ class EmployeesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private $data = [
-        [
-            'id' => '1',
-            'employee_id' => 'E001',
-            'last_name' => 'Doe',
-            'first_name' => 'John',
-            'birthday' => '1990-05-15',
-            'start_date' => '2020-01-10',
-            'address' => '123 Main St',
-            'phone' => '555-123-4567',
-            'base_salary' => 50000.00,
-            'allowance' => 2500.00,
-        ],
-        [
-            'id' => '2',
-            'employee_id' => 'E002',
-            'last_name' => 'Smith',
-            'first_name' => 'Jane',
-            'birthday' => '1985-08-20',
-            'start_date' => '2019-04-05',
-            'address' => '456 Elm St',
-            'phone' => '555-987-6543',
-            'base_salary' => 55000.00,
-            'allowance' => 2800.00,
-        ],
-        // ... (add more entries as needed)
-        [
-            'id' => '3',
-            'employee_id' => 'E010',
-            'last_name' => 'Brown',
-            'first_name' => 'Michael',
-            'birthday' => '1992-11-03',
-            'start_date' => '2021-02-15',
-            'address' => '789 Oak St',
-            'phone' => '555-333-4444',
-            'base_salary' => 52000.00,
-            'allowance' => 2600.00,
-        ],
-    ];
-
     public function index()
     {
-        $employees = $this->data;
+        $employees = Employee::get();
 
         return view('employees.index', compact('employees'));
     }
@@ -88,9 +49,9 @@ class EmployeesController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = collect($this->data)->where('id', $id)->first();
+        $employee = Employee::find($id);
       
-        if (empty($employee)) {
+        if (!$employee) {
             abort(404);
         }
 
@@ -102,12 +63,13 @@ class EmployeesController extends Controller
      */
     public function update(CreateEmployeeRequest $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
-
-        if ($index === false) {
+        $employee = Employee::find($id);
+      
+        if (!$employee) {
             abort(404);
         }
-
+        $validatedData = $request->validated();
+        $employee->update($validatedData);
         $request->session()->flash('success', 'Update Employee successful!');
         return redirect()->route('employees.index');
     }
@@ -117,12 +79,13 @@ class EmployeesController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
-
-        if ($index === false) {
+        $employee = Employee::find($id);
+      
+        if (!$employee) {
             abort(404);
         }
 
+        $employee->delete();
         $request->session()->flash('success', 'Delete Employee successful!');
 
         return redirect()->route('employees.index');

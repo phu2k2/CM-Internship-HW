@@ -27,7 +27,7 @@ class CreateEmployeeRequest extends FormRequest
             'birthday' => 'required|date',
             'start_date' => 'required|date',
             'address' => 'required|string|max:60',
-            'phone' => 'required|string|max:15',
+            'phone_number' => 'required|string|max:15',
             'base_salary' => 'required|numeric|between:0,9999999.99',
             'allowance' => 'required|numeric|between:0,9999999.99',
         ];
