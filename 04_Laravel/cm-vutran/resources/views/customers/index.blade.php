@@ -41,7 +41,6 @@
                 </tr>
             </tfoot>
             <tbody>
-
                 @foreach ($customers as $customer)
                 <tr>
                     <td>{{ $customer['id'] }}</td>
@@ -67,8 +66,6 @@
                     </td>
                 </tr>
                 @endforeach
-
-
             </tbody>
         </table>
     </div>
