@@ -61,5 +61,6 @@
   <div class="modal-footer">
     <button type="submit" class="btn btn-primary" id="addCustomerBtn">Add Customer</button>
   </div>
+  
 </form>
 @endsection

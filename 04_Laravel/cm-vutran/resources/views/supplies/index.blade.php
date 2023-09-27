@@ -47,7 +47,6 @@
             <tbody>
                 @foreach ($supplies as $supply)
                 <tr>
-                    {{-- <td>{{ $supplie['Id'] }}</td> --}}
                     <td>{{ $supply['companyId'] }}</td>
                     <td>{{ $supply['companyName'] }}</td>
                     <td>{{ $supply['transactionName'] }}</td>
@@ -63,7 +62,6 @@
                                 onsubmit="return confirm('Are you sure you want to delete this supply?')">
                                 @csrf
                                 @method('DELETE')
-
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>

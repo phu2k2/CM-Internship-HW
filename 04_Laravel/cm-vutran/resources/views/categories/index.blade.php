@@ -46,7 +46,6 @@
                             <form method="POST" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                 @csrf
                                 @method('DELETE')
-                            
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
