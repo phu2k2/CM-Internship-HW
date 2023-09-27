@@ -12,6 +12,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
+            'category_id' => strtoupper($this->faker->unique()->lexify('C?')),
             'category_name' => $this->faker->word, // Generates a random word for category_name
         ];
     }

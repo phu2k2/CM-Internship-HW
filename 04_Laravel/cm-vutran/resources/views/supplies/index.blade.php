@@ -3,7 +3,6 @@
 @section('title', 'Supplies Management')
 
 @section('content')
-
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -58,19 +57,20 @@
                     <td>{{ $supply['fax'] }}</td>
                     <td>
                         <div class="d-flex">
-                            <a class="btn btn-success mx-3" href="{{ route('supplies.edit', ['supply' => $supply['id']]) }}">Edit</a>
-                            <form method="POST" action="{{ route('supplies.destroy', ['supply' => $supply['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this supply?')">
+                            <a class="btn btn-success mx-3"
+                                href="{{ route('supplies.edit', ['supply' => $supply['id']]) }}">Edit</a>
+                            <form method="POST" action="{{ route('supplies.destroy', ['supply' => $supply['id']]) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this supply?')">
                                 @csrf
                                 @method('DELETE')
-                            
+
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 @endforeach
-                
-               
+
             </tbody>
         </table>
     </div>
