@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
-use Dotenv\Store\StoreInterface;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
