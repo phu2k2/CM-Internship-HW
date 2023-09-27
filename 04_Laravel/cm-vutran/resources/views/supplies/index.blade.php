@@ -47,13 +47,12 @@
             <tbody>
                 @foreach ($supplies as $supply)
                 <tr>
-                    {{-- <td>{{ $supplie['Id'] }}</td> --}}
-                    <td>{{ $supply['companyId'] }}</td>
-                    <td>{{ $supply['companyName'] }}</td>
-                    <td>{{ $supply['transactionName'] }}</td>
+                    <td>{{ $supply['company_id'] }}</td>
+                    <td>{{ $supply['company_name'] }}</td>
+                    <td>{{ $supply['transaction_name'] }}</td>
                     <td>{{ $supply['address'] }}</td>
                     <td>{{ $supply['email'] }}</td>
-                    <td>{{ $supply['phoneNumber'] }}</td>
+                    <td>{{ $supply['phone_number'] }}</td>
                     <td>{{ $supply['fax'] }}</td>
                     <td>
                         <div class="d-flex">
@@ -63,15 +62,12 @@
                                 onsubmit="return confirm('Are you sure you want to delete this supply?')">
                                 @csrf
                                 @method('DELETE')
-
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 @endforeach
-
-
             </tbody>
         </table>
     </div>

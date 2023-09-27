@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\CreateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
 class EmployeesController extends Controller
@@ -35,7 +36,6 @@ class EmployeesController extends Controller
             'base_salary' => 55000.00,
             'allowance' => 2800.00,
         ],
-        // ... (add more entries as needed)
         [
             'id' => '3',
             'employee_id' => 'E010',
@@ -100,7 +100,7 @@ class EmployeesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateEmployeeRequest $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         $index = array_search($id, array_column($this->data, 'id'));
 

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequest\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -13,28 +14,28 @@ class CategoriesController extends Controller
     private $data = [
         [
             'id' => 1,
-            'categoryId' => 'cat001',
-            'categoryName' => 'Category A',
+            'category_id' => 'cat001',
+            'category_name' => 'Category A',
         ],
         [
             'id' => 2,
-            'categoryId' => 'cat002',
-            'categoryName' => 'Category B',
+            'category_id' => 'cat002',
+            'category_name' => 'Category B',
         ],
         [
             'id' => 3,
-            'categoryId' => 'cat003',
-            'categoryName' => 'Category C',
+            'category_id' => 'cat003',
+            'category_name' => 'Category C',
         ],
         [
             'id' => 4,
-            'categoryId' => 'cat004',
-            'categoryName' => 'Category D',
+            'category_id' => 'cat004',
+            'category_name' => 'Category D',
         ],
         [
             'id' => 5,
-            'categoryId' => 'cat005',
-            'categoryName' => 'Category E',
+            'category_id' => 'cat005',
+            'category_name' => 'Category E',
         ],
     ];
 
@@ -88,7 +89,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         $index = array_search($id, array_column($this->data, 'id'));
 

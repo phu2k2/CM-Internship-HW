@@ -41,14 +41,13 @@
                 </tr>
             </tfoot>
             <tbody>
-
                 @foreach ($customers as $customer)
                 <tr>
                     <td>{{ $customer['id'] }}</td>
-                    <td>{{ $customer['transactionName'] }}</td>
+                    <td>{{ $customer['transaction_name'] }}</td>
                     <td>{{ $customer['address'] }}</td>
                     <td>{{ $customer['email'] }}</td>
-                    <td>{{ $customer['phoneNumber'] }}</td>
+                    <td>{{ $customer['phone_number'] }}</td>
                     <td>{{ $customer['fax'] }}</td>
                     <td>
                         <div class="d-flex">
@@ -59,7 +58,6 @@
                                 onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                 @csrf
                                 @method('DELETE')
-
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
@@ -67,8 +65,6 @@
                     </td>
                 </tr>
                 @endforeach
-
-
             </tbody>
         </table>
     </div>

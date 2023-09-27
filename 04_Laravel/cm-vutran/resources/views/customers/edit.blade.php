@@ -6,11 +6,11 @@
 <form action="{{ route('customers.update', ['customer' => $customer['id'] ]) }}" method="POST">
   @csrf
   @method('PUT')
-  <div class="p-5" style="width: 60%:">
+  <div class="p-5">
     <h2 class="text-center">Edit Customer</h2>
     <div class="mb-3">
       <label for="inputName" class="form-label">Transaction Name</label>
-      <input value="{{ old('transaction_name', $customer['transactionName']) }}" type="text" class="form-control"
+      <input value="{{ old('transaction_name', $customer['transaction_name']) }}" type="text" class="form-control"
         id="inputName" name="transaction_name">
       @error('transaction_name')
       <div class="text-danger">{{ $message }}</div>
@@ -37,7 +37,7 @@
 
     <div class="mb-3">
       <label for="inputPhone" class="form-label">Phone Number</label>
-      <input value="{{ old('phone_number', $customer['phoneNumber']) }}" type="text" class="form-control"
+      <input value="{{ old('phone_number', $customer['phone_number']) }}" type="text" class="form-control"
         id="inputPhone" name="phone_number">
       @error('phone_number')
       <div class="text-danger">{{ $message }}</div>
@@ -55,7 +55,6 @@
 
   <!-- Modal Footer -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Edit Customer</button>
   </div>
 

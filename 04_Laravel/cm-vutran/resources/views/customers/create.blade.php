@@ -5,9 +5,8 @@
 @section('content')
 <form id="customerForm" action="{{ route('customers.store') }}" method="POST">
   @csrf
-  <div class="p-5" style="width: 60%:">
+  <div class="p-5">
     <h2 class="text-center">Add customer</h2>
-
     <div class="mb-3">
       <label for="inputName" class="form-label">Company Name</label>
       <input value="{{ old('company_name') }}" type="text" class="form-control" id="inputName" name="company_name">
@@ -60,8 +59,8 @@
 
   <!-- Modal Footer -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-primary" id="addCustomerBtn">Add Customer</button>
   </div>
+  
 </form>
 @endsection

@@ -5,15 +5,15 @@
 @section('content')
 <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
   @csrf
-  <div class="p-5" style="width: 60%:">
-    <h2 class="text-center">Add employee</h2>
-    <div class="mb-3">
-      <label for="inputName" class="form-label">Name</label>
-      <input type="text" class="form-control" id="inputName" name="name">
-    </div>
-
-    <div class="p-5" style="width: 60%:">
+    <div class="p-5">
       <h2 class="text-center">Add employee</h2>
+      <div class="mb-3">
+        <label for="inputId" class="form-label">Employee Id</label>
+        <input value="{{ old('employee_id') }}" type="text" class="form-control" id="inputId" name="employee_id">
+        @error('employee_id')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+      </div>
       <div class="mb-3">
         <label for="inputName" class="form-label">Last Name</label>
         <input value="{{ old('last_name') }}" type="text" class="form-control" id="inputName" name="last_name">
@@ -85,5 +85,4 @@
     </div>
 
 </form>
-
 @endsection

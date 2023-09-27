@@ -38,15 +38,14 @@
                 @foreach ($categories as $category)
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
-                    <td>{{ $category['categoryId'] }}</td>
-                    <td>{{ $category['categoryName'] }}</td>
+                    <td>{{ $category['category_id'] }}</td>
+                    <td>{{ $category['category_name'] }}</td>
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-success mx-3" href="{{ route('categories.edit', ['category' => $category['id']]) }}">Edit</a>
                             <form method="POST" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                 @csrf
                                 @method('DELETE')
-                            
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
