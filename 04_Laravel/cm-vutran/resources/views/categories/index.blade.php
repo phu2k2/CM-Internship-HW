@@ -38,8 +38,8 @@
                 @foreach ($categories as $category)
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
-                    <td>{{ $category['categoryId'] }}</td>
-                    <td>{{ $category['categoryName'] }}</td>
+                    <td>{{ $category['category_id'] }}</td>
+                    <td>{{ $category['category_name'] }}</td>
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-success mx-3" href="{{ route('categories.edit', ['category' => $category['id']]) }}">Edit</a>

@@ -8,6 +8,13 @@
   <div class="p-5">
     <h2 class="text-center">Add Supply</h2>
     <div class="mb-3">
+      <label for="inputId" class="form-label">Company Id</label>
+      <input value="{{ old('company_id') }}" type="text" class="form-control" id="inputId" name="company_id">
+      @error('company_id')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
+    </div>
+    <div class="mb-3">
       <label for="inputName" class="form-label">Company Name</label>
       <input value="{{ old('company_name') }}" type="text" class="form-control" id="inputName" name="company_name">
       @error('company_name')

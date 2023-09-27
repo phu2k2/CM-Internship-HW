@@ -20,7 +20,7 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>STT</th>
+                    <th>Employee Id</th>
                     <th>last_name</th>
                     <th>first_name</th>
                     <th>birthday</th>
@@ -34,7 +34,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th>STT</th>
+                    <th>Employee Id</th>
                     <th>last_name</th>
                     <th>first_name</th>
                     <th>birthday</th>
@@ -49,7 +49,7 @@
             <tbody>
                 @foreach ($employees as $employee)
                 <tr>
-                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $employee['employee_id'] }}</td>
                     <td>{{ $employee['last_name'] }}</td>
                     <td>{{ $employee['first_name'] }}</td>
                     <td>{{ $employee['birthday'] }}</td>
