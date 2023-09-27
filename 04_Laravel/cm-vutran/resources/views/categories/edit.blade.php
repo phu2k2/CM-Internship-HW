@@ -3,7 +3,6 @@
 @section('title', 'Edit Category')
 
 @section('content')
-
 <form action="{{ route('categories.update', ['category' => $category['id'] ]) }}" method="POST">
   @csrf
   @method('PUT')
@@ -26,5 +25,4 @@
   </div>
 
 </form>
-
 @endsection
