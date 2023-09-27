@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CustomersController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -15,24 +15,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get(
-    '/', function () {
-        return view('welcome');
-    }
-);
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', function () {
+        return view('admin.pages.dashboard');
+    })->name('admin.dashboard');
 
-Route::group(
-    ['prefix' => 'admin'], function () {
-        Route::get(
-            '/', function () {
-                return view('admin.pages.dashboard');
-            }
-        )->name('admin.dashboard');
-
-        Route::resource('customers', CustomersController::class);
-        Route::resource('suppliers', SuppliersController::class);
-        Route::resource('categories', CategoriesController::class);
-        Route::resource('employees', EmployeesController::class);
-    }
-);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('suppliers', SupplierController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('employees', EmployeeController::class);
+});

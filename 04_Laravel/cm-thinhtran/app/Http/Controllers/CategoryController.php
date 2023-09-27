@@ -4,38 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
-
-    private $categoryList = [
-        ['TP', 'Thực phẩm' ],
-        ['DT', 'Ðiện tử' ],
-        ['MM', 'May mặc' ],
-        ['NT', 'Nội thất' ],
-        ['DC', 'Dụng cụ học tập' ]
+    private $categories = [
+        [ 'category_id' => 'TP',
+          'category_name' => 'Thực phẩm' ],
+        [ 'category_id' => 'DT',
+          'category_name' => 'Ðiện tử' ],
+        [ 'category_id' => 'MM',
+          'category_name' => 'May mặc' ],
+        [ 'category_id' => 'NT',
+          'category_name' => 'Nội thất' ],
+        [ 'category_id' => 'DC',
+          'category_name' => 'Dụng cụ học tập' ]
     ];
-
-    public function convertKeyValue()
-    {
-        $categories = [];
-        foreach ($this->categoryList as $category) {
-            $categories[] = [
-                'category_id' => $category[0],
-                'category_name' => $category[1]
-            ];
-        }
-        return $categories;
-    }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        $categories = $this->convertKeyValue();
-        return view("admin.pages.category.categories", compact('categories'));
-
+        $categories = $this->categories;
+        return view("admin.pages.category.index", compact('categories'));
     }
 
     /**

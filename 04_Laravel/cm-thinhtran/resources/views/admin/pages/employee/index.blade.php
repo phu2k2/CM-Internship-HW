@@ -38,37 +38,36 @@
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$employee['id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{ $employee['id'] }}</h6>
                             </div>
                         </div>
                     </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['last_name']}} {{$employee['first_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['last_name'] }} {{ $employee['first_name'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['birthday']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['birthday'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['start_date']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['start_date'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['address']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['address'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['phone']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['phone'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['base_salary']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['base_salary'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$employee['allowance']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $employee['allowance'] }}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('employees.edit', ['employee' => $employee['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('employees.edit', ['employee' => $employee['id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
-
-                        <a href="{{route('employees.destroy', ['employee' => $employee['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('employees.destroy', ['employee' => $employee['id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>
@@ -81,7 +80,6 @@
           </div>
         </div>
       </div>
-
 
         <!-- The Modal Add Customer-->
         <div class="modal fade" id="AddCustomerModal">

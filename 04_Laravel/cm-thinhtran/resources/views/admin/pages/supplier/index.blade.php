@@ -8,11 +8,11 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between" >
                 <div class="card-header pb-0">
-                    <h6>Categories</h6>
+                    <h6>Suppliers</h6>
                   </div>
                   <div class="card-header pb-0 ">
-                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddCategoryModal">
-                        Add category
+                    <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddSupplierModal">
+                        Add suppliers
                     </button>
                  </div>
             </div>
@@ -24,27 +24,47 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transaction</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fax</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($categories as $category)
+                    @foreach ($suppliers as $supplier)
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$category['category_id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{ $supplier['company_id'] }}</h6>
                             </div>
                         </div>
                     </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$category['category_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['company_name'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['transaction_name'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['address'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['email'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['phone'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['fax'] }}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('categories.edit', ['category' => $category['category_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('suppliers.edit', ['supplier' => $supplier['company_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
 
-                        <a href="{{route('categories.destroy', ['category' => $category['category_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('suppliers.destroy', ['supplier' => $supplier['company_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>
@@ -58,9 +78,8 @@
         </div>
       </div>
 
-
         <!-- The Modal Add Customer-->
-        <div class="modal fade" id="AddCategoryModal">
+        <div class="modal fade" id="AddSupplierModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
@@ -70,17 +89,38 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{route('categories.store')}}" method="POST">
+                    <form action="{{route('suppliers.store')}}" method="POST">
                         @csrf
                     <!-- Modal Body -->
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="category_id" name="category_id">
+                                <input type="text" class="form-control" id="company_id" name="company_id">
                             </div>
                             <div class="mb-3">
-                                <label for="company_name">Category Name:</label>
-                                <input type="text" class="form-control" id="category_name" name="category_name">
+                                <label for="company_name">Company Name:</label>
+                                <input type="text" class="form-control" id="company_name" name="company_name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="short_name">Transaction Name:</label>
+                                <input type="text" class="form-control" id="transaction_name" name="transaction_name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="city">Address:</label>
+                                <input type="text" class="form-control" id="address" name="address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone">Phone:</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                            </div>
+                            <div class="mb-3">
+                                <label for="other_info">Fax:</label>
+                                <textarea class="form-control" id="fax" name="fax"></textarea>
+                            </div>
                         </div>
                         <!-- Modal Footer -->
                         <div class="modal-footer">
@@ -91,7 +131,6 @@
                 </div>
             </div>
         </div>
-
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
