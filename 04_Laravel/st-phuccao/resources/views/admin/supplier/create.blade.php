@@ -12,34 +12,54 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4">
+            <form class="form-horizontal mt-4" action="{{ route('suppliers.store') }}" method="POST">
+                @csrf
                 <div class="form-group">
-                    <label>Company Name</label>
-                    <input type="text" class="form-control" value="">
+                    <label for="company_name">Company Name</label>
+                    <input type="text" class="form-control @error('company_name') is-invalid @enderror" id="company_name" name="company_name" value="{{ old('company_name') }}">
+                    @error('company_name')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Transaction Name</label>
-                    <input type="text" class="form-control" value="">
+                    <label for="transaction_name">Transaction Name</label>
+                    <input type="text" class="form-control @error('transaction_name') is-invalid @enderror" id="transaction_name" name="transaction_name" value="{{ old('transaction_name') }}">
+                    @error('transaction_name')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+                    @error('address')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control" value="">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                    @error('email')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control" value="">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}">
+                    @error('phone')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="form-control" value="">
-                </div>
-                <div class="form-group">
-                    <label>Fax</label>
-                    <input type="text" class="form-control" value="">
+                    <label for="fax">Fax</label>
+                    <input type="text" class="form-control @error('fax') is-invalid @enderror" id="fax" name="fax" value="{{ old('fax') }}">
+                    @error('fax')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <button class="btn btn-success text-white">Add</button>
+                        <button class="btn btn-success text-white" type="submit" >Add</button>
                     </div>
                 </div>               
             </form>
