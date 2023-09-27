@@ -24,9 +24,9 @@ class CustomerFactory extends Factory
         return [
             'company_name' => $this->faker->company,
             'transaction_name' => $this->faker->word,
-            'address' => Str::limit($this->faker->address, 40),
+            'address' => $this->faker->streetAddress,
             'email' => $this->faker->unique()->safeEmail,
-            'phone_number' => $this->faker->phoneNumber,
+            'phone_number' => Str::limit($this->faker->phoneNumber, 10),
             'fax' => Str::random(5),
         ];
     }
