@@ -22,7 +22,7 @@ class SupplierFactory extends Factory
             'company_name' => fake()->company(),
             'transaction_name' => strtoupper(fake()->state()),
             'address' => fake()->city(),
-            'email' => fake()->unique()->companyEmail(),
+            'email' => fake()->unique()->companyEmail(30),
             'phone' => fake()->phoneNumber(15),
             'fax' => fake()->ssn()
         ];

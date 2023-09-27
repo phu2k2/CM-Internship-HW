@@ -10,68 +10,6 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    private $data = [
-        [
-            'id' => 1,
-            'company_id' => 'VNM',
-            'company_name' => 'Công ty sữa Việt Nam',
-            'transaction_name' => 'VINAMILK',
-            'address' => 'Hà Nội',
-            'phone' => '04-891135',
-            'fax' => '',
-            'email' => 'vinamilk@vietnam.com'
-        ],
-        [
-            'id' => 2,
-            'company_id' => 'MVT',
-            'company_name' => 'Công ty may mặc Việt Tiến',
-            'transaction_name' => 'VIETTIEN',
-            'address' => 'Sài Gòn',
-            'phone' => '08-808803',
-            'fax' => '',
-            'email' => 'viettien@vietnam.com'
-        ],
-        [
-            'id' => 3,
-            'company_id' => 'SCM',
-            'company_name' => 'Siêu thị Coop-mart',
-            'transaction_name' => 'COOPMART',
-            'address' => 'Quy Nhơn',
-            'phone' => '056-888666',
-            'fax' => '',
-            'email' => 'coopmart@vietnam.com'
-        ],
-        [
-            'id' => 4,
-            'company_id' => 'DQV',
-            'company_name' => 'Công ty máy tính Quang Vũ',
-            'transaction_name' => 'QUANGVU',
-            'address' => 'Quy Nhơn',
-            'phone' => '056-888777',
-            'fax' => '',
-            'email' => 'quangvu@vietnam.com'
-        ],
-        [
-            'id' => 5,
-            'company_id' => 'DAF',
-            'company_name' => 'Nội thất Đài Loan Dafuco',
-            'transaction_name' => 'DAFUCO',
-            'address' => 'Quy Nhơn',
-            'phone' => '056-888111',
-            'fax' => '',
-            'email' => 'dafuco@vietnam.com'
-        ],
-        [
-            'id' => 6,
-            'company_id' => 'GOL',
-            'company_name' => 'Công ty sản xuất dụng cụ học sinh Golden',
-            'transaction_name' => 'GOLDEN',
-            'address' => 'Quy Nhơn',
-            'phone' => '056-891135',
-            'fax' => '',
-            'email' => 'golden@vietnam.com'
-        ],
-    ];
     /**
      * Display a listing of the resource.
      */
@@ -94,7 +32,14 @@ class SupplierController extends Controller
      */
     public function store(CreateSupplierRequest $request)
     {
-        //
+        $supplier = new Supplier();
+        if ($supplier->create($request->validated())) {
+            session()->flash('message', 'Create new customer was succesful!');
+        } else {
+            session()->flash('error', 'Create new customer failed!');
+        }
+
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -102,11 +47,7 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $supplier = $value;
-            }
-        }
+        $supplier = Supplier::find($id);
         return view('supplier.show', compact('supplier'));
     }
 
@@ -115,11 +56,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $supplier = $value;
-            }
-        }
+        $supplier = Supplier::find($id);
         return view('supplier.edit', compact('supplier'));
     }
 
@@ -128,7 +65,14 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if ($supplier->update($request->validated())) {
+            session()->flash('message', 'Update the supplier was succesful!');
+        } else {
+            session()->flash('error', 'Update the supplier failed!');
+        }
+
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -136,6 +80,13 @@ class SupplierController extends Controller
      */
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if ($supplier->delete()) {
+            session()->flash('message', 'Delete the supplier was succesful!');
+        } else {
+            session()->flash('error', 'Delete the supplier failed!');
+        }
+
+        return redirect()->route('suppliers.index');
     }
 }
