@@ -65,6 +65,7 @@ class CustomerController extends Controller
             'fax' => '777-777-7777',
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
