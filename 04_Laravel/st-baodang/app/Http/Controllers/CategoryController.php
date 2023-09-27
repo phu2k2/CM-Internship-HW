@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest\DeleteCategoryRequest;
 use App\Http\Requests\CategoryRequest\StoreCategoryRequest;
 use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -37,12 +36,11 @@ class CategoryController extends Controller
             'category_id' => $request->input('category_id'),
             'category_name' => $request->input('category_name')
         ]);
-
         if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('category.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -77,7 +75,7 @@ class CategoryController extends Controller
                 'category_name' => $request->input('category_name')
             ]);
 
-        return redirect()->route('category.show', $id);
+        return redirect()->route('categories.show', $id);
     }
 
     /**
@@ -87,9 +85,9 @@ class CategoryController extends Controller
     {
         $records = DB::table('categories')->delete($id);
         if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('category.index');
+        return redirect()->route('categories.index');
     }
 }

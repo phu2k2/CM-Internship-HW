@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeeRequest\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\StoreEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
@@ -45,12 +43,11 @@ class EmployeeController extends Controller
             'base_salary' => $request->input('base_salary'),
             'allowance' => $request->input('allowance')
         ]);
-
         if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -92,7 +89,7 @@ class EmployeeController extends Controller
                 'allowance' => $request->input('allowance')
             ]);
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -102,9 +99,9 @@ class EmployeeController extends Controller
     {
         $records = DB::table('employees')->delete($id);
         if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 }

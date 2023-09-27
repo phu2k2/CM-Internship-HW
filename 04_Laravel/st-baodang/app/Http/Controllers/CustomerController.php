@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest\DeleteCustomerRequest;
 use App\Http\Requests\CustomerRequest\StoreCustomerRequest;
 use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -43,10 +42,10 @@ class CustomerController extends Controller
         ]);
 
         if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -83,7 +82,7 @@ class CustomerController extends Controller
             'fax' => $request->input('fax')
         ]);
 
-        return redirect()->route('customer.show', $id);
+        return redirect()->route('customers.show', $id);
     }
 
     /**
@@ -93,9 +92,9 @@ class CustomerController extends Controller
     {
         $records = DB::table('customers')->delete($id);
         if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
     }
 }

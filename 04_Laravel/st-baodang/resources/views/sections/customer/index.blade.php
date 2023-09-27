@@ -18,7 +18,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Customers table</h5>
-            <a href="{{ route('customer.create') }}" type="button" class="btn btn-primary">Create</a>
+            <a href="{{ route('customers.create') }}" type="button" class="btn btn-primary">Create</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -35,7 +35,7 @@
                 @foreach($customers as $customer)
                     <tr>
                         <td><span class="fw-medium">{{$customer->id}}</span></td>
-                        <td><a href="{{ route('customer.show', $customer->id) }}">{{ $customer->company_name }}</a></td>
+                        <td><a href="{{ route('customers.show', $customer->id) }}">{{ $customer->company_name }}</a></td>
                         <td>{{ $customer->transaction_name }}</td>
                         <td>{{ $customer->email }}</td>
                         <td>
@@ -65,7 +65,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{ route('customer.destroy', $customer->id) }}">
+                                    <form method="POST" action="{{ route('customers.destroy', $customer->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <input style="display: none" name="id" value="{{ $customer->id }}">

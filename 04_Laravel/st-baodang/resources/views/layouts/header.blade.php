@@ -73,25 +73,25 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Tables</span></li>
         <!-- List -->
         <li class="menu-item">
-            <a href="{{ route('customer.index') }}" class="menu-link">
+            <a href="{{ route('customers.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Customers</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{ route('category.index') }}" class="menu-link">
+            <a href="{{ route('categories.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Categories</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{ route('supplier.index') }}" class="menu-link">
+            <a href="{{ route('suppliers.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Suppliers</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{ route('employee.index') }}" class="menu-link">
+            <a href="{{ route('employees.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Employees</div>
             </a>
