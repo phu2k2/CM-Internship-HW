@@ -22,7 +22,7 @@ class DeleteCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'companyId' => 'required|string|size:6|unique:category, companyId',
+            'id' => 'required|integer|exists:customers,id'
         ];
     }
 }

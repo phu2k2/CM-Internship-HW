@@ -21,6 +21,7 @@
                                 <thead>
                                     <tr>
                                         <th> ID </th>
+                                        <th> Company ID </th>
                                         <th> Company Name </th>
                                         <th> Transaction Name </th>
                                         <th> Address </th>
@@ -34,11 +35,12 @@
                                     @foreach ($suppliers as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['companyId'] }}</td>
-                                            <td>{{ $item['transactionName'] }}</td>
+                                            <td>{{ $item['company_id'] }}</td>
+                                            <td>{{ $item['company_name'] }}</td>
+                                            <td>{{ $item['transaction_name'] }}</td>
                                             <td>{{ $item['address'] }}</td>
                                             <td>{{ $item['email'] }}</td>
-                                            <td>{{ $item['phoneNumber'] }}</td>
+                                            <td>{{ $item['phone'] }}</td>
                                             <td>{{ $item['fax'] }}</td>
                                             <td>
                                                 <a href="{{ route('suppliers.edit', $item['id']) }}" class="btn btn-warning"
@@ -58,7 +60,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['transactionName'] }}"</b>!
+                                                                    <b>"{{ $item['company_name'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">

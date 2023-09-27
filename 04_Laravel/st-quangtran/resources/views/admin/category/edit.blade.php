@@ -8,34 +8,32 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form method="POST" action="{{ URL::to('category/update', ['id' => $category['id']]) }}">
+                            <form method="POST" action="{{ route('categories.update', ['category' => $category['id']]) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="categoryId"> Category ID </label>
-                                    <input type="text" id="categoryId" name="categoryId" class="form-control"
-                                        placeholder="Category ID" value="{{ old('categoryId', $category['categoryId']) }}">
-                                    @error('categoryId')
+                                    <label for="category_id"> Category ID </label>
+                                    <input type="text" id="category_id" name="category_id" class="form-control"
+                                        placeholder="Category ID"
+                                        value="{{ old('category_id', $category['category_id']) }}">
+                                    @error('category_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="categoryName"> Category ID </label>
-                                    <input type="text" id="categoryName" name="categoryName" class="form-control"
+                                    <label for="category_name"> Category ID </label>
+                                    <input type="text" id="category_name" name="category_name" class="form-control"
                                         placeholder="Category ID"
-                                        value="{{ old('categoryName', $category['categoryName']) }}">
-                                    @error('categoryName')
+                                        value="{{ old('category_name', $category['category_name']) }}">
+                                    @error('category_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 
@@ -45,10 +43,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

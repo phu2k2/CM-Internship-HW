@@ -8,48 +8,57 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form method="POST" action="{{ URL::to('supplier/update', ['id' => $supplier['id']]) }}">
+                            <form method="POST" action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="companyId"> Company ID </label>
-                                    <input type="text" class="form-control" id="companyId" placeholder="Company Name"
-                                        value="{{ old('companyId', $supplier['companyId']) }}">
-                                    @error('companyId')
+                                    <label for="company_id"> Company ID </label>
+                                    <input type="text" class="form-control" id="company_id" name="company_id"
+                                        placeholder="Company Name" value="{{ old('company_id', $supplier['company_id']) }}">
+                                    @error('company_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="transactionName">Transaction Name</label>
-                                    <input type="text" class="form-control" id="transactionName"
+                                    <label for="company_name"> Company ID </label>
+                                    <input type="text" class="form-control" id="company_name" name="company_name"
+                                        placeholder="Company Name"
+                                        value="{{ old('company_name', $supplier['company_name']) }}">
+                                    @error('company_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="transaction_name">Transaction Name</label>
+                                    <input type="text" class="form-control" id="transaction_name" name="transaction_name"
                                         placeholder="Transaction Name"
-                                        value="{{ old('transactionName', $supplier['transactionName']) }}">
-                                    @error('transactionName')
+                                        value="{{ old('transaction_name', $supplier['transaction_name']) }}">
+                                    @error('transaction_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" placeholder="Email"
-                                        value="{{ old('email', $supplier['email']) }}">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        placeholder="Email" value="{{ old('email', $supplier['email']) }}">
                                     @error('email')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Address"
-                                        value="{{ old('address', $supplier['address']) }}">
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        placeholder="Address" value="{{ old('address', $supplier['address']) }}">
                                     @error('address')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phoneNumber">Phone</label>
-                                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone"
-                                        value="{{ old('phoneNumber', $supplier['phoneNumber']) }}">
-                                    @error('phoneNumber')
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        placeholder="Phone" value="{{ old('phone', $supplier['phone']) }}">
+                                    @error('phone')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -68,8 +77,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 
@@ -79,9 +86,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
 

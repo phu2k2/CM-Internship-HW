@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Customers Management</h4>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-success" href="{{ route('suppliers.create') }}"
+                                    <a class="btn btn-success" href="{{ route('customers.create') }}"
                                         style="padding: 5px 30px">Add
                                         Customer</a>
                                 </div>
@@ -34,11 +34,11 @@
                                     @foreach ($customers as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['companyId'] }}</td>
-                                            <td>{{ $item['transactionName'] }}</td>
+                                            <td>{{ $item['company_id'] }}</td>
+                                            <td>{{ $item['transaction_name'] }}</td>
                                             <td>{{ $item['address'] }}</td>
                                             <td>{{ $item['email'] }}</td>
-                                            <td>{{ $item['phoneNumber'] }}</td>
+                                            <td>{{ $item['phone'] }}</td>
                                             <td>{{ $item['fax'] }}</td>
                                             <td>
                                                 <a href="{{ route('customers.edit', $item['id']) }}" class="btn btn-warning"
@@ -58,7 +58,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['transactionName'] }}"</b>!
+                                                                    <b>"{{ $item['transaction_name'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">

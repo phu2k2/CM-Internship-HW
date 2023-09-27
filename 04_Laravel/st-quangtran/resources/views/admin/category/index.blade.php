@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Categories Management Categories</h4>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-success" href="{{ URL::to('category/insert') }}"
+                                    <a class="btn btn-success" href="{{ route('categories.create') }}"
                                         style="padding: 5px 30px">Add
                                         Category</a>
                                 </div>
@@ -30,8 +30,8 @@
                                     @foreach ($categories as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['categoryId'] }}</td>
-                                            <td>{{ $item['categoryName'] }}</td>
+                                            <td>{{ $item['category_id'] }}</td>
+                                            <td>{{ $item['category_name'] }}</td>
                                             <td>
                                                 <a href="{{ route('categories.edit', $item['id']) }}"
                                                     class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
@@ -51,7 +51,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['categoryName'] }}"</b>!
+                                                                    <b>"{{ $item['category_name'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
@@ -83,5 +83,4 @@
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

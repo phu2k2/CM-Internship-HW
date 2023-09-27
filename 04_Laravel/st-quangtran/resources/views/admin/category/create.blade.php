@@ -7,21 +7,21 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{ URL::to('category/store') }}">
+                            <form method="post" action="{{ route('categories.store') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="categoryId"> Category ID </label>
-                                    <input type="text" id="categoryId" name="categoryId" class="form-control"
-                                        placeholder="Category ID" value="{{ old('categoryId') }}">
-                                    @error('categoryId')
+                                    <label for="category_id"> Category ID </label>
+                                    <input type="text" id="category_id" name="category_id" class="form-control"
+                                        placeholder="Category ID" value="{{ old('category_id') }}">
+                                    @error('category_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="categoryName">Category Name</label>
-                                    <input type="text" class="form-control" id="categoryName" placeholder="Category Name"
-                                        value="{{ old('categoryName') }}">
-                                    @error('categoryName')
+                                    <label for="category_name">Category Name</label>
+                                    <input type="text" class="form-control" id="category_name"
+                                        placeholder="Category Name" value="{{ old('category_name') }}">
+                                    @error('category_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -40,10 +40,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

@@ -11,164 +11,152 @@ class EmployeeController extends Controller
 {
     private $data = [
         [
-            'id' => '1',
-            'employeeId' => 'EMP001',
-            'lastName' => 'Smith',
-            'firstName' => 'John',
-            'birthday' => '1990-05-15',
-            'startDate' => '2015-03-20',
-            'address' => '123 Main St',
-            'phone' => '555-123-4567',
-            'baseSalary' => 60000,
-            'allowance' => 3000,
+            'id' => 1,
+            'employee_id' => 'A001',
+            'last_name' => 'Đậu Tố',
+            'first_name' => 'Anh',
+            'birthday' => '1986-03-07',
+            'start_date' => '2009-03-01',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-647995',
+            'base_salary' => 10000000,
+            'allowance' => 1000000
         ],
         [
-            'id' => '2',
-            'employeeId' => 'EMP002',
-            'lastName' => 'Johnson',
-            'firstName' => 'Emily',
-            'birthday' => '1985-12-10',
-            'startDate' => '2017-08-12',
-            'address' => '456 Elm St',
-            'phone' => '555-234-5678',
-            'baseSalary' => 55000,
-            'allowance' => 2800,
+            'id' => 2,
+            'employee_id' => 'H001',
+            'last_name' => 'Lê Thị Bích',
+            'first_name' => 'Hoa',
+            'birthday' => '1986-05-20',
+            'start_date' => '2009-03-01',
+            'address' => 'An Khê',
+            'phone' => '056-647995',
+            'base_salary' => 9000000,
+            'allowance' => 1000000
         ],
         [
-            'id' => '3',
-            'employeeId' => 'EMP003',
-            'lastName' => 'Williams',
-            'firstName' => 'Michael',
-            'birthday' => '1992-03-25',
-            'startDate' => '2016-06-05',
-            'address' => '789 Oak St',
-            'phone' => '555-345-6789',
-            'baseSalary' => 62000,
-            'allowance' => 3200,
+            'id' => 3,
+            'employee_id' => 'H002',
+            'last_name' => 'Ông Hoàng',
+            'first_name' => 'Hải',
+            'birthday' => '1987-08-11',
+            'start_date' => '2009-03-01',
+            'address' => 'Đà Nẵng',
+            'phone' => '0905-611725',
+            'base_salary' => 12000000,
+            'allowance' => 0
         ],
         [
-            'id' => '4',
-            'employeeId' => 'EMP004',
-            'lastName' => 'Brown',
-            'firstName' => 'Jessica',
-            'birthday' => '1988-08-20',
-            'startDate' => '2018-02-18',
-            'address' => '101 Pine St',
-            'phone' => '555-456-7890',
-            'baseSalary' => 58000,
-            'allowance' => 2900,
+            'id' => 4,
+            'employee_id' => 'H003',
+            'last_name' => 'Trần Nguyễn Đức',
+            'first_name' => 'Hoàng',
+            'birthday' => '1986-04-09',
+            'start_date' => '2009-03-01',
+            'address' => 'Quy Nhơn',
+            'phone' => '',
+            'base_salary' => 11000000,
+            'allowance' => 0
         ],
         [
-            'id' => '5',
-            'employeeId' => 'EMP005',
-            'lastName' => 'Jones',
-            'firstName' => 'David',
-            'birthday' => '1995-02-28',
-            'startDate' => '2019-07-10',
-            'address' => '202 Cedar St',
-            'phone' => '555-567-8901',
-            'baseSalary' => 64000,
-            'allowance' => 3300,
+            'id' => 5,
+            'employee_id' => 'P001',
+            'last_name' => 'Nguyễn Hoài',
+            'first_name' => 'Phong',
+            'birthday' => '1986-06-14',
+            'start_date' => '2009-03-01',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-891135',
+            'base_salary' => 13000000,
+            'allowance' => 0
         ],
         [
-            'id' => '6',
-            'employeeId' => 'EMP006',
-            'lastName' => 'Davis',
-            'firstName' => 'Sarah',
-            'birthday' => '1993-11-15',
-            'startDate' => '2014-04-02',
-            'address' => '303 Birch St',
-            'phone' => '555-678-9012',
-            'baseSalary' => 57000,
-            'allowance' => 2700,
+            'id' => 6,
+            'employee_id' => 'Q001',
+            'last_name' => 'Trương Thị Thế',
+            'first_name' => 'Quang',
+            'birthday' => '1987-06-17',
+            'start_date' => '2009-03-01',
+            'address' => 'Ayunpa',
+            'phone' => '0979-792176',
+            'base_salary' => 10000000,
+            'allowance' => 500000
         ],
         [
-            'id' => '7',
-            'employeeId' => 'EMP007',
-            'lastName' => 'Miller',
-            'firstName' => 'Christopher',
-            'birthday' => '1987-07-05',
-            'startDate' => '2015-11-30',
-            'address' => '404 Oak St',
-            'phone' => '555-789-0123',
-            'baseSalary' => 61000,
-            'allowance' => 3100,
+            'id' => 7,
+            'employee_id' => 'T001',
+            'last_name' => 'Nguyễn Đức',
+            'first_name' => 'Thắng',
+            'birthday' => '1984-09-13',
+            'start_date' => '2009-03-01',
+            'address' => 'Phù Mỹ',
+            'phone' => '0955-593893',
+            'base_salary' => 12000000,
+            'allowance' => 0
+        ],
+        [
+            'id' => 8,
+            'employee_id' => 'D001',
+            'last_name' => 'Nguyễn Minh',
+            'first_name' => 'Đăng',
+            'birthday' => '1987-12-29',
+            'start_date' => '2009-03-01',
+            'address' => 'Quy Nhơn',
+            'phone' => '0905-779919',
+            'base_salary' => 14000000,
+            'allowance' => 0
+        ],
+        [
+            'id' => 9,
+            'employee_id' => 'M001',
+            'last_name' => 'Hồ Thị Phương',
+            'first_name' => 'Mai',
+            'birthday' => '1987-09-01',
+            'start_date' => '2009-03-01',
+            'address' => 'Tây Sơn',
+            'phone' => '',
+            'base_salary' => 9000000,
+            'allowance' => 500000
         ],
     ];
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $employees = [];
+        $employees = $this->data;
 
-        for ($i = 1; $i <= 10; $i++) {
-            $employee = [
-                'ID' => $i,
-                'Employee ID' => rand(1000, 9999),
-                'Last Name' => 'Last Name ' . $i,
-                'First Name' => 'First Name ' . $i,
-                'Birthday' => date('Y-m-d', strtotime('-' . rand(18, 60) . ' years')),
-                'Start Day' => date('Y-m-d', strtotime('-' . rand(1, 10) . ' years')),
-                'Address' => 'Address ' . $i,
-                'Phone' => '123-456-' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'Base Salary' => rand(30000, 80000),
-                'Allowance' => rand(1000, 5000),
-                'Created At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
-                'Updated At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
-            ];
-
-            $employees[] = $employee;
-        }
-        return view("admin.employee.show", ['employees' => $employees]);
+        return view('admin.employee.index', compact('employees'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.employee.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreEmployeeRequest $request)
     {
         return redirect()->route('admin.employee.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
-        return view('admin.employee.update', ['id' => $id]);
+        foreach ($this->data as $key => $value) {
+            if ($value['id'] == $id) {
+                $employee = $value;
+            }
+        }
+
+        return view('admin.employee.edit', compact('employee'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        //
     }
 }

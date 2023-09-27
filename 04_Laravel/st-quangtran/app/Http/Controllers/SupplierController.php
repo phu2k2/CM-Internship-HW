@@ -12,60 +12,76 @@ class SupplierController extends Controller
     private $data = [
         [
             'id' => 1,
-            'companyId' => 'ABC123',
-            'transactionName' => 'Transaction A',
-            'address' => '123 Main St',
-            'email' => 'example1@example.com',
-            'phoneNumber' => '123-456-7890',
-            'fax' => '987-654-3210',
+            'company_id' => 'VNM',
+            'company_name' => 'Công ty sữa Việt Nam',
+            'transaction_name' => 'VINAMILK',
+            'address' => 'Hà Nội',
+            'phone' => '04-891135',
+            'fax' => '',
+            'email' => 'vinamilk@vietnam.com'
         ],
         [
             'id' => 2,
-            'companyId' => 'XYZ456',
-            'transactionName' => 'Transaction B',
-            'address' => '456 Elm St',
-            'email' => 'example2@example.com',
-            'phoneNumber' => '555-555-5555',
-            'fax' => '111-111-1111',
+            'company_id' => 'MVT',
+            'company_name' => 'Công ty may mặc Việt Tiến',
+            'transaction_name' => 'VIETTIEN',
+            'address' => 'Sài Gòn',
+            'phone' => '08-808803',
+            'fax' => '',
+            'email' => 'viettien@vietnam.com'
         ],
         [
             'id' => 3,
-            'companyId' => 'DEF789',
-            'transactionName' => 'Transaction C',
-            'address' => '789 Oak St',
-            'email' => 'example3@example.com',
-            'phoneNumber' => '777-777-7777',
-            'fax' => '222-222-2222',
+            'company_id' => 'SCM',
+            'company_name' => 'Siêu thị Coop-mart',
+            'transaction_name' => 'COOPMART',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-888666',
+            'fax' => '',
+            'email' => 'coopmart@vietnam.com'
         ],
         [
             'id' => 4,
-            'companyId' => 'GHI101',
-            'transactionName' => 'Transaction D',
-            'address' => '101 Pine St',
-            'email' => 'example4@example.com',
-            'phoneNumber' => '999-999-9999',
-            'fax' => '333-333-3333',
+            'company_id' => 'DQV',
+            'company_name' => 'Công ty máy tính Quang Vũ',
+            'transaction_name' => 'QUANGVU',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-888777',
+            'fax' => '',
+            'email' => 'quangvu@vietnam.com'
         ],
         [
             'id' => 5,
-            'companyId' => 'JKL202',
-            'transactionName' => 'Transaction E',
-            'address' => '202 Cedar St',
-            'email' => 'example5@example.com',
-            'phoneNumber' => '444-444-4444',
-            'fax' => '555-555-5555',
+            'company_id' => 'DAF',
+            'company_name' => 'Nội thất Đài Loan Dafuco',
+            'transaction_name' => 'DAFUCO',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-888111',
+            'fax' => '',
+            'email' => 'dafuco@vietnam.com'
+        ],
+        [
+            'id' => 6,
+            'company_id' => 'GOL',
+            'company_name' => 'Công ty sản xuất dụng cụ học sinh Golden',
+            'transaction_name' => 'GOLDEN',
+            'address' => 'Quy Nhơn',
+            'phone' => '056-891135',
+            'fax' => '',
+            'email' => 'golden@vietnam.com'
         ],
     ];
 
     public function index()
     {
         $suppliers = $this->data;
-        return view("admin.supplier.index", ['suppliers' => $suppliers]);
+
+        return view('admin.supplier.index', ['suppliers' => $suppliers]);
     }
 
     public function create()
     {
-        return view("admin.supplier.create");
+        return view('admin.supplier.create');
     }
 
     public function store(StoreSupplierRequest $request)
@@ -79,12 +95,17 @@ class SupplierController extends Controller
 
     public function edit(int $id)
     {
-        return view('admin.customer.edit', ['id' => $id]);
+        foreach ($this->data as $key => $value) {
+            if ($value['id'] == $id) {
+                $supplier = $value;
+            }
+        }
+
+        return view('admin.supplier.edit', compact('supplier'));
     }
 
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        return redirect()->route('admin.customer.index');
     }
 
     public function destroy(DeleteSupplierRequest $request, string $id)

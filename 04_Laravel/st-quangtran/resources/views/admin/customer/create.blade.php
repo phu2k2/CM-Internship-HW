@@ -8,21 +8,21 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form method="post" action="{{ URL::to('customer/store') }}">
+                            <form method="post" action="{{ route('customers.store') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="companyId"> Company ID </label>
-                                    <input type="text" id="companyId" name="companyId" class="form-control"
-                                        placeholder="Company ID" value="{{ old('companyId') }}">
-                                    @error('companyId')
+                                    <label for="company_id"> Company ID </label>
+                                    <input type="text" id="company_id" name="company_id" class="form-control"
+                                        placeholder="Company ID" value="{{ old('company_id') }}">
+                                    @error('company_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="transactionName">Transaction Name</label>
-                                    <input type="text" id="transactionName" name="transactionName" class="form-control"
-                                        placeholder="Transaction Name" value="{{ old('transactionName') }}">
-                                    @error('transactionName')
+                                    <label for="transaction_name">Transaction Name</label>
+                                    <input type="text" id="transaction_name" name="transaction_name" class="form-control"
+                                        placeholder="Transaction Name" value="{{ old('transaction_name') }}">
+                                    @error('transaction_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -43,10 +43,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phoneNumber">Phone Number</label>
-                                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
-                                        placeholder="Phone Number" value="{{ old('phoneNumber') }}">
-                                    @error('phoneNumber')
+                                    <label for="phone">Phone Number</label>
+                                    <input type="text" id="phone" name="phone" class="form-control"
+                                        placeholder="Phone Number" value="{{ old('phone') }}">
+                                    @error('phone')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -61,7 +61,6 @@
 
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
-
                         </div>
                     </div>
                 </div>

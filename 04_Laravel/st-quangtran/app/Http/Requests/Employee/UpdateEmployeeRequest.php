@@ -22,14 +22,14 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employeeId' => 'required|string|size:4|unique:employee, employeeId',
-            'lastName' => 'required|string|max:40',
-            'firstName' => 'required|string|max:10',
+            'employee_id' => 'required|string|unique:employees,employee_id|size:4',
+            'last_name' => 'required|string|max:40',
+            'first_name' => 'required|string|max:10',
             'birthday' => 'required|date',
-            'startDate' => 'required|date',
+            'start_date' => 'required|date',
             'address' => 'required|string|max:60',
-            'phoneNumber' => 'required|string|max:15',
-            'baseSalary' => 'required|numeric',
+            'phone' => 'required|string|max:15',
+            'base_salary' => 'required|numeric',
             'allowance' => 'required|numeric',
         ];
     }

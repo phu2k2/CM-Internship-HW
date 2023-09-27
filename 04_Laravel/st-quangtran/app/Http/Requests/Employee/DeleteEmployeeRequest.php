@@ -22,7 +22,7 @@ class DeleteEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employeeId' => 'required|string|size:4|unique:employee, employeeId',
+            'id' => 'required|integer|exists:employees,id'
         ];
     }
 }

@@ -37,17 +37,17 @@
                                     @foreach ($employees as $employee)
                                         <tr>
                                             <td>{{ $employee['id'] }}</td>
-                                            <td>{{ $employee['employeeId'] }}</td>
-                                            <td>{{ $employee['lastName'] }}</td>
-                                            <td>{{ $employee['firstName'] }}</td>
+                                            <td>{{ $employee['employee_id'] }}</td>
+                                            <td>{{ $employee['last_name'] }}</td>
+                                            <td>{{ $employee['first_name'] }}</td>
                                             <td>{{ $employee['birthday'] }}</td>
-                                            <td>{{ $employee['startDate'] }}</td>
+                                            <td>{{ $employee['start_date'] }}</td>
                                             <td>{{ $employee['address'] }}</td>
                                             <td>{{ $employee['phone'] }}</td>
-                                            <td>{{ $employee['baseSalary'] }}</td>
+                                            <td>{{ $employee['base_salary'] }}</td>
                                             <td>{{ $employee['allowance'] }}</td>
                                             <td>
-                                                <a href="{{ route('employees.edit', $employee['ID']) }}"
+                                                <a href="{{ route('employees.edit', $employee['id']) }}"
                                                     class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
                                                         class="fa-solid fa-pen"></i>
                                                 </a>
@@ -65,7 +65,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Are you sure you want to delete
-                                                                    <b>"{{ $employee['firstName'] }}"</b>!
+                                                                    <b>"{{ $employee['first_name'] }}"</b>!
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
@@ -84,8 +84,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         @stop
 
@@ -95,10 +93,7 @@
             <script src="{{ asset('admin/assets/js/jquery.cookie.js') }}"></script>
             <script src="{{ asset('admin/assets/js/off-canvas.js') }}"></script>
             <script src="{{ asset('admin/assets/js/hoverable-collapse.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
-
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

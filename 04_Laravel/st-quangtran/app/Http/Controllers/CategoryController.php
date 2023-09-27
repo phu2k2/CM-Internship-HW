@@ -12,54 +12,56 @@ class CategoryController extends Controller
     private $data = [
         [
             'id' => 1,
-            'categoryId' => 'cat001',
-            'categoryName' => 'Category A',
+            'category_id' => 'cat001',
+            'category_name' => 'Category A',
         ],
         [
             'id' => 2,
-            'categoryId' => 'cat002',
-            'categoryName' => 'Category B',
+            'category_id' => 'cat002',
+            'category_name' => 'Category B',
         ],
         [
             'id' => 3,
-            'categoryId' => 'cat003',
-            'categoryName' => 'Category C',
+            'category_id' => 'cat003',
+            'category_name' => 'Category C',
         ],
         [
             'id' => 4,
-            'categoryId' => 'cat004',
-            'categoryName' => 'Category D',
+            'category_id' => 'cat004',
+            'category_name' => 'Category D',
         ],
         [
             'id' => 5,
-            'categoryId' => 'cat005',
-            'categoryName' => 'Category E',
+            'category_id' => 'cat005',
+            'category_name' => 'Category E',
         ],
         [
             'id' => 6,
-            'categoryId' => 'cat006',
-            'categoryName' => 'Category F',
+            'category_id' => 'cat006',
+            'category_name' => 'Category F',
         ],
         [
             'id' => 7,
-            'categoryId' => 'cat007',
-            'categoryName' => 'Category G',
+            'category_id' => 'cat007',
+            'category_name' => 'Category G',
         ],
     ];
 
     public function index()
     {
         $categories = $this->data;
-        return view("admin.category.index", ['categories' => $categories]);
+
+        return view('admin.category.index', ['categories' => $categories]);
     }
 
     public function create()
     {
-        return view("admin.category.create");
+        return view('admin.category.create');
     }
 
     public function store(StoreCategoryRequest $request)
     {
+        return redirect()->route('categories.index');
     }
 
     public function show(string $id)
@@ -68,7 +70,13 @@ class CategoryController extends Controller
 
     public function edit(int $id)
     {
-        return view("admin.category.edit", ['id' => $id]);
+        foreach ($this->data as $key => $value) {
+            if ($value['id'] == $id) {
+                $category = $value;
+            }
+        }
+
+        return view('admin.category.edit', compact('category'));
     }
 
     public function update(UpdateCategoryRequest $request, string $id)
