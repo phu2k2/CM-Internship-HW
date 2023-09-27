@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('transaction_name', 20)->unique();
             $table->string('address', 50);
             $table->string('phone', 15)->unique();
-            $table->string('fax', 15)->unique();
             $table->string('email', 30)->unique();
+            $table->string('fax', 15)->unique();
             $table->timestamps();
         });
     }
