@@ -40,7 +40,7 @@
                 </tr>
             </tfoot>
             <tbody>
-                
+
                 @foreach ($customers as $customer)
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
@@ -56,8 +56,8 @@
                     </td>
                 </tr>
                 @endforeach
-                
-               
+
+
             </tbody>
         </table>
     </div>

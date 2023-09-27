@@ -9,8 +9,6 @@ class CustomersController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
      private $data = [
         [
             'id' => 1,
@@ -283,9 +281,11 @@ class CustomersController extends Controller
             'fax' => '111-222-3333',
         ],
     ];
+
     public function index()
     {
         $customers = $this->data;
+        
         return view('customers.index', compact('customers'));
     }
 

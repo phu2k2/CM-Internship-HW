@@ -10,7 +10,6 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     private $data = [
         [
             'id' => 1,
@@ -37,11 +36,12 @@ class CategoriesController extends Controller
             'categoryId' => 'cat005',
             'categoryName' => 'Category E',
         ],
-        // Add more rows as needed
     ];
+
     public function index()
     {
         $categories = $this->data;
+
         return view('categories.index', compact('categories'));
     }
 

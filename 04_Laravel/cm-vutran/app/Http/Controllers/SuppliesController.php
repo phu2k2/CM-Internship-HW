@@ -9,7 +9,6 @@ class SuppliesController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     private $data = [
         [
             'id' => 1,
@@ -216,6 +215,7 @@ class SuppliesController extends Controller
     public function index()
     {
         $supplies = $this->data;
+        
         return view('supplies.index', compact('supplies'));
     }
 

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class EmployeesController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     private $data = [
         [
             'id' => '1',
@@ -148,6 +151,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $employees = $this->data;
+
         return view('employees.index', compact('employees'));
     }
 
