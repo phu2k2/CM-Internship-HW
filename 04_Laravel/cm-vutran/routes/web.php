@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\SuppliesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+Route::resource('customers', CustomersController::class);
+
+Route::resource('categories', CategoriesController::class);
+
+Route::resource('supplies', SuppliesController::class);
+
+Route::resource('employees', EmployeesController::class);
