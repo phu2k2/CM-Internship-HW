@@ -48,6 +48,9 @@ class CustomerController extends Controller
     public function show(string $id)
     {
         $customer = Customer::find($id);
+        if (!$customer) {
+            abort(404);
+        }
         return view('customer.show', compact('customer'));
     }
 
@@ -57,6 +60,9 @@ class CustomerController extends Controller
     public function edit(string $id)
     {
         $customer = Customer::find($id);
+        if (!$customer) {
+            abort(404);
+        }
         return view('customer.edit', compact('customer'));
     }
 

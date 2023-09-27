@@ -48,6 +48,9 @@ class EmployeeController extends Controller
     public function show(string $id)
     {
         $employee = Employee::find($id);
+        if (!$employee) {
+            abort(404);
+        }
         return view('employee.show', compact('employee'));
     }
 
@@ -57,6 +60,9 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         $employee = Employee::find($id);
+        if (!$employee) {
+            abort(404);
+        }
         return view('employee.edit', compact('employee'));
     }
 

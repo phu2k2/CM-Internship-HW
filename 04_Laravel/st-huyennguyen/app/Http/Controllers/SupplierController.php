@@ -48,6 +48,9 @@ class SupplierController extends Controller
     public function show(string $id)
     {
         $supplier = Supplier::find($id);
+        if (!$supplier) {
+            abort(404);
+        }
         return view('supplier.show', compact('supplier'));
     }
 
@@ -57,6 +60,9 @@ class SupplierController extends Controller
     public function edit(string $id)
     {
         $supplier = Supplier::find($id);
+        if (!$supplier) {
+            abort(404);
+        }
         return view('supplier.edit', compact('supplier'));
     }
 
