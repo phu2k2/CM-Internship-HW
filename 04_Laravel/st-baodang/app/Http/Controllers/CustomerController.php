@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest\DeleteCustomerRequest;
 use App\Http\Requests\CustomerRequest\StoreCustomerRequest;
 use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = DB::table('customers')->get();
+        $customers = Customer::all();
 
         return view('sections.customer.index', compact('customers'));
     }
@@ -33,17 +34,9 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        $isStored = DB::table('customers')->insert([
-            'company_name' => $request->input('company_name'),
-            'transaction_name' => $request->input('transaction_name'),
-            'address' => $request->input('address'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'fax' => $request->input('fax')
-        ]);
-
-        if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+        $customer = new Customer();
+        if ($customer->create($request->validated())) {
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
         return redirect()->route('customer.index');
@@ -54,7 +47,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $customer = DB::table('customers')->where('id', $id)->first();
+        $customer = Customer::find($id);
 
         return view('sections.customer.show', compact('customer'));
     }
@@ -64,7 +57,7 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $customer = DB::table('customers')->where('id', $id)->first();
+        $customer = Customer::find($id);
 
         return view('sections.customer.edit', compact('customer'));
     }
@@ -74,16 +67,13 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
-        DB::table('customers')->where('id', $id)->update([
-            'company_name' => $request->input('company_name'),
-            'transaction_name' => $request->input('transaction_name'),
-            'address' => $request->input('address'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'fax' => $request->input('fax')
-        ]);
+        $customer = Customer::find($id);
+        $isUpdated = $customer->update($request->validated());
+        if ($isUpdated) {
+            session()->flash('status', 'Đã sửa dữ liệu thành công');
+        }
 
-        return redirect()->route('customer.show', $id);
+        return redirect()->route('category.index', $id);
     }
 
     /**
@@ -91,9 +81,10 @@ class CustomerController extends Controller
      */
     public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        $records = DB::table('customers')->delete($id);
-        if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+        $customer = Customer::find($id);
+        $isDeleted = $customer->delete();
+        if ($isDeleted) {
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
         return redirect()->route('customer.index');

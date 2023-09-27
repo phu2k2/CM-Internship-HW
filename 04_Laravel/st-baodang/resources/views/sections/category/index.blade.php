@@ -7,9 +7,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @enderror
-    @if(Session::has('success'))
+    @if(Session::has('status'))
         <div class="alert alert-success alert-dismissible" role="alert">
-            {{ Session::get('success') }}
+            {{ Session::get('status') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif

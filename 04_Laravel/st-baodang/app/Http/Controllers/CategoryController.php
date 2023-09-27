@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest\DeleteCategoryRequest;
 use App\Http\Requests\CategoryRequest\StoreCategoryRequest;
 use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -15,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')->get();
+        $categories = Category::all();
 
         return view('sections.category.index', compact('categories'));
     }
@@ -33,13 +32,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $isStored = DB::table('categories')->insert([
-            'category_id' => $request->input('category_id'),
-            'category_name' => $request->input('category_name')
-        ]);
-
-        if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+        $category = new Category();
+        if ($category->create($request->validated())) {
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
         return redirect()->route('category.index');
@@ -50,7 +45,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = Category::find($id);
 
         return view('sections.category.show', compact('category'));
     }
@@ -60,7 +55,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = Category::find($id);
 
         return view('sections.category.edit', compact('category'));
     }
@@ -70,14 +65,13 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        DB::table('categories')
-            ->where('id', $id)
-            ->update([
-                'category_id' => $request->input('category_id'),
-                'category_name' => $request->input('category_name')
-            ]);
+        $category = Category::find($id);
+        $isUpdated = $category->update($request->validated());
+        if ($isUpdated) {
+            session()->flash('status', 'Đã sửa dữ liệu thành công');
+        }
 
-        return redirect()->route('category.show', $id);
+        return redirect()->route('category.index', $id);
     }
 
     /**
@@ -85,9 +79,10 @@ class CategoryController extends Controller
      */
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        $records = DB::table('categories')->delete($id);
-        if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+        $category = Category::find($id);
+        $isDeleted = $category->delete();
+        if ($isDeleted) {
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
         return redirect()->route('category.index');
