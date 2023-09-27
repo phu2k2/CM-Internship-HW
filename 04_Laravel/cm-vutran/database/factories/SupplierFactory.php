@@ -21,7 +21,7 @@ class SupplierFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => strtoupper($this->faker->unique()->lexify('???')),
+            'company_id' => strtoupper($this->faker->unique()->lexify('S??')),
             'company_name' => $this->faker->company,
             'transaction_name' => $this->faker->word,
             'address' => $this->faker->streetAddress,

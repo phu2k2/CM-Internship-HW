@@ -20,7 +20,7 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            'employee_id' => strtoupper($this->faker->unique()->lexify('????')),
+            'employee_id' => strtoupper($this->faker->unique()->lexify('EM??')),
             'last_name' => $this->faker->lastName,
             'first_name' => $this->faker->firstName,
             'birthday' => $this->faker->dateTimeBetween('-40 years', '-18 years')->format('Y-m-d H:i:s'),
