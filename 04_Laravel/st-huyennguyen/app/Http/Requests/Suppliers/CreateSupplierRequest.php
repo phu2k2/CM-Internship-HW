@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CustomerRequest;
+namespace App\Http\Requests\Suppliers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCustomerRequest extends FormRequest
+class CreateSupplierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,11 @@ class UpdateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:customers,id|integer',
+            'company_id' => 'required|string|size:3|unique:suppliers,company_id',
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:30',
             'address' => 'required|string|max:50',
-            'email' => [
-                'required',
-                'email',
-                'max:30',
-                'unique:customers,email,'.$this->id.',id'
-            ],
+            'email' => 'required|email|unique:suppliers,email|max:30',
             'phone' => 'required|string|max:15',
             'fax' => 'required|string|max:15'
         ];

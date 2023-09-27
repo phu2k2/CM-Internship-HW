@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CustomerRequest;
+namespace App\Http\Requests\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCustomerRequest extends FormRequest
+class DeleteCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class CreateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_name' => 'required|string|max:50',
-            'transaction_name' => 'required|string|max:30',
-            'address' => 'required|string|max:50',
-            'email' => 'required|email|unique:customers,email|max:30',
-            'phone' => 'required|string|max:15',
-            'fax' => 'required|string|max:15'
+            'id' => 'required|integer|exists:categories,id'
         ];
     }
 }

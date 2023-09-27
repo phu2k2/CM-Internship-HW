@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerRequest\CreateCustomerRequest;
-use App\Http\Requests\CustomerRequest\DeleteCustomerRequest;
-use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\DeleteCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
 
 class CustomerController extends Controller
 {
