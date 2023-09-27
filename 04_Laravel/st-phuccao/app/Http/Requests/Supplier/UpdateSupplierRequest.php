@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Supplier;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSupplierRequest extends FormRequest
 {
@@ -25,9 +26,20 @@ class UpdateSupplierRequest extends FormRequest
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
-            'phone' => 'required|string|max:15|unique:suppliers',
+            'phone' => [
+                'required',
+                'string',
+                'max:15',
+                Rule::unique('suppliers', 'phone')->ignore('supplier'),
+            ],
             'fax' => 'nullable|string|max:15',
-            'email' => 'required|string|email|max:30|unique:suppliers',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:30',
+                Rule::unique('suppliers', 'email')->ignore('supplier'),
+            ], 
         ];
     }
 }

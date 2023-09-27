@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEmployeeRequest extends FormRequest
 {
@@ -27,7 +28,11 @@ class UpdateEmployeeRequest extends FormRequest
             'birthday' => 'required|date',
             'start_date' => 'required|date',
             'address' => 'required|max:60|unique:employees',
-            'phone' => 'required|max:15||unique:employees',
+            'phone' => [
+                'required',
+                'max:15',
+                Rule::unique('employees', 'phone')->ignore('employee'),
+            ],
             'base_salary' => 'required|numeric|min:0',
             'allowance' => 'required|numeric|min:0',
         ];

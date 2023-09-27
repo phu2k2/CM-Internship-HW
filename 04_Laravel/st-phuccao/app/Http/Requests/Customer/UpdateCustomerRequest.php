@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCustomerRequest extends FormRequest
 {
@@ -25,8 +26,19 @@ class UpdateCustomerRequest extends FormRequest
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
-            'email' => 'required|string|email|max:30|unique:customers', 
-            'phone' => 'required|string|max:15|unique:customers',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:30',
+                Rule::unique('customers', 'email')->ignore('customer'),
+            ], 
+            'phone' => [
+                'required',
+                'string',
+                'max:15',
+                Rule::unique('customers', 'phone')->ignore('customer'),
+            ],
             'fax' => 'nullable|string|max:15',
         ];
     }
