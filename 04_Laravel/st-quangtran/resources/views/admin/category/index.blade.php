@@ -55,8 +55,7 @@
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <a href="{{ URL::to('delete/' . $item['id']) }}"
-                                                                    class="btn btn-danger">Yes</a>
+                                                                <a class="btn btn-danger">Yes</a>
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close</button>
                                                             </div>
