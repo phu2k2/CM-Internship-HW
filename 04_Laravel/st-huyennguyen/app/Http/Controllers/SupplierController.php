@@ -47,10 +47,7 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        $supplier = Supplier::find($id);
-        if (!$supplier) {
-            abort(404);
-        }
+        $supplier = Supplier::findOrFail($id);
         return view('supplier.show', compact('supplier'));
     }
 
@@ -59,10 +56,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = Supplier::find($id);
-        if (!$supplier) {
-            abort(404);
-        }
+        $supplier = Supplier::findOrFail($id);
         return view('supplier.edit', compact('supplier'));
     }
 
@@ -71,7 +65,7 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
         if ($supplier->update($request->validated())) {
             session()->flash('message', 'Update the supplier was succesful!');
         } else {
@@ -86,7 +80,7 @@ class SupplierController extends Controller
      */
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
         if ($supplier->delete()) {
             session()->flash('message', 'Delete the supplier was succesful!');
         } else {

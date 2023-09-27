@@ -47,10 +47,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $customer = Customer::find($id);
-        if (!$customer) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id);
         return view('customer.show', compact('customer'));
     }
 
@@ -59,10 +56,7 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $customer = Customer::find($id);
-        if (!$customer) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id);
         return view('customer.edit', compact('customer'));
     }
 
@@ -71,7 +65,7 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
         if ($customer->update($request->validated())) {
             session()->flash('message', 'Update the customer was succesful!');
         } else {
@@ -86,7 +80,7 @@ class CustomerController extends Controller
      */
     public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
         if ($customer->delete()) {
             session()->flash('message', 'Delete the customer was succesful!');
         } else {

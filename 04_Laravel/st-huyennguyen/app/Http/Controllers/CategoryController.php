@@ -47,10 +47,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
-        if (!$category) {
-            abort(404);
-        }
+        $category = Category::findOrFail($id);
         return view('category.edit', compact('category'));
     }
 
@@ -59,7 +56,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         if ($category->update($request->validated())) {
             session()->flash('message', 'Update the category was succesful!');
         } else {
@@ -74,7 +71,7 @@ class CategoryController extends Controller
      */
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         if ($category->delete()) {
             session()->flash('message', 'Delete the category was succesful!');
         } else {

@@ -47,10 +47,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employee = Employee::find($id);
-        if (!$employee) {
-            abort(404);
-        }
+        $employee = Employee::findOrFail($id);
         return view('employee.show', compact('employee'));
     }
 
@@ -59,10 +56,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::find($id);
-        if (!$employee) {
-            abort(404);
-        }
+        $employee = Employee::findOrFail($id);
         return view('employee.edit', compact('employee'));
     }
 
@@ -71,7 +65,7 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         if ($employee->update($request->validated())) {
             session()->flash('message', 'Update the employee was succesful!');
         } else {
