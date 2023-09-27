@@ -38,7 +38,7 @@ class EmployeeController extends Controller
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -56,7 +56,6 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-
         $employee = Employee::find($id);
 
         return view('sections.employee.edit', compact('employee'));
@@ -73,7 +72,7 @@ class EmployeeController extends Controller
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -87,6 +86,6 @@ class EmployeeController extends Controller
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('employee.index');
+        return redirect()->route('employees.index');
     }
 }

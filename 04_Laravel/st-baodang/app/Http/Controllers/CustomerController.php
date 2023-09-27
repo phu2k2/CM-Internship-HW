@@ -37,7 +37,7 @@ class CustomerController extends Controller
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class CustomerController extends Controller
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 
-        return redirect()->route('category.index', $id);
+        return redirect()->route('customers.show', $id);
     }
 
     /**
@@ -85,6 +85,6 @@ class CustomerController extends Controller
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
     }
 }

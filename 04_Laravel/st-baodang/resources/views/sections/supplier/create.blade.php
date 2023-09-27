@@ -3,15 +3,15 @@
 @section('content')
 
     <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a
-                href="{{ route('supplier.index') }}">Suppliers</a> / </span>Create</h4>
+                href="{{ route('suppliers.index') }}">Suppliers</a> / </span>Create</h4>
 
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">New supplier</h5>
-            <a href="{{ route('supplier.index') }}"><i class='bx bx-arrow-back'></i></a>
+            <a href="{{ route('suppliers.index') }}"><i class='bx bx-arrow-back'></i></a>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{route('supplier.store')}}">
+            <form method="POST" action="{{route('suppliers.store')}}">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="company_id">Company ID</label>

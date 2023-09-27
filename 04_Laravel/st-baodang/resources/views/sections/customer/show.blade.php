@@ -3,12 +3,12 @@
 @section('content')
 
     <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a
-                href="{{ route('customer.index') }}">Customers</a> / </span>Details</h4>
+                href="{{ route('customers.index') }}">Customers</a> / </span>Details</h4>
 
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">Customer details</h5>
-            <a href="{{ route('customer.index') }}"><i class='bx bx-arrow-back'></i></a>
+            <a href="{{ route('customers.index') }}"><i class='bx bx-arrow-back'></i></a>
         </div>
         <div class="card-body">
             <div class="row mb-3">

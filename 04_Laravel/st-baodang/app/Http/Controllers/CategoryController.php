@@ -37,7 +37,7 @@ class CategoryController extends Controller
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('category.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class CategoryController extends Controller
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 
-        return redirect()->route('category.index', $id);
+        return redirect()->route('categories.index', $id);
     }
 
     /**
@@ -85,6 +85,6 @@ class CategoryController extends Controller
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('category.index');
+        return redirect()->route('categories.index');
     }
 }

@@ -2,16 +2,16 @@
 
 @section('content')
 
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('category.index') }}">Categories</a>/ {{$category->id}} / </span>Edit
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('categories.index') }}">Categories</a>/ {{$category->id}} / </span>Edit
     </h4>
 
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Editing category</h5>
-            <a href="{{ route('category.index') }}"><i class='bx bx-arrow-back'></i></a>
+            <a href="{{ route('categories.index') }}"><i class='bx bx-arrow-back'></i></a>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{route('category.update', $category->id)}}">
+            <form method="POST" action="{{route('categories.update', $category->id)}}">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -43,7 +43,7 @@
                     @enderror
                 </div>
 
-                <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary" type="button">Cancel</a>
+                <a href="{{ route('categories.show', $category->id) }}" class="btn btn-secondary" type="button">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

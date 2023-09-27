@@ -37,7 +37,7 @@ class SupplierController extends Controller
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class SupplierController extends Controller
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 
-        return redirect()->route('category.index', $id);
+        return redirect()->route('suppliers.index', $id);
     }
 
     /**
@@ -85,6 +85,6 @@ class SupplierController extends Controller
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 }

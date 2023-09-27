@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Employees table</h5>
-            <a href="{{ route('employee.create') }}" type="button" class="btn btn-primary">Create</a>
+            <a href="{{ route('employees.create') }}" type="button" class="btn btn-primary">Create</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -38,7 +38,7 @@
                 @foreach($employees as $employee)
                     <tr>
                         <td><span class="fw-medium">{{$employee->id}}</span></td>
-                        <td><a href="{{ route('employee.show', $employee->id) }}">{{ $employee->employee_id }}</a></td>
+                        <td><a href="{{ route('employees.show', $employee->id) }}">{{ $employee->employee_id }}</a></td>
                         <td class=" ">{{ $employee->first_name }} {{ $employee->last_name }}</td>
                         <td class=" ">{{ $employee->base_salary }}</td>
                         <td class=" ">{{ $employee->allowance }}</td>
@@ -49,7 +49,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <a class="dropdown-item" href="{{ route('employee.edit', $employee->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('employees.edit', $employee->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                     <a class="dropdown-item" data-bs-toggle="modal"
                                        data-bs-target="#modalCenter{{$employee->id}}"><i
@@ -69,7 +69,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
+                                    <form method="POST" action="{{ route('employees.destroy', $employee->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <input style="display: none" name="id" value="{{ $employee->id }}">
