@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label>Transaction Name</label>
-                    <input type="text" class="form-control @error('transaction_name') is-invalid @enderror" id="transaction_name" name="transaction_name">
+                    <input type="text" class="form-control @error('transaction_name') is-invalid @enderror" id="transaction_name" name="transaction_name" value = "{{ old('transaction_name') }}">
                     @error('transaction_name')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
@@ -31,14 +31,14 @@
 
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address">
+                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value = "{{ old('address') }}">
                     @error('address')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email">
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value = "{{ old('email') }}">
                     @error('email')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
@@ -46,14 +46,14 @@
 
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone">
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value = "{{ old('phone') }}">
                     @error('phone')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Fax</label>
-                    <input type="text" class="form-control @error('fax') is-invalid @enderror" id="fax" name="fax">
+                    <input type="text" class="form-control @error('fax') is-invalid @enderror" id="fax" name="fax" value = "{{ old('fax') }}">
                     @error('fax')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror

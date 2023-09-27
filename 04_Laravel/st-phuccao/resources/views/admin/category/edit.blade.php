@@ -17,7 +17,7 @@
                 @method('PUT')
                 <div class="form-group">
                     <label for="category_name">Category Name</label>
-                    <input type="text" class="form-control" name="category_name" value = "{{ old('category_name') ?? $category['category_name'] }}">
+                    <input type="text" class="form-control" name="category_name" value = "{{ old('category_name',$category['category_name']) }}">
                     @error('category_name')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
