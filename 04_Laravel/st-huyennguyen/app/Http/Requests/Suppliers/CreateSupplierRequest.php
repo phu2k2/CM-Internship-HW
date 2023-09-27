@@ -27,7 +27,7 @@ class CreateSupplierRequest extends FormRequest
             'transaction_name' => 'required|string|max:30',
             'address' => 'required|string|max:50',
             'email' => 'required|email|unique:suppliers,email|max:30',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|regex:/^([0-9\-\+\(\)]*)$/|max:15',
             'fax' => 'required|string|max:15'
         ];
     }

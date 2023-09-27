@@ -34,7 +34,7 @@ class SupplierController extends Controller
     {
         $supplier = new Supplier();
         if ($supplier->create($request->validated())) {
-            session()->flash('message', 'Create new customer was succesful!');
+            session()->flash('message', 'Create new customer was successful!');
         } else {
             session()->flash('error', 'Create new customer failed!');
         }
@@ -67,7 +67,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
         if ($supplier->update($request->validated())) {
-            session()->flash('message', 'Update the supplier was succesful!');
+            session()->flash('message', 'Update the supplier was successful!');
         } else {
             session()->flash('error', 'Update the supplier failed!');
         }
@@ -82,7 +82,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
         if ($supplier->delete()) {
-            session()->flash('message', 'Delete the supplier was succesful!');
+            session()->flash('message', 'Delete the supplier was successful!');
         } else {
             session()->flash('error', 'Delete the supplier failed!');
         }

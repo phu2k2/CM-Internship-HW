@@ -34,7 +34,7 @@ class EmployeeController extends Controller
     {
         $employee = new Employee();
         if ($employee->create($request->validated())) {
-            session()->flash('message', 'Create new customer was succesful!');
+            session()->flash('message', 'Create new customer was successful!');
         } else {
             session()->flash('error', 'Create new customer failed!');
         }
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::findOrFail($id);
         if ($employee->update($request->validated())) {
-            session()->flash('message', 'Update the employee was succesful!');
+            session()->flash('message', 'Update the employee was successful!');
         } else {
             session()->flash('error', 'Update the employee failed!');
         }
@@ -82,7 +82,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($id);
         if ($employee->delete()) {
-            session()->flash('message', 'Delete the employee was succesful!');
+            session()->flash('message', 'Delete the employee was successful!');
         } else {
             session()->flash('error', 'Delete the employee failed!');
         }

@@ -34,7 +34,7 @@ class CustomerController extends Controller
     {
         $customer = new Customer();
         if ($customer->create($request->validated())) {
-            session()->flash('message', 'Create new customer was succesful!');
+            session()->flash('message', 'Create new customer was successful!');
         } else {
             session()->flash('error', 'Create new customer failed!');
         }
@@ -67,7 +67,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
         if ($customer->update($request->validated())) {
-            session()->flash('message', 'Update the customer was succesful!');
+            session()->flash('message', 'Update the customer was successful!');
         } else {
             session()->flash('error', 'Update the customer failed!');
         }
@@ -82,7 +82,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
         if ($customer->delete()) {
-            session()->flash('message', 'Delete the customer was succesful!');
+            session()->flash('message', 'Delete the customer was successful!');
         } else {
             session()->flash('error', 'Delete the customer failed!');
         }

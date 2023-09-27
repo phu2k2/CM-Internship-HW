@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         if ($category->create($request->validated())) {
-            session()->flash('message', 'Create new category was succesful!');
+            session()->flash('message', 'Create new category was successful!');
         } else {
             session()->flash('error', 'Create new category failed!');
         }
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         if ($category->update($request->validated())) {
-            session()->flash('message', 'Update the category was succesful!');
+            session()->flash('message', 'Update the category was successful!');
         } else {
             session()->flash('error', 'Update the category failed!');
         }
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         if ($category->delete()) {
-            session()->flash('message', 'Delete the category was succesful!');
+            session()->flash('message', 'Delete the category was successful!');
         } else {
             session()->flash('error', 'Delete the category failed!');
         }

@@ -13,9 +13,8 @@ function destroyCategory(id) {
                 function() {
                 }
             },
-
-            confirm: function () {
-                $("#destroy" + id).trigger("submit");
+            confirm: function() {
+                document.getElementById("destroy" + id).submit();
             }
         }
     });
