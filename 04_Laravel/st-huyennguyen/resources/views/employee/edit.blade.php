@@ -8,43 +8,71 @@
     <form action="{{ route('employees.update', ['employee' => $employee['id']]) }}" method="POST">
         @method('PUT')
         @csrf
+        <input type="hidden" name="id" value="{{ $employee['id'] }}">
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Employee ID</label>
-            <input name="employee_id" class="form-control" type="text" value="{{ $employee['employee_id'] }}">
+            @error('employee_id')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="employee_id" class="form-control" type="text" value="{{ old('employee_id', $employee['employee_id']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Last Name</label>
-            <input name="last_name" class="form-control" type="text" value="{{ $employee['last_name'] }}">
+            @error('last_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="last_name" class="form-control" type="text" value="{{ old('last_name', $employee['last_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">First Name</label>
-            <input name="first_name" class="form-control" type="text" value="{{ $employee['first_name'] }}">
+            @error('first_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="first_name" class="form-control" type="text" value="{{ old('first_name', $employee['first_name']) }}">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Birthday</label>
+            @error('birthday')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
             <input name="birthday" class="form-control" data-provide="datepicker" id="datepicker" type="text"
-                value="{{ $employee['birthday'] }}">
+                value="{{ old('birthday', $employee['birthday']) }}">
         </div>
         <div class="form-group">
             <label for="example-search-input" class="form-control-label">Start Date</label>
+            @error('start_date')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
             <input name="start_date" class="form-control" data-provide="datepicker" id="startpicker" type="text"
-                value="{{ $employee['start_date'] }}">
+                value="{{ old('start_date', $employee['start_date']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Address</label>
-            <input name="address" class="form-control" type="text" value="{{ $employee['address'] }}">
+            @error('address')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="address" class="form-control" type="text" value="{{ old('address', $employee['address']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Phone</label>
-            <input name="phone" class="form-control" type="text" value="{{ $employee['phone'] }}">
+            @error('phone')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="phone" class="form-control" type="text" value="{{ old('phone', $employee['phone']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Base Salary</label>
-            <input name="base_salary" class="form-control" type="number" value="{{ $employee['base_salary'] }}">
+            @error('base_salary')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="base_salary" class="form-control" type="number" value="{{ old('base_salary', $employee['base_salary']) }}">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Allowance</label>
-            <input name="allowance" class="form-control" type="number" value="{{ $employee['allowance'] }}">
+            @error('allowance')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="allowance" class="form-control" type="number" value="{{ old('allowance', $employee['allowance']) }}">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

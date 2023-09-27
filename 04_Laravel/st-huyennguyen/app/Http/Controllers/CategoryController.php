@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\DeleteCategoryRequest;
+use App\Http\Requests\Categories\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -54,9 +57,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        //
+        session()->flash('message', 'Create new category was successful!');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -70,22 +74,23 @@ class CategoryController extends Controller
             }
         }
         return view('category.edit', compact('category'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Update the category was successful!');
+        return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Delete the category was successful!');
+        return redirect()->route('categories.index');
     }
 }

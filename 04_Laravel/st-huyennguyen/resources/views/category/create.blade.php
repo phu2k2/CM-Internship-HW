@@ -9,11 +9,19 @@
         @csrf
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Category ID</label>
-            <input name="category_id" class="form-control" type="text" placeholder="Enter category ID">
+            @error('category_id')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="category_id" class="form-control" type="text" value="{{ old('category_id') }}"
+                placeholder="Enter category ID">
         </div>
         <div class="form-group">
             <label for="example-text-input" class="form-control-label">Category Name</label>
-            <input name="category_name" class="form-control" type="text" placeholder="Enter category name">
+            @error('category_name')
+                <span class="text-danger fst-italic fs-7">{{ $message }}</span>
+            @enderror
+            <input name="category_name" class="form-control" type="text" value="{{ old('category_name') }}"
+                placeholder="Enter category name">
         </div>
         <div class="form-group col-12 row">
             <div class="col-6">

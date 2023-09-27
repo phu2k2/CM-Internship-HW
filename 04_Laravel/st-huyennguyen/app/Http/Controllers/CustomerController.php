@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\DeleteCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
 
 class CustomerController extends Controller
 {
@@ -86,9 +86,10 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCustomerRequest $request)
     {
-        //
+        session()->flash('message', 'Create new customer was successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -97,7 +98,7 @@ class CustomerController extends Controller
     public function show(string $id)
     {
         foreach ($this->data as $key => $cus) {
-            if($cus['id'] == $id) {
+            if ($cus['id'] == $id) {
                 $customer = $cus;
             }
         }
@@ -110,7 +111,7 @@ class CustomerController extends Controller
     public function edit(string $id)
     {
         foreach ($this->data as $key => $cus) {
-            if($cus['id'] == $id) {
+            if ($cus['id'] == $id) {
                 $customer = $cus;
             }
         }
@@ -120,16 +121,18 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCustomerRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Update the customer was successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Delete the customer was successful!');
+        return redirect()->route('customers.index');
     }
 }
