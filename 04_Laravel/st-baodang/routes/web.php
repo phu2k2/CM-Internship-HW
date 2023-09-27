@@ -19,7 +19,7 @@ use \App\Http\Controllers\EmployeeController;
 Route::get('/', function () {
     return view('index');
 })->name('index');
-Route::resource('customer', CustomerController::class);
-Route::resource('supplier', SupplierController::class);
-Route::resource('category', CategoryController::class);
-Route::resource('employee', EmployeeController::class);
+Route::resource('customers', CustomerController::class);
+Route::resource('suppliers', SupplierController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('employees', EmployeeController::class);

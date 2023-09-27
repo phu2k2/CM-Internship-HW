@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
 use App\Http\Requests\SupplierRequest\StoreSupplierRequest;
 use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
@@ -42,11 +41,12 @@ class SupplierController extends Controller
             'phone' => $request->input('phone'),
             'fax' => $request->input('fax')
         ]);
+
         if ($isStored) {
-            session()->flash('success', 'Đã thêm dữ liệu thành công');
+            session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -90,7 +90,7 @@ class SupplierController extends Controller
                 'fax' => $request->input('fax')
             ]);
 
-        return redirect()->route('supplier.show', $id);
+        return redirect()->route('suppliers.show', $id);
     }
 
     /**
@@ -100,9 +100,9 @@ class SupplierController extends Controller
     {
         $records = DB::table('suppliers')->delete($id);
         if ($records) {
-            session()->flash('success', 'Đã xóa dữ liệu thành công');
+            session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 }

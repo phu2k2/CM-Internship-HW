@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Suppliers table</h5>
-            <a href="{{ route('supplier.create') }}" type="button" class="btn btn-primary">Create</a>
+            <a href="{{ route('suppliers.create') }}" type="button" class="btn btn-primary">Create</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -39,7 +39,7 @@
                     <tr>
                         <td><span class="fw-medium">{{$supplier->id}}</span></td>
                         <td>{{ $supplier->company_id }}</td>
-                        <td><a href="{{ route('supplier.show', $supplier->id) }}">{{ $supplier->company_name }}</a></td>
+                        <td><a href="{{ route('suppliers.show', $supplier->id) }}">{{ $supplier->company_name }}</a></td>
                         <td>{{ $supplier->transaction_name }}</td>
                         <td>{{ $supplier->email }}</td>
                         <td>
@@ -49,7 +49,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <a class="dropdown-item" href="{{ route('supplier.edit', $supplier->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('suppliers.edit', $supplier->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                     <a class="dropdown-item" data-bs-toggle="modal"
                                        data-bs-target="#modalCenter{{$supplier->id}}"><i
@@ -69,7 +69,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{ route('supplier.destroy', $supplier->id) }}">
+                                    <form method="POST" action="{{ route('suppliers.destroy', $supplier->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <input style="display: none" name="id" value="{{ $supplier->id }}">

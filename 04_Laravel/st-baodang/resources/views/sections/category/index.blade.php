@@ -18,7 +18,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Categories table</h5>
-            <a href="{{ route('category.create') }}" type="button" class="btn btn-primary">Create</a>
+            <a href="{{ route('categories.create') }}" type="button" class="btn btn-primary">Create</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -34,7 +34,7 @@
                 @foreach($categories as $category)
                     <tr>
                         <td><span class="fw-medium">{{$category->id}}</span></td>
-                        <td><a href="{{ route('category.show', $category->id) }}">{{ $category->category_id }}</a></td>
+                        <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->category_id }}</a></td>
                         <td>{{ $category->category_name }}</td>
                         <td>
                             <div class="dropdown">
@@ -43,12 +43,11 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <a class="dropdown-item" href="{{ route('category.edit', $category->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('categories.edit', $category->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                     <a class="dropdown-item" data-bs-toggle="modal"
                                        data-bs-target="#modalCenter{{$category->id}}"><i
                                             class="bx bx-trash me-1"></i> Delete</a>
-
                                 </div>
                             </div>
                         </td>
@@ -64,7 +63,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{ route('category.destroy', $category->id) }}">
+                                    <form method="POST" action="{{ route('categories.destroy', $category->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <input style="display: none" name="id" value="{{ $category->id }}">

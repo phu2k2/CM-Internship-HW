@@ -2,16 +2,16 @@
 
 @section('content')
 
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('customer.index') }}">Customers</a> / {{ $customer->id }} / </span>Edit
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('customers.index') }}">Customers</a> / {{ $customer->id }} / </span>Edit
     </h4>
 
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Editing customer</h5>
-            <a href="{{ route('customer.index') }}"><i class='bx bx-arrow-back'></i></a>
+            <a href="{{ route('customers.index') }}"><i class='bx bx-arrow-back'></i></a>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{route('customer.update', $customer->id)}}">
+            <form method="POST" action="{{route('customers.update', $customer->id)}}">
                 @error('id')
                 <div class="invalid-feedback" style="display:block;">
                     {{ $message }}
@@ -105,7 +105,7 @@
                     </div>
                     @enderror
                 </div>
-                <a href="{{ route('customer.show', $customer->id) }}" class="btn btn-secondary" type="button">Cancel</a>
+                <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-secondary" type="button">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
