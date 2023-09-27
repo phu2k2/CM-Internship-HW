@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CategoryRequest;
+namespace App\Http\Requests\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteCategoryRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class DeleteCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:categories,id'
+            'category_id' => 'required|unique:categories,category_id|string|size:2',
+            'category_name' => 'required|string|max:30'
         ];
     }
 }

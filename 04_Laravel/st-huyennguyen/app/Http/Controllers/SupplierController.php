@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SupplierRequest\CreateSupplierRequest;
-use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
-use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
+use App\Http\Requests\Suppliers\CreateSupplierRequest;
+use App\Http\Requests\Suppliers\DeleteSupplierRequest;
+use App\Http\Requests\Suppliers\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller

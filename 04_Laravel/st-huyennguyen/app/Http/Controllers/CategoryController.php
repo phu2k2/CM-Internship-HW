@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest\CreateCategoryRequest;
-use App\Http\Requests\CategoryRequest\DeleteCategoryRequest;
-use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\DeleteCategoryRequest;
+use App\Http\Requests\Categories\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
