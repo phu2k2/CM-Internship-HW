@@ -21,21 +21,21 @@ class CategoryController extends Controller
         return view("admin.manages.categories.index" , compact("categories"));
     }
 
-    public function store(CreateCategoryRequest $res)
+    public function store(CreateCategoryRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $categoryID)
     {
         $categories = Category::get();
         $editingCategory = Category::findOrFail($categoryID);
-        return view("admin.manages.categories.edit" , compact("categories", "editingCategory", "categoryID"));
+        return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
     }
 
-    public function update(EditCategoryRequest $res, string $id)
+    public function update(EditCategoryRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)

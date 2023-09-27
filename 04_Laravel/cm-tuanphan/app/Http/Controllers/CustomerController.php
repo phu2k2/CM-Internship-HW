@@ -21,21 +21,21 @@ class CustomerController extends Controller
         return view("admin.manages.customers.index" , compact("customers"));
     }
 
-    public function store(CreateCustomerRequest $res)
+    public function store(CreateCustomerRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $customerID)
     {
         $customers = Customer::get();
         $editingCustomer = Customer::findOrFail($customerID);
-        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer", "customerID"));
+        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer"));
     }
 
-    public function update(EditCustomerRequest $res, string $id)
+    public function update(EditCustomerRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)

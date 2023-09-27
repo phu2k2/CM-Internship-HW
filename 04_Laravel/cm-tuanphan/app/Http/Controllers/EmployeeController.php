@@ -21,21 +21,21 @@ class EmployeeController extends Controller
         return view("admin.manages.employees.index" , compact("employees"));
     }
 
-    public function store(CreateEmployeeRequest $res)
+    public function store(CreateEmployeeRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $employeeID)
     {
         $employees = Employee::get();
         $editingEmployee = Employee::findOrFail($employeeID);
-        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee", "employeeID"));
+        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee"));
     }
 
-    public function update(EditEmployeeRequest $res, string $id)
+    public function update(EditEmployeeRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)

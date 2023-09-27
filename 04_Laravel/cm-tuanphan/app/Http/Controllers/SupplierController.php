@@ -21,21 +21,21 @@ class SupplierController extends Controller
         return view("admin.manages.suppliers.index" , compact("suppliers"));
     }
 
-    public function store(CreateSupplierRequest $res)
+    public function store(CreateSupplierRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $supplierID)
     {
         $suppliers = Supplier::get();
         $editingSupplier = Supplier::findOrFail($supplierID);
-        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier", "supplierID"));
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier"));
     }
 
-    public function update(EditSupplierRequest $res, string $id)
+    public function update(EditSupplierRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)

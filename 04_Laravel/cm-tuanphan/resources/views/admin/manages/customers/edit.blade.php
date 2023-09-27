@@ -11,7 +11,7 @@
             @if ($errors->any() || Route::is('customers.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addCustomerModal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('customers.update' , ['customer' => $customerID ]) }}" id="addCustomerForm">
+            <form method="post" action="{{ route('customers.update' , ['customer' => $editingCustomer->id ]) }}" id="addCustomerForm">
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>

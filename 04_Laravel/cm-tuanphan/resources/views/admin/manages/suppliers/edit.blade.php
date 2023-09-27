@@ -11,7 +11,7 @@
             @if ($errors->any() || Route::is('suppliers.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addSupplierModal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('suppliers.update' , ['supplier' => $supplierID ]) }}" id="addSupplierForm">
+            <form method="post" action="{{ route('suppliers.update' , ['supplier' => $editingSupplier->id ]) }}" id="addSupplierForm">
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>

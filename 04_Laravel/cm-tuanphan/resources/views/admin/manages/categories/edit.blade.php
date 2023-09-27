@@ -10,7 +10,7 @@
             @if ($errors->any() || Route::is('categories.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addCategoryModal"]').click();@endsection
             @endif
-            <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $categoryID ]) }}">
+            <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $editingCategory->category_id ]) }}">
                 @csrf
                 @method("PUT")
                 <label>ID danh mục</label>

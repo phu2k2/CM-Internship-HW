@@ -11,7 +11,7 @@
             @if ($errors->any() || Route::is('employees.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('employees.update' , ['employee' => $employeeID ]) }}" id="addEmployeeForm">
+            <form method="post" action="{{ route('employees.update' , ['employee' => $editingEmployee->employee_id ]) }}" id="addEmployeeForm">
                 @csrf
                 @method("PUT")
                 <label>Tên nhân viên</label>
