@@ -3,7 +3,6 @@
 @section('title', 'Add Category')
 
 @section('content')
-
 <form>
   <div class="p-5" style="width: 60%:">
     <h2 class="text-center">Add Category</h2>
@@ -19,5 +18,4 @@
   </div>
 
 </form>
-
 @endsection

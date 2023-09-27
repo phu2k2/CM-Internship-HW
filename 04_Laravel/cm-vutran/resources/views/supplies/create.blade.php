@@ -3,7 +3,6 @@
 @section('title', 'Add Supply')
 
 @section('content')
-
 <form>
   <div class="p-5" style="width: 60%:">
     <h2 class="text-center">Add Supply</h2>
@@ -43,5 +42,4 @@
   </div>
 
 </form>
-
 @endsection
