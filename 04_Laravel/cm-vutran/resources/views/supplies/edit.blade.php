@@ -6,7 +6,7 @@
 <form id="supplyForm" action="{{ route('supplies.update', ['supply' => $supply['id'] ]) }}" method="POST">
   @csrf
   @method('PUT')
-  <div class="p-5" style="width: 60%:">
+  <div class="p-5">
     <h2 class="text-center">Edit Supply</h2>
     <div class="mb-3">
       <label for="inputName" class="form-label">Company Name</label>
@@ -51,6 +51,7 @@
       <div class="text-danger">{{ $message }}</div>
       @enderror
     </div>
+
     <div class="mb-3">
       <label for="inputSalary" class="form-label">Fax</label>
       <input value="{{ old('fax', $supply['fax'] ) }}" type="text" class="form-control" id="inputSalary" name="fax">
@@ -62,7 +63,6 @@
 
   <!-- Modal Footer -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-primary" id="addsupplyBtn">Edit supply</button>
   </div>
 

@@ -6,7 +6,7 @@
 <form action="{{ route('categories.update', ['category' => $category['id'] ]) }}" method="POST">
   @csrf
   @method('PUT')
-  <div class="p-5" style="width: 60%:">
+  <div class="p-5">
     <h2 class="text-center">Edit Category</h2>
     <div class="mb-3">
       <label for="inputName" class="form-label">Category Name</label>
@@ -20,8 +20,7 @@
 
   <!-- Modal Footer -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Add Category</button>
+    <button type="submit" class="btn btn-primary" id="addEmployeeBtn">Edit Category</button>
   </div>
 
 </form>

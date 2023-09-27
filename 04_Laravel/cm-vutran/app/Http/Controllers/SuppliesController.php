@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateSupplieRequest;
 use App\Http\Requests\CreateSupplyRequest;
 use Illuminate\Http\Request;
 
@@ -231,7 +232,7 @@ class SuppliesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateSupplyRequest $request)
+    public function store(CreateSupplieRequest $request)
     {
         $request->session()->flash('success', 'Add Supply successful!');
         
@@ -263,7 +264,7 @@ class SuppliesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateSupplyRequest $request, string $id)
+    public function update(CreateSupplieRequest $request, string $id)
     {
         $index = array_search($id, array_column($this->data, 'id'));
 
