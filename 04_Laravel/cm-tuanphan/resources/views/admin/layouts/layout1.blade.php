@@ -178,10 +178,10 @@
         }
     </script>
 
+    @if(session('success'))
     <script>
-        @if(session('success'))
-            notify('{{ session('success') }}');
-        @endif
+        notify('{{ session('success') }}');
     </script>
+    @endif
 </body>
 </html>

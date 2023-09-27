@@ -1,15 +1,15 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModal" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="add-customer-modal" tabindex="-1" aria-labelledby="add-customer-modal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCustomerModal">Edit khách hàng</h1>
+          <h1 class="modal-title fs-5" id="add-customer-modal">Edit khách hàng</h1>
         </div>
         <div class="modal-body">
             @if ($errors->any() || Route::is('customers.edit'))
-            @section('modalTrigger')document.querySelector('[data-bs-target="#addCustomerModal"]').click();@endsection
+            @section('modalTrigger')document.querySelector('[data-bs-target="#add-customer-modal"]').click();@endsection
             @endif
             <form method="post" action="{{ route('customers.update' , ['customer' => $editingCustomer->id ]) }}" id="addCustomerForm">
                 @csrf
@@ -67,7 +67,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6>Danh sách khách hàng</h6>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Thêm khách hàng</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-customer-modal">Thêm khách hàng</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">

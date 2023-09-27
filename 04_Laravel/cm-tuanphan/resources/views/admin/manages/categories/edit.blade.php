@@ -1,14 +1,14 @@
 @extends('admin.layouts.layout1')
 @section('modal')
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModal" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addCategoryModal">Edit danh mục sản phẩm</h1>
+          <h1 class="modal-title fs-5" id="add-category-modal">Edit danh mục sản phẩm</h1>
         </div>
         <div class="modal-body">
             @if ($errors->any() || Route::is('categories.edit'))
-            @section('modalTrigger')document.querySelector('[data-bs-target="#addCategoryModal"]').click();@endsection
+            @section('modalTrigger')document.querySelector('[data-bs-target="#add-category-modal"]').click();@endsection
             @endif
             <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $editingCategory->category_id ]) }}">
                 @csrf
@@ -45,7 +45,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6>Danh mục sản phẩm</h6>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Thêm danh mục sản phẩm</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-category-modal">Thêm danh mục sản phẩm</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
