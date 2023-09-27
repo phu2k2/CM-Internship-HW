@@ -37,6 +37,7 @@ class CategoryController extends Controller
             'category_name' => 'Dụng cụ học tập',
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +60,7 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        session()->flash('message', 'Create new category was succesful!');
+        session()->flash('message', 'Create new category was successful!');
         return redirect()->route('categories.index');
     }
 
@@ -81,7 +82,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        session()->flash('message', 'Update the category was succesful!');
+        session()->flash('message', 'Update the category was successful!');
         return redirect()->route('categories.index');
     }
 
@@ -90,7 +91,7 @@ class CategoryController extends Controller
      */
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        session()->flash('message', 'Delete the category was succesful!');
+        session()->flash('message', 'Delete the category was successful!');
         return redirect()->route('categories.index');
     }
 }

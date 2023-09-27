@@ -72,6 +72,7 @@ class SupplierController extends Controller
             'email' => 'golden@vietnam.com'
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -94,7 +95,8 @@ class SupplierController extends Controller
      */
     public function store(CreateSupplierRequest $request)
     {
-        //
+        session()->flash('message', 'Create new supplier was successful!');
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -128,7 +130,8 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Update the supplier was successful!');
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -136,6 +139,7 @@ class SupplierController extends Controller
      */
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Delete the supplier was successful!');
+        return redirect()->route('suppliers.index');
     }
 }

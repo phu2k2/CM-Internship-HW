@@ -66,6 +66,7 @@ class CustomerController extends Controller
             'fax' => '777-777-7777',
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -88,7 +89,8 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-        //
+        session()->flash('message', 'Create new customer was successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -122,7 +124,8 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Update the customer was successful!');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -130,6 +133,7 @@ class CustomerController extends Controller
      */
     public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Delete the customer was successful!');
+        return redirect()->route('customers.index');
     }
 }

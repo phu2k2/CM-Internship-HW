@@ -29,7 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
             'birthday' => 'required|date|before:today',
             'start_date' => 'required|date|before_or_equal:today',
             'address' => 'required|string|max:60',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|regex:/^([0-9\-\+\(\)]*)$/|max:15',
             'base_salary' => 'required|numeric|decimal:1,10',
             'allowance' => 'required|numeric|decimal:1,10',
         ];
