@@ -15,12 +15,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Users -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('user.index')}}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Users</span></a>
-            </li>
 
             <!-- Nav Item - Employees -->
             <li class="nav-item">
