@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateEmployeeRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,7 +15,7 @@ class EmployeeController extends Controller
             'birthday' => '1985-05-15 00:00:00',
             'start_date' => '2022-01-10 00:00:00',
             'address' => '123 Main Street',
-            'phone' => '+1 (555) 123-4567',
+            'phone' => '0953430664',
             'base_salary' => 50000.00,
             'allowance' => 2000.00,
             'created_at' => "2023-09-25 00:00:00",
@@ -27,7 +28,7 @@ class EmployeeController extends Controller
             'birthday' => '1990-08-22 00:00:00',
             'start_date' => '2021-03-05 00:00:00',
             'address' => '456 Elm Street',
-            'phone' => '+1 (555) 987-6543',
+            'phone' => '0953430664',
             'base_salary' => 55000.00,
             'allowance' => 2500.00,
             'created_at' => "2023-09-25 00:00:00",
@@ -55,9 +56,10 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateEmployeeRequest $request)
     {
-        //
+
+        // return redirect()->route('employees.index');
     }
 
     /**
