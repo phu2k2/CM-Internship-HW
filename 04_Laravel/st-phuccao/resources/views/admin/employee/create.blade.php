@@ -16,21 +16,21 @@
                 @csrf 
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">
                     @error('last_name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
                     @error('first_name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Birthday</label>
-                    <input type="text" class="form-control" name="birthday" value="{{ old('birthday') }}">
+                    <input type="text" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{ old('birthday') }}">
                     @error('birthday')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

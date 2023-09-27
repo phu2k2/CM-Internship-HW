@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\customer\StoreRequest;
-use App\Http\Requests\customer\UpdateRequest;
+use App\Http\Requests\Customer\StoreRequest;
+use App\Http\Requests\Customer\UpdateRequest;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller

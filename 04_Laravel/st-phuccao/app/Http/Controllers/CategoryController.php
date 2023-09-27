@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\category\StoreRequest;
-use App\Http\Requests\category\UpdateRequest;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\supplier;
+namespace App\Http\Requests\Supplier;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,9 +25,9 @@ class UpdateRequest extends FormRequest
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|max:15|unique:suppliers',
             'fax' => 'nullable|string|max:15',
-            'email' => 'required|string|email|max:30',
+            'email' => 'required|string|email|max:30|unique:suppliers',
         ];
     }
 }

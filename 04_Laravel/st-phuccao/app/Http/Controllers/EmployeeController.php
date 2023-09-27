@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\employee\StoreRequest;
-use App\Http\Requests\employee\UpdateRequest;
+use App\Http\Requests\Employee\StoreRequest;
+use App\Http\Requests\Employee\UpdateRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller

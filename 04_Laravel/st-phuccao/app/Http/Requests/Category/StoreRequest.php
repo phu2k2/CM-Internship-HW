@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\supplier;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,12 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_name' => 'required|string|max:50',
-            'transaction_name' => 'required|string|max:20',
-            'address' => 'required|string|max:50',
-            'phone' => 'required|string|max:15|unique:suppliers',
-            'fax' => 'nullable|string|max:15',
-            'email' => 'required|string|email|max:30|unique:suppliers',
+            'category_name' => 'required|max:30',
         ];
     }
 }

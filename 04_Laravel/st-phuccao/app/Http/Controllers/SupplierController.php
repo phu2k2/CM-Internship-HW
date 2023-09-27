@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\supplier\StoreRequest;
-use App\Http\Requests\supplier\UpdateRequest;
+use App\Http\Requests\Supplier\StoreRequest;
+use App\Http\Requests\Supplier\UpdateRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
