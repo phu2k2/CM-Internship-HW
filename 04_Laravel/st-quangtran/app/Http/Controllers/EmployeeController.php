@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
@@ -94,13 +95,15 @@ class EmployeeController extends Controller
             'allowance' => 3100,
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $employees = $this->data;
-        return view("admin.employee.show", compact('employees'));
+
+        return view("admin.employee.index", compact('employees'));
     }
 
     /**
@@ -142,6 +145,7 @@ class EmployeeController extends Controller
                 abort(404);
             }
         }
+
         return view('admin.employee.update', compact('employee'));
     }
 
@@ -156,7 +160,7 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteEmployeeRequest $request, string $id)
     {
         //
     }

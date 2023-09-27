@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use Illuminate\Http\Request;
@@ -45,13 +46,14 @@ class CategoryController extends Controller
             'categoryName' => 'Category G',
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $categories = $this->data;
-        return view("admin.category.show", compact("categories"));
+        return view("admin.category.index", compact("categories"));
     }
 
     /**
@@ -93,6 +95,7 @@ class CategoryController extends Controller
         if (!$category) {
             abort(404);
         }
+
         return view('admin.category.update', compact('category'));
     }
 
@@ -107,7 +110,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteCategoryRequest $request, string $id)
     {
         //
     }

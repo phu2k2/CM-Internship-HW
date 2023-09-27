@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customer\DeleteCustomerRequest;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use Illuminate\Http\Request;
@@ -54,25 +55,8 @@ class CustomerController extends Controller
             'phoneNumber' => '444-444-4444',
             'fax' => '555-555-5555',
         ],
-        [
-            'id' => 6,
-            'companyId' => 'MNO303',
-            'transactionName' => 'Transaction F',
-            'address' => '303 Birch St',
-            'email' => 'example6@example.com',
-            'phoneNumber' => '666-666-6666',
-            'fax' => '777-777-7777',
-        ],
-        [
-            'id' => 7,
-            'companyId' => 'PQR404',
-            'transactionName' => 'Transaction G',
-            'address' => '404 Oak St',
-            'email' => 'example7@example.com',
-            'phoneNumber' => '888-888-8888',
-            'fax' => '999-999-9999',
-        ],
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -80,7 +64,7 @@ class CustomerController extends Controller
     {
         $customers = $this->data;
 
-        return view('admin.customer.show', compact('customers'));
+        return view('admin.customer.index', compact('customers'));
     }
 
     /**
@@ -96,7 +80,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        return redirect()->route('admin.customer.index');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -110,7 +94,7 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
         $customer = null;
         foreach ($this->data as $item) {
@@ -136,7 +120,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteCustomerRequest $request, string $id)
     {
         //
     }
