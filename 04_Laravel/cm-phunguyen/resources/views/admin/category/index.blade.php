@@ -21,7 +21,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Category Table</h6>
                             <div style="position: absolute; top: 10px; right: 0 ">
-                                <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('customers.create')}}';">Add</button>
+                                <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('categories.create')}}';">Add</button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -44,7 +44,7 @@
                                                 <td>{{ $category['created_at'] }}</td>
                                                 <td>{{ $category['updated_at'] }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('categories.edit', ['category'=> $category['category_id']])}}';">Edit</button>
+                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('categories.edit', ['category'=> $category['id']])}}';">Edit</button>
                                                     <button type="button" class="btn btn-primary" >Delete</button>
                                                 </td>
                                             </tr>

@@ -13,31 +13,53 @@
             <h1 class="h3 mb-2 text-gray-800">Add Function</h1>
 
             <div class="p-5">
-                <form class="user">
+                <form class="user" method = "POST" action = "{{route('suppliers.store')}}">
+                    @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Company Id">
+                        <input type="text" name = "company_id" class="form-control form-control-user" placeholder="Company Id" value = "{{old('company_id')}}">
+                        @error('company_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Company Name">
+                        <input type="text" name = "company_name" class="form-control form-control-user" placeholder="Company Name" value = "{{old('company_name')}}">
+                        @error('company_name')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Transaction Name">
+                        <input type="text" name = "transaction_name"  class="form-control form-control-user" placeholder="Transaction Name" value = "{{old('transaction_name')}}">
+                        @error('transaction_name')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Address">
+                        <input type="text" name = "address" class="form-control form-control-user" placeholder="Address" value = "{{old('address')}}">
+                        @error('address')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Phone">
+                        <input type="text" name = "phone" class="form-control form-control-user" placeholder="Phone" value = "{{old('phone')}}">
+                        @error('phone')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Fax">
+                        <input type="text" name = "fax" class="form-control form-control-user" placeholder="Fax" value = "{{old('fax')}}">
+                        @error('fax')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" placeholder="Email">
+                        <input type="text" name ="email" class="form-control form-control-user" placeholder="Email" value = "{{old('email')}}">
+                        @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class ="button-container">
-                            <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('employees.index')}}';">
+                            <button type="submit" class="btn btn-primary" >
                                 Add
                             </button>
                             <button type="button" class="btn btn-secondary" onclick= "window.location.href = '{{route('employees.index')}}';">

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\customers\CreateCustomerRequest;
+use App\Http\Requests\customers\UpdateCustomerRequest;
 
 class CustomersController extends Controller
 {
 
     private $customerData = [
         [
-            'customers_id' => 1,
+            'id' => 1,
             'company_name' => "ABC Inc.",
             'transaction_name' => "Purchase",
             'address' => "123 Main Street",
@@ -20,7 +21,7 @@ class CustomersController extends Controller
             'updated_at' => "2023-09-26 10:30:00",
         ],
         [
-            'customers_id' => 2,
+            'id' => 2,
             'company_name' => "XYZ Corp.",
             'transaction_name' => "Sale",
             'address' => "456 Elm Street",
@@ -31,7 +32,7 @@ class CustomersController extends Controller
             'updated_at' => "2023-09-26 11:45:00",
         ],
         [
-            'customers_id' => 3,
+            'id' => 3,
             'company_name' => "LMN Ltd.",
             'transaction_name' => "Service",
             'address' => "789 Oak Street",
@@ -63,9 +64,9 @@ class CustomersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCustomerRequest $request)
     {
-        //
+
     }
 
     /**
@@ -83,7 +84,7 @@ class CustomersController extends Controller
     {
         $customer = null;
         foreach ($this->customerData as $key => $value) {
-            if ($value['customers_id'] == $id) {
+            if ($value['id'] == $id) {
                 $customer = $value;
                 break;
             }
@@ -94,9 +95,9 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCustomerRequest $request, string $id)
     {
-        //
+
     }
 
     /**

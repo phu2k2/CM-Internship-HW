@@ -55,7 +55,7 @@
                                                 <td>{{ $employee['base_salary'] }}</td>
                                                 <td>{{ $employee['allowance'] }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('employees.edit', ['employee'=> $employee['employee_id']])}}';">Edit</button>
+                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('employees.edit', ['employee'=> $employee['id']])}}';">Edit</button>
                                                     <button type="button" class="btn btn-primary" >Delete</button>
                                                 </td>
                                             </tr>

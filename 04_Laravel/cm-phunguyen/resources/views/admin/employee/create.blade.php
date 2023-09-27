@@ -16,8 +16,8 @@
                 <form class="user" method = "POST" action = "{{route('employees.store')}}">
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="id" class="form-control form-control-user" placeholder="Id" value = "{{old('id')}}">
-                        @error('id')
+                        <input type="text" name="employee_id" class="form-control form-control-user" placeholder="Id" value = "{{old('employee_id')}}">
+                        @error('employee_id')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

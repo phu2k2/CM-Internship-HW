@@ -50,7 +50,7 @@
                                                 <td>{{ $supplier['fax'] }}</td>
                                                 <td>{{ $supplier['email'] }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('suppliers.edit', ['supplier'=> $supplier['company_id']])}}';">Edit</button>
+                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('suppliers.edit', ['supplier'=> $supplier['id']])}}';">Edit</button>
                                                     <button type="button" class="btn btn-primary" >Delete</button>
                                                 </td>
                                             </tr>

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\employees\CreateEmployeeRequest;
+use App\Http\Requests\employees\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     private $employeeData = [
         [
+            'id'=>1,
             'employee_id' => 'EMP1',
             'last_name' => 'Smith',
             'first_name' => 'John',
@@ -22,6 +24,7 @@ class EmployeeController extends Controller
             'updated_at' => "2023-09-25 00:00:00"
         ],
         [
+            'id'=>2,
             'employee_id' => 'EMP2',
             'last_name' => 'Johnson',
             'first_name' => 'Emily',
@@ -58,8 +61,6 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-
-        // return redirect()->route('employees.index');
     }
 
     /**
@@ -77,7 +78,7 @@ class EmployeeController extends Controller
     {
         $employee = null;
         foreach ($this->employeeData as $key => $value) {
-            if ($value['employee_id'] == $id) {
+            if ($value['id'] == $id) {
                 $employee = $value;
                 break;
             }
@@ -88,7 +89,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         //
     }

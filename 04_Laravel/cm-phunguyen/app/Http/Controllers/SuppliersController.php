@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\suppliers\CreateSupplierRequest;
+use App\Http\Requests\suppliers\UpdateSupllierRequest;
 use Illuminate\Http\Request;
 
 class SuppliersController extends Controller
 {
     private $suppliersData = [
         [
+            'id' => 1,
             'company_id' => 'C001',
             'company_name' => 'ABC Corporation',
             'transaction_name' => 'Sales',
@@ -19,6 +22,7 @@ class SuppliersController extends Controller
             'updated_at' => "2023-09-26 10:30:00",
         ],
         [
+            'id'=> 2,
             'company_id' => 'C002',
             'company_name' => 'XYZ Enterprises',
             'transaction_name' => 'Marketing',
@@ -50,7 +54,7 @@ class SuppliersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSupplierRequest $request)
     {
         //
     }
@@ -70,7 +74,7 @@ class SuppliersController extends Controller
     {
         $supplier = null;
         foreach ($this->suppliersData as $key => $value) {
-            if ($value['company_id'] == $id) {
+            if ($value['id'] == $id) {
                 $supplier = $value;
                 break;
             }
@@ -81,7 +85,7 @@ class SuppliersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSupllierRequest $request, string $id)
     {
         //
     }

@@ -27,5 +27,4 @@ Route::prefix('admin')->group(function () {
     Route::resource('suppliers', SuppliersController::class);
     Route::resource('categories', CategoriesController::class);
     Route::resource('employees', EmployeeController::class);
-    Route::resource('user', UserController::class);
 });

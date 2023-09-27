@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\employees;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required',
+            'employee_id' => 'required|string|max:4',
             'last_name' => 'required|max:8',
             'first_name' => 'required|max:8',
             'birthday' => 'required|date_format:Y-m-d H:i:s',

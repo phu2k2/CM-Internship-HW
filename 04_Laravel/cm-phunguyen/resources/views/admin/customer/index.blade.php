@@ -29,7 +29,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>Customer_Id</th>
                                             <th>Company Name</th>
                                             <th>Transaction Name</th>
                                             <th>Address</th>
@@ -42,7 +42,7 @@
                                     <tbody>
                                         @foreach ($data as $customer)
                                             <tr>
-                                                <td>{{ $customer['customers_id'] }}</td>
+                                                <td>{{ $customer['id'] }}</td>
                                                 <td>{{ $customer['company_name'] }}</td>
                                                 <td>{{ $customer['transaction_name'] }}</td>
                                                 <td>{{ $customer['address'] }}</td>
@@ -50,7 +50,7 @@
                                                 <td>{{ $customer['phone'] }}</td>
                                                 <td>{{ $customer['fax'] }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('customers.edit', ['customer'=> $customer['customers_id']])}}';">Edit</button>
+                                                    <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('customers.edit', ['customer'=> $customer['id']])}}';">Edit</button>
                                                     <button type="button" class="btn btn-primary" >Delete</button>
                                                 </td>
                                             </tr>
