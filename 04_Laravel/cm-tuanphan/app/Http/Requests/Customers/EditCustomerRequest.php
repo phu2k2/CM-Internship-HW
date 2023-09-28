@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Customers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\PhoneNumber;
+use App\Rules\FaxNumber;
 
 class EditCustomerRequest extends FormRequest
 {
@@ -25,8 +27,8 @@ class EditCustomerRequest extends FormRequest
             'company_name' => 'required|string|max:255',
             'transaction_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:15',
-            'fax' => 'nullable|string|max:15',
+            'phone_number' => ['required', new PhoneNumber],
+            'fax' => ['nullable','string','max:15' , new FaxNumber],
         ];
     }
 
