@@ -28,14 +28,14 @@
                 </div>
                 @enderror
                 <label>Sinh nhật</label>
-                <input type="date" class="form-control @error('birthday') is-invalid @enderror" placeholder="Sinh nhật" name="birthday"/>
+                <input type="datetime-local" class="form-control @error('birthday') is-invalid @enderror" placeholder="Sinh nhật" name="birthday"/>
                 @error('birthday')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control @error('start_date') is-invalid @enderror" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
                 @error('start_date')
                 <div class="invalid-feedback">
                     {{ $message }}

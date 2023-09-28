@@ -49,7 +49,11 @@ class SupplierController extends Controller
 
     public function update(EditSupplierRequest $req, string $id)
     {
-        dd($req->all());
+        if(Supplier::find($id)->update($req->except("_token" , "_method"))) {
+            return redirect()->back()->with('success', 'Edit supplier successfully');
+        } else {
+            return redirect()->back()->withError('Editing supplier failed');
+        }
     }
 
     public function destroy(string $id)

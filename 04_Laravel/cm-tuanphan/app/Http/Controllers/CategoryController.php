@@ -40,7 +40,11 @@ class CategoryController extends Controller
 
     public function update(EditCategoryRequest $req, string $id)
     {
-        dd($req->all());
+        if(Category::find($id)->update($req->except("_token" , "_method"))) {
+            return redirect()->back()->with('success', 'Edit category successfully');
+        } else {
+            return redirect()->back()->withError('Editing category failed');
+        }
     }
 
     public function destroy(string $id)

@@ -40,7 +40,11 @@ class CustomerController extends Controller
 
     public function update(EditCustomerRequest $req, string $id)
     {
-        dd($req->all());
+        if(Customer::find($id)->update($req->except("_token" , "_method"))) {
+            return redirect()->back()->with('success', 'Edit customer successfully');
+        } else {
+            return redirect()->back()->withError('Editing customer failed');
+        }
     }
 
     public function destroy(string $id)

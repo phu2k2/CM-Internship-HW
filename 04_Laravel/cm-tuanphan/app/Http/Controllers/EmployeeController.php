@@ -55,7 +55,11 @@ class EmployeeController extends Controller
 
     public function update(EditEmployeeRequest $req, string $id)
     {
-        dd($req->all());
+        if(Employee::find($id)->update($req->except("_token" , "_method"))) {
+            return redirect()->back()->with('success', 'Edit employee successfully');
+        } else {
+            return redirect()->back()->withError('Editing employee failed');
+        }
     }
 
     public function destroy(string $id)
