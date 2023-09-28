@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\SupplierRequest;
+use App\Http\Requests\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
     private $suppliers = [
         [
             'id' => 1,
@@ -84,6 +82,9 @@ class SupplierController extends Controller
         ],
     ];
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $suppliers = $this->suppliers;
@@ -101,7 +102,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SupplierRequest $request)
+    public function store(StoreSupplierRequest $request)
     {
         $validated = $request->validated();
     }
@@ -120,9 +121,9 @@ class SupplierController extends Controller
     public function edit(string $id)
     {
         $suppliers = $this->suppliers;
-        foreach ($suppliers as $editSupplier) {
-            if ((int)$editSupplier['company_id'] === (int)$id) {
-                return view("admin.pages.supplier.edit", compact('editSupplier'));
+        foreach ($suppliers as $supplier) {
+            if ((int)$supplier['company_id'] === (int)$id) {
+                return view("admin.pages.supplier.edit", compact('supplier'));
             }
         }
     }
@@ -130,7 +131,7 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SupplierRequest $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
         $validated = $request->validated();
     }

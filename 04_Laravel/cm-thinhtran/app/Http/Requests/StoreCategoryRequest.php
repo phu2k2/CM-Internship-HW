@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|integer|min:1',
-            'category_name' => 'required|string|max:255',
+            'category_id' => 'required|string|max:2|unique:categories',
+            'category_name' => 'required|string|max:30',
         ];
     }
 }
