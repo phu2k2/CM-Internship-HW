@@ -32,8 +32,13 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $category = new Category();
-        if ($category->create($request->validated())) {
+        $category = Category::withTrashed()
+            ->where('category_id', $request->input('category_id'))
+            ->first();
+        if ($category && $category->trashed()) {
+            $category->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif (Category::create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
