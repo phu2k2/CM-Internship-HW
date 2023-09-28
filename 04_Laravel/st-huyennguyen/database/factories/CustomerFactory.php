@@ -21,8 +21,8 @@ class CustomerFactory extends Factory
             'company_name' => fake()->company(),
             'transaction_name' => strtoupper(fake()->state()),
             'address' => fake()->city(),
-            'email' => fake()->unique()->companyEmail(),
-            'phone' => fake()->phoneNumber(15),
+            'email' => fake()->unique()->regexify('[a-z0-9\.]{15}') . '@gmail.com',
+            'phone' => fake()->numerify('###-###-####'),
             'fax' => fake()->ssn()
         ];
     }
