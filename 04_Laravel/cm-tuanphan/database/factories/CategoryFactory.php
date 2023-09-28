@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Str;
+use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
@@ -17,7 +19,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'category_id' => fake()->unique()->regexify('[A-Z]{2}'),
+            'category_name' => fake()->text(30),
         ];
     }
 }
