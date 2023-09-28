@@ -15,7 +15,6 @@ class CategoryFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = Category::class;
 
     public function definition(): array
