@@ -45,7 +45,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <a class="dropdown-item" href="{{ route('customer.edit', $customer->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('customers.edit', $customer->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                     <a class="dropdown-item" data-bs-toggle="modal"
                                        data-bs-target="#modalCenter{{$customer->id}}"><i

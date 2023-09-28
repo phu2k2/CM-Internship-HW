@@ -71,7 +71,7 @@ class CustomerController extends Controller
             session()->flash('status', 'Đã sửa dữ liệu thành công');
         }
 
-        return redirect()->route('customers.show', $id);
+        return redirect()->route('customers.index', $id);
     }
 
     /**
