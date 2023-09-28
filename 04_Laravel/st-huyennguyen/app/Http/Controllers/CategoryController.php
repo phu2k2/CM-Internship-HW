@@ -15,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(15);
+        define('PAGINATE_DEFAULT', 15);
+        $categories = Category::paginate(PAGINATE_DEFAULT);
         return view('category.index', compact('categories'));
     }
 

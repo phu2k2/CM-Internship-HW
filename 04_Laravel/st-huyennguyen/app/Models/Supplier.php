@@ -10,6 +10,7 @@ class Supplier extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
     protected $table = 'suppliers';
 
     protected $fillable = [

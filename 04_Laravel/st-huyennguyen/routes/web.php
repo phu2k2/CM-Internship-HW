@@ -25,4 +25,3 @@ Route::resource('categories', CategoryController::class)->except('show');
 Route::resource('customers', CustomerController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('suppliers', SupplierController::class);
-
