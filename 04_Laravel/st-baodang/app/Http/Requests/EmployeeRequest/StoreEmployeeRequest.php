@@ -26,7 +26,7 @@ class StoreEmployeeRequest extends FormRequest
                 'required',
                 'string',
                 'size:4',
-                'unique:employees,employee_id'
+                'unique:employees,employee_id,NULL,id,deleted_at,NULL'
             ],
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:40',

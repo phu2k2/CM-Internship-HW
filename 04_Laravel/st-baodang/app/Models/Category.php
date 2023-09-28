@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'categories';
 

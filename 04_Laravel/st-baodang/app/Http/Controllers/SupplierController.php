@@ -32,8 +32,13 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        $supplier = new Supplier();
-        if ($supplier->create($request->validated())) {
+        $supplier = Supplier::withTrashed()
+            ->where('company_id', $request->input('company_id'))
+            ->first();
+        if ($supplier && $supplier->trashed()) {
+            $supplier->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif ($supplier->create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
