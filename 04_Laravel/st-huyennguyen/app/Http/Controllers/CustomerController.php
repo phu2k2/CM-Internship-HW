@@ -15,7 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(15);
+        define('PAGINATE_DEFAULT', 15);
+        $customers = Customer::paginate(PAGINATE_DEFAULT);
         return view('customer.index', compact('customers'));
     }
 

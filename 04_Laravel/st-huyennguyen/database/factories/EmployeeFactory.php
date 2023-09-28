@@ -20,11 +20,11 @@ class EmployeeFactory extends Factory
         return [
             'employee_id' => strtoupper(fake()->bothify('?###')),
             'last_name' => fake()->lastName(),
-            'first_name'=> fake()->firstName(),
+            'first_name' => fake()->firstName(),
             'birthday' => fake()->dateTimeThisCentury->format('Y-m-d'),
             'start_date' => date('Y-m-d'),
             'address' => fake()->city(),
-            'phone' => fake()->phoneNumber(15),
+            'phone' => fake()->numerify('###-###-####'),
             'base_salary' => 100000,
             'allowance' => 0,
         ];

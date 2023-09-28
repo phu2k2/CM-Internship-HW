@@ -15,7 +15,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::paginate(15);
+        define('PAGINATE_DEFAULT', 15);
+        $suppliers = Supplier::paginate(PAGINATE_DEFAULT);
         return view('supplier.index', compact('suppliers'));
     }
 
