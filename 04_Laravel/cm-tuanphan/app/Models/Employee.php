@@ -22,4 +22,9 @@ class Employee extends Model
         'base_salary',
         'allowance'
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class , 'employee_id' , 'employee_id');
+    }
 }
