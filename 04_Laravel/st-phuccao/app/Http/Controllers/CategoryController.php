@@ -10,22 +10,23 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function generateUniqueCategoryId()
+    private function generateUniqueCategoryId()
     {
         do {
-            $categoryId = Str::random(2); 
-
+            $categoryId = Str::upper(Str::random(2)); 
             $existingCategory = Category::where('category_id', $categoryId)->first();
         } while ($existingCategory);
 
         return $categoryId;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $perPage = 10; // Number of records displayed per page
+        // Number of records displayed per page
+        $perPage = 10; 
 
         $categories = Category::paginate($perPage);
     
@@ -48,11 +49,8 @@ class CategoryController extends Controller
         // Create a new Category instance
         $category = new Category();
 
-        // Generate a unique category_id
-        $uniqueCategoryId = $this->generateUniqueCategoryId();
-
         // Set the attributes for the new category
-        $category->category_id = $uniqueCategoryId;
+        $category->category_id = $this->generateUniqueCategoryId();
         $category->category_name = $request->input('category_name');
 
         // Save the new category to the database
@@ -79,6 +77,7 @@ class CategoryController extends Controller
         if (!$category) {
             abort(404);
         }
+
         return view('admin.category.edit', compact('category'));
     }
 
@@ -96,6 +95,8 @@ class CategoryController extends Controller
         $category->category_name = $request->input('category_name');
         
         $category->save();
+
+        return redirect()->route('categories.edit', $category->id);
     }
 
     /**

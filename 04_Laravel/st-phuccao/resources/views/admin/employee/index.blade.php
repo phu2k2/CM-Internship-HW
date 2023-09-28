@@ -53,16 +53,24 @@
                             </a>
                         </td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=""
-                                aria-expanded="false">
-                                <i class="mdi mdi-account-remove"></i>
-                                <span class="hide-menu">Delete</span>
-                            </a>
+                            <form action="{{ route('employees.destroy', $item->employee_id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach   
                 </tbody>
             </table>
+            <div class="text-center">
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $employees->previousPageUrl() }}'" @if (!$employees->onFirstPage()) style="display:inline-block" @else style="display:none" @endif>
+                    Previous
+                </button>
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $employees->nextPageUrl() }}'" @if ($employees->hasMorePages()) style="display:inline-block" @else style="display:none" @endif>
+                    Next
+                </button>
+            </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <button class="btn btn-success text-white"><a href="{{ route('employees.create') }}">Add Employee</a></button>

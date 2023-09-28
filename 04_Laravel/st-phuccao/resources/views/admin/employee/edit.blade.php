@@ -15,6 +15,7 @@
             <form class="form-horizontal mt-4" method="POST" action="{{ route('employees.update',['employee' => $employee['employee_id']]) }}">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="employee_id" value="{{ $employee['id'] }}">
                 <div class="form-group">
                     <label>Last Name</label>
                     <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name', $employee['last_name']) }}">

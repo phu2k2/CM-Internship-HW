@@ -38,9 +38,9 @@
                         <td>{{ $item['company_name'] }}</td>
                         <td>{{ $item['transaction_name'] }}</td>
                         <td>{{ $item['address'] }}</td>
+                        <td>{{ $item['email'] }}</td>
                         <td>{{ $item['phone'] }}</td>
                         <td>{{ $item['fax'] }}</td>
-                        <td>{{ $item['email'] }}</td>
                         <td>
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('suppliers.edit', ['supplier' => $item['company_id']]) }}"
                                 aria-expanded="false">
@@ -49,16 +49,24 @@
                             </a>
                         </td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=""
-                                aria-expanded="false">
-                                <i class="mdi mdi-account-remove"></i>
-                                <span class="hide-menu">Delete</span>
-                            </a>
+                            <form action="{{ route('suppliers.destroy', $item->company_id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach 
                 </tbody>
             </table>
+            <div class="text-center">
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $suppliers->previousPageUrl() }}'" @if (!$suppliers->onFirstPage()) style="display:inline-block" @else style="display:none" @endif>
+                    Previous
+                </button>
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $suppliers->nextPageUrl() }}'" @if ($suppliers->hasMorePages()) style="display:inline-block" @else style="display:none" @endif>
+                    Next
+                </button>
+            </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <button class="btn btn-success text-white"> <a href="{{ route('suppliers.create') }}">Add Supplier</a> </button>

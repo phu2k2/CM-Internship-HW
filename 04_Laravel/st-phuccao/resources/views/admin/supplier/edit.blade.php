@@ -15,6 +15,7 @@
             <form class="form-horizontal mt-4" method="POST" action="{{ route('suppliers.update', ['supplier' => $supplier['company_id']]) }}">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="supplier_id" value="{{ $supplier['id'] }}">
                 <div class="form-group">
                     <label for="company_name">Company Name</label>
                     <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name', $supplier['company_name']) }}">
