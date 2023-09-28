@@ -37,6 +37,12 @@
 
 <body class="g-sidenav-show   bg-gray-100">
 
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div>{{$error}}</div>
+        @endforeach
+    @endif
+
     {{-- Toast Notification HTML --}}
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToastNotification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

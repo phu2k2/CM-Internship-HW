@@ -7,6 +7,7 @@ use App\Models\Category;
 use View;
 use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Http\Requests\Categories\EditCategoryRequest;
+use App\Http\Requests\Categories\DeleteCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -47,8 +48,9 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(DeleteCategoryRequest $req , string $id)
     {
+        Category::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Delete Category With ID ' . $id . ' Successfully');
     }
 }

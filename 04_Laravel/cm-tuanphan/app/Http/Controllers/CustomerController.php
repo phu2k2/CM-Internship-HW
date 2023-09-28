@@ -49,6 +49,7 @@ class CustomerController extends Controller
 
     public function destroy(string $id)
     {
+        Customer::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Delete Customer With ID ' . $id . ' Successfully');
     }
 }

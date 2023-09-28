@@ -106,7 +106,7 @@
                                         <button class="btn btn-danger" onclick="(function() {
                                             var deleteCategoryModal = new bootstrap.Modal(document.getElementById('deleteCategoryModal'), {});
                                             deleteCategoryModal.show();
-                                            document.getElementById('deleteCategoryForm').action = '{{route('categories.destroy' , ['category' => $category->category_id])}}';
+                                            document.getElementById('deleteCategoryForm').action = '{{route('categories.destroy' , ['category' => $category->id])}}';
                                         })();">Xóa</button>
                                     </td>
                                 </tr>  

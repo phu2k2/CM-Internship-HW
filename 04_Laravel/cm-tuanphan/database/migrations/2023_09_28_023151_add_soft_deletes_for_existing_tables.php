@@ -20,7 +20,7 @@ return new class extends Migration
         Schema::table('employees', function($table) {
             $table->softDeletes();
         });
-        Schema::table('products', function($table) {
+        Schema::table('suppliers', function($table) {
             $table->softDeletes();
         });
     }
