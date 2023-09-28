@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\SupplierController as APISupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -26,5 +25,3 @@ Route::resource('categories', CategoryController::class)->except('show');
 Route::resource('customers', CustomerController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('suppliers', SupplierController::class);
-
-Route::apiResource('suppliers', APISupplierController::class);
