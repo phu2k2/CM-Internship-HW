@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('shipping_date');
             $table->string('destination', 80);
             $table->timestamps();
+            $table->softDeletes();
     
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');

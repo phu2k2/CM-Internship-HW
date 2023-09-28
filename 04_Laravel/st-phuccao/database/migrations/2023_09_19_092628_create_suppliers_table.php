@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('fax', 15)->nullable();
             $table->string('email', 30);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

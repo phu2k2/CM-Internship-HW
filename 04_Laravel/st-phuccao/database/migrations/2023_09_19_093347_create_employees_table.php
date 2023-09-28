@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('base_salary', 10, 2);
             $table->decimal('allowance', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
