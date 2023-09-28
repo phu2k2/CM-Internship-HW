@@ -21,7 +21,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Category ID</th>
                         <th scope="col">Category Name</th>
-                        <th scope="col">Create At</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -32,30 +33,34 @@
                             <th scope="row">{{$loop->index}}</th>
                             <td>{{ $item['category_id'] }}</td>
                             <td>{{ $item['category_name'] }}</td>
-                            <td>{{ $item['create_at'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['updated_at'] }}</td>
                             <td>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categories.edit', ['category' => $item['category_id']]) }}"
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categories.edit', ['category' => $item['id']]) }}"
                                     aria-expanded="false">
                                     <i class="mdi mdi-account-edit"></i>
                                     <span class="hide-menu">Edit</span>
                                 </a>
                             </td>
                             <td>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categories.destroy', ['category' => $item['category_id']]) }}"
-                                    aria-expanded="false"
-                                    onclick="event.preventDefault(); document.getElementById('delete-form-{{ $item['category_id'] }}').submit();">
-                                    <i class="mdi mdi-account-remove"></i>
-                                    <span class="hide-menu">Delete</span>
-                                </a>
-                                <form id="delete-form-{{ $item['category_id'] }}" action="{{ route('categories.destroy', ['category' => $item['category_id']]) }}" method="POST" style="display: none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </td>
+                            <form action="{{ route('categories.destroy', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                            </form>
+                        </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="text-center">
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $categories->previousPageUrl() }}'" @if (!$categories->onFirstPage()) style="display:inline-block" @else style="display:none" @endif>
+                    Previous
+                </button>
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $categories->nextPageUrl() }}'" @if ($categories->hasMorePages()) style="display:inline-block" @else style="display:none" @endif>
+                    Next
+                </button>
+            </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <button class="btn btn-success text-white"><a href="{{ route('categories.create') }}">Add Category</a></button>

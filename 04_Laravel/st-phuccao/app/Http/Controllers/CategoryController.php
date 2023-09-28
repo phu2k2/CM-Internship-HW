@@ -4,34 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    public function generateUniqueCategoryId()
+    {
+        do {
+            $categoryId = Str::random(2); 
+
+            $existingCategory = Category::where('category_id', $categoryId)->first();
+        } while ($existingCategory);
+
+        return $categoryId;
+    }
     /**
      * Display a listing of the resource.
      */
-    private $categoriesData = [
-        [
-            'category_id' => '01',
-            'category_name' => 'Category 1',
-            'create_at' => '1/1/2019'
-        ],
-        [
-            'category_id' => '02',
-            'category_name' => 'Category 2',
-            'create_at' => '1/1/2020'
-        ],
-        [
-            'category_id' => '03',
-            'category_name' => 'Category 3',
-            'create_at' => '1/1/2021'
-        ],
-    ];
-
     public function index()
     {
-        return view('admin.category.index', ['categories' => $this->categoriesData]);
+        $perPage = 10; // Number of records displayed per page
+
+        $categories = Category::paginate($perPage);
+    
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -47,7 +45,20 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        // Create a new Category instance
+        $category = new Category();
+
+        // Generate a unique category_id
+        $uniqueCategoryId = $this->generateUniqueCategoryId();
+
+        // Set the attributes for the new category
+        $category->category_id = $uniqueCategoryId;
+        $category->category_name = $request->input('category_name');
+
+        // Save the new category to the database
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -63,10 +74,10 @@ class CategoryController extends Controller
      */
     public function edit(int $id)
     {
-        foreach ($this->categoriesData as $key => $value) {
-            if ($value['category_id'] == $id) {
-                $category = $value;
-            }
+        $category = Category::find($id);
+
+        if (!$category) {
+            abort(404);
         }
         return view('admin.category.edit', compact('category'));
     }
@@ -76,7 +87,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category = Category::find($id);
+
+        if(!$category) {
+            abort(404);
+        }
+
+        $category->category_name = $request->input('category_name');
+        
+        $category->save();
     }
 
     /**
@@ -84,11 +103,14 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        foreach ($this->categoriesData as $key => $value) {
-            if ($value['category_id'] === $id) {
-                unset($this->categoriesData[$key]);
-            }
+        $category = Category::find($id);
+
+        if (!$category) {
+            abort(404);
         }
+
+        $category->delete();
+
         return redirect()->route('categories.index');
     }
 }
