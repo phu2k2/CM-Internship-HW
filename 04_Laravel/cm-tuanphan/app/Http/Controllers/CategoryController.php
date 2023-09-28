@@ -23,7 +23,12 @@ class CategoryController extends Controller
 
     public function store(CreateCategoryRequest $req)
     {
-        dd($req->all());
+        $category = Category::create($req->except("_token"));
+        if ($category) {
+            return redirect()->back()->with('success', 'Category created successfully');
+        } else {
+            return redirect()->back()->withError('Category creation failed');
+        }
     }
 
     public function edit(string $categoryID)

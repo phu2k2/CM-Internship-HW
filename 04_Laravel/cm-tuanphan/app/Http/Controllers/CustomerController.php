@@ -23,7 +23,12 @@ class CustomerController extends Controller
 
     public function store(CreateCustomerRequest $req)
     {
-        dd($req->all());
+        $customer = Customer::create($req->except("_token"));
+        if ($customer) {
+            return redirect()->back()->with('success', 'Customer created successfully');
+        } else {
+            return redirect()->back()->withError('Customer creation failed');
+        }
     }
 
     public function edit(string $customerID)

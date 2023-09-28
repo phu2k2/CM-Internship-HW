@@ -28,7 +28,7 @@
                 </div>
                 @enderror
                 <label>Sinh nhật</label>
-                <input class="form-control @error('birthday') is-invalid @enderror" placeholder="Sinh nhật" name="birthday"/>
+                <input type="date" class="form-control @error('birthday') is-invalid @enderror" placeholder="Sinh nhật" name="birthday"/>
                 @error('birthday')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -42,7 +42,7 @@
                 </div>
                 @enderror
                 <label>Địa chỉ</label>
-                <input type="date" class="form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" name="address"/>
                 @error('address')
                 <div class="invalid-feedback">
                     {{ $message }}

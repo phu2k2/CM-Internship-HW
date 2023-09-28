@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
             'company_name' => fake()->text(50),
             'transaction_name' => strtoupper(fake()->text(20)),
             'address' => fake()->text(50),
-            'email' => fake()->email,
+            'email' => fake()->safeEmail,
             'phone_number' => $this->faker->numerify('##########'),
             'fax' => $this->faker->numerify('##########'),
         ];

@@ -25,6 +25,7 @@ class CreateCustomerRequest extends FormRequest
             'company_name' => 'required|string|max:255',
             'transaction_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'phone_number' => 'required|string|max:15',
             'fax' => 'nullable|string|max:15',
         ];
@@ -39,6 +40,8 @@ class CreateCustomerRequest extends FormRequest
             'transaction_name.max' => 'Tên giao dịch không được vượt quá 255 ký tự.',
             'address.required' => 'Vui lòng nhập Địa chỉ.',
             'address.max' => 'Địa chỉ không được vượt quá 255 ký tự.',
+            'email.required' => 'Vui lòng nhập địa chỉ email',
+            'email.email' => 'Địa chỉ email không hợp lệ',
             'phone_number.required' => 'Vui lòng nhập Số điện thoại.',
             'phone_number.max' => 'Số điện thoại không được vượt quá 15 ký tự.',
             'fax.max' => 'Số fax không được vượt quá 15 ký tự.',
