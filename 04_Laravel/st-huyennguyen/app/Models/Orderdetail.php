@@ -11,6 +11,7 @@ class Orderdetail extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $table = 'orderdetails';
 
     protected $fillable = [
