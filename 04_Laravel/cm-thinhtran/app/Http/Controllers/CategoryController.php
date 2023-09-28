@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -40,7 +40,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
     }
@@ -59,9 +59,9 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $categories = $this->categories;
-        foreach ($categories as $editCategory) {
-            if ((int)$editCategory['category_id'] === (int)$id) {
-                return view("admin.pages.category.edit", compact('editCategory'));
+        foreach ($categories as $category) {
+            if ((int)$category['category_id'] === (int)$id) {
+                return view("admin.pages.category.edit", compact('category'));
             }
         }
     }
@@ -69,7 +69,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         $validated = $request->validated();
     }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmployeeRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request)
     {
         $validated = $request->validated();
     }
@@ -86,9 +86,9 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         $employees = $this->employees;
-        foreach ($employees as $editEmployee) {
-            if ((int)$editEmployee['id'] === (int)$id) {
-                return view("admin.pages.employee.edit", compact('editEmployee'));
+        foreach ($employees as $employee) {
+            if ((int)$employee['id'] === (int)$id) {
+                return view("admin.pages.employee.edit", compact('employee'));
             }
         }
     }
@@ -96,7 +96,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeRequest $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         $validated = $request->validated();
     }
