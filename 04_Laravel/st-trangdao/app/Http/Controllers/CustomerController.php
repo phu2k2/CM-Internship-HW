@@ -86,7 +86,6 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $customer = $value;
