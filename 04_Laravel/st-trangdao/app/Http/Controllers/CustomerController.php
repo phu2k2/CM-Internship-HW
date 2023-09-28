@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customer\CreateRequestCustomer;
+use App\Http\Requests\Customer\DeleteRequestCustomer;
+use App\Http\Requests\Customer\UpdateRequestCustomer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -38,10 +41,11 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        //
         $customers =  $this->data;
+
         return view('customers.index', compact('customers'));
     }
 
@@ -50,16 +54,17 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
         return view('customers.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequestCustomer $request)
     {
-        //
+        session()->flash('message', 'Successfully created!');
+
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -67,12 +72,12 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $customer = $value;
             }
         }
+
         return view('customers.show', compact('customer'));
     }
 
@@ -87,22 +92,27 @@ class CustomerController extends Controller
                 $customer = $value;
             }
         }
+
         return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequestCustomer $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully updated!');
+
+        return redirect()->route('customers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteRequestCustomer $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully deleted!');
+
+        return redirect()->route('customers.index');
     }
 }

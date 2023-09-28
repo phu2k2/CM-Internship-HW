@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\CreateRequestEmployee;
+use App\Http\Requests\Employee\DeleteRequestEmployee;
+use App\Http\Requests\Employee\UpdateRequestEmployee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -47,11 +50,12 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $employees = $this -> data;
+        $employees = $this->data;
+
         return view('employees.index', compact('employees'));
-        //
     }
 
     /**
@@ -59,16 +63,17 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
         return view('employees.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequestEmployee $request)
     {
-        //
+        session()->flash('message', 'Successfully created!');
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -76,12 +81,12 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $employee = $value;
             }
         }
+
         return view('employees.show', compact('employee'));
     }
 
@@ -90,28 +95,32 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $employee = $value;
             }
         }
+
         return view('employees.edit', compact('employee'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequestEmployee $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully updated!');
+
+        return redirect()->route('employees.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteRequestEmployee $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully deleted!');
+
+        return redirect()->route('employees.index');
     }
 }
