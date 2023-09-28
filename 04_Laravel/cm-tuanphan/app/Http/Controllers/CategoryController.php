@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use View;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -20,9 +21,9 @@ class CategoryController extends Controller
         return view("admin.manages.categories.index" , compact("categories"));
     }
 
-    public function store(CategoryRequest $res)
+    public function store(CreateCategoryRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $categoryID)
@@ -32,9 +33,9 @@ class CategoryController extends Controller
         return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
     }
 
-    public function update(CategoryRequest $res, string $id)
+    public function update(EditCategoryRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)
