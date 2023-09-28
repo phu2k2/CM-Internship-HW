@@ -4,18 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class SupplierController extends Controller
 {
-    private $categoriesData = [
+    private $suppliersData = [
         [
-            'category_id' => 'C1',
-            'category_name' => 'Electronics',
+            'company_id' => 'C001',
+            'company_name' => 'ABC Corporation',
+            'transaction_name' => 'Sales',
+            'address' => '123 Main Street',
+            'phone' => '+1 (555) 123-4567',
+            'fax' => '+1 (555) 987-6543',
+            'email' => 'abc@example.com',
             'created_at' => "2023-09-26 10:00:00",
             'updated_at' => "2023-09-26 10:30:00",
         ],
         [
-            'category_id' => 'C2',
-            'category_name' => 'Clothing',
+            'company_id' => 'C002',
+            'company_name' => 'XYZ Enterprises',
+            'transaction_name' => 'Marketing',
+            'address' => '456 Elm Street',
+            'phone' => '+1 (555) 789-0123',
+            'fax' => '+1 (555) 567-8901',
+            'email' => 'xyz@example.com',
             'created_at' => "2023-09-26 11:15:00",
             'updated_at' => "2023-09-26 11:45:00",
         ],
@@ -25,8 +35,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $data = $this->categoriesData;
-        return view('admin/category/index', compact('data'));
+        $data = $this->suppliersData;
+        return view('admin/supplier/index', compact('data'));
     }
 
     /**
@@ -34,7 +44,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin/category/create');
+        return view('admin/supplier/create');
     }
 
     /**
@@ -58,15 +68,16 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        $category = null;
-        foreach ($this->categoriesData as $key => $value) {
-            if ($value['category_id'] == $id) {
-                $category = $value;
+        $supplier = null;
+        foreach ($this->suppliersData as $key => $value) {
+            if ($value['company_id'] == $id) {
+                $supplier = $value;
                 break;
             }
         }
-        return view(('admin/category/edit'), compact('category'));
+        return view(('admin/supplier/edit'), compact('supplier'));
     }
+
     /**
      * Update the specified resource in storage.
      */
