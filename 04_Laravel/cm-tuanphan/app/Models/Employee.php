@@ -19,6 +19,6 @@ class Employee extends Model
         'address',
         'phone',
         'base_salary',
-        'allowance'
+        'allowance',
     ];
 }

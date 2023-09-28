@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class EditCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|numeric|unique:categories',
-            'category_name' => 'required|string|unique:categories',
+            'category_id' => 'required|numeric|unique:categories|max:2',
+            'category_name' => 'required|string|unique:categories|max:255',
         ];
     }
 
@@ -32,10 +32,12 @@ class CategoryRequest extends FormRequest
         return [
             'category_id.required' => 'Vui lòng nhập ID danh mục.',
             'category_id.numeric' => 'ID danh mục phải là số.',
-            'category_id.unique' => 'ID danh mục đã tồn tại.',             
+            'category_id.unique' => 'ID danh mục đã tồn tại.',    
+            'category_id.max' => 'Tên danh mục không được vượt quá 2 ký tự.',         
             'category_name.required' => 'Vui lòng nhập Tên danh mục.',
             'category_name.string' => 'Tên danh mục phải là chuỗi.',
             'category_name.unique' => 'Tên danh mục đã tồn tại.',
+            'category_name.max' => 'Tên danh mục không được vượt quá 255 ký tự.',
         ];
     }
 
