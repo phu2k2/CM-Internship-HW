@@ -7,11 +7,19 @@
         @csrf
         @method('PUT')
         <div class="p-5">
-            <h2 class="text-center">Edit employee</h2>
+            <div class="mb-3">
+                <h2 class="text-center">Edit employee</h2>
+                <label for="inputId" class="form-label">Employee Id</label>
+                <input value="{{ old('employee_id', $employee->employee_id) }}" type="text" class="form-control"
+                    id="inputId" name="employee_id">
+                @error('employee_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="mb-3">
                 <label for="inputName" class="form-label">Last Name</label>
-                <input value="{{ old('last_name', $employee->last_name) }}" type="text" class="form-control" id="inputName"
-                    name="last_name">
+                <input value="{{ old('last_name', $employee->last_name) }}" type="text" class="form-control"
+                    id="inputName" name="last_name">
                 @error('last_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -28,8 +36,8 @@
 
             <div class="mb-3">
                 <label for="inputBirthDay" class="form-label">BirthDay</label>
-                <input value="{{ old('birthday', date('Y-m-d', strtotime($employee->birthday))) }}" type="date" class="form-control"
-                    id="inputBirthDay" name="birthday">
+                <input value="{{ old('birthday', date('Y-m-d', strtotime($employee->birthday))) }}" type="date"
+                    class="form-control" id="inputBirthDay" name="birthday">
                 @error('birthday')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -37,8 +45,8 @@
 
             <div class="mb-3">
                 <label for="inputStartDate" class="form-label">Start Date</label>
-                <input value="{{ old('start_date', date('Y-m-d', strtotime($employee->start_date))) }}" type="date" class="form-control"
-                    id="inputStartDate" name="start_date">
+                <input value="{{ old('start_date', date('Y-m-d', strtotime($employee->start_date))) }}" type="date"
+                    class="form-control" id="inputStartDate" name="start_date">
                 @error('start_date')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -55,9 +63,9 @@
 
             <div class="mb-3">
                 <label for="inputPhone" class="form-label">Phone</label>
-                <input value="{{ old('phone_number', $employee->phone) }}" type="text" class="form-control" id="inputPhone"
-                    name="phone_number">
-                @error('phone_number')
+                <input value="{{ old('phone', $employee->phone) }}" type="text" class="form-control"
+                    id="inputPhone" name="phone">
+                @error('phone')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

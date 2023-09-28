@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequest\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,9 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+        $validatedData = $request->validated();
+        $category = new Category();
+        $category->create($validatedData);
 
         $request->session()->flash('success', 'Add Category successful!');
         
@@ -63,7 +67,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         $category = Category::find($id);
         
@@ -72,7 +76,6 @@ class CategoriesController extends Controller
         }
     
         $validatedData = $request->validated();
-        
         $category->update($validatedData);
     
         $request->session()->flash('success', 'Update Category successful!');
@@ -92,6 +95,7 @@ class CategoriesController extends Controller
         }
 
         $category->delete();
+        
         $request->session()->flash('success', 'Delete Category successful!');
 
         return redirect()->route('categories.index');

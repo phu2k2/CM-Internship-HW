@@ -16,7 +16,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
             <div class="mb-3">
                 <label for="inputName" class="form-label">Transaction Name</label>
                 <input value="{{ old('transaction_name', $customer->transaction_name) }}" type="text"

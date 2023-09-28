@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\CustomerRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateEmployeeRequest extends FormRequest
+class UpdateCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +23,12 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'last_name' => 'required|string|max:10',
-            'first_name' => 'required|string|max:10',
-            'birthday' => 'required|date',
-            'start_date' => 'required|date',
-            'address' => 'required|string|max:60',
+            'company_name' => 'required|string|max:50',
+            'transaction_name' => 'required|string|max:20',
+            'address' => 'required|string|max:50',
+            'email' => 'required|email|max:30|unique:customers,email,'.$this->customer,
             'phone_number' => 'required|string|max:15',
-            'base_salary' => 'required|numeric|between:0,9999999.99',
-            'allowance' => 'required|numeric|between:0,9999999.99',
+            'fax' => 'required|string|max:15',
         ];
     }
 }

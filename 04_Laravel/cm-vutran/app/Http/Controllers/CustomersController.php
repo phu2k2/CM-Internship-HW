@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCustomerRequest;
+use App\Http\Requests\CustomerRequest\CreateCustomerRequest;
+use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,10 @@ class CustomersController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
+        $validatedData = $request->validated();
+        $customer = new Customer();
+        $customer->create($validatedData);
+
         $request->session()->flash('success', 'Add Customer successful!');
 
         return redirect()->route('customers.index');
@@ -61,7 +66,7 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateCustomerRequest $request, string $id)
+    public function update(UpdateCustomerRequest $request, string $id)
     {
         $customer = Customer::find($id);
 

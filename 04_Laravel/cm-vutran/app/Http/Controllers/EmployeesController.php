@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\CreateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,10 @@ class EmployeesController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
+        $validatedData = $request->validated();
+        $employee = new Employee();
+        $employee->create($validatedData);
+        
         $request->session()->flash('success', 'Add Employee successful!');
         
         return redirect()->route('employees.index');
@@ -61,16 +66,19 @@ class EmployeesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateEmployeeRequest $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = Employee::find($id);
       
         if (!$employee) {
             abort(404);
         }
+
         $validatedData = $request->validated();
         $employee->update($validatedData);
+
         $request->session()->flash('success', 'Update Employee successful!');
+        
         return redirect()->route('employees.index');
     }
 

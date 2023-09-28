@@ -8,16 +8,23 @@
         <div class="p-5">
             <h2 class="text-center">Add employee</h2>
             <div class="mb-3">
+                <label for="inputId" class="form-label">Employee Id</label>
+                <input value="{{ old('employee_id') }}" type="text" class="form-control" id="inputId" name="employee_id">
+                @error('employee_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label for="inputName" class="form-label">Last Name</label>
                 <input value="{{ old('last_name') }}" type="text" class="form-control" id="inputName" name="last_name">
                 @error('last_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
             <div class="mb-3">
                 <label for="inputName" class="form-label">First Name</label>
-                <input value="{{ old('first_name') }}" type="text" class="form-control" id="inputName" name="first_name">
+                <input value="{{ old('first_name') }}" type="text" class="form-control"
+                    id="inputName" name="first_name">
                 @error('first_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -79,6 +86,5 @@
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Add Employee</button>
         </div>
-
     </form>
 @endsection
