@@ -6,7 +6,7 @@ use App\Http\Requests\categories\CreateCategoryRequest;
 use App\Http\Requests\categories\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     private $categoriesData = [
         [

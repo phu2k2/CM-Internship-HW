@@ -6,7 +6,7 @@ use App\Http\Requests\suppliers\CreateSupplierRequest;
 use App\Http\Requests\suppliers\UpdateSupllierRequest;
 use Illuminate\Http\Request;
 
-class SuppliersController extends Controller
+class SupplierController extends Controller
 {
     private $suppliersData = [
         [
