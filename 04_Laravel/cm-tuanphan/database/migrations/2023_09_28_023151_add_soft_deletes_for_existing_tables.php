@@ -31,16 +31,24 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('customers', function($table) {
-            $table->dropSoftDeletes();
+            if (Schema::hasColumn('customers', 'deleted_at')) {
+                $table->dropSoftDeletes();
+            }
         });
         Schema::table('categories', function($table) {
-            $table->dropSoftDeletes();
+            if (Schema::hasColumn('categories', 'deleted_at')) {
+                $table->dropSoftDeletes();
+            }
         });
         Schema::table('employees', function($table) {
-            $table->dropSoftDeletes();
+            if (Schema::hasColumn('employees', 'deleted_at')) {
+                $table->dropSoftDeletes();
+            }
         });
         Schema::table('products', function($table) {
-            $table->dropSoftDeletes();
+            if (Schema::hasColumn('products', 'deleted_at')) {
+                $table->dropSoftDeletes();
+            }
         });
     }
 };
