@@ -21,8 +21,8 @@ class OrderdetailFactory extends Factory
         $data = [];
         $invoices = Order::all();
         $products = Product::all();
-        foreach ($invoices as $key => $invoice) {
-            foreach ($products as $key => $product) {
+        foreach ($invoices as $invoice) {
+            foreach ($products as $product) {
                 $data[] = $invoice->id . '-' . $product->product_id;
             }
         }
