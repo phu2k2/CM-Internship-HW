@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Customer;
 use Illuminate\Support\Str;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
