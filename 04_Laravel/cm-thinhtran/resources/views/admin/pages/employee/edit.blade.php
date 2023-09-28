@@ -72,14 +72,9 @@
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>
-
           </div>
-
-
         </div>
       </div>
-
-
     </div>
 
     <footer class="footer pt-3  ">

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-
     private $employees = [
         [
             'id' => '1',

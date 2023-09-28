@@ -7,18 +7,17 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
     private $categories = [
-        [  'category_id' => 'TP',
-           'category_name' => 'Thực phẩm' ],
-        [  'category_id' => 'DT',
-           'category_name' => 'Ðiện tử' ],
-        [  'category_id' => 'MM',
-           'category_name' => 'May mặc' ],
-        [  'category_id' => 'NT',
-           'category_name' => 'Nội thất' ],
-        [  'category_id' => 'DC',
-           'category_name' => 'Dụng cụ học tập' ]
+        [ 'category_id' => 'TP',
+          'category_name' => 'Thực phẩm' ],
+        [ 'category_id' => 'DT',
+          'category_name' => 'Ðiện tử' ],
+        [ 'category_id' => 'MM',
+          'category_name' => 'May mặc' ],
+        [ 'category_id' => 'NT',
+          'category_name' => 'Nội thất' ],
+        [ 'category_id' => 'DC',
+          'category_name' => 'Dụng cụ học tập' ]
     ];
 
     /**

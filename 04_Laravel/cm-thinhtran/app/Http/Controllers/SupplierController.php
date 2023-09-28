@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
     private $suppliers = [
         [
             'id' => 1,
@@ -84,6 +80,9 @@ class SupplierController extends Controller
         ],
     ];
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $suppliers = $this->suppliers;

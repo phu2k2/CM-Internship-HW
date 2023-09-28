@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
     private $customers = [
         [
             'id' => 1,
@@ -116,7 +112,6 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-
         $customers = $this->customers;
         foreach ($customers as $editCustomer) {
             if ((int)$editCustomer['id'] === (int)$id) {

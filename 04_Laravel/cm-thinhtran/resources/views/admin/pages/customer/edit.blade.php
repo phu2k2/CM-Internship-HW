@@ -10,7 +10,11 @@
             <div class="card-body px-0 pt-0 pb-2">
             <div class="container mt-5">
                 <h1>Edit Customer Information</h1>
+<<<<<<< HEAD
                 <form action="{{route('customers.update', ['customer' => $editCustomer['id']])}}" method="POST">
+=======
+                <form action="{{ route('customers.update', ['customer' => $editCustomer['id']]) }}" method="PUT">
+>>>>>>> mergeLayoutToValidate
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
@@ -65,14 +69,9 @@
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>
-
           </div>
-
-
         </div>
       </div>
-
-
     </div>
 
     <footer class="footer pt-3  ">

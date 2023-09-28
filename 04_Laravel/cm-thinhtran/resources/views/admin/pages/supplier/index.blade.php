@@ -37,34 +37,34 @@
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$supplier['company_id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{ $supplier['company_id'] }}</h6>
                             </div>
                         </div>
                     </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['company_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['company_name'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['transaction_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['transaction_name'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['address']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['address'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['email']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['email'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['phone']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['phone'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$supplier['fax']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $supplier['fax'] }}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('suppliers.edit', ['supplier' => $supplier['company_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('suppliers.edit', ['supplier' => $supplier['company_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
 
-                        <a href="{{route('suppliers.destroy', ['supplier' => $supplier['company_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('suppliers.destroy', ['supplier' => $supplier['company_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>
@@ -77,7 +77,6 @@
           </div>
         </div>
       </div>
-
 
         <!-- The Modal Add Customer-->
         <div class="modal fade" id="AddSupplierModal">

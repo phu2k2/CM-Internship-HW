@@ -35,28 +35,28 @@
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$customer['id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{ $customer['id'] }}</h6>
                             </div>
                         </div>
                     </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$customer['company_name']}} - {{$customer['short_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $customer['company_name'] }} - {{ $customer['short_name'] }}</p>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$customer['city']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $customer['city'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$customer['email']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $customer['email'] }}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{$customer['phone']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $customer['phone'] }}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('customers.edit', ['customer' => $customer['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('customers.edit', ['customer' => $customer['id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
 
-                        <a href="{{route('customers.destroy', ['customer' => $customer['id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('customers.destroy', ['customer' => $customer['id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>

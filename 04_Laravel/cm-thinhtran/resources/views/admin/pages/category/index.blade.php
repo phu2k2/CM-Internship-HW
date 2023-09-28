@@ -3,18 +3,18 @@
 @section('content')
 
 <div class="container-fluid py-4">
-      <div class="row">
+    <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="d-flex justify-content-between" >
                 <div class="card-header pb-0">
                     <h6>Categories</h6>
-                  </div>
-                  <div class="card-header pb-0 ">
+                </div>
+                <div class="card-header pb-0 ">
                     <button type="button" class="btn btn-primary badge badge-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#AddCategoryModal">
                         Add category
                     </button>
-                 </div>
+                </div>
             </div>
 
             <div class="card-body px-0 pt-0 pb-2">
@@ -32,19 +32,19 @@
                     <tr>
                     <td>
                         <div class="d-flex px-3 py-1">
-                            <h6 class="mb-0 text-sm">{{$category['category_id']}}</h6>
+                            <h6 class="mb-0 text-sm">{{ $category['category_id'] }}</h6>
                             </div>
                         </div>
                     </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$category['category_name']}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{ $category['category_name'] }}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="{{route('categories.edit', ['category' => $category['category_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('categories.edit', ['category' => $category['category_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success">Edit</span>
                         </a>
 
-                        <a href="{{route('categories.destroy', ['category' => $category['category_id']])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{ route('categories.destroy', ['category' => $category['category_id']]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <span class="badge badge-sm bg-gradient-success ">Delete</span>
                         </a>
                       </td>
@@ -69,7 +69,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{route('categories.store')}}" method="POST">
+                    <form action="{{ route('categories.store') }}" method="POST">
                         @csrf
                     <!-- Modal Body -->
                         <div class="modal-body">
