@@ -33,8 +33,13 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        $employee = new Employee();
-        if ($employee->create($request->validated())) {
+        $employee = Employee::withTrashed()
+            ->where('employee_id', $request->input('employee_id'))
+            ->first();
+        if ($employee && $employee->trashed()) {
+            $employee->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif ($employee->create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
