@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Category;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
@@ -22,8 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'categoryId' => 'required|string|max:255|unique:category, categoryId',
-            'categoryName' => 'required|string|max:255',
+            'category_name' => 'required|string|max:255',
         ];
     }
 }

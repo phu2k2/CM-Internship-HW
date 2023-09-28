@@ -6,15 +6,25 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
+                        @if (session()->has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-text"><strong>Success!</strong> {{ session()->get('message') }}</span>
+                            </div>
+                        @endif
+                        @if (session()->has('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span class="alert-text"><strong>Error!</strong> {{ session()->get('error') }}</span>
+                            </div>
+                        @endif
                         <div class="card-body" style="align-items: center">
                             <div class="row">
                                 <div class="col-9">
                                     <h4 class="card-title">Suppliers Management </h4>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-success" href="{{ URL::to('customer/insert') }}"
+                                    <a class="btn btn-success" href="{{ route('suppliers.create') }}"
                                         style="padding: 5px 30px">Add
-                                        Customer</a>
+                                        supplier</a>
                                 </div>
                             </div>
                             <table class="table table-responsive" style=" overflow: auto;">
@@ -34,42 +44,28 @@
                                     @foreach ($suppliers as $item)
                                         <tr>
                                             <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['companyId'] }}</td>
-                                            <td>{{ $item['transactionName'] }}</td>
+                                            <td>{{ $item['company_id'] }}</td>
+                                            <td>{{ $item['transaction_name'] }}</td>
                                             <td>{{ $item['address'] }}</td>
                                             <td>{{ $item['email'] }}</td>
-                                            <td>{{ $item['phoneNumber'] }}</td>
+                                            <td>{{ $item['phone'] }}</td>
                                             <td>{{ $item['fax'] }}</td>
                                             <td>
-                                                <a href="{{ URL::to('customer/update/' . $item['id']) }}"
-                                                    class="btn btn-warning" style="padding: 0.25rem 0.5rem"><i
-                                                        class="fa-solid fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-danger" data-toggle="modal"
-                                                    style="padding: 0.25rem 0.5rem"
-                                                    data-target="#myModal{{ $item['id'] }}"><i
-                                                        class="fa-solid fa-trash-can"></i></a>
-                                                <div class="modal" id="myModal{{ $item['id'] }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Delete Confirmation</h4>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal">&times;</button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Are you sure you want to delete
-                                                                    <b>"{{ $item['transactionName'] }}"</b>!
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a href="{{ URL::to('delete/' . $item['id']) }}"
-                                                                    class="btn btn-danger">Yes</a>
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ route('suppliers.edit', ['supplier' => $item['id']]) }}"
+                                                        class="btn btn-warning mr-2" style="padding: 0.25rem 0.5rem">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </a>
+                                                    <form method="POST"
+                                                        action="{{ route('suppliers.destroy', ['supplier' => $item['id']]) }}"
+                                                        onsubmit="return confirm('Are you sure you want to delete')">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger"
+                                                            style="padding: 0.25rem 0.5rem">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
