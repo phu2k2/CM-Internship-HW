@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SupplierRequest\DeleteSupplierRequest;
 use App\Http\Requests\SupplierRequest\StoreSupplierRequest;
 use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
-use Illuminate\Support\Facades\DB;
+use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
@@ -14,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = DB::table('suppliers')->get();
+        $suppliers = Supplier::all();
 
         return view('sections.supplier.index', compact('suppliers'));
     }
@@ -32,17 +32,13 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        $isStored = DB::table('suppliers')->insert([
-            'company_id' => $request->input('company_id'),
-            'company_name' => $request->input('company_name'),
-            'transaction_name' => $request->input('transaction_name'),
-            'address' => $request->input('address'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'fax' => $request->input('fax')
-        ]);
-
-        if ($isStored) {
+        $supplier = Supplier::withTrashed()
+            ->where('company_id', $request->input('company_id'))
+            ->first();
+        if ($supplier && $supplier->trashed()) {
+            $supplier->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif ($supplier->create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
@@ -54,9 +50,7 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        $supplier = DB::table('suppliers')
-            ->where('id', $id)
-            ->first();
+        $supplier = Supplier::findOrFail($id);
 
         return view('sections.supplier.show', compact('supplier'));
     }
@@ -66,9 +60,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = DB::table('suppliers')
-            ->where('id', $id)
-            ->first();
+        $supplier = Supplier::find($id);
 
         return view('sections.supplier.edit', compact('supplier'));
     }
@@ -78,19 +70,13 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        DB::table('suppliers')
-            ->where('id', $id)
-            ->update([
-                'company_id' => $request->input('company_id'),
-                'company_name' => $request->input('company_name'),
-                'transaction_name' => $request->input('transaction_name'),
-                'address' => $request->input('address'),
-                'email' => $request->input('email'),
-                'phone' => $request->input('phone'),
-                'fax' => $request->input('fax')
-            ]);
+        $supplier = Supplier::find($id);
+        $isUpdated = $supplier->update($request->validated());
+        if ($isUpdated) {
+            session()->flash('status', 'Đã sửa dữ liệu thành công');
+        }
 
-        return redirect()->route('suppliers.show', $id);
+        return redirect()->route('suppliers.index', $id);
     }
 
     /**
@@ -98,8 +84,9 @@ class SupplierController extends Controller
      */
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        $records = DB::table('suppliers')->delete($id);
-        if ($records) {
+        $supplier = Supplier::find($id);
+        $isDeleted = $supplier->delete();
+        if ($isDeleted) {
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 
