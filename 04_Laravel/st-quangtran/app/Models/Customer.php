@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Customer extends Model
 {
     use HasFactory, SoftDeletes;
-
     protected $table = "customers";
-
     protected $fillable = [
         'company_name',
         'transaction_name',
@@ -20,4 +18,9 @@ class Customer extends Model
         'phone',
         'fax',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

@@ -10,7 +10,6 @@ class Supplier extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "suppliers";
-
     protected $fillable = [
         'company_id',
         'company_name',
@@ -20,4 +19,9 @@ class Supplier extends Model
         'fax',
         'email',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
