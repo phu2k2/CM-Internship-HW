@@ -30,9 +30,10 @@ class UpdateSupplierRequest extends FormRequest
                 'required',
                 'string',
                 'max:15',
+                'regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
                 Rule::unique('suppliers', 'phone')->ignore($this->input('supplier_id')),
             ],
-            'fax' => 'nullable|string|max:15',
+            'fax' => 'nullable|string|max:15|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
             'email' => [
                 'required',
                 'string',
