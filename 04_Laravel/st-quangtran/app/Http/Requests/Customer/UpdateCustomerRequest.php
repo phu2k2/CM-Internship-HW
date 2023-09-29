@@ -26,7 +26,12 @@ class UpdateCustomerRequest extends FormRequest
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
-            'email' => 'required|email|unique:customers,email|max:30',
+            'email' => [
+                'required',
+                'email',
+                'max:30',
+                'unique:customers,email,' . $this->customer . ',id'
+            ],
             'phone' => 'required|string|max:15',
             'fax' => 'string|max:15',
         ];
