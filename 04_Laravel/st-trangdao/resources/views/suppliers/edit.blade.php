@@ -11,11 +11,11 @@
                 <form action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}" method="POST">
                     @method('PUT')
                     @csrf
-                    {{-- @error('id')
+                    @error('id')
                         <div class="invalid-feedback" style="display: block">
                             {{ $message }}
                         </div>
-                    @enderror --}}
+                    @enderror
                     <div class="mb-3 row">
                         <label for="html5-text-input" class="col-md-2 col-form-label">ID</label>
                         <div class="col-md-10">
@@ -76,7 +76,7 @@
                     <div class="mb-3 row">
                         <label for="html5-search-input" class="col-md-2 col-form-label">Email</label>
                         <div class="col-md-10">
-                            
+
                             @error('email')
                                 <div class="invalid-feedback" style="display: block">
                                     {{ $message }}
@@ -110,8 +110,8 @@
                             @enderror
                         </div>
                     </div>
-                    <a href="" type="submit"
-                        class="btn rounded-pill btn-outline-warning">Cancel</a>
+                    <a href="" type="submit" class="btn rounded-pill btn-outline-warning">Cancel</a>
+                    <input type="hidden" name="id" value="{{ $supplier['id'] }}">
                     <button type="submit" class="btn rounded-pill btn-outline-success">Edit</button>
                 </form>
             </div>
