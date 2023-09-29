@@ -41,7 +41,7 @@ class CustomerController extends Controller
             Customer::create($request->validated());
 
             return redirect()->route('customers.create')->with('success', 'Successfully added customer!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('customers.create')->with('error', 'An error occurred while adding customer!');
         }
     }
