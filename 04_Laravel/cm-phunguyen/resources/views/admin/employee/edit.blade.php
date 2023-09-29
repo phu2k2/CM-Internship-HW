@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <h6>First Name</h6>
                             <input type="text" name="first_name" class="form-control form-control-user"
-                                placeholder="First Name" value="{{ old('employee_id', $employee['employee_id']) }}">
+                                placeholder="First Name" value="{{ old('first_name', $employee['first_name']) }}">
                             @error('first_name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
