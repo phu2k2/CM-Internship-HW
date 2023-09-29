@@ -59,9 +59,9 @@ class CategoryController extends Controller
             // Save the new category to the database
             $category->save();
     
-            return redirect()->route('categories.index');
+            return redirect()->route('categories.create')->with('success', 'Successfully added category!');
         } catch (Exception $e) {
-            abort(404);
+            return redirect()->route('categories.create')->with('error', 'An error occurred while adding category!');
         }
     }
 
@@ -98,9 +98,9 @@ class CategoryController extends Controller
 
             $category->save();
 
-            return redirect()->route('categories.edit', $category->id);
+            return redirect()->route('categories.edit', $category->id)->with('success', 'Updated category information successfully!');
         } catch (Exception $e) {
-            abort(404);
+            return redirect()->route('categories.edit', $id)->with('error', 'Updating category information failed, Please try again!');
         }
     }
 
@@ -113,9 +113,9 @@ class CategoryController extends Controller
             $category = Category::findOrFail($id);
             $category->delete();
     
-            return redirect()->route('categories.index');
+            return redirect()->route('categories.index')->with('success', 'Category has been deleted successfully!');;
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('categories.index')->with('error', 'Failed to delete category. An error occurred. Please try again!');;
         }
     }
 }

@@ -12,6 +12,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
+            @include('admin.layouts.alerts')
             <form class="form-horizontal mt-4" method="POST" action="{{ route('categories.store') }}">
                 @csrf   
                 <div class="form-group">

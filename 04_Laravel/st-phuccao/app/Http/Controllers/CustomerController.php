@@ -36,9 +36,13 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        $customer = Customer::create($request->validated());
+        try {
+            Customer::create($request->validated());
 
-        return redirect()->route('customers.index');
+            return redirect()->route('customers.create')->with('success', 'Successfully added customer!');
+        } catch (\Exception $e) {
+            return redirect()->route('customers.create')->with('error', 'An error occurred while adding customer!');
+        }
     }
 
     /**
@@ -71,9 +75,9 @@ class CustomerController extends Controller
     
             $customer->update($request->validated());
     
-            return redirect()->route('customers.edit', $customer->id);
+            return redirect()->route('customers.edit', $customer->id)->with('success', 'Updated customer information successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('customers.edit', $id)->with('error', 'Updating customer information failed, Please try again!');
         }
     }
 
@@ -86,9 +90,9 @@ class CustomerController extends Controller
             $customer = Customer::findOrFail($id);
             $customer->delete();
     
-            return redirect()->route('customers.index');
+            return redirect()->route('customers.index')->with('success', 'Customer has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('customers.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }

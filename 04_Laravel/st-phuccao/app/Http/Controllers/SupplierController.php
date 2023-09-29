@@ -17,7 +17,7 @@ class SupplierController extends Controller
     {
         do {
             $supplierId = Str::upper(Str::random(4));
-            $existingSupplier = Employee::where('employee_id', $supplierId)->first();
+            $existingSupplier = Supplier::where('company_id', $supplierId)->first();
         } while ($existingSupplier);
 
         return $supplierId;
@@ -62,9 +62,9 @@ class SupplierController extends Controller
     
             $supplier->saveOrFail();
     
-            return redirect()->route('suppliers.index');
+            return redirect()->route('suppliers.create')->with('success', 'Successfully added supplier!');
         } catch (Exception $e) {
-            abort(500);
+            return redirect()->route('suppliers.create')->with('error', 'An error occurred while adding supplier!');
         }
     }
 
@@ -104,9 +104,9 @@ class SupplierController extends Controller
     
             $supplier->update($data);
     
-            return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id]);
+            return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id])->with('success', 'Updated supplier information successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('suppliers.edit', ['supplier' => $id])->with('error', 'Updating employee information failed, Please try again!');
         }
     }
 
@@ -120,9 +120,9 @@ class SupplierController extends Controller
     
             $supplier->delete();
     
-            return redirect()->route('suppliers.index');
+            return redirect()->route('suppliers.index')->with('success', 'Supplier has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('suppliers.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }

@@ -64,9 +64,9 @@ class EmployeeController extends Controller
     
             $employee->saveOrFail();
     
-            return redirect()->route('employees.index');
+            return redirect()->route('employees.create')->with('success', 'Successfully added employee!');
         } catch (Exception $e) {
-            abort(404);
+            return redirect()->route('employees.create')->with('error', 'An error occurred while adding employee!');
         }
     }
 
@@ -105,9 +105,9 @@ class EmployeeController extends Controller
                 'address', 'phone', 'base_salary', 'allowance'
             ]));
     
-            return redirect()->route('employees.edit', $employee->employee_id);
+            return redirect()->route('employees.edit', $employee->employee_id)->with('success', 'Updated employee information successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('employees.edit', $id)->with('error', 'Updating employee information failed, Please try again!');
         }
     }
 
@@ -121,9 +121,9 @@ class EmployeeController extends Controller
     
             $employee->delete();
     
-            return redirect()->route('employees.index');
+            return redirect()->route('employees.index')->with('success', 'Employee has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            abort(404);
+            return redirect()->route('employees.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }
