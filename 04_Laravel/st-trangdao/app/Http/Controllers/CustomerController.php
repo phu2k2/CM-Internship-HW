@@ -5,46 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\CreateRequestCustomer;
 use App\Http\Requests\Customer\DeleteRequestCustomer;
 use App\Http\Requests\Customer\UpdateRequestCustomer;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    private $data = [
-        [
-            'id' => 1,
-            'company_name' => 'Công ty sữa Việt Nam',
-            'transaction_name' => 'VINAMILK',
-            'address' => 'Hà Nội',
-            'email' => 'vinamilk@vietnam.com',
-            'phone' => '0408911350',
-            'fax' => '9876543210',
-        ],
-        [
-            'id' => 2,
-            'company_name' => 'Công ty may mặc Việt Tiến',
-            'transaction_name' => 'VIETTIEN',
-            'address' => 'Sài Gòn',
-            'email' => 'viettien@vietnam.com',
-            'phone' => '0993493841',
-            'fax' => '1234952934',
-        ],
-        [
-            'id' => 3,
-            'company_name' => 'Tổng công ty thực phẩm dinh dưỡng NUTRIFOOD',
-            'transaction_name' => 'NUTRIFOOD',
-            'address' => 'Sài Gòn',
-            'email' => 'nutrifood@vietnam.com',
-            'phone' => '0845809890',
-            'fax' => '3422783847',
-        ]
-    ];
     /**
      * Display a listing of the resource.
      */
 
     public function index()
     {
-        $customers =  $this->data;
+        $customers =  Customer::all();
 
         return view('customers.index', compact('customers'));
     }
@@ -62,7 +34,13 @@ class CustomerController extends Controller
      */
     public function store(CreateRequestCustomer $request)
     {
-        session()->flash('message', 'Successfully created!');
+
+        $customer = Customer::create($request->validated());
+        if ($customer) {
+            session()->flash('message', 'Successfully created!');
+        } else {
+            session()->flash('error', 'New creation failed!');
+        }
 
         return redirect()->route('customers.index');
     }
@@ -72,11 +50,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $customer = $value;
-            }
-        }
+        $customer = Customer::find($id);
 
         return view('customers.show', compact('customer'));
     }
@@ -86,11 +60,7 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $customer = $value;
-            }
-        }
+        $customer = Customer::find($id);
 
         return view('customers.edit', compact('customer'));
     }
@@ -100,7 +70,19 @@ class CustomerController extends Controller
      */
     public function update(UpdateRequestCustomer $request, string $id)
     {
-        session()->flash('message', 'Successfully updated!');
+        $customer = Customer::find($id);
+        if (!$customer) {
+            session()->flash('error', 'Data not found!');
+            return redirect()->route('customers.index');
+        }
+
+        $customer->update($request->validated());
+
+        if ($customer->wasChanged()) {
+            session()->flash('message', 'Successfully updated!');
+        } else {
+            session()->flash('error', 'No changes made.');
+        }
 
         return redirect()->route('customers.index');
     }
@@ -110,7 +92,16 @@ class CustomerController extends Controller
      */
     public function destroy(DeleteRequestCustomer $request, string $id)
     {
-        session()->flash('message', 'Successfully deleted!');
+        $customer = Customer::find($id);
+        if (!$customer) {
+            session()->flash('error', 'Data not found!');
+            return redirect()->route('customers.index');
+        }
+        if ($customer->delete($id)) {
+            session()->flash('message', 'Successfully deleted!');
+        } else {
+            session()->flash('error', 'Deleted failed!');
+        }
 
         return redirect()->route('customers.index');
     }

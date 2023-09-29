@@ -5,55 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\CreateRequestEmployee;
 use App\Http\Requests\Employee\DeleteRequestEmployee;
 use App\Http\Requests\Employee\UpdateRequestEmployee;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    private $data = [
-        [
-            'id' => 1,
-            'employee_id' => 'A001',
-            'last_name' => 'Đậu Tố',
-            'first_name' => 'Anh',
-            'birthday' => '1986/03/07',
-            'start_date' => '2009/03/01',
-            'address' => 'Quy Nhơn',
-            'phone' => '056-647995',
-            'base_salary' => 10000000,
-            'allowance' => 1000000
-        ],
-        [
-            'id' => 2,
-            'employee_id' => 'H001',
-            'last_name' => 'Lê Thị Bích',
-            'first_name' => 'Hoa',
-            'birthday' => '1986/20/05',
-            'start_date' => '2009/03/01',
-            'address' => 'An Khê',
-            'phone' => '056-647995',
-            'base_salary' => 9000000,
-            'allowance' => 1000000
-        ],
-        [
-            'id' => 3,
-            'employee_id' => 'H002',
-            'last_name' => 'Ông Hoàng',
-            'first_name' => 'Hải',
-            'birthday' => '1987/08/11',
-            'start_date' => '2009/03/01',
-            'address' => 'Đà Nẵng',
-            'phone' => '0905-611725',
-            'base_salary' => 12000000,
-            'allowance' => 0
-        ]
-    ];
     /**
      * Display a listing of the resource.
      */
 
     public function index()
     {
-        $employees = $this->data;
+        $employees = Employee::all();
 
         return view('employees.index', compact('employees'));
     }
@@ -71,7 +34,12 @@ class EmployeeController extends Controller
      */
     public function store(CreateRequestEmployee $request)
     {
-        session()->flash('message', 'Successfully created!');
+        $employee = Employee::create($request->validated());
+        if ($employee) {
+            session()->flash('message', 'Successfully created!');
+        } else {
+            session()->flash('error', 'New creation failed!');
+        }
 
         return redirect()->route('employees.index');
     }
@@ -81,11 +49,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $employee = $value;
-            }
-        }
+        $employee = Employee::find($id);
 
         return view('employees.show', compact('employee'));
     }
@@ -95,11 +59,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $employee = $value;
-            }
-        }
+        $employee = Employee::find($id);
 
         return view('employees.edit', compact('employee'));
     }
@@ -109,7 +69,19 @@ class EmployeeController extends Controller
      */
     public function update(UpdateRequestEmployee $request, string $id)
     {
-        session()->flash('message', 'Successfully updated!');
+        $employee = Employee::find($id);
+        if (!$employee) {
+            session()->flash('error', 'Data not found!');
+            return redirect()->route('employees.index');
+        }
+
+        $employee->update($request->validated());
+
+        if ($employee->wasChanged()) {
+            session()->flash('message', 'Successfully updated!');
+        } else {
+            session()->flash('error', 'No changes made.');
+        }
 
         return redirect()->route('employees.index');
     }
@@ -119,7 +91,16 @@ class EmployeeController extends Controller
      */
     public function destroy(DeleteRequestEmployee $request, string $id)
     {
-        session()->flash('message', 'Successfully deleted!');
+        $employee = Employee::find($id);
+        if (!$employee) {
+            session()->flash('error', 'Data not found!');
+            return redirect()->route('employees.index');
+        }
+        if ($employee->delete($id)) {
+            session()->flash('message', 'Successfully deleted!');
+        } else {
+            session()->flash('error', 'Deleted failed!');
+        }
 
         return redirect()->route('employees.index');
     }

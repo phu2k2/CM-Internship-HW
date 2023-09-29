@@ -22,13 +22,13 @@ class CreateRequestEmployee extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_id' => 'required|string|size:4',
+            'employee_id' => 'required|unique:employees|string|size:4',
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',
             'birthday' => 'required|date|before:-18 years',
             'start_date' => 'required|date|before:now',
             'address' => 'required|string|max:50',
-            'phone' => 'required|unique|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'phone' => 'required|unique:employees|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
             'base_salary' => 'required|numeric|max:12',
             'allowance' => 'numeric|max:12',
         ];

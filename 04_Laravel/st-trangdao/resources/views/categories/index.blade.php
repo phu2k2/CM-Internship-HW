@@ -60,24 +60,26 @@
                                                 Bạn chắc chắn sẽ xóa dữ liệu này chứ
                                             </span>
                                         </div>
-                                        <form action="{{ route('categories.destroy', ['category' => $category['id']]) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            {{-- @error('id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror --}}
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary"
-                                                    data-bs-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <button type="button" class="btn btn-primary">Save
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <form
+                                                action="{{ route('categories.destroy', ['category' => $category['id']]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{ $category['id'] }}">
+                                                @error('id')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                <button type="submit" class="btn btn-primary">Save
                                                     changes</button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

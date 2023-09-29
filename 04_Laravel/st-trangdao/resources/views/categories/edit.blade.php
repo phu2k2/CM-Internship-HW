@@ -11,11 +11,11 @@
                 <form action="{{ route('categories.update', ['category' => $category['id']]) }}" method="POST">
                     @method('PUT')
                     @csrf
-                    {{-- @error('id')
+                    @error('id')
                         <div class="invalid-feedback" style="display: block">
                             {{ $message }}
                         </div>
-                    @enderror --}}
+                    @enderror
                     <div class="mb-3 row">
                         <label for="html5-text-input" class="col-md-2 col-form-label">ID</label>
                         <div class="col-md-10">
@@ -50,6 +50,7 @@
                     </div>
                     <a href="" type="button"
                         class="btn rounded-pill btn-outline-warning">Cancel</a>
+                        <input type="hidden" name="id" value="{{ $category['id'] }}">
                     <button type="submit" class="btn rounded-pill btn-outline-success">Edit</button>
                 </form>
             </div>

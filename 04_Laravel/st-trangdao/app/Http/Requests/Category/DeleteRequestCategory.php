@@ -22,7 +22,7 @@ class DeleteRequestCategory extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|unique|exists:categories,id|integer',
+            'id' => 'required|exists:categories,id|integer',
         ];
     }
 }

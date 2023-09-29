@@ -22,7 +22,7 @@ class UpdateRequestEmployee extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|unique|exists:employees,id|integer',
+            'id' => 'required|exists:employees,id|integer',
             'employee_id' => 'required|string|size:4',
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',

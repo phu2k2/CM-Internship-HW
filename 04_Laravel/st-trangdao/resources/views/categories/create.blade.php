@@ -20,7 +20,7 @@
                                 value="{{ old('category_id') }}" placeholder="TP" aria-label="TP"
                                 aria-describedby="basic-icon-default-categoryid2" />
                             @error('category_id')
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" style="display: block">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -36,7 +36,7 @@
                                 name="category_name" value="{{ old('category_name') }}" placeholder="Thực phẩm"
                                 aria-label="Thực phẩm" aria-describedby="basic-icon-default-categoryname2" />
                             @error('category_name')
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" style="display: block">
                                     {{ $message }}
                                 </div>
                             @enderror
