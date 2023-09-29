@@ -55,7 +55,7 @@ class CustomerController extends Controller
     public function edit(int $id)
     {
         try {
-            return view('admin.customer.edit', ['customer'=> Customer::findOrFail($id)]);
+            return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
         } catch (ModelNotFoundException $e) {
             abort(404);
         }

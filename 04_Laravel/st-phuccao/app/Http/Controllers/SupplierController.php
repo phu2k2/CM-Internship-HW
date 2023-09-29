@@ -16,7 +16,7 @@ class SupplierController extends Controller
     private function generateUniqueCompanyId()
     {
         do {
-            $supplierId = Str::upper(Str::random(4)); 
+            $supplierId = Str::upper(Str::random(4));
             $existingSupplier = Employee::where('employee_id', $supplierId)->first();
         } while ($existingSupplier);
 
@@ -29,7 +29,7 @@ class SupplierController extends Controller
     public function index()
     {
         // Number of records displayed per page
-        $perPage = 10; 
+        $perPage = 10;
 
         $suppliers = Supplier::paginate($perPage);
 
@@ -52,7 +52,7 @@ class SupplierController extends Controller
         try {
             $supplier = new Supplier();
     
-            $supplier->company_id = $this->generateUniqueCompanyId(); 
+            $supplier->company_id = $this->generateUniqueCompanyId();
             $supplier->company_name = $request->input('company_name');
             $supplier->transaction_name = $request->input('transaction_name');
             $supplier->address = $request->input('address');

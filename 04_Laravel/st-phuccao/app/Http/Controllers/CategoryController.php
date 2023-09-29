@@ -15,7 +15,7 @@ class CategoryController extends Controller
     private function generateUniqueCategoryId()
     {
         do {
-            $categoryId = Str::upper(Str::random(2)); 
+            $categoryId = Str::upper(Str::random(2));
             $existingCategory = Category::where('category_id', $categoryId)->first();
         } while ($existingCategory);
 
@@ -28,7 +28,7 @@ class CategoryController extends Controller
     public function index()
     {
         // Number of records displayed per page
-        $perPage = 10; 
+        $perPage = 10;
 
         $categories = Category::paginate($perPage);
     
@@ -80,7 +80,7 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::findOrFail($id);
-            
+
             return view('admin.category.edit', compact('category'));
         } catch (ModelNotFoundException $e) {
             abort(404);
