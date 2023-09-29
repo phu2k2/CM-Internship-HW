@@ -32,4 +32,14 @@ class Supplier extends Model
     {
         return $this->hasMany(Product::class, 'company_id', 'company_id');
     }
+
+    public function scopeJoinProducts(Builder $builder)
+    {
+        $builder->join('products', 'products.company_id', '=', 'suppliers.company_id');
+    }
+
+    public function scopeJoinCustomers(Builder $builder)
+    {
+        $builder->join('customers', 'customers.transaction_name', '=', 'suppliers.transaction_name');
+    }
 }

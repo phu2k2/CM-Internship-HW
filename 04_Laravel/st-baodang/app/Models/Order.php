@@ -42,4 +42,19 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class, 'invoice_id', 'id');
     }
+
+    public function scopeJoinOrderDetails(Builder $builder)
+    {
+        $builder->join('orderdetails', 'orderdetails.invoice_id', '=', 'orders.id');
+    }
+
+    public function scopeJoinCustomers(Builder $builder)
+    {
+        $builder->join('customers', 'customers.id', '=', 'orders.customer_id');
+    }
+
+    public function scopeJoinEmployees(Builder $builder)
+    {
+        $builder->join('employees', 'employees.id', '=', 'orders.customer_id');
+    }
 }
