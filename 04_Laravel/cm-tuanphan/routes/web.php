@@ -34,6 +34,10 @@ Route::prefix('admin')->group(function () {
 });
 
 // use App\Models\Supplier;
+// use App\Http\Resources\UserCollection;
+// Route::get('/users', function () {
+//     return new UserCollection(Supplier::all());
+// });
 // use App\Models\Product;
 // use App\Models\Customer;
 // use App\Models\Order;
