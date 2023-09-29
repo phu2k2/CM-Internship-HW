@@ -15,8 +15,9 @@ class SupplierController extends Controller
 {
     private function generateUniqueCompanyId()
     {
+        $lengthOfId = 3;
         do {
-            $supplierId = Str::upper(Str::random(4));
+            $supplierId = Str::upper(Str::random($lengthOfId));
             $existingSupplier = Supplier::where('company_id', $supplierId)->first();
         } while ($existingSupplier);
 
