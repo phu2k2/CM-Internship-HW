@@ -22,7 +22,7 @@ class UpdateRequestSupplier extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|unique|exists:suppliers,id|integer',
+            'id' => 'required|exists:suppliers,id|integer',
             'company_name' => 'required|string|max:50',
             'company_id' => 'required|string|size:3|unique:suppliers,company_id,' . $this->id,
             'transaction_name' => 'required|string|max:50',

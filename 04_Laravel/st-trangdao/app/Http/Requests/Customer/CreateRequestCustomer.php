@@ -23,11 +23,11 @@ class CreateRequestCustomer extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:50',
-            'transaction_name' => 'required|string|unique|max:50',
+            'transaction_name' => 'required|string|unique:customers|max:50',
             'address' => 'required|string|max:50',
-            'email' => 'required|unique|email',
-            'phone' => 'required|unique|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
-            'fax' => 'required|unique|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'email' => 'required|unique:customers|email',
+            'phone' => 'required|unique:customers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'fax' => 'required|unique:customers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
         ];
     }
 }

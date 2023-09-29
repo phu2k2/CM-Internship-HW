@@ -22,7 +22,7 @@ class UpdateRequestEmployee extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|unique|exists:employees,id|integer',
+            'id' => 'required|exists:employees,id|integer',
             'employee_id' => 'required|string|size:4',
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',
@@ -30,8 +30,8 @@ class UpdateRequestEmployee extends FormRequest
             'start_date' => 'required|date|before:now',
             'address' => 'required|string|max:50',
             'phone' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15|unique:employees,phone,' . $this->id,
-            'base_salary' => 'required|numeric|max:12',
-            'allowance' => 'numeric|max:12',
+            'base_salary' => 'required|numeric|digits_between:8,10',
+            'allowance' => 'numeric|digits_between:6,8',
         ];
     }
 }

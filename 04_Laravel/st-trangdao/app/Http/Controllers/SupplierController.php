@@ -67,7 +67,7 @@ class SupplierController extends Controller
     {
         session()->flash('message', 'Successfully created!');
 
-        return redirect()->route('categories.index');
+        return redirect()->route('suppliers.index');
     }
 
     /**

@@ -28,9 +28,9 @@ class CreateRequestEmployee extends FormRequest
             'birthday' => 'required|date|before:-18 years',
             'start_date' => 'required|date|before:now',
             'address' => 'required|string|max:50',
-            'phone' => 'required|unique|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
-            'base_salary' => 'required|numeric|max:12',
-            'allowance' => 'numeric|max:12',
+            'phone' => 'required|unique:employees|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'base_salary' => 'required|numeric|digits_between:8,10',
+            'allowance' => 'numeric|digits_between:6,8',
         ];
     }
 }
