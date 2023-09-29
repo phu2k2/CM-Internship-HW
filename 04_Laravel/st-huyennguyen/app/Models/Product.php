@@ -39,26 +39,4 @@ class Product extends Model
     {
         return $this->hasMany(Orderdetail::class, 'product_id', 'product_id');
     }
-
-    /**
-     * Scope a query to join suppliers table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinSuppliers($query)
-    {
-        return $query->join('suppliers', 'suppliers.company_id', 'products.company_id');
-    }
-
-    /**
-     * Scope a query to join categories table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinCategories($query)
-    {
-        return $query->join('categories', 'categories.category_id', 'products.category_id');
-    }
 }

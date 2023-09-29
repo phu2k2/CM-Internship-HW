@@ -28,4 +28,16 @@ class Supplier extends Model
     {
         return $this->hasMany(Product::class, 'company_id', 'company_id');
     }
+
+    /**
+     * Scope a query to only include users of a given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $companyName
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereCompanyName($query, $companyName)
+    {
+        return $query->where('company_name', 'like', '%' . $companyName . '%');
+    }
 }

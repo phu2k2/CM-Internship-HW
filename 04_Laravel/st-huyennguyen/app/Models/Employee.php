@@ -35,4 +35,9 @@ class Employee extends Model
     {
         return "{$this->last_name} {$this->first_name}";
     }
+
+    public function getSalaryAttribute()
+    {
+        return ($this->base_salary + $this->allowance);
+    }
 }

@@ -31,4 +31,9 @@ class Orderdetail extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
+
+    public function getPriceTotalAttribute()
+    {
+        return $this->amount * ($this->price - $this->discount);
+    }
 }

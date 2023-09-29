@@ -27,4 +27,4 @@ Route::resource('customers', CustomerController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('suppliers', SupplierController::class);
 
-Route::get('/home', 'App\Http\Controllers\HomeController@practice');
+Route::get('/home/{id}', [HomeController::class, 'practice']);

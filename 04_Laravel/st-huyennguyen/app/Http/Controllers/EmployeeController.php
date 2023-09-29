@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    protected const PAGINATE_DEFAULT = 15;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        define('PAGINATE_DEFAULT', 15);
-        $employees = Employee::paginate(PAGINATE_DEFAULT);
+        $employees = Employee::paginate(self::PAGINATE_DEFAULT);
         return view('employee.index', compact('employees'));
     }
 

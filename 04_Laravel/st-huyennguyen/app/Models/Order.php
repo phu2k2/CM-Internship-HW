@@ -40,50 +40,6 @@ class Order extends Model
     }
 
     /**
-     * Scope a query to join customers table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinCustomers($query)
-    {
-        return $query->join('customers', 'customers.id', 'orders.customer_id');
-    }
-
-    /**
-     * Scope a query to join employees table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinEmployees($query)
-    {
-        return $query->join('employees', 'employees.employee_id', 'orders.employee_id');
-    }
-
-    /**
-     * Scope a query to join orderdetails table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinOrderDetails($query)
-    {
-        return $query->join('orderdetails', 'orderdetails.invoice_id', 'orders.id');
-    }
-
-    /**
-     * Scope a query to join orderdetails table.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinProducts($query)
-    {
-        return $query->join('products', 'products.product_id', 'orderdetails.product_id');
-    }
-
-    /**
      * Scope a query to only include users of a given type.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
