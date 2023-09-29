@@ -38,13 +38,14 @@ class CategoryController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        define('PAGINATE_DEFAULT', 15);
-        $categories = Category::paginate(PAGINATE_DEFAULT);
+        $categories = Category::paginate(self::PAGINATE_DEFAULT);
         return view('category.index', compact('categories'));
     }
 

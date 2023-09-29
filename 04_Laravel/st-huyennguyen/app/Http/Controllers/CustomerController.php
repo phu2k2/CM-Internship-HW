@@ -67,13 +67,14 @@ class CustomerController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        define('PAGINATE_DEFAULT', 15);
-        $customers = Customer::paginate(PAGINATE_DEFAULT);
+        $customers = Customer::paginate(self::PAGINATE_DEFAULT);
         return view('customer.index', compact('customers'));
     }
 

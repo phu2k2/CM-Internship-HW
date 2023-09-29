@@ -73,13 +73,14 @@ class SupplierController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        define('PAGINATE_DEFAULT', 15);
-        $suppliers = Supplier::paginate(PAGINATE_DEFAULT);
+        $suppliers = Supplier::paginate(self::PAGINATE_DEFAULT);
         return view('supplier.index', compact('suppliers'));
     }
 
