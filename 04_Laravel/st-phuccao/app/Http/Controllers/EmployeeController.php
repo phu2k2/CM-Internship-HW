@@ -16,8 +16,9 @@ class EmployeeController extends Controller
 {
     private function generateUniqueEmployeeId()
     {
+        $lengthOfId = 4;
         do {
-            $employeeId = Str::upper(Str::random(4));
+            $employeeId = Str::upper(Str::random($lengthOfId));
             $existingEmployee = Employee::where('employee_id', $employeeId)->first();
         } while ($existingEmployee);
 

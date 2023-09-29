@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -36,9 +37,13 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        $customer = Customer::create($request->validated());
+        try {
+            Customer::create($request->validated());
 
-        return redirect()->route('customers.index');
+            return redirect()->route('customers.index');
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
     /**

@@ -14,8 +14,9 @@ class CategoryController extends Controller
 {
     private function generateUniqueCategoryId()
     {
+        $lengthOfId = 2;
         do {
-            $categoryId = Str::upper(Str::random(2));
+            $categoryId = Str::upper(Str::random($lengthOfId));
             $existingCategory = Category::where('category_id', $categoryId)->first();
         } while ($existingCategory);
 
@@ -79,9 +80,7 @@ class CategoryController extends Controller
     public function edit(int $id)
     {
         try {
-            $category = Category::findOrFail($id);
-
-            return view('admin.category.edit', compact('category'));
+            return view('admin.category.edit', ['category' => Category::findOrFail($id)]);
         } catch (ModelNotFoundException $e) {
             abort(404);
         }

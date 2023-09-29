@@ -15,9 +15,10 @@ class SupplierController extends Controller
 {
     private function generateUniqueCompanyId()
     {
+        $lengthOfId = 3;
         do {
-            $supplierId = Str::upper(Str::random(4));
-            $existingSupplier = Employee::where('employee_id', $supplierId)->first();
+            $supplierId = Str::upper(Str::random($lengthOfId));
+            $existingSupplier = Supplier::where('company_id', $supplierId)->first();
         } while ($existingSupplier);
 
         return $supplierId;
@@ -64,7 +65,7 @@ class SupplierController extends Controller
     
             return redirect()->route('suppliers.index');
         } catch (Exception $e) {
-            abort(500);
+            abort(404);
         }
     }
 
