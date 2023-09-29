@@ -30,8 +30,8 @@ class UpdateRequestEmployee extends FormRequest
             'start_date' => 'required|date|before:now',
             'address' => 'required|string|max:50',
             'phone' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15|unique:employees,phone,' . $this->id,
-            'base_salary' => 'required|numeric|max:12',
-            'allowance' => 'numeric|max:12',
+            'base_salary' => 'required|numeric|digits_between:8,10',
+            'allowance' => 'numeric|digits_between:6,8',
         ];
     }
 }

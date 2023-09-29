@@ -23,7 +23,7 @@ class UpdateRequestCategory extends FormRequest
     {
         return [
             'id' => 'required|exists:categories,id|integer',
-            'category_id' => 'required|string|size:2',
+            'category_id' => 'required|string|size:2|unique:categories,category_id,' . $this->id,
             'category_name' => 'required|string|max:30',
         ];
     }
