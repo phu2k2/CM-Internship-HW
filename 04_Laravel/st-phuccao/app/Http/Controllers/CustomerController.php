@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $perPage = 10; // Number of records displayed per page
+        // Number of records displayed per page
+        $perPage = 10;
 
         $customers = Customer::paginate($perPage);
     
@@ -52,13 +54,11 @@ class CustomerController extends Controller
      */
     public function edit(int $id)
     {
-        $customer = Customer::find($id);
-
-        if (!$customer) {
+        try {
+            return view('admin.customer.edit', ['customer'=> Customer::findOrFail($id)]);
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        return view('admin.customer.edit', compact('customer'));
     }
 
     /**
@@ -66,26 +66,15 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, int $id)
     {
-        // Find customers by ID
-        $customer = Customer::find($id);
-
-        if (!$customer) {
+        try {
+            $customer = Customer::findOrFail($id);
+    
+            $customer->update($request->validated());
+    
+            return redirect()->route('customers.edit', $customer->id);
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        // Get data from request to update customer information
-        $customer->company_name = $request->input('company_name');
-        $customer->transaction_name = $request->input('transaction_name');
-        $customer->address = $request->input('address');
-        $customer->email = $request->input('email');
-        $customer->phone = $request->input('phone');
-        $customer->fax = $request->input('fax');
-
-        // Save changes to database
-        $customer->save();
-
-        // Redirects to a page showing updated information
-        return redirect()->route('customers.edit', $customer->id);
     }
 
     /**
@@ -93,14 +82,13 @@ class CustomerController extends Controller
      */
     public function destroy(int $id)
     {
-        $customer = Customer::find($id);
-
-        if (!$customer) {
+        try {
+            $customer = Customer::findOrFail($id);
+            $customer->delete();
+    
+            return redirect()->route('customers.index');
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        $customer->delete();
-
-        return redirect()->route('customers.index');
     }
 }

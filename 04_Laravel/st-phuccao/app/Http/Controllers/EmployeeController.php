@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
 
 
@@ -47,22 +49,25 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        // Create a new Employee instance
-        $employee = new Employee();        
-
-        $employee->employee_id = $this->generateUniqueEmployeeId();
-        $employee->last_name = $request->input('last_name');
-        $employee->first_name = $request->input('first_name');
-        $employee->birthday = $request->input('birthday');
-        $employee->start_date = $request->input('start_date');
-        $employee->address = $request->input('address');
-        $employee->phone = $request->input('phone');
-        $employee->base_salary = $request->input('base_salary');
-        $employee->allowance = $request->input('allowance');
-
-        $employee->save();
-
-        return redirect()->route('employees.index');
+        try {
+            $employee = new Employee([
+                'employee_id' => $this->generateUniqueEmployeeId(),
+                'last_name' => $request->input('last_name'),
+                'first_name' => $request->input('first_name'),
+                'birthday' => $request->input('birthday'),
+                'start_date' => $request->input('start_date'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'base_salary' => $request->input('base_salary'),
+                'allowance' => $request->input('allowance'),
+            ]);
+    
+            $employee->saveOrFail();
+    
+            return redirect()->route('employees.index');
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -78,13 +83,13 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::where('employee_id', $id)->first();
-
-        if(!$employee){
+        try {
+            $employee = Employee::where('employee_id', $id)->firstOrFail();
+    
+            return view('admin.employee.edit', compact('employee'));
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        return view('admin.employee.edit', compact('employee'));
     }
 
     /**
@@ -94,16 +99,12 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where('employee_id', $id)->firstOrFail();
-            $employee->last_name = $request->input('last_name');
-            $employee->first_name = $request->input('first_name');
-            $employee->birthday = $request->input('birthday');
-            $employee->start_date = $request->input('start_date');
-            $employee->address = $request->input('address');
-            $employee->phone = $request->input('phone');
-            $employee->base_salary = $request->input('base_salary');
-            $employee->allowance = $request->input('allowance');
-            $employee->save();
-
+    
+            $employee->update($request->only([
+                'last_name', 'first_name', 'birthday', 'start_date',
+                'address', 'phone', 'base_salary', 'allowance'
+            ]));
+    
             return redirect()->route('employees.edit', $employee->employee_id);
         } catch (ModelNotFoundException $e) {
             abort(404);
@@ -115,14 +116,14 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        $employee = Employee::where('employee_id', $id)->first();
-
-        if(!$employee){
+        try {
+            $employee = Employee::where('employee_id', $id)->firstOrFail();
+    
+            $employee->delete();
+    
+            return redirect()->route('employees.index');
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        $employee->delete();
-
-        return redirect()->route('employees.index');
     }
 }

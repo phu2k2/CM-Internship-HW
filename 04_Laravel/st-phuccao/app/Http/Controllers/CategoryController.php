@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -46,17 +48,21 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        // Create a new Category instance
-        $category = new Category();
-
-        // Set the attributes for the new category
-        $category->category_id = $this->generateUniqueCategoryId();
-        $category->category_name = $request->input('category_name');
-
-        // Save the new category to the database
-        $category->save();
-
-        return redirect()->route('categories.index');
+        try {
+            // Create a new Category instance
+            $category = new Category();
+    
+            // Set the attributes for the new category
+            $category->category_id = $this->generateUniqueCategoryId();
+            $category->category_name = $request->input('category_name');
+    
+            // Save the new category to the database
+            $category->save();
+    
+            return redirect()->route('categories.index');
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -72,13 +78,13 @@ class CategoryController extends Controller
      */
     public function edit(int $id)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
+        try {
+            $category = Category::findOrFail($id);
+            
+            return view('admin.category.edit', compact('category'));
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -86,17 +92,16 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
+        try {
+            $category = Category::findOrFail($id);
+            $category->category_name = $request->input('category_name');
 
-        if(!$category) {
+            $category->save();
+
+            return redirect()->route('categories.edit', $category->id);
+        } catch (Exception $e) {
             abort(404);
         }
-
-        $category->category_name = $request->input('category_name');
-        
-        $category->save();
-
-        return redirect()->route('categories.edit', $category->id);
     }
 
     /**
@@ -104,14 +109,13 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+    
+            return redirect()->route('categories.index');
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        $category->delete();
-
-        return redirect()->route('categories.index');
     }
 }

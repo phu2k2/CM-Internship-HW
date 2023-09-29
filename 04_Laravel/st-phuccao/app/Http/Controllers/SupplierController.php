@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Exception;
 
 class SupplierController extends Controller
 {
@@ -48,21 +49,23 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        $supplier = new Supplier();
-
-        $supplier->company_id = $this->generateUniqueCompanyId(); 
-        $supplier->company_name = $request->input('company_name');
-        $supplier->transaction_name = $request->input('transaction_name');
-        $supplier->address = $request->input('address');
-        $supplier->phone = $request->input('phone');
-        $supplier->fax = $request->input('fax');
-        $supplier->email = $request->input('email');
-
-        if(!$supplier->save()){
-            abort(404);
-        };
-
-        return redirect()->route('suppliers.index');
+        try {
+            $supplier = new Supplier();
+    
+            $supplier->company_id = $this->generateUniqueCompanyId(); 
+            $supplier->company_name = $request->input('company_name');
+            $supplier->transaction_name = $request->input('transaction_name');
+            $supplier->address = $request->input('address');
+            $supplier->phone = $request->input('phone');
+            $supplier->fax = $request->input('fax');
+            $supplier->email = $request->input('email');
+    
+            $supplier->saveOrFail();
+    
+            return redirect()->route('suppliers.index');
+        } catch (Exception $e) {
+            abort(500);
+        }
     }
 
     /**
@@ -78,13 +81,13 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = Supplier::where('company_id', $id)->first();
-
-        if(!$supplier){
+        try {
+            $supplier = Supplier::where('company_id', $id)->firstOrFail();
+    
+            return view('admin.supplier.edit', compact('supplier'));
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        return view('admin.supplier.edit', compact('supplier'));
     }
 
     /**
@@ -94,8 +97,12 @@ class SupplierController extends Controller
     {
         try {
             $supplier = Supplier::where('company_id', $id)->firstOrFail();
-
-            $supplier->update($request->all());
+    
+            $data = $request->only([
+                'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
+            ]);
+    
+            $supplier->update($data);
     
             return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id]);
         } catch (ModelNotFoundException $e) {
@@ -108,14 +115,14 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        $supplier = Supplier::where('company_id', $id)->first();
-
-        if (!$supplier) {
+        try {
+            $supplier = Supplier::where('company_id', $id)->firstOrFail();
+    
+            $supplier->delete();
+    
+            return redirect()->route('suppliers.index');
+        } catch (ModelNotFoundException $e) {
             abort(404);
         }
-
-        $supplier->delete();
-
-        return redirect()->route('suppliers.index');
     }
 }
