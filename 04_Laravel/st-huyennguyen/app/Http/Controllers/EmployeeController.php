@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employees\CreateEmployeeRequest;
 use App\Http\Requests\Employees\DeleteEmployeeRequest;
 use App\Http\Requests\Employees\UpdateEmployeeRequest;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -120,12 +121,14 @@ class EmployeeController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $employees = $this->data;
+        $employees = Employee::paginate(self::PAGINATE_DEFAULT);
         return view('employee.index', compact('employees'));
     }
 

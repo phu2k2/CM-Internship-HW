@@ -116,4 +116,5 @@
             </div>
         </div>
     </div>
+    {!! $employees->links('pagination::bootstrap-4') !!}
 @endsection

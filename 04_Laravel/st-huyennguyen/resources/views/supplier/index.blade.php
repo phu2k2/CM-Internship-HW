@@ -121,4 +121,5 @@
             </div>
         </div>
     </div>
+    {!! $suppliers->links('pagination::bootstrap-4') !!}
 @endsection

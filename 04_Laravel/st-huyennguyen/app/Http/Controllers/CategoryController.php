@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Http\Requests\Categories\DeleteCategoryRequest;
 use App\Http\Requests\Categories\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -37,12 +38,14 @@ class CategoryController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = $this->data;
+        $categories = Category::paginate(self::PAGINATE_DEFAULT);
         return view('category.index', compact('categories'));
     }
 

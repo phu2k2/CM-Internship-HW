@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Suppliers\CreateSupplierRequest;
 use App\Http\Requests\Suppliers\DeleteSupplierRequest;
 use App\Http\Requests\Suppliers\UpdateSupplierRequest;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -72,12 +73,14 @@ class SupplierController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $suppliers = $this->data;
+        $suppliers = Supplier::paginate(self::PAGINATE_DEFAULT);
         return view('supplier.index', compact('suppliers'));
     }
 

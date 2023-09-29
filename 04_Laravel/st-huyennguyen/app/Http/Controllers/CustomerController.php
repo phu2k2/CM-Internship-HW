@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customers\CreateCustomerRequest;
 use App\Http\Requests\Customers\DeleteCustomerRequest;
 use App\Http\Requests\Customers\UpdateCustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -66,12 +67,14 @@ class CustomerController extends Controller
         ],
     ];
 
+    protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $customers = $this->data;
+        $customers = Customer::paginate(self::PAGINATE_DEFAULT);
         return view('customer.index', compact('customers'));
     }
 
