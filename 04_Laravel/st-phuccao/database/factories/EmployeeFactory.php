@@ -24,7 +24,7 @@ class EmployeeFactory extends Factory
             'employee_id' => fake()->unique()->regexify('[A-Z0-9]{4}'),
             'last_name' => fake()->text(40),
             'first_name' => fake()->text(10),
-            'birthday' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d H:i:s'),
+            'birthday' => fake()->dateTimeBetween('-30 years', '-18 years')->format('Y-m-d H:i:s'),
             'start_date' => fake()->dateTimeBetween('-5 years', 'now'),
             'address' => fake()->text(60),
             'phone' => fake()->regexify('[0-9]{10,15}'),
