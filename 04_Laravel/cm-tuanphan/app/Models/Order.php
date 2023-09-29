@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $fillable = [
         'customer_id',
         'employee_id',
@@ -25,5 +25,9 @@ class Order extends Model
     public function employee()
     {
         return $this->hasOne(Employee::class);
+    }
+
+    public function orderDetails() {
+        return $this->hasMany(OrderDetail::class , "id" , "invoice_id");
     }
 }
