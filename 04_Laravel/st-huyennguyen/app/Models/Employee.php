@@ -30,4 +30,9 @@ class Employee extends Model
     {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->last_name} {$this->first_name}";
+    }
 }
