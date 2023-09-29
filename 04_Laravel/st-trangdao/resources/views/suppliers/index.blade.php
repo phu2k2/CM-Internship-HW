@@ -84,8 +84,7 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
-                                                <button type="submit" class="btn btn-primary">Save
-                                                    changes</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
                                             </form>
                                         </div>
                                     </div>
