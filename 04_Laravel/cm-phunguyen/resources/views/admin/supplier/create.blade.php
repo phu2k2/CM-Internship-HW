@@ -10,7 +10,7 @@
     <div id="wrapper">
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <h1 class="h3 mb-2 text-gray-800">Add Function</h1>
+            <h1 class="h3 mb-2 text-gray-800">Add Function</h1>`
 
             <div class="p-5">
                 <form class="user" method = "POST" action = "{{route('suppliers.store')}}">
@@ -32,7 +32,6 @@
                         @error('transaction_name')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
                     </div>
                     <div class="form-group">
                         <input type="text" name = "address" class="form-control form-control-user" placeholder="Address" value = "{{old('address')}}">

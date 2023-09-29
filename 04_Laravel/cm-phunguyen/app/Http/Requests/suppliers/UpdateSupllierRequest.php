@@ -25,10 +25,10 @@ class UpdateSupllierRequest extends FormRequest
             'company_id' => 'required',
             'company_name' => 'required|string|max:20',
             'transaction_name' => 'required|string|max:10',
-            'address' => ['required','unique:suppliers,address,'.$this->id . ',id','max:40'],
+            'address' => ['required','unique:suppliers,address,'.$this->supplier . ',id','max:40'],
             'phone' => 'required|string|max:20',
             'fax' => 'required|string|max:20',
-            'email' => ['required','unique:suppliers,email,'.$this->id . ',id'],
+            'email' => ['required','unique:suppliers,email,'.$this->supplier . ',id','max:30'],
         ];
     }
 }

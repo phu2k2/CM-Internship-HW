@@ -4,43 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\suppliers\CreateSupplierRequest;
 use App\Http\Requests\suppliers\UpdateSupllierRequest;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    private $suppliersData = [
-        [
-            'id' => 1,
-            'company_id' => 'C001',
-            'company_name' => 'ABC Corporation',
-            'transaction_name' => 'Sales',
-            'address' => '123 Main Street',
-            'phone' => '+1 (555) 123-4567',
-            'fax' => '+1 (555) 987-6543',
-            'email' => 'abc@example.com',
-            'created_at' => "2023-09-26 10:00:00",
-            'updated_at' => "2023-09-26 10:30:00",
-        ],
-        [
-            'id'=> 2,
-            'company_id' => 'C002',
-            'company_name' => 'XYZ Enterprises',
-            'transaction_name' => 'Marketing',
-            'address' => '456 Elm Street',
-            'phone' => '+1 (555) 789-0123',
-            'fax' => '+1 (555) 567-8901',
-            'email' => 'xyz@example.com',
-            'created_at' => "2023-09-26 11:15:00",
-            'updated_at' => "2023-09-26 11:45:00",
-        ],
-    ];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->suppliersData;
-        return view('admin/supplier/index', compact('data'));
+        $supplier = Supplier::get();
+        return view('admin/supplier/index', compact('supplier'));
     }
 
     /**
@@ -56,7 +31,16 @@ class SupplierController extends Controller
      */
     public function store(CreateSupplierRequest $request)
     {
-        //
+        Supplier::create([
+            'company_id' => $request->company_id,
+            'company_name' => $request->company_name,
+            'transaction_name' => $request->transaction_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'fax' => $request->fax,
+            'email' => $request->email,
+        ]);
+        return redirect(route('suppliers.index'));
     }
 
     /**
@@ -72,14 +56,11 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = null;
-        foreach ($this->suppliersData as $key => $value) {
-            if ($value['id'] == $id) {
-                $supplier = $value;
-                break;
-            }
+        $supplier = Supplier::find($id);
+        if (!$supplier) {
+            abort(404);
         }
-        return view(('admin/supplier/edit'), compact('supplier'));
+        return view('admin/supplier/edit', compact('supplier'));
     }
 
     /**
@@ -87,7 +68,19 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupllierRequest $request, string $id)
     {
-        //
+        $supplier = Supplier::where('id', $id)->update([
+            'company_id' => $request->company_id,
+            'company_name' => $request->company_name,
+            'transaction_name' => $request->transaction_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'fax' => $request->fax,
+            'email' => $request->email,
+        ]);
+        if (!$supplier) {
+            abort(404);
+        }
+        return redirect(route('suppliers.index'));
     }
 
     /**
@@ -95,6 +88,11 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $supplier = Supplier::find($id)->delete();
+        if (!$supplier) {
+            abort(404);
+        }
+        session()->flash('status', 'Delete success!');
+        return redirect()->route('suppliers.index');
     }
 }

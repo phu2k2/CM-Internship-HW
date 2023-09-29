@@ -28,7 +28,7 @@ class CreateSupplierRequest extends FormRequest
             'address' => 'required|string|unique:suppliers|max:40',
             'phone' => 'required|string|max:20',
             'fax' => 'required|string|max:20',
-            'email' => 'required|email|unique:suppliers',
+            'email' => 'required|email|unique:suppliers|max:30',
         ];
     }
 }

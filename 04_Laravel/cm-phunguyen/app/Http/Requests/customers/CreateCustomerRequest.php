@@ -22,13 +22,13 @@ class CreateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => 'required',
             'company_name'=>'required|string|max:30',
             'transaction_name'=>'required|string|max:10',
             'address' => 'required|string|max:40',
-            'email' => 'required|email|unique:customers|max:20',
+            'email' => 'required|email|unique:customers|max:30',
             'phone'=>'required|string|max:20',
             'fax'=> 'required|string'
         ];
+        dd($this->request);
     }
 }

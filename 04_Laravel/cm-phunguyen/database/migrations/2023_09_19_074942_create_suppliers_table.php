@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone',15);
             $table->string('fax',15);
             $table->string('email',30);
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

@@ -4,33 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\categories\CreateCategoryRequest;
 use App\Http\Requests\categories\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    private $categoriesData = [
-        [
-            'id' => 1,
-            'category_id' => 'C1',
-            'category_name' => 'Electronics',
-            'created_at' => "2023-09-26 10:00:00",
-            'updated_at' => "2023-09-26 10:30:00",
-        ],
-        [
-            'id' => 2,
-            'category_id' => 'C2',
-            'category_name' => 'Clothing',
-            'created_at' => "2023-09-26 11:15:00",
-            'updated_at' => "2023-09-26 11:45:00",
-        ],
-    ];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->categoriesData;
-        return view('admin/category/index', compact('data'));
+        $category = Category::get();
+        return view('admin/category/index', compact('category'));
     }
 
     /**
@@ -46,6 +31,11 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+        Category::create([
+            'category_id' => $request->category_id,
+            'category_name' => $request->category_name
+        ]);
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -61,21 +51,25 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = null;
-        foreach ($this->categoriesData as $key => $value) {
-            if ($value['id'] == $id) {
-                $category = $value;
-                break;
-            }
+        $category = Category::find($id);
+        if (!$category) {
+            abort(404);
         }
-        return view(('admin/category/edit'), compact('category'));
+        return view('admin/category/edit', compact('category'));
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category = Category::where('id', $id)->update([
+            'category_id' => $request->category_id,
+            'category_name' => $request->category_name
+        ]);
+        if (!$category) {
+            abort(404);
+        }
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -83,6 +77,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+        if(!$category){
+            abort(404);
+        }
+        $category->delete();
+        session()->flash('status','Delete success!');
+        return redirect()->route('categories.index');
     }
 }
