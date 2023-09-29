@@ -22,6 +22,7 @@ class UpdateCustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'nullable|string|max:20',

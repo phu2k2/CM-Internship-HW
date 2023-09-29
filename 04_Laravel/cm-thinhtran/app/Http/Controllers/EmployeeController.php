@@ -4,54 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Employee;
+use App\Models\Supplier;
 
 class EmployeeController extends Controller
 {
-    private $employees = [
-        [
-            'id' => '1',
-            'employee_id' => 'E001',
-            'last_name' => 'Doe',
-            'first_name' => 'John',
-            'birthday' => '1990-05-15',
-            'start_date' => '2020-01-10',
-            'address' => '123 Main St',
-            'phone' => '555-123-4567',
-            'base_salary' => 50000.00,
-            'allowance' => 2500.00,
-        ],
-        [
-            'id' => '2',
-            'employee_id' => 'E002',
-            'last_name' => 'Smith',
-            'first_name' => 'Jane',
-            'birthday' => '1985-08-20',
-            'start_date' => '2019-04-05',
-            'address' => '456 Elm St',
-            'phone' => '555-987-6543',
-            'base_salary' => 55000.00,
-            'allowance' => 2800.00,
-        ],
-        [
-            'id' => '3',
-            'employee_id' => 'E010',
-            'last_name' => 'Brown',
-            'first_name' => 'Michael',
-            'birthday' => '1992-11-03',
-            'start_date' => '2021-02-15',
-            'address' => '789 Oak St',
-            'phone' => '555-333-4444',
-            'base_salary' => 52000.00,
-            'allowance' => 2600.00,
-        ],
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $employees = $this->employees;
+        $employees = Employee::all();
         return view("admin.pages.employee.index", compact('employees'));
 
     }
@@ -70,6 +33,8 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $validated = $request->validated();
+        Employee::insert($validated);
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -85,12 +50,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employees = $this->employees;
-        foreach ($employees as $employee) {
-            if ((int)$employee['id'] === (int)$id) {
-                return view("admin.pages.employee.edit", compact('employee'));
-            }
-        }
+        $employee = Employee::findOrFail($id);
+        return view("admin.pages.employee.edit", compact('employee'));
     }
 
     /**
@@ -99,6 +60,8 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $validated = $request->validated();
+        Employee::findOrFail($id)->update($validated);
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -106,6 +69,7 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Employee::findOrFail($id)->delete();
+        return redirect()->route('employees.index');
     }
 }

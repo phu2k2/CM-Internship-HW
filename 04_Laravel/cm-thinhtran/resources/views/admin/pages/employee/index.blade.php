@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-3 py-1">
-                                                    <h6 class="mb-0 text-sm">{{ $employee['id'] }}</h6>
+                                                    <h6 class="mb-0 text-sm">{{ $employee['employee_id'] }}</h6>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
@@ -79,16 +79,21 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $employee['allowance'] }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('employees.edit', ['employee' => $employee['id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success">Edit</span>
-                                                </a>
-                                                <a href="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success ">Delete</span>
-                                                </a>
+                                                <div class="d-flex justify-content-evenly">
+                                                    <a href="{{ route('employees.edit', ['employee' => $employee['id']]) }}"
+                                                        class="font-weight-bold btn btn-xs bg-gradient-success"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-xs">Delete</button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -152,7 +157,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email">Address:</label>
-                                <input type="email" class="form-control" id="address" name="address">
+                                <input type="text" class="form-control" id="address" name="address">
                                 @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

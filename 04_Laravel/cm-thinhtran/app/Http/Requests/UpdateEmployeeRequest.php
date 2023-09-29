@@ -35,8 +35,8 @@ class UpdateEmployeeRequest extends FormRequest
             'start_date' => 'nullable|date',
             'address' => 'required|string|max:60',
             'phone' => 'required|string|max:15',
-            'base_salary' => 'required|numeric|max:12',
-            'allowance' => 'required|numeric|max:12',
+            'base_salary' => 'required|numeric',
+            'allowance' => 'required|numeric',
         ];
     }
 }

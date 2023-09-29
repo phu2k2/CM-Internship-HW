@@ -73,17 +73,21 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $supplier['fax'] }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('suppliers.edit', ['supplier' => $supplier['company_id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success">Edit</span>
-                                                </a>
-
-                                                <a href="{{ route('suppliers.destroy', ['supplier' => $supplier['company_id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success ">Delete</span>
-                                                </a>
+                                                <div class="d-flex justify-content-evenly">
+                                                    <a href="{{ route('suppliers.edit', ['supplier' => $supplier['id']]) }}"
+                                                        class="font-weight-bold btn btn-xs bg-gradient-success"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('suppliers.destroy', ['supplier' => $supplier['id']]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-xs">Delete</button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -111,7 +115,7 @@
                         <!-- Modal Body -->
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="id">ID:</label>
+                                <label for="company_id">Company Id:</label>
                                 <input type="text" class="form-control" id="company_id" name="company_id">
                                 @error('company_id')
                                     <span class="text-danger">{{ $message }}</span>

@@ -43,17 +43,21 @@
                                                 </p>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('categories.edit', ['category' => $category['category_id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success">Edit</span>
-                                                </a>
-
-                                                <a href="{{ route('categories.destroy', ['category' => $category['category_id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success ">Delete</span>
-                                                </a>
+                                                <div class="d-flex justify-content-evenly">
+                                                    <a href="{{ route('categories.edit', ['category' => $category['id']]) }}"
+                                                        class="font-weight-bold btn btn-xs bg-gradient-success"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('categories.destroy', ['category' => $category['id']]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-xs">Delete</button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -81,15 +85,17 @@
                         <!-- Modal Body -->
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="category_id" name="category_id">
+                                <label for="id">Category Id:</label>
+                                <input type="text" class="form-control" id="category_id" name="category_id"
+                                    value={{ old('category_id') }}>
                                 @error('category_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_name">Category Name:</label>
-                                <input type="text" class="form-control" id="category_name" name="category_name">
+                                <input type="text" class="form-control" id="category_name" name="category_name"
+                                    value={{ old('category_name') }}>
                                 @error('category_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

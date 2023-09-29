@@ -22,12 +22,13 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'company_id' => [
                 'required',
                 'string',
                 'max:3',
-                Rule::unique('suppliers')->ignore($this->id),
+                Rule::unique('suppliers')->ignore($this->id)
             ],
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',

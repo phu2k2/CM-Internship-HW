@@ -17,7 +17,7 @@ class SupplierFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => fake()->numerify('S##'),
+            'company_id' => fake()->unique()->numerify('S##'),
             'company_name' => fake()->company,
             'transaction_name' => fake('vi_VN')->word,
             'address' => fake()->streetAddress,
