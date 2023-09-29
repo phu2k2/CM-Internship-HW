@@ -128,29 +128,29 @@
                                 @foreach ($customers as $index => $customer)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->company_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->company_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->transaction_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->transaction_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->address}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->address }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->phone_number}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->phone_number }}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$customer->fax}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $customer->fax }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('customers.edit', ['customer'=>$customer->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger" onclick="(function() {
                                             var deleteCustomerModal = new bootstrap.Modal(document.getElementById('deleteCustomerModal'), {});
                                             deleteCustomerModal.show();
-                                            document.getElementById('deleteCustomerForm').action = '{{route('customers.destroy' , ['customer' => $customer->id])}}';
+                                            document.getElementById('deleteCustomerForm').action = '{{ route('customers.destroy' , ['customer' => $customer->id]) }}';
                                         })();">Xóa</button>
                                     </td>
                                 </tr>                                    

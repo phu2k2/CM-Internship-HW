@@ -23,8 +23,8 @@ class EditCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required','numeric',Rule::unique('categories')->ignore($this->id),'max:2'],
-            'category_name' => 'required|string|unique:categories|max:255',
+            'category_id' => ['required',Rule::unique('categories')->ignore($this->category),'max:2'],
+            'category_name' => 'required|string|max:255',
         ];
     }
 

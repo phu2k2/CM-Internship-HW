@@ -93,20 +93,20 @@
                                 @foreach ($categories as $index => $category)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$category->category_id}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $category->category_id }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$category->category_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $category->category_name }}</p>
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('categories.edit', ['category'=>$category->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger" onclick="(function() {
                                             var deleteCategoryModal = new bootstrap.Modal(document.getElementById('deleteCategoryModal'), {});
                                             deleteCategoryModal.show();
-                                            document.getElementById('deleteCategoryForm').action = '{{route('categories.destroy' , ['category' => $category->category_id])}}';
+                                            document.getElementById('deleteCategoryForm').action = '{{ route('categories.destroy' , ['category' => $category->category_id]) }}';
                                         })();">Xóa</button>
                                     </td>
                                 </tr>  
