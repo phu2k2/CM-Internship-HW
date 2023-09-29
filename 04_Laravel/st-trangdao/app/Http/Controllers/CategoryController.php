@@ -23,12 +23,14 @@ class CategoryController extends Controller
             'category_name' => 'May mặc',
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $categories = $this->data;
+
         return view('categories.index', compact('categories'));
     }
 
@@ -37,7 +39,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
         return view('categories.create');
     }
 
@@ -54,12 +55,12 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $category = $value;
             }
         }
+
         return view('categories.show', compact('category'));
     }
 
@@ -68,12 +69,12 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $category = $value;
             }
         }
+
         return view('categories.edit', compact('category'));
     }
 

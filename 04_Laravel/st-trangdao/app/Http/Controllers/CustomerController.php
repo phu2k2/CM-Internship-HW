@@ -35,13 +35,14 @@ class CustomerController extends Controller
             'fax' => '3422783847',
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
         $customers =  $this->data;
+
         return view('customers.index', compact('customers'));
     }
 
@@ -50,7 +51,6 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
         return view('customers.create');
     }
 
@@ -67,12 +67,12 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $customer = $value;
             }
         }
+
         return view('customers.show', compact('customer'));
     }
 
@@ -81,12 +81,12 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $customer = $value;
             }
         }
+
         return view('customers.edit', compact('customer'));
     }
 

@@ -44,14 +44,15 @@ class EmployeeController extends Controller
             'allowance' => 0
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $employees = $this -> data;
+        $employees = $this->data;
+
         return view('employees.index', compact('employees'));
-        //
     }
 
     /**
@@ -59,7 +60,6 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
         return view('employees.create');
     }
 
@@ -76,12 +76,12 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $employee = $value;
             }
         }
+
         return view('employees.show', compact('employee'));
     }
 
@@ -90,12 +90,12 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $employee = $value;
             }
         }
+
         return view('employees.edit', compact('employee'));
     }
 

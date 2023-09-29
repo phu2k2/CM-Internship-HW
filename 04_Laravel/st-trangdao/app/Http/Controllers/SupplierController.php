@@ -38,13 +38,14 @@ class SupplierController extends Controller
             'email' => 'coopmart@vietnam.com'
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $suppliers = $this ->data;
+        $suppliers = $this->data;
+
         return view('suppliers.index', compact('suppliers'));
     }
 
@@ -53,7 +54,6 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
         return view('suppliers.create');
     }
 
@@ -70,12 +70,12 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $supplier = $value;
             }
         }
+
         return view('suppliers.show', compact('supplier'));
     }
 
@@ -84,12 +84,12 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        //
         foreach ($this->data as $key => $value) {
             if ($value['id'] == $id) {
                 $supplier = $value;
             }
         }
+
         return view('suppliers.edit', compact('supplier'));
     }
 
