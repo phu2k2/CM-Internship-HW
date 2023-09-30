@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Customer extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "customers";
+
+    protected $table = 'customers';
+
     protected $fillable = [
         'company_name',
         'transaction_name',
@@ -21,6 +23,6 @@ class Customer extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'customer_id', 'id');
     }
 }

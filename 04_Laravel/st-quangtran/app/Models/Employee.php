@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Employee extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "employees";
+
+    protected $table = 'employees';
+
     protected $fillable = [
         'employee_id',
         'last_name',
@@ -24,6 +26,6 @@ class Employee extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
 }

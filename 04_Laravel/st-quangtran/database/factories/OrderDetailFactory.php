@@ -18,12 +18,12 @@ class OrderDetailFactory extends Factory
      */
     public function definition(): array
     {
-        $invoice_id = Order::all()->random();
-        $product_id = Product::all()->random();
+        $invoiceId = Order::all()->random();
+        $productId = Product::all()->random();
 
         return [
-            'invoice_id' => $invoice_id,
-            'product_id' => $product_id->product_id,
+            'invoice_id' => $invoiceId,
+            'product_id' => $productId->product_id,
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'amount' => $this->faker->numberBetween(1, 100),
             'discount' => $this->faker->randomFloat(2, 0, 100),
