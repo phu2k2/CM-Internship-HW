@@ -10,7 +10,7 @@ class Employee extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "employees";
+    protected $table = 'employees';
 
     protected $fillable = [
         'employee_id',
@@ -23,4 +23,9 @@ class Employee extends Model
         'base_salary',
         'allowance',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
+    }
 }

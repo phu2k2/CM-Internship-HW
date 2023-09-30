@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Supplier extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "suppliers";
+
+    protected $table = 'suppliers';
 
     protected $fillable = [
         'company_id',
@@ -20,4 +21,9 @@ class Supplier extends Model
         'fax',
         'email',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'company_id', 'company_id');
+    }
 }
