@@ -6,6 +6,7 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
+                        {!! implode('', $errors->all('<div>:message</div>')) !!}
                         @if (session()->has('message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <span class="alert-text"><strong>Success!</strong> {{ session()->get('message') }}</span>
@@ -61,6 +62,8 @@
                                                         onsubmit="return confirm('Are you sure you want to delete')">
                                                         @method('DELETE')
                                                         @csrf
+                                                        <input style="display: none" name="id"
+                                                            value="{{ $item['id'] }}">
                                                         <button type="submit" class="btn btn-danger"
                                                             style="padding: 0.25rem 0.5rem">
                                                             <i class="fa-solid fa-trash"></i>

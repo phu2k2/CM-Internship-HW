@@ -59,7 +59,7 @@ class CustomerController extends Controller
         return redirect()->route('customers.index');
     }
 
-    public function destroy(DeleteCustomerRequest $request, int $id)
+    public function destroy(DeleteCustomerRequest $request, string $id)
     {
         $customer = Customer::findOrFail($id);
 

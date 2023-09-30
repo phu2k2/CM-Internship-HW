@@ -12,7 +12,7 @@
                                 <div class="form-group">
                                     <label for="company_name">Company Name</label>
                                     <input type="text" id="company_name" name="company_name" class="form-control"
-                                        placeholder="Transaction Name" value="{{ old('company_name') }}">
+                                        placeholder="Company Name" value="{{ old('company_name') }}">
                                     @error('company_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror

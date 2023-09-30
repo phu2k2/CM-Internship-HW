@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::paginate(5);
 
-        return view("admin.category.index", compact('categories'));
+        return view('admin.category.index', compact('categories'));
     }
 
     public function create()
@@ -25,6 +25,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = new Category();
+
         if ($category->create($request->validated())) {
             session()->flash('message', 'Create new category was successful!');
         } else {
@@ -49,6 +50,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, int $id)
     {
         $category = Category::findOrFail($id);
+
         if ($category->update($request->validated())) {
             session()->flash('message', 'Update the category was successful!');
         } else {
@@ -61,6 +63,7 @@ class CategoryController extends Controller
     public function destroy(DeleteCategoryRequest $request, int $id)
     {
         $category = Category::findOrFail($id);
+
         if ($category->delete()) {
             session()->flash('message', 'Delete the category was successful!');
         } else {

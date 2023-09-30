@@ -53,6 +53,8 @@
                                                         onsubmit="return confirm('Are you sure you want to delete')">
                                                         @method('DELETE')
                                                         @csrf
+                                                        <input style="display: none" name="id"
+                                                            value="{{ $item['id'] }}">
                                                         <button type="submit" class="btn btn-danger"
                                                             style="padding: 0.25rem 0.5rem">
                                                             <i class="fa-solid fa-trash"></i>
