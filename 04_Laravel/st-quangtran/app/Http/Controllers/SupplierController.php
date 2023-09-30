@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Supplier\DeleteSupplierRequest;
 use App\Http\Requests\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Models\Supplier;
@@ -18,13 +19,14 @@ class SupplierController extends Controller
 
     public function create()
     {
-        return view("admin.supplier.create");
+        return view('admin.supplier.create');
     }
 
     public function store(StoreSupplierRequest $request)
     {
-        $supplier = $request->validated();
-        if (Supplier::create($supplier)) {
+        $supplier = new Supplier();
+
+        if ($supplier->create($request->validated())) {
             session()->flash('message', 'Create new customer was successful!');
         } else {
             session()->flash('error', 'Create new supplier failed!');
@@ -47,6 +49,7 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, int $id)
     {
         $supplier = Supplier::findOrFail($id);
+
         if ($supplier->update($request->validated())) {
             session()->flash('message', 'Update the supplier was successful!');
         } else {
@@ -56,9 +59,10 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(DeleteSupplierRequest $request, int $id)
     {
         $supplier = Supplier::findOrFail($id);
+        
         if ($supplier->delete()) {
             session()->flash('message', 'Delete the supplier was successful!');
         } else {

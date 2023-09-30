@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
@@ -24,8 +25,9 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $employee = new Employee();
+
         if ($employee->create($request->validated())) {
-            session()->flash('message', 'Create new employee was successful!');
+            session()->flash('message', 'Create employee successful!');
         } else {
             session()->flash('error', 'Create new customer failed!');
         }
@@ -47,22 +49,24 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, int $id)
     {
         $employee = Employee::findOrFail($id);
+
         if ($employee->update($request->validated())) {
-            session()->flash('message', 'Update the employee was successful!');
+            session()->flash('message', 'Update employee successful!');
         } else {
-            session()->flash('error', 'Update the employee failed!');
+            session()->flash('error', 'Update employee failed!');
         }
 
         return redirect()->route('employees.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(DeleteEmployeeRequest $request, int $id)
     {
         $employee = Employee::findOrFail($id);
+
         if ($employee->delete()) {
-            session()->flash('message', 'Delete the employee was successful!');
+            session()->flash('message', 'Delete employee successful!');
         } else {
-            session()->flash('error', 'Delete the employee failed!');
+            session()->flash('error', 'Delete employee failed!');
         }
 
         return redirect()->route('employees.index');

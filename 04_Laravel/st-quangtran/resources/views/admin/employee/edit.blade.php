@@ -11,7 +11,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="employeeId">Employee ID</label>
+                                    <label for="employee_id">Employee ID</label>
                                     <input type="text" class="form-control" id="employee_id" name="employee_id"
                                         placeholder="Employee ID"
                                         value="{{ old('employee_id', $employee['employee_id']) }}">
@@ -93,7 +93,7 @@
                                             @enderror
                                         </div>
                                         <div class="col">
-                                            <label for="transactionName">Allowance</label>
+                                            <label for="allowance">Allowance</label>
                                             <input type="number" class="form-control" id="allowance" name="allowance"
                                                 placeholder="Allowance"
                                                 value="{{ old('allowance', $employee['allowance']) }}">

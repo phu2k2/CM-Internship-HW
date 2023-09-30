@@ -19,7 +19,7 @@
                         <div class="card-body" style="align-items: center">
                             <div class="row">
                                 <div class="col-9">
-                                    <h4 class="card-title">Suppliers Management </h4>
+                                    <h4 class="card-title">Customers Management</h4>
                                 </div>
                                 <div class="col-3">
                                     <a class="btn btn-success" href="{{ route('suppliers.create') }}"
@@ -31,6 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th> ID </th>
+                                        <th> Company ID </th>
                                         <th> Company Name </th>
                                         <th> Transaction Name </th>
                                         <th> Address </th>

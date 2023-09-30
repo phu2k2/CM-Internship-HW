@@ -22,7 +22,7 @@ class DeleteSupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:customers,id',
+            'id' => 'required|integer|exists:suppliers,id'
         ];
     }
 }

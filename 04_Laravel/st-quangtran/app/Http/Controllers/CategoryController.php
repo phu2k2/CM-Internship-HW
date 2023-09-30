@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
@@ -18,7 +19,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view("admin.category.create");
+        return view('admin.category.create');
     }
 
     public function store(StoreCategoryRequest $request)
@@ -40,7 +41,6 @@ class CategoryController extends Controller
 
     public function edit(int $id)
     {
-
         $category = Category::findOrFail($id);
 
         return view('admin.category.edit', compact('category'));
@@ -58,7 +58,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(DeleteCategoryRequest $request, int $id)
     {
         $category = Category::findOrFail($id);
         if ($category->delete()) {
