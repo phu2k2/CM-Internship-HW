@@ -25,4 +25,12 @@ class Employee extends Model
         'allowance'
     ];
 
+    /**
+     * Get the orders associated with the employee.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }

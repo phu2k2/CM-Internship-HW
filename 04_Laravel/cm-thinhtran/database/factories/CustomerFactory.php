@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
             'company_name' => fake()->company,
             'transaction_name' => fake('vi_VN')->word,
             'address' => fake()->streetAddress,
-            'email' => fake()->unique()->safeEmail,
+            'email' => fake()->unique()->freeEmail,
             'phone' => fake()->e164PhoneNumber,
             'fax' => fake()->numberBetween($min = 1000000000, $max = 9999999999),
         ];

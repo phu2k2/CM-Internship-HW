@@ -20,4 +20,12 @@ class Customer extends Model
         'phone',
         'fax'
     ];
+
+    /**
+     * Get the orders associated with the customer.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

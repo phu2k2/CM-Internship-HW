@@ -22,4 +22,12 @@ class Supplier extends Model
         'fax',
         'email'
     ];
+
+    /**
+     * Get the products associated with the category.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
