@@ -45,14 +45,14 @@
     @include('admin.layouts.sidenav')
     <!-- end sidenav  -->
 
-
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-    <!-- Navbar -->
-    @include('admin.layouts.nav')
-    <!-- End Navbar -->
+        <!-- Navbar -->
+        @include('admin.layouts.nav')
+        <!-- End Navbar -->
+        @include('admin.layouts.flash-message')
 
-    @yield('content')
+        @yield('content')
 
     </main>
 

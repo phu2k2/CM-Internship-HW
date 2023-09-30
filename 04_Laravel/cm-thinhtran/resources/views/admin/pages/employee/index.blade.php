@@ -122,63 +122,72 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="employee_id" name="employee_id">
+                                <input type="text" class="form-control" id="employee_id" name="employee_id"
+                                    value="{{ old('employee_id') }}">
                                 @error('employee_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="company_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name">
+                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                    value="{{ old('last_name') }}">
                                 @error('last_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="short_name">First Name:</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name">
+                                <input type="text" class="form-control" id="first_name" name="first_name"
+                                    value="{{ old('first_name') }}">
                                 @error('first_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="city">Birthday:</label>
-                                <input type="datetime-local" class="form-control" id="birthday" name="birthday">
+                                <input type="datetime-local" class="form-control" id="birthday" name="birthday"
+                                    value="{{ old('birthday') }}">
                                 @error('birthday')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="city">Start date:</label>
-                                <input type="datetime-local" class="form-control" id="start_date" name="start_date">
+                                <input type="datetime-local" class="form-control" id="start_date" name="start_date"
+                                    value="{{ old('start_date') }}">
                                 @error('start_date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email">Address:</label>
-                                <input type="text" class="form-control" id="address" name="address">
+                                <input type="text" class="form-control" id="address" name="address"
+                                    value="{{ old('address') }}">
                                 @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Phone:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone">
+                                <input type="tel" class="form-control" id="phone" name="phone"
+                                    value="{{ old('phone') }}">
                                 @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Base salary:</label>
-                                <input type="tel" class="form-control" id="base_salary" name="base_salary">
+                                <input type="tel" class="form-control" id="base_salary" name="base_salary"
+                                    value="{{ old('base_salary') }}">
                                 @error('base_salary')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Allowance:</label>
-                                <input type="tel" class="form-control" id="allowance" name="allowance">
+                                <input type="tel" class="form-control" id="allowance" name="allowance"
+                                    value="{{ old('allowance') }}">
                                 @error('allowance')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

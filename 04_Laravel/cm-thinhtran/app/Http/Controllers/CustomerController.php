@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -28,8 +30,12 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $validated = $request->validated();
-        Customer::insert($validated);
-        return redirect()->route('customers.index');
+        try {
+            Customer::insert($validated);
+        } catch (Exception $e) {
+            return back()->with('error','Item created failed!');
+        }
+        return redirect()->route('customers.index')->with('success','Item created successfully!');
     }
 
     /**
@@ -55,8 +61,12 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, string $id)
     {
         $validated = $request->validated();
-        Customer::findOrFail($id)->update($validated);
-        return redirect()->route('customers.index');
+        try {
+            Customer::findOrFail($id)->update($validated);
+        } catch (Exception $e) {
+            return back()->with('error','Item update failed!');
+        }
+        return redirect()->route('customers.index')->with('success','Item update successfully!');
     }
 
     /**

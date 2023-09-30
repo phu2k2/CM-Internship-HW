@@ -35,7 +35,7 @@ class UpdateCustomerRequest extends FormRequest
                 Rule::unique('customers')->ignore($this->id)
             ],
             'phone' => 'required|string|max:15',
-            'fax' => 'nullable|string',
+            'fax' => 'nullable|string|max:15',
         ];
     }
 }
