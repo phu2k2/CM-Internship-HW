@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
             'company_name' => 'Công ty ' . fake('vi_VN')->company(),
             'transaction_name' => strtoupper(fake()->unique()->regexify('([A-Z]{4})')),
             'address' => fake()->boolean() ? fake('vi_VN')->city() : fake('vi_VN')->province(),
-            'email' => fake()->unique()->companyEmail(),
+            'email' => fake('vi_VN')->unique()->companyEmail(),
             'phone' => fake('vi_VN')->unique()->regexify('0([0-9]{9})'),
             'fax' => fake('vi_VN')->unique()->regexify('0([0-9]{9})'),
         ];

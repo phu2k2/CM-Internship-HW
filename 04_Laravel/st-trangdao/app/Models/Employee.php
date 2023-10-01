@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
@@ -28,4 +29,8 @@ class Employee extends Model
         'allowance' => 0,
     ];
     protected $data = ['deleted_at'];
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
+    }
 }

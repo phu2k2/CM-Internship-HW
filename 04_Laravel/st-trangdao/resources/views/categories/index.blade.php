@@ -1,7 +1,7 @@
 @extends('home')
 @section('title', 'List Categories')
 @section('pageName', 'List Categories')
-@section('content')
+@section('content')  
     <div class="card">
         <h5 class="card-header">List Categories</h5>
         <div class="col-12 text-end">
