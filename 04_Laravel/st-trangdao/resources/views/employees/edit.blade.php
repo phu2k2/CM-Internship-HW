@@ -114,7 +114,7 @@
                         <label for="html5-search-input" class="col-md-2 col-form-label">Base Salary</label>
                         <div class="col-md-10">
                             <input class="form-control" type="text" name="base_salary"
-                                value="{{ old('base_salary', $employee['base_salary']) }}" id="html5-search-input" />
+                            value="{{ old('base_salary', intval($employee->base_salary)) }}" id="html5-search-input" />
                             @error('base_salary')
                                 <div class="invalid-feedback" style="display: block">
                                     {{ $message }}
@@ -126,7 +126,7 @@
                         <label for="html5-search-input" class="col-md-2 col-form-label">Allowance</label>
                         <div class="col-md-10">
                             <input class="form-control" type="text" name="allowance"
-                                value="{{ old('allowance', $employee['allowance']) }}" id="html5-search-input" />
+                            value="{{ old('base_salary', intval($employee->allowance)) }}" id="html5-search-input" />
                             @error('allowance')
                                 <div class="invalid-feedback" style="display: block">
                                     {{ $message }}

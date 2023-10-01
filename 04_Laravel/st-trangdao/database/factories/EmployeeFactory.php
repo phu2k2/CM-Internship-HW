@@ -24,7 +24,7 @@ class EmployeeFactory extends Factory
             'start_date'  => fake()->dateTimeBetween('-18 years', 'now', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
             'address' => fake()->boolean() ? fake('vi_VN')->city() : fake('vi_VN')->province(),
             'phone' => fake('vi_VN')->unique()->regexify('0([0-9]{9})'),
-            'base_saraly' => fake()->numberBetween(5000, 99999) * 1000,
+            'base_salary' => fake()->numberBetween(5000, 99999) * 1000,
             'allowance' => fake()->numberBetween(0, 5000) * 1000,
         ];
     }
