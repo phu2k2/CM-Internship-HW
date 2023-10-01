@@ -9,10 +9,11 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('employees.store') }}">
                                 @csrf
+                                <h1>{!! implode('', $errors->all('<div>:message</div>')) !!}</h1>
                                 <div class="form-group">
                                     <label for="employee_id">Employee ID</label>
-                                    <input type="text" class="form-control" id="employee_id" name="employee_id"
-                                        placeholder="Employee ID" value="{{ old('employee_id') }}">
+                                    <input type="text" class="form-control" name="employee_id" id="employee_id"
+                                        placeholder="Employe ID" value="{{ old('employee_id') }}">
                                     @error('employee_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -41,7 +42,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="birthday">Birthday</label>
-                                            <input type="date" class="form-control" id="birthday" name="birthday"
+                                            <input type="text" class="form-control" id="birthday" name="birthday"
                                                 value="{{ old('birthday') }}">
                                             @error('birthday')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -49,7 +50,7 @@
                                         </div>
                                         <div class="col">
                                             <label for="start_date">Start Date</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date"
+                                            <input type="text" class="form-control" id="start_date" name="start_date"
                                                 value="{{ old('start_date') }}">
                                             @error('start_date')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -60,8 +61,28 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col">
+                                            <label for="phone">Phone Number</label>
+                                            <input type="text" id="phone" name="phone" class="form-control"
+                                                placeholder="Phone Number" value="{{ old('phone') }}">
+                                            @error('phone')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <label for="address">Address</label>
+                                            <input type="text" id="address" name="address" class="form-control"
+                                                placeholder="Address" value="{{ old('address') }}">
+                                            @error('address')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
                                             <label for="base_salary">Base Salary</label>
-                                            <input type="number" class="form-control" id="base_salary" name="base_salary"
+                                            <input type="text" class="form-control" id="base_salary" name="base_salary"
                                                 placeholder="Base Salary" value="{{ old('base_salary') }}">
                                             @error('base_salary')
                                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -69,7 +90,7 @@
                                         </div>
                                         <div class="col">
                                             <label for="transactionName">Allowance</label>
-                                            <input type="number" class="form-control" id="allowance" name="allowance"
+                                            <input type="text" class="form-control" id="allowance" name="allowance"
                                                 placeholder="Allowance" value="{{ old('allowance') }}">
                                             @error('allowance')
                                                 <div class="alert alert-danger">{{ $message }}</div>

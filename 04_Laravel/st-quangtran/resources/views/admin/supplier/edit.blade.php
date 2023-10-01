@@ -6,7 +6,6 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
-
                         <div class="card-body">
                             <form method="POST" action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}">
                                 @csrf
@@ -14,17 +13,17 @@
                                 <div class="form-group">
                                     <label for="company_id"> Company ID </label>
                                     <input type="text" class="form-control" id="company_id" name="company_id"
-                                        placeholder="Company Name" value="{{ old('company_id', $supplier['company_id']) }}">
+                                        placeholder="Company ID" value="{{ old('company_id', $supplier['company_id']) }}">
                                     @error('company_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="company_name"> Company ID </label>
+                                    <label for="company_name"> Company Name </label>
                                     <input type="text" class="form-control" id="company_name" name="company_name"
                                         placeholder="Company Name"
                                         value="{{ old('company_name', $supplier['company_name']) }}">
-                                    @error('company_id')
+                                    @error('company_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -37,7 +36,6 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control" id="email" name="email"
@@ -64,16 +62,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="fax">Fax</label>
-                                    <input type="text" class="form-control" id="fax" placeholder="Fax"
-                                        value="{{ old('fax', $supplier['fax']) }}">
+                                    <input type="text" class="form-control" id="fax" name="fax"
+                                        placeholder="Fax" value="{{ old('fax', $supplier['fax']) }}">
                                     @error('fax')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -89,5 +85,4 @@
             <script src="{{ asset('admin/assets/js/misc.js') }}"></script>
             <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
             <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
-
         @stop

@@ -6,7 +6,6 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
-
                         <div class="card-body">
                             <form method="POST" action="{{ route('categories.update', ['category' => $category['id']]) }}">
                                 @csrf

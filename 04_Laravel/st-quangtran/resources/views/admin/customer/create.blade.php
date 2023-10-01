@@ -6,15 +6,14 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
-
                         <div class="card-body">
                             <form method="post" action="{{ route('customers.store') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="company_id"> Company ID </label>
-                                    <input type="text" id="company_id" name="company_id" class="form-control"
-                                        placeholder="Company ID" value="{{ old('company_id') }}">
-                                    @error('company_id')
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text" id="company_name" name="company_name" class="form-control"
+                                        placeholder="Company Name" value="{{ old('company_name') }}">
+                                    @error('company_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -58,7 +57,6 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </form>
                         </div>

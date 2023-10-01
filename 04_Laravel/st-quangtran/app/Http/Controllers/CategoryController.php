@@ -5,53 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    private $data = [
-        [
-            'id' => 1,
-            'category_id' => 'cat001',
-            'category_name' => 'Category A',
-        ],
-        [
-            'id' => 2,
-            'category_id' => 'cat002',
-            'category_name' => 'Category B',
-        ],
-        [
-            'id' => 3,
-            'category_id' => 'cat003',
-            'category_name' => 'Category C',
-        ],
-        [
-            'id' => 4,
-            'category_id' => 'cat004',
-            'category_name' => 'Category D',
-        ],
-        [
-            'id' => 5,
-            'category_id' => 'cat005',
-            'category_name' => 'Category E',
-        ],
-        [
-            'id' => 6,
-            'category_id' => 'cat006',
-            'category_name' => 'Category F',
-        ],
-        [
-            'id' => 7,
-            'category_id' => 'cat007',
-            'category_name' => 'Category G',
-        ],
-    ];
-
     public function index()
     {
-        $categories = $this->data;
+        $categories = Category::paginate(5);
 
-        return view('admin.category.index', ['categories' => $categories]);
+        return view('admin.category.index', compact('categories'));
     }
 
     public function create()
@@ -61,7 +24,16 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request)
     {
-        return redirect()->route('categories.index');
+        $category = new Category();
+
+        if ($category->create($request->validated())) {
+            session()->flash('message', 'Create new category was successful!');
+        } else {
+            session()->flash('error', 'Create new category failed!');
+        }
+
+        return redirect()->route('categories.index')
+            ->with('success', 'category created successfully.');
     }
 
     public function show(string $id)
@@ -70,20 +42,34 @@ class CategoryController extends Controller
 
     public function edit(int $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $category = $value;
-            }
-        }
+        $category = Category::findOrFail($id);
 
         return view('admin.category.edit', compact('category'));
     }
 
-    public function update(UpdateCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, int $id)
     {
+        $category = Category::findOrFail($id);
+
+        if ($category->update($request->validated())) {
+            session()->flash('message', 'Update the category was successful!');
+        } else {
+            session()->flash('error', 'Update the category failed!');
+        }
+
+        return redirect()->route('categories.index');
     }
 
-    public function destroy(DeleteCategoryRequest $request, string $id)
+    public function destroy(DeleteCategoryRequest $request, int $id)
     {
+        $category = Category::findOrFail($id);
+
+        if ($category->delete()) {
+            session()->flash('message', 'Delete the category was successful!');
+        } else {
+            session()->flash('error', 'Delete the category failed!');
+        }
+
+        return redirect()->route('categories.index');
     }
 }

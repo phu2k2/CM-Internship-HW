@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use HasFactory;
-    protected $table = "suppliers";
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'suppliers';
 
     protected $fillable = [
         'company_id',
@@ -19,4 +21,9 @@ class Supplier extends Model
         'fax',
         'email',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'company_id', 'company_id');
+    }
 }

@@ -6,16 +6,16 @@
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
-
                         <div class="card-body">
                             <form method="POST" action="{{ route('customers.update', ['customer' => $customer['id']]) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="companyId"> Company Name </label>
-                                    <input type="text" class="form-control" id="company_id" name="company_id"
-                                        placeholder="Company Name" value="{{ old('company_id', $customer['company_id']) }}">
-                                    @error('companyId')
+                                    <label for="company_name"> Company Name </label>
+                                    <input type="text" class="form-control" id="company_name" name="company_name"
+                                        placeholder="Company Name"
+                                        value="{{ old('company_name', $customer['company_name']) }}">
+                                    @error('company_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -28,7 +28,6 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control" id="email" name="email"
@@ -68,7 +67,6 @@
                 </div>
             </div>
         @stop
-
         @section('scripts')
             <script src="{{ asset('admin/assets/vendors/js/vendor.bundle.base.js') }} "></script>
             <script src="{{ asset('admin/assets/vendors/chart.js/Chart.min.js') }}"></script>
