@@ -1,12 +1,12 @@
 @extends('layout.app')
 
-@section('title', 'Add Supply')
+@section('title', 'Add Supplier')
 
 @section('content')
-    <form id="supplyForm" action="{{ route('supplies.store') }}" method="POST">
+    <form id="supplierForm" action="{{ route('suppliers.store') }}" method="POST">
         @csrf
         <div class="p-5">
-            <h2 class="text-center">Add Supply</h2>
+            <h2 class="text-center">Add Supplier</h2>
             <div class="mb-3">
                 <label for="inputId" class="form-label">Company Id</label>
                 <input value="{{ old('company_id') }}" type="text" class="form-control" id="inputId" name="company_id">
@@ -68,7 +68,7 @@
 
         <!-- Modal Footer -->
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="addsupplyBtn">Add supply</button>
+            <button type="submit" class="btn btn-primary" id="addsupplierBtn">Add supplier</button>
         </div>
 
     </form>

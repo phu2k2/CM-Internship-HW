@@ -33,11 +33,20 @@ class EmployeesController extends Controller
     public function store(CreateEmployeeRequest $request)
     {
         $validatedData = $request->validated();
-        $employee = new Employee();
-        $employee->create($validatedData);
-        
-        $request->session()->flash('success', 'Add Employee successful!');
-        
+
+        $existingEmployee = Employee::onlyTrashed()
+            ->where('employee_id', $validatedData['employee_id'])
+            ->first();
+
+        if ($existingEmployee) {
+            $existingEmployee->restore();
+            $request->session()->flash('success', 'You have input duplicate employee_id, restore Employee successful!');
+        } else {
+            $employee = new Employee();
+            $employee->create($validatedData);
+            $request->session()->flash('success', 'Add Employee successful!');
+        }
+
         return redirect()->route('employees.index');
     }
 
@@ -55,7 +64,7 @@ class EmployeesController extends Controller
     public function edit(string $id)
     {
         $employee = Employee::find($id);
-      
+
         if (!$employee) {
             abort(404);
         }
@@ -69,7 +78,7 @@ class EmployeesController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = Employee::find($id);
-      
+
         if (!$employee) {
             abort(404);
         }
@@ -78,7 +87,7 @@ class EmployeesController extends Controller
         $employee->update($validatedData);
 
         $request->session()->flash('success', 'Update Employee successful!');
-        
+
         return redirect()->route('employees.index');
     }
 
@@ -88,7 +97,7 @@ class EmployeesController extends Controller
     public function destroy(Request $request, string $id)
     {
         $employee = Employee::find($id);
-      
+
         if (!$employee) {
             abort(404);
         }

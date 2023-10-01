@@ -34,11 +34,20 @@ class CategoriesController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $validatedData = $request->validated();
-        $category = new Category();
-        $category->create($validatedData);
 
-        $request->session()->flash('success', 'Add Category successful!');
+        $existingCategory = Category::onlyTrashed()
+        ->where('category_id', $validatedData['category_id'])
+        ->first();
         
+        if ($existingCategory) {
+            $existingCategory->restore();
+            $request->session()->flash('success', 'You have input duplicate category_id, restore Category successful!');
+        } else{
+            $category = new Category();
+            $category->create($validatedData);
+            $request->session()->flash('success', 'Add Category successful!');
+        }
+
         return redirect()->route('categories.index');
     }
 

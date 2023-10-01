@@ -3,7 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\SuppliesController;
+use App\Http\Controllers\SuppliersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +25,6 @@ Route::resource('customers', CustomersController::class);
 
 Route::resource('categories', CategoriesController::class);
 
-Route::resource('supplies', SuppliesController::class);
+Route::resource('suppliers', SuppliersController::class);
 
 Route::resource('employees', EmployeesController::class);
