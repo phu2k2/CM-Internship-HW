@@ -21,9 +21,14 @@ class Customer extends Model
         'phone',
         'fax'
     ];
-    protected $data = ['deleted_at'];
-    public function order(): HasMany
+
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
+    public function scopeJoinSupplier($query)
+    {
+          return $query->join('suppliers', 'suppliers.transaction_name', '=', 'customers.transaction_name');
     }
 }

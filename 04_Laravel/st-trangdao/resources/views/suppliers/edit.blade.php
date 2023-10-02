@@ -11,11 +11,6 @@
                 <form action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}" method="POST">
                     @method('PUT')
                     @csrf
-                    @error('id')
-                        <div class="invalid-feedback" style="display: block">
-                            {{ $message }}
-                        </div>
-                    @enderror
                     <div class="mb-3 row">
                         <label for="html5-text-input" class="col-md-2 col-form-label">ID</label>
                         <div class="col-md-10">

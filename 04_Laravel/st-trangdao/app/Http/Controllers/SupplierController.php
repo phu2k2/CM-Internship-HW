@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Supplier\CreateRequestSupplier;
-use App\Http\Requests\Supplier\DeleteRequestSupplier;
-use App\Http\Requests\Supplier\UpdateRequestSupplier;
+use App\Http\Requests\Supplier\CreateSupplierRequest;
+use App\Http\Requests\Supplier\DeleteSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
+use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestSupplier $request)
+    public function store(CreateSupplierRequest $request)
     {
         $supplier = Supplier::create($request->validated());
         if ($supplier) {
@@ -49,7 +50,7 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
 
         return view('suppliers.show', compact('supplier'));
     }
@@ -59,7 +60,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
 
         return view('suppliers.edit', compact('supplier'));
     }
@@ -67,13 +68,9 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestSupplier $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
-        $supplier = Supplier::find($id);
-        if (!$supplier) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('suppliers.index');
-        }
+        $supplier = Supplier::findOrFail($id);
 
         $supplier->update($request->validated());
 
@@ -89,13 +86,10 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestSupplier $request, string $id)
+    public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        $supplier = Supplier::find($id);
-        if (!$supplier) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('suppliers.index');
-        }
+        $supplier = Supplier::findOrFail($id);
+
         if ($supplier->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {
@@ -103,5 +97,11 @@ class SupplierController extends Controller
         }
 
         return redirect()->route('suppliers.index');
+    }
+
+    public function getSuppliersWithProducts()
+    {
+        $suppliers = Supplier::with('products')->get();
+        return SupplierResource::collection($suppliers);
     }
 }

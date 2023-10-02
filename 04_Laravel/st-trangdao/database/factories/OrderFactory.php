@@ -19,11 +19,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         $customer = Customer::all()->random();
-        $customer_id = $customer->id;
+        $customerId = $customer->id;
         $destination = $customer->address;
         $date = fake()->dateTimeBetween('-20 days', 'now', 'Asia/Ho_Chi_Minh')->format('Y-m-d');
         return [
-            'customer_id' => $customer_id,
+            'customer_id' => $customerId,
             'employee_id' => Employee::all()->random()->employee_id,
             'order_date' => $date,
             'delivery_date' => $date,
