@@ -20,5 +20,4 @@ class Customer extends Model
         'phone',
         'fax'
     ];
-    protected $data = ['deleted_at'];
 }

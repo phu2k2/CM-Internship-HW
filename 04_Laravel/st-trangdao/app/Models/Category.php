@@ -16,5 +16,4 @@ class Category extends Model
         'category_id',
         'category_name'
     ];
-    protected $data = ['deleted_at'];
 }

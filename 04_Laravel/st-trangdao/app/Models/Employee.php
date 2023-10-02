@@ -27,5 +27,4 @@ class Employee extends Model
     protected $attributes = [
         'allowance' => 0,
     ];
-    protected $data = ['deleted_at'];
 }

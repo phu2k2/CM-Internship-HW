@@ -21,5 +21,4 @@ class Supplier extends Model
         'email',
         'fax'
     ];
-    protected $data = ['deleted_at'];
 }
