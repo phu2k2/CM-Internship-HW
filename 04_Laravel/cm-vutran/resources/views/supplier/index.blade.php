@@ -1,14 +1,14 @@
 @extends('layout.app')
 
-@section('title', 'Customers Management')
+@section('title', 'suppliers Management')
 
 @section('content')
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Customers Management
-        <a class="btn btn-primary mx-5" href="{{ route('customers.create') }}">
-            Add Customer
+        suppliers Management
+        <a class="btn btn-primary mx-5" href="{{ route('suppliers.create') }}">
+            Add supplier
         </a>
     </div>
     @if(session()->has('success'))
@@ -20,7 +20,9 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
+                    <th>company_id</th>
+                    <th>company_name</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -31,7 +33,9 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
+                    <th>company_id</th>
+                    <th>company_name</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -41,32 +45,30 @@
                 </tr>
             </tfoot>
             <tbody>
-                @foreach ($customers as $customer)
+                @foreach ($suppliers as $supplier)
                 <tr>
-                    <td>{{ $customer['id'] }}</td>
-                    <td>{{ $customer['transaction_name'] }}</td>
-                    <td>{{ $customer['address'] }}</td>
-                    <td>{{ $customer['email'] }}</td>
-                    <td>{{ $customer['phone_number'] }}</td>
-                    <td>{{ $customer['fax'] }}</td>
+                    <td>{{ $supplier->company_id }}</td>
+                    <td>{{ $supplier->company_name }}</td>
+                    <td>{{ $supplier->transaction_name }}</td>
+                    <td>{{ $supplier->address }}</td>
+                    <td>{{ $supplier->email }}</td>
+                    <td>{{ $supplier->phone_number }}</td>
+                    <td>{{ $supplier->fax }}</td>
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-success mx-3"
-                                href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">Edit</a>
-                            <form method="POST"
-                                action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}"
-                                onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                                href="{{ route('suppliers.edit', ['supplier' => $supplier->id]) }}">Edit</a>
+                            <form method="POST" action="{{ route('suppliers.destroy', ['supplier' => $supplier->id]) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this supplier?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-</div>
 @endsection

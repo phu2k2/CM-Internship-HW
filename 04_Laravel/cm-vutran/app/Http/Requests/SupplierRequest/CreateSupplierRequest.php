@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\SupplieRequest;
+namespace App\Http\Requests\SupplierRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSupplieRequest extends FormRequest
+class CreateSupplierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class CreateSupplieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required|string|size:3|unique:suppliers',
+            'company_id' => 'required|string|size:3|unique:suppliers,company_id,NULL,id,deleted_at,NULL',
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',

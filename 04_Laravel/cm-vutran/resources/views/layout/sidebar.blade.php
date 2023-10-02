@@ -15,9 +15,9 @@
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
 
-                <a class="nav-link {{ Route::is('supplies.*') ? 'active' : '' }}" href="{{ route('supplies.index') }}">
+                <a class="nav-link {{ Route::is('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Supplies
+                    Suppliers
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
 

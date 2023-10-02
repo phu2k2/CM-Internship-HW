@@ -4,46 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest\CreateCategoryRequest;
 use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    private $data = [
-        [
-            'id' => 1,
-            'category_id' => 'cat001',
-            'category_name' => 'Category A',
-        ],
-        [
-            'id' => 2,
-            'category_id' => 'cat002',
-            'category_name' => 'Category B',
-        ],
-        [
-            'id' => 3,
-            'category_id' => 'cat003',
-            'category_name' => 'Category C',
-        ],
-        [
-            'id' => 4,
-            'category_id' => 'cat004',
-            'category_name' => 'Category D',
-        ],
-        [
-            'id' => 5,
-            'category_id' => 'cat005',
-            'category_name' => 'Category E',
-        ],
-    ];
 
     public function index()
     {
-        $categories = $this->data;
+        $categories = Category::get();
 
-        return view('categories.index', compact('categories'));
+        return view('category.index', compact('categories'));
     }
 
     /**
@@ -51,7 +25,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('category.create');
     }
 
     /**
@@ -59,8 +33,21 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $request->session()->flash('success', 'Add Category successful!');
+        $validatedData = $request->validated();
+
+        $existingCategory = Category::onlyTrashed()
+        ->where('category_id', $validatedData['category_id'])
+        ->first();
         
+        if ($existingCategory) {
+            $existingCategory->restore();
+            $request->session()->flash('success', 'You have input duplicate category_id, restore Category successful!');
+        } else{
+            $category = new Category();
+            $category->create($validatedData);
+            $request->session()->flash('success', 'Add Category successful!');
+        }
+
         return redirect()->route('categories.index');
     }
 
@@ -77,13 +64,13 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        $category = collect($this->data)->where('id', $id)->first();
+        $category = Category::find($id);
 
-        if (empty($category)) {
+        if (!$category) {
             abort(404);
         }
-
-        return view('categories.edit', compact('category'));
+        
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -91,12 +78,15 @@ class CategoriesController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
-
-        if ($index === false) {
+        $category = Category::find($id);
+        
+        if (!$category) {
             abort(404);
         }
-
+    
+        $validatedData = $request->validated();
+        $category->update($validatedData);
+    
         $request->session()->flash('success', 'Update Category successful!');
 
         return redirect()->route('categories.index');
@@ -107,12 +97,14 @@ class CategoriesController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $index = array_search($id, array_column($this->data, 'id'));
+        $category = Category::find($id);
 
-        if ($index === false) {
+        if (!$category) {
             abort(404);
         }
 
+        $category->delete();
+        
         $request->session()->flash('success', 'Delete Category successful!');
 
         return redirect()->route('categories.index');

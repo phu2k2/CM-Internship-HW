@@ -49,21 +49,21 @@
             <tbody>
                 @foreach ($employees as $employee)
                 <tr>
-                    <td>{{ $employee['employee_id'] }}</td>
-                    <td>{{ $employee['last_name'] }}</td>
-                    <td>{{ $employee['first_name'] }}</td>
-                    <td>{{ $employee['birthday'] }}</td>
-                    <td>{{ $employee['start_date'] }}</td>
-                    <td>{{ $employee['address'] }}</td>
-                    <td>{{ $employee['phone'] }}</td>
-                    <td>{{ $employee['base_salary'] }}</td>
-                    <td>{{ $employee['allowance'] }}</td>
+                    <td>{{ $employee->employee_id }}</td>
+                    <td>{{ $employee->last_name }}</td>
+                    <td>{{ $employee->first_name }}</td>
+                    <td>{{ $employee->birthday }}</td>
+                    <td>{{ $employee->start_date }}</td>
+                    <td>{{ $employee->address }}</td>
+                    <td>{{ $employee->phone }}</td>
+                    <td>{{ $employee->base_salary }}</td>
+                    <td>{{ $employee->allowance }}</td>
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-success mx-3"
-                                href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">Edit</a>
+                                href="{{ route('employees.edit', ['employee' => $employee->id]) }}">Edit</a>
                             <form method="POST"
-                                action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
+                                action="{{ route('employees.destroy', ['employee' => $employee->id]) }}"
                                 onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                 @csrf
                                 @method('DELETE')
@@ -77,5 +77,4 @@
             </tbody>
         </table>
     </div>
-</div>
 @endsection
