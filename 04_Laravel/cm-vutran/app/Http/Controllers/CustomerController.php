@@ -7,7 +7,7 @@ use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class CustomersController extends Controller
     {
         $customers = Customer::get();
         
-        return view('customers.index', compact('customers'));
+        return view('customer.index', compact('customers'));
     }
 
     /**
@@ -24,7 +24,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        return view('customers.create');
+        return view('customer.create');
     }
 
     /**
@@ -60,7 +60,7 @@ class CustomersController extends Controller
             abort(404);
         }
 
-        return view('customers.edit', compact('customer'));
+        return view('customer.edit', compact('customer'));
     }
 
     /**

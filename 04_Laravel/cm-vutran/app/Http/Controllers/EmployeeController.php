@@ -7,7 +7,7 @@ use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class EmployeesController extends Controller
     {
         $employees = Employee::get();
 
-        return view('employees.index', compact('employees'));
+        return view('employee.index', compact('employees'));
     }
 
     /**
@@ -24,7 +24,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('employee.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class EmployeesController extends Controller
             abort(404);
         }
 
-        return view('employees.edit', compact('employee'));
+        return view('employee.edit', compact('employee'));
     }
 
     /**

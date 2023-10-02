@@ -7,7 +7,7 @@ use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
-class SuppliersController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class SuppliersController extends Controller
     {
         $suppliers = Supplier::get();
 
-        return view('suppliers.index', compact('suppliers'));
+        return view('supplier.index', compact('suppliers'));
     }
 
     /**
@@ -24,7 +24,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-        return view('suppliers.create');
+        return view('supplier.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class SuppliersController extends Controller
             abort(404);
         }
 
-        return view('suppliers.edit', compact('supplier'));
+        return view('supplier.edit', compact('supplier'));
     }
 
     /**

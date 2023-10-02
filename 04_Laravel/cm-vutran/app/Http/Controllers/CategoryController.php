@@ -7,7 +7,7 @@ use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class CategoriesController extends Controller
     {
         $categories = Category::get();
 
-        return view('categories.index', compact('categories'));
+        return view('category.index', compact('categories'));
     }
 
     /**
@@ -25,7 +25,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('category.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoriesController extends Controller
             abort(404);
         }
         
-        return view('categories.edit', compact('category'));
+        return view('category.edit', compact('category'));
     }
 
     /**
