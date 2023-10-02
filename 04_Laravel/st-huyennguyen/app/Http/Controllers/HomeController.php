@@ -115,10 +115,10 @@ class HomeController extends Controller
          * retrieve all employees
          * return Salary: accessors getSalaryAttribute
         */
-        $employees = Employee::select('last_name', 'first_name', 'base_salary', 'allowance')->get();
+        $employees = Employee::select('employee_id', 'last_name', 'first_name', 'base_salary', 'allowance')->get();
 
         foreach ($employees as $employee) {
-            dump($employee->full_name . ': ' . number_format($employee->salary));
+            dump($employee->employee_id . ' - ' . $employee->full_name . ': ' . number_format($employee->salary));
         }
     }
 
@@ -195,7 +195,6 @@ class HomeController extends Controller
                             $query->whereRaw('orders.destination = customers.address')))
                         ->with('customer:id,transaction_name')
                         ->get();
-
 
         foreach ($orders as $order) {
             dump('Order ID: ' . $order->id . ', customer: ' . $order->customer->transaction_name . ' ');
