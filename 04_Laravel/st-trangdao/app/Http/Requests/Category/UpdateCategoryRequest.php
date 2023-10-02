@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Customer;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteRequestCustomer extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class DeleteRequestCustomer extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:customers,id|integer',
+            'id' => 'required|exists:categories,id|integer',
+            'category_id' => 'required|string|size:2|unique:categories,category_id,' . $this->id,
+            'category_name' => 'required|string|max:30',
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Supplier;
+namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequestSupplier extends FormRequest
+class CreateCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,11 @@ class CreateRequestSupplier extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:50',
-            'company_id' => 'required|unique:suppliers|string|size:3',
-            'transaction_name' => 'required|string|unique:suppliers|max:50',
+            'transaction_name' => 'required|string|unique:customers|max:50',
             'address' => 'required|string|max:50',
-            'email' => 'required|unique:suppliers|email',
-            'phone' => 'required|unique:suppliers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
-            'fax' => 'required|unique:suppliers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'email' => 'required|unique:customers|email',
+            'phone' => 'required|unique:customers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
+            'fax' => 'required|unique:customers|string|regex:/^([0-9\s\-\+\(\)]*)$/|between:10,15',
         ];
     }
 }

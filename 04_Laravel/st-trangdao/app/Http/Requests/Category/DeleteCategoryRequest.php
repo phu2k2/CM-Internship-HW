@@ -4,7 +4,7 @@ namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteRequestCategory extends FormRequest
+class DeleteCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
