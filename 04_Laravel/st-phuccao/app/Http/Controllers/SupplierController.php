@@ -30,9 +30,7 @@ class SupplierController extends Controller
     {
         // Number of records displayed per page
         $perPage = 10;
-
         $suppliers = Supplier::paginate($perPage);
-
         return view('admin.supplier.index', compact('suppliers'));
     }
 
@@ -81,13 +79,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
-    
-            return view('admin.supplier.edit', compact('supplier'));
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.supplier.edit', ['supplier' => Supplier::where('company_id', $id)->firstOrFail()]);
     }
 
     /**

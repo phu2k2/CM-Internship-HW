@@ -20,7 +20,6 @@ class EmployeeController extends Controller
             $employeeId = Str::upper(Str::random($lengthOfId));
             $existingEmployee = Employee::where('employee_id', $employeeId)->first();
         } while ($existingEmployee);
-
         return $employeeId;
     }
     
@@ -30,9 +29,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $perPage = 10; // Number of records displayed per page
-
         $employees = Employee::paginate($perPage);
-
         return view('admin.employee.index', compact('employees'));
     }
 
@@ -83,13 +80,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        try {
-            $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
-            return view('admin.employee.edit', compact('employee'));
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.employee.edit', ['employee' => Employee::where('employee_id', $id)->firstOrFail()]);
     }
 
     /**

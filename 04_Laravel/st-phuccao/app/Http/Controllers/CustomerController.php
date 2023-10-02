@@ -18,9 +18,7 @@ class CustomerController extends Controller
     {
         // Number of records displayed per page
         $perPage = 10;
-
         $customers = Customer::paginate($perPage);
-    
         return view('admin.customer.index', compact('customers'));
     }
 
@@ -59,11 +57,7 @@ class CustomerController extends Controller
      */
     public function edit(int $id)
     {
-        try {
-            return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
     }
 
     /**
