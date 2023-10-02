@@ -20,15 +20,15 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasOne(Customer::class , 'id' , 'customer_id');
     }
 
     public function employee()
     {
-        return $this->hasOne(Employee::class);
+        return $this->hasOne(Employee::class , 'employee_id' , 'employee_id');
     }
 
     public function orderDetails() {
-        return $this->hasMany(OrderDetail::class , "id" , "invoice_id");
+        return $this->hasMany(OrderDetail::class , "invoice_id" , "id");
     }
 }

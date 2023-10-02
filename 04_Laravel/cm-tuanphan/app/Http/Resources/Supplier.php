@@ -14,8 +14,10 @@ class Supplier extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $supplier = parent::toArray($request);
+        unset($supplier["products"]);
         return [
-            'supplier' => parent::toArray($request),
+            'supplier' => $supplier,
             'product_ids' => $this->products->pluck('product_id'),
         ];
     }

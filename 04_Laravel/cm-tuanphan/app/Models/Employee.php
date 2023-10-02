@@ -11,6 +11,7 @@ class Employee extends Model
     use HasFactory,SoftDeletes;
     protected $primaryKey = "employee_id";
     protected $keyType = "string";
+    protected $appends = ["EmployeeName" , "Salary"];
     protected $fillable = [
         'employee_id',
         'last_name',
@@ -26,5 +27,15 @@ class Employee extends Model
     public function orders()
     {
         return $this->hasMany(Order::class , 'employee_id' , 'employee_id');
+    }
+
+    public function getEmployeeNameAttribute()
+    {
+        return $this->attributes['last_name'] . " " . $this->attributes['first_name'];
+    }
+
+    public function getSalaryAttribute()
+    {
+        return $this->attributes['base_salary'] + $this->attributes['allowance'];
     }
 }

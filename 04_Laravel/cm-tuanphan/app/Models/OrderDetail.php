@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderDetail extends Model
 {
+    protected $table = "orderdetails";
     use HasFactory,SoftDeletes;
 
     public function product()
     {
-        return $this->hasOne(Product::class , 'product_id' , 'product_id');
+        return $this->belongsTo(Product::class, 'product_id' , 'product_id');
     }
 }
