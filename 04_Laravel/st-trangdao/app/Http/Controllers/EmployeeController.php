@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Employee\CreateRequestEmployee;
-use App\Http\Requests\Employee\DeleteRequestEmployee;
-use App\Http\Requests\Employee\UpdateRequestEmployee;
+use App\Http\Requests\Employee\CreateEmployeeRequest;
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestEmployee $request)
+    public function store(CreateEmployeeRequest $request)
     {
         $employee = Employee::create($request->validated());
         if ($employee) {
@@ -49,7 +49,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
         return view('employees.show', compact('employee'));
     }
@@ -59,7 +59,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
         return view('employees.edit', compact('employee'));
     }
@@ -67,13 +67,9 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestEmployee $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
-        $employee = Employee::find($id);
-        if (!$employee) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('employees.index');
-        }
+        $employee = Employee::findOrFail($id);
 
         $employee->update($request->validated());
 
@@ -89,13 +85,10 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestEmployee $request, string $id)
+    public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        $employee = Employee::find($id);
-        if (!$employee) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('employees.index');
-        }
+        $employee = Employee::findOrFail($id);
+
         if ($employee->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {

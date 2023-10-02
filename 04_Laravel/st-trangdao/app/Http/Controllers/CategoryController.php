@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\CreateRequestCategory;
-use App\Http\Requests\Category\DeleteRequestCategory;
-use App\Http\Requests\Category\UpdateRequestCategory;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\DeleteCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestCategory $request)
+    public function store(CreateCategoryRequest $request)
     {
 
         $category = Category::create($request->validated());
@@ -46,7 +46,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         return view('categories.show', compact('category'));
     }
@@ -56,7 +56,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         return view('categories.edit', compact('category'));
     }
@@ -64,13 +64,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestCategory $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
-        if (!$category) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('categories.index');
-        }
+        $category = Category::findOrFail($id);
 
         $category->update($request->validated());
 
@@ -86,13 +82,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestCategory $request, string $id)
+    public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
-        if (!$category) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('categories.index');
-        }
+        $category = Category::findOrFail($id);
+
         if ($category->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {

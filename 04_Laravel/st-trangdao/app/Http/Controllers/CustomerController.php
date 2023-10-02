@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Customer\CreateRequestCustomer;
-use App\Http\Requests\Customer\DeleteRequestCustomer;
-use App\Http\Requests\Customer\UpdateRequestCustomer;
+use App\Http\Requests\Customer\CreateCustomerRequest;
+use App\Http\Requests\Customer\DeleteCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestCustomer $request)
+    public function store(CreateCustomerRequest $request)
     {
 
         $customer = Customer::create($request->validated());
@@ -50,7 +50,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
 
         return view('customers.show', compact('customer'));
     }
@@ -60,7 +60,7 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
 
         return view('customers.edit', compact('customer'));
     }
@@ -68,13 +68,9 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestCustomer $request, string $id)
+    public function update(UpdateCustomerRequest $request, string $id)
     {
-        $customer = Customer::find($id);
-        if (!$customer) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('customers.index');
-        }
+        $customer = Customer::findOrFail($id);
 
         $customer->update($request->validated());
 
@@ -90,13 +86,10 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestCustomer $request, string $id)
+    public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        $customer = Customer::find($id);
-        if (!$customer) {
-            session()->flash('error', 'Data not found!');
-            return redirect()->route('customers.index');
-        }
+        $customer = Customer::findOrFail($id);
+
         if ($customer->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {
