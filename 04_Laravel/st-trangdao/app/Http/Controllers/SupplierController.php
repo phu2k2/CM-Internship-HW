@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Supplier\CreateRequestSupplier;
-use App\Http\Requests\Supplier\DeleteRequestSupplier;
-use App\Http\Requests\Supplier\UpdateRequestSupplier;
+use App\Http\Requests\Supplier\CreateSupplierRequest;
+use App\Http\Requests\Supplier\DeleteSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -64,7 +64,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestSupplier $request)
+    public function store(CreateSupplierRequest $request)
     {
         session()->flash('message', 'Successfully created!');
 
@@ -102,7 +102,7 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestSupplier $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
         session()->flash('message', 'Successfully updated!');
 
@@ -112,7 +112,7 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestSupplier $request, string $id)
+    public function destroy(DeleteSupplierRequest $request, string $id)
     {
         session()->flash('message', 'Successfully deleted!');
 

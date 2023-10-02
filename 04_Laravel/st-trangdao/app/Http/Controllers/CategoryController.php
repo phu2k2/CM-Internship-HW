@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\CreateRequestCategory;
-use App\Http\Requests\Category\DeleteRequestCategory;
-use App\Http\Requests\Category\UpdateRequestCategory;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\DeleteCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -49,7 +49,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequestCategory $request)
+    public function store(CreateCategoryRequest $request)
     {
         session()->flash('message', 'Successfully created!');
 
@@ -87,7 +87,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequestCategory $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         session()->flash('message', 'Successfully updated!');
 
@@ -97,7 +97,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DeleteRequestCategory $request, string $id)
+    public function destroy(DeleteCategoryRequest $request, string $id)
     {
         session()->flash('message', 'Successfully deleted!');
 
