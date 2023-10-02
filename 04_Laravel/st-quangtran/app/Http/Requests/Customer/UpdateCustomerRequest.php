@@ -32,8 +32,8 @@ class UpdateCustomerRequest extends FormRequest
                 'max:30',
                 'unique:customers,email,' . $this->customer . ',id'
             ],
-            'phone' => 'required|string|max:15',
-            'fax' => 'string|max:15',
+            'phone' => 'required|string|regex:/^([0-9\-\+\(\)]*)$/|max:15',
+            'fax' => 'required|string|max:15',
         ];
     }
 }

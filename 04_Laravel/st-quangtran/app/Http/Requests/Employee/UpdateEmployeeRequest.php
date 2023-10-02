@@ -30,10 +30,10 @@ class UpdateEmployeeRequest extends FormRequest
             ],
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',
-            'birthday' => 'required|date',
-            'start_date' => 'required|date',
+            'birthday' => 'required|date|before:today',
+            'start_date' => 'required|date|before_or_equal:today',
             'address' => 'required|string|max:60',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|regex:/^([0-9\-\+\(\)]*)$/|max:15',
             'base_salary' => 'required|numeric',
             'allowance' => 'required|numeric',
         ];
