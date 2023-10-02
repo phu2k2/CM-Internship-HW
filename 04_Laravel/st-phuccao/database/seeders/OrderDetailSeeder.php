@@ -14,7 +14,7 @@ class OrderDetailSeeder extends Seeder
     public function run(): void
     {
         OrderDetail::factory()
-                    ->count(20)
-                    ->create();
+                        ->count(20)
+                        ->create();
     }
 }
