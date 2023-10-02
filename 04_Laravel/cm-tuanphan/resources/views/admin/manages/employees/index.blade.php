@@ -1,15 +1,15 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModal" aria-hidden="true">
+<div class="modal fade" id="add-employee-modal" tabindex="-1" aria-labelledby="add-employee-modal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addEmployeeModal">Thêm nhân viên</h1>
+          <h1 class="modal-title fs-5" id="add-employee-modal">Thêm nhân viên</h1>
         </div>
         <div class="modal-body">
             @if ($errors->any())
-            @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
+            @section('modalTrigger')document.querySelector('[data-bs-target="#add-employee-modal"]').click();@endsection
             @endif
             <form method="POST" action="{{ route('employees.store') }}" id="addEmployeeForm">
                 @csrf
@@ -104,7 +104,6 @@
 </div>
 @endsection
 
-
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
@@ -112,7 +111,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6>Nhân viên</h6>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Thêm nhân viên</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-employee-modal">Thêm nhân viên</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -203,7 +202,5 @@
             </div>
         </div>
     </div>
-
-
 </div>
 @endsection

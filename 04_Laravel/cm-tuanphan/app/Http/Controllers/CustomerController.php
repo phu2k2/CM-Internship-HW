@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use View;
-use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\EditCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -20,9 +21,9 @@ class CustomerController extends Controller
         return view("admin.manages.customers.index" , compact("customers"));
     }
 
-    public function store(CustomerRequest $res)
+    public function store(CreateCustomerRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $customerID)
@@ -32,9 +33,9 @@ class CustomerController extends Controller
         return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer"));
     }
 
-    public function update(CustomerRequest $res, string $id)
+    public function update(EditCustomerRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function destroy(string $id)
