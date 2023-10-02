@@ -37,7 +37,6 @@ class CustomerController extends Controller
     {
         try {
             Customer::create($request->validated());
-
             return redirect()->route('customers.index');
         } catch (Exception $e) {
             abort(404);
@@ -67,9 +66,7 @@ class CustomerController extends Controller
     {
         try {
             $customer = Customer::findOrFail($id);
-    
             $customer->update($request->validated());
-    
             return redirect()->route('customers.edit', $customer->id);
         } catch (ModelNotFoundException $e) {
             abort(404);
@@ -84,7 +81,6 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
             $customer->delete();
-    
             return redirect()->route('customers.index');
         } catch (ModelNotFoundException $e) {
             abort(404);

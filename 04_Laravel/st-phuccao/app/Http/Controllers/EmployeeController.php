@@ -58,9 +58,7 @@ class EmployeeController extends Controller
                 'base_salary' => $request->input('base_salary'),
                 'allowance' => $request->input('allowance'),
             ]);
-    
             $employee->saveOrFail();
-    
             return redirect()->route('employees.index');
         } catch (Exception $e) {
             abort(404);
@@ -90,12 +88,10 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
             $employee->update($request->only([
                 'last_name', 'first_name', 'birthday', 'start_date',
                 'address', 'phone', 'base_salary', 'allowance'
             ]));
-    
             return redirect()->route('employees.edit', $employee->employee_id);
         } catch (ModelNotFoundException $e) {
             abort(404);
@@ -109,9 +105,7 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
             $employee->delete();
-    
             return redirect()->route('employees.index');
         } catch (ModelNotFoundException $e) {
             abort(404);
