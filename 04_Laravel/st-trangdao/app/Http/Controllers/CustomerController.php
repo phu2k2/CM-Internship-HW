@@ -38,6 +38,7 @@ class CustomerController extends Controller
             'fax' => '3422783847',
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */

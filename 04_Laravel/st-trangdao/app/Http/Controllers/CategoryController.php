@@ -26,6 +26,7 @@ class CategoryController extends Controller
             'category_name' => 'May mặc',
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */

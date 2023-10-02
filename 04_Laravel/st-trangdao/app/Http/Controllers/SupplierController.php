@@ -41,6 +41,7 @@ class SupplierController extends Controller
             'email' => 'coopmart@vietnam.com'
         ]
     ];
+
     /**
      * Display a listing of the resource.
      */
