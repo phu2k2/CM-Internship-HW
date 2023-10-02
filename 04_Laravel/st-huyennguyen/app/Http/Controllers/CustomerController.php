@@ -34,7 +34,7 @@ class CustomerController extends Controller
     public function store(CreateCustomerRequest $request)
     {
         $customer = new Customer();
-        if ($customer->create($request->validated())) {
+        if ($customer->create($request->all())) {
             session()->flash('message', 'Create new customer was successful!');
         } else {
             session()->flash('error', 'Create new customer failed!');
@@ -67,7 +67,7 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, string $id)
     {
         $customer = Customer::findOrFail($id);
-        if ($customer->update($request->validated())) {
+        if ($customer->update($request->all())) {
             session()->flash('message', 'Update the customer was successful!');
         } else {
             session()->flash('error', 'Update the customer failed!');
