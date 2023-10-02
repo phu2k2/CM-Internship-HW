@@ -4,6 +4,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\SupplierResource;
+use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +32,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('suppliers', SupplierController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('employees', EmployeeController::class);
+});
+
+Route::get('/suppliers', function () {
+    $suppliers = Supplier::with('products')->get();
+    return SupplierResource::collection($suppliers);
+});
+
+Route::get('/products', function () {
+    $products = Product::with('supplier')->get();
+    return ProductResource::collection($products);
 });
