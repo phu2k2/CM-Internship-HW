@@ -34,10 +34,10 @@ class EmployeeController extends Controller
     public function store(CreateEmployeeRequest $request)
     {
         $employee = new Employee();
-        if ($employee->create($request->validated())) {
-            session()->flash('message', 'Create new customer was successful!');
+        if ($employee->create($request->all())) {
+            session()->flash('message', 'Create new employee was successful!');
         } else {
-            session()->flash('error', 'Create new customer failed!');
+            session()->flash('error', 'Create new employee failed!');
         }
 
         return redirect()->route('employees.index');
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = Employee::findOrFail($id);
-        if ($employee->update($request->validated())) {
+        if ($employee->update($request->all())) {
             session()->flash('message', 'Update the employee was successful!');
         } else {
             session()->flash('error', 'Update the employee failed!');

@@ -34,10 +34,10 @@ class SupplierController extends Controller
     public function store(CreateSupplierRequest $request)
     {
         $supplier = new Supplier();
-        if ($supplier->create($request->validated())) {
-            session()->flash('message', 'Create new customer was successful!');
+        if ($supplier->create($request->all())) {
+            session()->flash('message', 'Create new supplier was successful!');
         } else {
-            session()->flash('error', 'Create new customer failed!');
+            session()->flash('error', 'Create new supplier failed!');
         }
 
         return redirect()->route('suppliers.index');
@@ -67,7 +67,7 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-        if ($supplier->update($request->validated())) {
+        if ($supplier->update($request->all())) {
             session()->flash('message', 'Update the supplier was successful!');
         } else {
             session()->flash('error', 'Update the supplier failed!');
