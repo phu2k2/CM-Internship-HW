@@ -22,7 +22,6 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'company_id' => [
                 'required',
