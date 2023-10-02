@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Orderdetail;
 use App\Models\Product;
 use App\Models\Supplier;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -35,17 +36,11 @@ class HomeController extends Controller
         // 1. Công ty Việt Tiến đã cung cấp những mặt hàng nào?
         $companyName = 'Việt Tiến';
         /**
-         * Solution 1: scopeWhereCompanyName
+         * Solution: scopeWhereCompanyName
          */
         $suppliers = Supplier::with('products:id,company_id,product_name')
-                                ->whereCompanyName($companyName)->get();
-        /**
-         * Solution 2: whereRelation
-         */
-        $suppliers = Supplier::with('products:id,company_id,product_name')
-                                ->whereRelation('products', 'company_name', 'like', '%' . $companyName . '%')
-                                ->get();
-        // Test
+                                ->companyName($companyName)->get();
+
         foreach ($suppliers as $supplier) {
             dump('Company: ' . $supplier->company_name);
             foreach ($supplier->products as $product) {
@@ -58,17 +53,19 @@ class HomeController extends Controller
     {
         // 2. Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
         /**
-         * Solution: whereHas + distinct
+         * Solution: whereHas
          * retrieve all suppliers name that have at least one product
          * that has category where category name equal $categoryName
          */
         $categoryName = 'Thực phẩm';
         $suppliers = Supplier::distinct()
                                 ->whereHas('products.category', fn ($query) => (
-                                    $query->where('category_name', $categoryName)))
-                                ->select('company_name')->get();
+                                    $query->categoryName($categoryName)))
+                                ->select('company_name', 'address')
+                                ->get();
+
         foreach ($suppliers as $supplier) {
-            dump($supplier->company_name);
+            dump($supplier->company_name . ' - address: ' . $supplier->address);
         }
     }
 
@@ -81,10 +78,11 @@ class HomeController extends Controller
          * And then, relationship with customers table
          */
         $productName = 'Sữa hộp';
-        $orders = Order::with('customer:id,transaction_name')
-                        ->whereHas('orderdetails.product', fn ($query) => (
-                            $query->where('product_name', 'like', '%' . $productName . '%')))
+        $orders = Order::whereHas('orderdetails.product', fn ($query) => (
+                            $query->productName($productName)))
+                        ->with('customer:id,transaction_name')
                         ->get();
+
         foreach ($orders as $order) {
             dump($order->customer->transaction_name);
         }
@@ -97,14 +95,16 @@ class HomeController extends Controller
          * Solution:
          * Relationship with customers and employees table
          * scopeOfOrder with order have id equal $orderId
+         * accessors getFullNameAttribute
          */
         $orderId = 1;
         $order = Order::with(['customer:id,transaction_name',
                                 'employee:id,employee_id,last_name,first_name'])
                         ->ofOrder($orderId)->first();
-        // Test output
-        dump($order->customer->transaction_name);
-        dump($order->employee->full_name); //accessors getFullNameAttribute
+
+        $delivery_date = Carbon::parse($order->delivery_date)->format('H:i:s d/m/Y');
+        dump($order->customer->transaction_name . '  - ' . $order->employee->full_name);
+        dump($delivery_date . ' - ' . $order->destination);
     }
 
     public function exercise5()
@@ -116,6 +116,7 @@ class HomeController extends Controller
          * return Salary: accessors getSalaryAttribute
         */
         $employees = Employee::select('last_name', 'first_name', 'base_salary', 'allowance')->get();
+
         foreach ($employees as $employee) {
             dump($employee->full_name . ': ' . number_format($employee->salary));
         }
@@ -133,8 +134,9 @@ class HomeController extends Controller
          */
         $orderId = 3;
         $orders = Orderdetail::with('product:id,product_id,product_name')
-                                ->whereRelation('product', 'invoice_id', $orderId)
+                                ->ofOrder($orderId)
                                 ->get();
+
         foreach ($orders as $order) {
             dump($order->product->product_name . ', price: ' . number_format($order->price_total));
         }
@@ -142,10 +144,27 @@ class HomeController extends Controller
 
     public function exercise7()
     {
-        // 7. Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng?
+        // 7. Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty?
+            // (tức là có cùng tên giao dịch)
+        /**
+         * Solution 1: join table
+         */
         $companies = Customer::joinSuppliers()
                                 ->select('customers.transaction_name')
                                 ->get();
+
+        foreach ($companies as $company) {
+            dump($company->transaction_name);
+        }
+
+        /**
+         * Solution 2: subquery
+         */
+        $suppliers = Supplier::select('transaction_name')->get();
+        $companies = Customer::select('transaction_name')
+                                ->whereIn('transaction_name', $suppliers)
+                                ->get();
+
         foreach ($companies as $company) {
             dump($company->transaction_name);
         }
@@ -154,12 +173,13 @@ class HomeController extends Controller
     public function exercise8()
     {
         // 8. Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
-        $employees = Employee::selectRaw('birthday,
-                                        GROUP_CONCAT(last_name, " " , first_name separator ", ") AS list_employees')
+        $employees = Employee::select('birthday')
+                                ->selectRaw('GROUP_CONCAT(last_name, " " , first_name separator ", ") AS list_employees')
                                 ->groupBy('birthday')
                                 ->havingRaw('count(birthday) > 1')
                                 ->orderBy('birthday')
                                 ->get();
+
         foreach ($employees as $employee) {
             dump($employee->birthday . ' ' . $employee->list_employees);
         }
@@ -171,10 +191,12 @@ class HomeController extends Controller
         /**
          * whereHas: retrieve all order that have destination like address customer.
          */
-        $orders = Order::with('customer:id,transaction_name')
-                        ->whereHas('customer', fn ($query) => (
+        $orders = Order::whereHas('customer', fn ($query) => (
                             $query->whereRaw('orders.destination = customers.address')))
+                        ->with('customer:id,transaction_name')
                         ->get();
+
+
         foreach ($orders as $order) {
             dump('Order ID: ' . $order->id . ', customer: ' . $order->customer->transaction_name . ' ');
         }
@@ -189,6 +211,7 @@ class HomeController extends Controller
         $products = Product::doesntHave('orderdetails')
                             ->select('product_id', 'product_name')
                             ->get();
+
         foreach ($products as $product) {
             dump($product->product_id . ' - ' . $product->product_name);
         }
@@ -203,7 +226,7 @@ class HomeController extends Controller
         $employees = Employee::doesntHave('orders')
                                 ->select('employee_id', 'last_name', 'first_name')
                                 ->get();
-        // Test
+
         foreach ($employees as $employee) {
             dump($employee->employee_id . ': ' . $employee->full_name);
         }

@@ -36,7 +36,7 @@ class Supplier extends Model
      * @param  mixed  $companyName
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereCompanyName($query, $companyName)
+    public function scopeCompanyName($query, $companyName)
     {
         return $query->where('company_name', 'like', '%' . $companyName . '%');
     }

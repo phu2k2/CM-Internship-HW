@@ -39,4 +39,9 @@ class Product extends Model
     {
         return $this->hasMany(Orderdetail::class, 'product_id', 'product_id');
     }
+
+    public function scopeProductName($query, $productName)
+    {
+        return $query->where('product_name', 'like', '%' . $productName . '%');
+    }
 }

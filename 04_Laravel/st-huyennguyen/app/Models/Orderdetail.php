@@ -36,4 +36,9 @@ class Orderdetail extends Model
     {
         return $this->amount * ($this->price - $this->discount);
     }
+
+    public function scopeOfOrder($query, $orderId)
+    {
+        return $query->where('invoice_id', $orderId);
+    }
 }
