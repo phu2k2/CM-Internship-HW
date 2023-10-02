@@ -32,7 +32,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('categories' , CategoryController::class)->name('*', 'categories');
     Route::resource('suppliers' , SupplierController::class)->name('*', 'suppliers');
     Route::resource('customers' , CustomerController::class)->name('*', 'customers');
-    Route::resource('sql' , HomeController::class)->name('*' , 'sql');
+    Route::get('sql/{question}' , [HomeController::class, "index"]);
 });
 
 // use App\Models\Supplier;

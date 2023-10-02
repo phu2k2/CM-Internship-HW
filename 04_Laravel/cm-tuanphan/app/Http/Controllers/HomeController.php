@@ -14,9 +14,10 @@ use DB;
 
 class HomeController extends Controller
 {
-    public function index() 
+    public function index($question) 
     {
-        return $this->cau6();
+        $str = "cau" . $question;
+        return $this->$str();
     }
 
     function cau1()
