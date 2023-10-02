@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerPostRequest;
+use App\Http\Requests\Customer\StoreCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -51,7 +52,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
         
     }
@@ -74,14 +75,13 @@ class CustomerController extends Controller
                 $customer = $value;
             }
         }
-        
         return view('admin.customer.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateCustomerRequest $request, int $id)
     {
         //
     }

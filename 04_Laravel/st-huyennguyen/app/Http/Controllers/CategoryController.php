@@ -34,7 +34,7 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $category = new Category();
-        if ($category->create($request->validated())) {
+        if ($category->create($request->all())) {
             session()->flash('message', 'Create new category was successful!');
         } else {
             session()->flash('error', 'Create new category failed!');
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, string $id)
     {
         $category = Category::findOrFail($id);
-        if ($category->update($request->validated())) {
+        if ($category->update($request->all())) {
             session()->flash('message', 'Update the category was successful!');
         } else {
             session()->flash('error', 'Update the category failed!');

@@ -12,14 +12,18 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4">
+            <form class="form-horizontal mt-4" method="POST" action="{{ route('categories.store') }}">
+                @csrf   
                 <div class="form-group">
-                    <label>Category Name</label>
-                    <input type="text" class="form-control">
+                    <label for="category_name">Category Name</label>
+                    <input type="text" class="form-control" id="category_name" name="category_name" value = "{{ old('category_name') }}">
+                    @error('category_name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <button class="btn btn-success text-white">Add</button>
+                        <button class="btn btn-success text-white" type="submit">Add</button>
                     </div>
                 </div>               
             </form>
