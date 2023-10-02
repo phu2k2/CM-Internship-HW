@@ -10,14 +10,17 @@
         <a class="btn btn-primary mx-5" href="{{ route('customers.create') }}">
             Add Customer
         </a>
-
     </div>
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>company_id</th>
+                    <th>ID</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -28,8 +31,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th>STT</th>
-                    <th>company_name</th>
+                    <th>ID</th>
                     <th>transaction_name</th>
                     <th>address</th>
                     <th>email</th>
@@ -39,24 +41,30 @@
                 </tr>
             </tfoot>
             <tbody>
-
                 @foreach ($customers as $customer)
                 <tr>
-                    <td>{{ $loop->index+1 }}</td>
-                    <td>{{ $customer['companyId'] }}</td>
-                    <td>{{ $customer['transactionName'] }}</td>
+                    <td>{{ $customer['id'] }}</td>
+                    <td>{{ $customer['transaction_name'] }}</td>
                     <td>{{ $customer['address'] }}</td>
                     <td>{{ $customer['email'] }}</td>
-                    <td>{{ $customer['phoneNumber'] }}</td>
+                    <td>{{ $customer['phone_number'] }}</td>
                     <td>{{ $customer['fax'] }}</td>
                     <td>
-                        <a class="btn btn-success" href="">Edit</a>
-                        <a class="btn btn-danger" href="">Delete</a>
+                        <div class="d-flex">
+                            <a class="btn btn-success mx-3"
+                                href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">Edit</a>
+                            <form method="POST"
+                                action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+
                     </td>
                 </tr>
                 @endforeach
-
-
             </tbody>
         </table>
     </div>
