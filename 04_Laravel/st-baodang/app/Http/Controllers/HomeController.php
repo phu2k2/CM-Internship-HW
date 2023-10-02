@@ -47,6 +47,7 @@ class HomeController extends Controller
     {
         $typeProduct = Supplier::joinProducts()
             ->join('categories', 'products.category_id', '=', 'categories.category_id')
+            ->distinct()
             ->where('categories.category_name', '=', 'thực phẩm')
             ->get(['suppliers.company_id', 'suppliers.company_name', 'suppliers.address']);
         dump($typeProduct);
