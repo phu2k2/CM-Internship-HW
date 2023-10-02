@@ -7,7 +7,6 @@
                 <i class="bx bx-menu bx-sm"></i>
             </a>
         </div>
-
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center">
@@ -26,7 +25,6 @@
                         data-icon="octicon-star" data-size="large" data-show-count="true"
                         aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
                 </li>
-
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
