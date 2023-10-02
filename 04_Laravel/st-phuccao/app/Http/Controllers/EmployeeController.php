@@ -20,7 +20,6 @@ class EmployeeController extends Controller
             $employeeId = Str::upper(Str::random($lengthOfId));
             $existingEmployee = Employee::where('employee_id', $employeeId)->first();
         } while ($existingEmployee);
-
         return $employeeId;
     }
     
@@ -30,9 +29,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $perPage = 10; // Number of records displayed per page
-
         $employees = Employee::paginate($perPage);
-
         return view('admin.employee.index', compact('employees'));
     }
 
@@ -61,12 +58,14 @@ class EmployeeController extends Controller
                 'base_salary' => $request->input('base_salary'),
                 'allowance' => $request->input('allowance'),
             ]);
-    
             $employee->saveOrFail();
-    
-            return redirect()->route('employees.create')->with('success', 'Successfully added employee!');
+            return redirect()
+                    ->route('employees.create')
+                    ->with('success', 'Successfully added employee!');
         } catch (Exception $e) {
-            return redirect()->route('employees.create')->with('error', 'An error occurred while adding employee!');
+            return redirect()
+                    ->route('employees.create')
+                    ->with('error', 'An error occurred while adding employee!');
         }
     }
 
@@ -83,13 +82,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        try {
-            $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
-            return view('admin.employee.edit', compact('employee'));
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.employee.edit', ['employee' => Employee::where('employee_id', $id)->firstOrFail()]);
     }
 
     /**
@@ -99,15 +92,17 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
             $employee->update($request->only([
                 'last_name', 'first_name', 'birthday', 'start_date',
                 'address', 'phone', 'base_salary', 'allowance'
             ]));
-    
-            return redirect()->route('employees.edit', $employee->employee_id)->with('success', 'Updated employee information successfully!');
+            return redirect()
+                        ->route('employees.edit', $employee->employee_id)
+                        ->with('success', 'Updated employee information successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('employees.edit', $id)->with('error', 'Updating employee information failed, Please try again!');
+            return redirect()
+                        ->route('employees.edit', $id)
+                        ->with('error', 'Updating employee information failed, Please try again!');
         }
     }
 
@@ -118,12 +113,14 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where('employee_id', $id)->firstOrFail();
-    
             $employee->delete();
-    
-            return redirect()->route('employees.index')->with('success', 'Employee has been deleted successfully!');
+            return redirect()
+                        ->route('employees.index')
+                        ->with('success', 'Employee has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('employees.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
+            return redirect()
+                        ->route('employees.index')
+                        ->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }
