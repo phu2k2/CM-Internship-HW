@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\OrderDetail;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class OrderDetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Category::factory()
-            ->count('5')
+        OrderDetail::factory()
+            ->count(20)
             ->create();
     }
 }
