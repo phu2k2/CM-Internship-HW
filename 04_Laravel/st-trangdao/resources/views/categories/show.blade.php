@@ -12,22 +12,28 @@
                 <div class="mb-3">
                     <label for="html5-text-input" class="col-md-2 col-form-label">ID : </label>
                     <div class="col-md-10">
-                        <span id="basic-icon-default-categoryid2" class="input-group-text"><i
-                                class='bx bx-id-card'></i>{{ $category['id'] }}</span>
+                        <span id="basic-icon-default-categoryid2" class="input-group-text">
+                            <i class='bx bx-id-card'></i>
+                            {{ $category['id'] }}
+                        </span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="html5-text-input" class="col-md-2 col-form-label">Category ID : </label>
                     <div class="col-md-10">
-                        <span id="basic-icon-default-categoryid2" class="input-group-text"><i
-                                class='bx bxs-barcode'></i>{{ $category['category_id'] }}</span>
+                        <span id="basic-icon-default-categoryid2" class="input-group-text">
+                            <i class='bx bxs-barcode'></i>
+                            {{ $category['category_id'] }}
+                        </span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="html5-text-input" class="col-md-2 col-form-label">Category Name : </label>
                     <div class="col-md-10">
-                        <span id="basic-icon-default-categoryname2"class="input-group-text"><i
-                                class='bx bx-package'></i>{{ $category['category_name'] }}</span>
+                        <span id="basic-icon-default-categoryname2"class="input-group-text">
+                            <i class='bx bx-package'></i>
+                            {{ $category['category_name'] }}
+                        </span>
                     </div>
                 </div>
             </form>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Supplier\CreateSupplierRequest;
+use App\Http\Requests\Supplier\DeleteSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -42,6 +45,7 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $suppliers = $this->data;
@@ -60,9 +64,11 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSupplierRequest $request)
     {
-        //
+        session()->flash('message', 'Successfully created!');
+
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -96,16 +102,20 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully updated!');
+
+        return redirect()->route('suppliers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteSupplierRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully deleted!');
+
+        return redirect()->route('suppliers.index');
     }
 }

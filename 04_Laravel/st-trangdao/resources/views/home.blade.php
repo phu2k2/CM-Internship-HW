@@ -70,12 +70,12 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         @section('sidebar')
-                    @include('layout.sidebar') <!-- Include your header content here -->
+                @include('layout.sidebar') <!-- Include your header content here -->
         @show
         <div class="layout-page">
         <!-- Menu -->
         @section('header')
-                    @include('layout.header') <!-- Include your header content here -->
+                @include('layout.header') <!-- Include your header content here -->
         @show
         <!-- / Menu -->
         <div class="content-wrapper">
@@ -85,15 +85,15 @@
             @yield('content')
               </div>
         </div>
-@show
-@section('footer')
+    @show
+    @section('footer')
                 @include('layout.footer') <!-- Include your footer content here -->
-@show
-</div>
-</div>
+    @show
+    </div>
+  </div>
 
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->

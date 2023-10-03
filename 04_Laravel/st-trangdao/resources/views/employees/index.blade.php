@@ -42,18 +42,56 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item"
-                                        href="{{ route('employees.edit', ['employee' => $employee['id']]) }}"><i
-                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <form action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</a>
-                                    </form>
+                                        href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">
+                                        <i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#modalCenter{{ $employee['id'] }}">
+                                        <i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    <div class="mt-3">
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalCenter{{ $employee['id'] }}" tabindex="-1"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel1">Delete database
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span id="basic-icon-default-employeeid2"
+                                            class="fab fa-angular fa-lg text-danger me-1">
+                                            Bạn chắc chắn sẽ xóa dữ liệu này chứ
+                                        </span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <form
+                                            action="{{ route('employees.destroy', ['employee' => $employee['id']]) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id" value="{{ $employee['id'] }}">
+                                            @error('id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>

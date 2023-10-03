@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\CreateEmployeeRequest;
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -48,6 +51,7 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $employees = $this->data;
@@ -66,9 +70,11 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateEmployeeRequest $request)
     {
-        //
+        session()->flash('message', 'Successfully created!');
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -102,16 +108,20 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully updated!');
+
+        return redirect()->route('employees.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        //
+        session()->flash('message', 'Successfully deleted!');
+
+        return redirect()->route('employees.index');
     }
 }

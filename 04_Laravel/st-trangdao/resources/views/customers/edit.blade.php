@@ -8,60 +8,92 @@
             <h5 class="card-header">Edit Customer</h5>
         </div>
         <div class="card-body">
-            <form href="{{ route('customers.update', ['customer' => $customer['id']]) }}" method="POST">
+            <form action="{{ route('customers.update', ['customer' => $customer['id']]) }}" method="POST">
                 @method('PUT')
                 @csrf
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">ID</label>
                     <div class="col-md-10">
-                        <span id="basic-icon-default-categoryid2"
-                            class="fab fa-angular fa-lg text-danger me-3">{{ $customer['id'] }}</span>
+                        <span id="basic-icon-default-customerid2" class="fab fa-angular fa-lg text-danger me-3">
+                            {{ $customer['id'] }}
+                        </span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">Company Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['company_name'] }}"
-                            id="html5-text-input" />
+                        <input class="form-control" type="text" name="company_name"
+                            value="{{ old('company_name', $customer['company_name']) }}" id="html5-text-input" />
+                        @error('company_name')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Transaction Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['transaction_name'] }}"
+                        <input class="form-control" type="text" name="transaction_name"
+                            value="{{ old('transaction_name', $customer['transaction_name']) }}"
                             id="html5-search-input" />
+                        @error('transaction_name')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Address</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['address'] }}"
-                            id="html5-search-input" />
+                        <input class="form-control" type="text" name="address"
+                            value="{{ old('address', $customer['address']) }}" id="html5-search-input" />
+                        @error('address')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Email</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['email'] }}"
-                            id="html5-search-input" />
+                        <input class="form-control" type="text" name="email"
+                            value="{{ old('email', $customer['email']) }}" id="html5-search-input" />
+                        @error('email')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Phone</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['phone'] }}"
-                            id="html5-search-input" />
+                        <input class="form-control" type="text" name="phone"
+                            value="{{ old('phone', $customer['phone']) }}" id="html5-search-input" />
+                        @error('phone')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Fax</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $customer['fax'] }}"
-                            id="html5-search-input" />
+                        <input class="form-control" type="text" name="fax"
+                            value="{{ old('fax', $customer['fax']) }}" id="html5-search-input" />
+                        @error('fax')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
-                <a href="{{ route('customers.index') }}" type="submit"
-                    class="btn rounded-pill btn-outline-warning">Cancel</a>
+                <a href="" type="submit" class="btn rounded-pill btn-outline-warning">Cancel</a>
+                <input type="hidden" name="id" value="{{ $customer['id'] }}">
                 <button type="submit" class="btn rounded-pill btn-outline-success">Edit</button>
             </form>
         </div>

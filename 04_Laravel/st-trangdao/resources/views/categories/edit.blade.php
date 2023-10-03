@@ -14,26 +14,37 @@
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">ID</label>
                     <div class="col-md-10">
-                        <span id="basic-icon-default-categoryid2"
-                            class="fab fa-angular fa-lg text-danger me-1">{{ $category['id'] }}</span>
+                        <span id="basic-icon-default-categoryid2" class="fab fa-angular fa-lg text-danger me-1">
+                            {{ $category['id'] }}
+                        </span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">Category ID</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $category['category_id'] }}"
-                            id="html5-text-input" />
+                        <input class="form-control" type="text" name="category_id"
+                            value="{{ old('category_id', $category['category_id']) }}" id="html5-text-input" />
+                        @error('category_id')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-search-input" class="col-md-2 col-form-label">Category Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="{{ $category['category_name'] }}"
-                            id="html5-search-input" />
+                        <input class="form-control" type="text" name="category_name"
+                            value="{{ old('category_name', $category['category_name']) }}" id="html5-search-input" />
+                        @error('category_name')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
-                <a href="{{ route('categories.index') }}" type="submit"
-                    class="btn rounded-pill btn-outline-warning">Cancel</a>
+                <a href="" type="button" class="btn rounded-pill btn-outline-warning">Cancel</a>
+                <input type="hidden" name="id" value="{{ $category['id'] }}">
                 <button type="submit" class="btn rounded-pill btn-outline-success">Edit</button>
             </form>
         </div>
