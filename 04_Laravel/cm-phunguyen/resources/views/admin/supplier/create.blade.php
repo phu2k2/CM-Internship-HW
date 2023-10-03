@@ -1,11 +1,6 @@
 @extends('layouts.auth')
 
 @section('content')
-
-<!DOCTYPE html>
-<html lang="en">
-
-<body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Begin Page Content -->
@@ -22,7 +17,6 @@
                     <div class="form-group">
                         <input type="text" class="form-control form-control-user" placeholder="Transaction Name">
                     </div>
-                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control form-control-user" placeholder="Address">
                     </div>
@@ -35,21 +29,22 @@
                     <div class="form-group">
                         <input type="text" class="form-control form-control-user" placeholder="Email">
                     </div>
-                    <div class ="button-container">
-                            <button type="button" class="btn btn-primary" onclick= "window.location.href = '{{route('employees.index')}}';">
-                                Add
-                            </button>
-                            <button type="button" class="btn btn-secondary" onclick= "window.location.href = '{{route('employees.index')}}';">
-                                Cancel
-                            </button>
+                    <div class="button-container">
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href = '{{ route('employees.index') }}';">
+                            Add
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href = '{{ route('employees.index') }}';">
+                            Cancel
+                        </button>
                     </div>
                 </form>
             </div>
-            </div>
         </div>
     </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
-</html>
+    </html>
 @endsection
