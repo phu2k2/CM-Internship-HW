@@ -28,12 +28,12 @@ class Order extends Model
         'destination'
     ];
 
-    public function customerId(): BelongsTo
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
-    public function employeeId(): BelongsTo
+    public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
