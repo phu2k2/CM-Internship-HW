@@ -39,9 +39,4 @@ class Order extends Model
         return $this->belongsToMany(Product::class, 'orderdetails', 'invoice_id', 'product_id', 'id', 'product_id')
                                     ->withPivot('price', 'amount', 'discount');
     }
-
-    public function scopeOfOrder($query, $orderId)
-    {
-        return $query->find($orderId);
-    }
 }

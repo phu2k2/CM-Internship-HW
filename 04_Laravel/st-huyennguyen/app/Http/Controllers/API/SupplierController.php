@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
+    protected const PAGINATE_DEFAULT = 15;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        define('PAGINATE_DEFAUL', 15);
-        return response()->json(SupplierResource::collection(Supplier::paginate(PAGINATE_DEFAUL)));
+        return response()->json(SupplierResource::collection(Supplier::paginate(self::PAGINATE_DEFAULT)));
     }
 
     /**

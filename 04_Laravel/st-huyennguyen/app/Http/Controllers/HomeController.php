@@ -31,32 +31,24 @@ class HomeController extends Controller
         die();
     }
 
+    // 1. Công ty Việt Tiến đã cung cấp những mặt hàng nào?
     public function exercise1()
     {
-        // 1. Công ty Việt Tiến đã cung cấp những mặt hàng nào?
         $companyName = 'Việt Tiến';
-        /**
-         * Solution: scopeWhereCompanyName
-         */
-        $suppliers = Supplier::with('products:id,company_id,product_name')
+        $suppliers = Supplier::with('products:company_id,product_name')
                                 ->companyName($companyName)->get();
 
         foreach ($suppliers as $supplier) {
             dump('Company: ' . $supplier->company_name);
             foreach ($supplier->products as $product) {
-                dump($product->product_name);
+                dump('Product name: ' . $product->product_name);
             }
         }
     }
 
+    // 2. Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
     public function exercise2()
     {
-        // 2. Loại hàng thực phẩm do những công ty nào cung cấp, địa chỉ của công ty đó?
-        /**
-         * Solution: whereHas
-         * retrieve all suppliers name that have at least one product
-         * that has category where category name equal $categoryName
-         */
         $categoryName = 'Thực phẩm';
         $suppliers = Supplier::distinct()
                                 ->whereHas('products.category', fn ($query) => (
@@ -65,18 +57,14 @@ class HomeController extends Controller
                                 ->get();
 
         foreach ($suppliers as $supplier) {
-            dump($supplier->company_name . ' - address: ' . $supplier->address);
+            dump('Company name: ' . $supplier->company_name . ' - Address: ' . $supplier->address);
         }
     }
 
+
+    // 3. Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
     public function exercise3()
     {
-        // 3. Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
-        /**
-         * Solution:
-         * First, retrieve all order that have product like Sữa hộp into orderdetail
-         * And then, relationship with customers table
-         */
         $productName = 'Sữa hộp';
         $orders = Order::whereHas('products', fn ($query) => (
                             $query->productName($productName)))
@@ -84,67 +72,63 @@ class HomeController extends Controller
                         ->get();
 
         foreach ($orders as $order) {
-            dump($order->customer->transaction_name);
+            dump('Transaction name: ' . $order->customer?->transaction_name);
         }
     }
 
+
+    // 4. Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
     public function exercise4()
     {
-        // 4. Đơn đặt hàng số 1 do ai đặt và do nhân viên nào lập, thời gian và địa điểm giao hàng là ở đâu?
-        /**
-         * Solution:
-         * Relationship with customers and employees table
-         * scopeOfOrder with order have id equal $orderId
-         * accessors getFullNameAttribute
-         */
         $orderId = 1;
         $order = Order::with(['customer:id,transaction_name',
                                 'employee:id,employee_id,last_name,first_name'])
-                        ->ofOrder($orderId);
+                        ->find($orderId);
 
         $delivery_date = Carbon::parse($order->delivery_date)->format('H:i:s d/m/Y');
-        dump($order->customer->transaction_name . '  - ' . $order->employee->full_name);
-        dump($delivery_date . ' - ' . $order->destination);
+        dump('Customer name: ' . $order->customer->transaction_name);
+        dump('Employee name: ' . $order->employee->full_name);
+        dump('Delivery in: ' . $delivery_date);
+        dump('Destination: ' . $order->destination);
     }
 
+    /**
+     * 5. Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu
+     * (lương=lương cơ bản+phụ cấp)?
+     */
     public function exercise5()
     {
-        // 5. Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu
-            // (lương=lương cơ bản+phụ cấp)?
-        /**
-         * retrieve all employees
-         * return Salary: accessors getSalaryAttribute
-        */
         $employees = Employee::select('employee_id', 'last_name', 'first_name', 'base_salary', 'allowance')->get();
 
         foreach ($employees as $employee) {
-            dump($employee->employee_id . ' - ' . $employee->full_name . ': ' . number_format($employee->salary));
+            dump('Employee ID: ' . $employee->employee_id);
+            dump('Employee name: ' . $employee->full_name);
+            dump('Salary: ' . number_format($employee->salary));
         }
     }
 
+    /**
+     * 6. Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng
+     * phải trả cho mỗi mặt hàng là bao nhiêu
+     * (số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
+     */
     public function exercise6()
     {
-        // 6. Trong đơn đặt hàng số 3 đặt mua những mặt hàng nào và số tiền mà khách hàng
-            // phải trả cho mỗi mặt hàng là bao nhiêu
-            // (số tiền phải trả=số lượng x giá bán – số lượng x mức giảm giá)?
-        /**
-         * First: retrieve all order detail that have invoice_id = 3
-         * And then, loops order detail and show information: product name and price total
-         * Price for each product: accessors getPriceTotalAttribute
-         */
         $orderId = 3;
         $order = Order::with('products:id,product_id,product_name')
-                                ->ofOrder($orderId);
+                                ->find($orderId);
 
         foreach ($order->products as $product) {
-            dump($product->product_name . ', price: ' . number_format($product->price_total));
+            dump('Product name: ' . $product->product_name . ', Price: ' . number_format($product->price_total));
         }
     }
 
+    /**
+     * 7. Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty?
+     * (tức là có cùng tên giao dịch)
+     */
     public function exercise7()
     {
-        // 7. Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty?
-            // (tức là có cùng tên giao dịch)
         /**
          * Solution 1: join table
          */
@@ -152,80 +136,83 @@ class HomeController extends Controller
                                 ->get();
 
         foreach ($companies as $company) {
-            dump($company->transaction_name);
+            dump('Company name: ' . $company->company_name);
+            dump('Transaction name: ' . $company->transaction_name);
         }
 
         /**
          * Solution 2:
          */
         $suppliers = Supplier::select('transaction_name')->get();
-        $companies = Customer::select('transaction_name')
+        $companies = Customer::select('transaction_name', 'company_name')
                                 ->whereIn('transaction_name', $suppliers)
                                 ->get();
 
         foreach ($companies as $company) {
-            dump($company->transaction_name);
+            dump('Company name: ' . $company->company_name);
+            dump('Transaction name: ' . $company->transaction_name);
         }
     }
 
+
+    // 8. Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
     public function exercise8()
     {
-        // 8. Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?
         $employees = Employee::select('birthday')
-                                ->selectRaw('GROUP_CONCAT(last_name, " " , first_name separator ", ") AS list_employees')
-                                ->groupBy('birthday')
-                                ->havingRaw('count(birthday) > 1')
-                                ->orderBy('birthday')
-                                ->get();
+                            ->selectRaw('GROUP_CONCAT(last_name, " " , first_name SEPARATOR ", ") AS list_employees')
+                            ->groupBy('birthday')
+                            ->havingRaw('COUNT(birthday) > 1')
+                            ->orderBy('birthday')
+                            ->get();
 
         foreach ($employees as $employee) {
-            dump($employee->birthday . ' ' . $employee->list_employees);
+            dump('Birthday: ' . $employee->birthday . ' - List Employee: ' . $employee->list_employees);
         }
     }
 
+    /**
+     * 9. Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
+     * whereHas: retrieve all order that have destination like address customer.
+     */
     public function exercise9()
     {
-        // 9. Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
-        /**
-         * whereHas: retrieve all order that have destination like address customer.
-         */
         $orders = Order::whereHas('customer', fn ($query) => (
                             $query->whereRaw('orders.destination = customers.address')))
                         ->with('customer:id,transaction_name')
                         ->get();
 
         foreach ($orders as $order) {
-            dump('Order ID: ' . $order->id . ', customer: ' . $order->customer->transaction_name . ' ');
+            dump('Order ID: ' . $order->id . ', Customer: ' . $order->customer->transaction_name);
         }
     }
 
+    /**
+     * 10. Những mặt hàng nào chưa từng được khách hàng đặt mua?
+     * doesnHave('orders'): retrieve all products that don't have any orders.
+     */
     public function exercise10()
     {
-        // 10. Những mặt hàng nào chưa từng được khách hàng đặt mua?
-        /**
-         * doesnHave('orders'): retrieve all products that don't have any orders.
-         */
         $products = Product::doesntHave('orders')
                             ->select('product_id', 'product_name')
                             ->get();
 
         foreach ($products as $product) {
-            dump($product->product_id . ' - ' . $product->product_name);
+            dump('Product ID: ' . $product->product_id . ' - Product Name: ' . $product->product_name);
         }
     }
 
+    /**
+     * 11. Những nhân viên nào của công ty chưa từng lập hóa đơn đặt hàng nào?
+     * doesnHave('orders'): retrieve all employees that don't have any orders.
+     */
     public function exercise11()
     {
-        // 11. Những nhân viên nào của công ty chưa từng lập hóa đơn đặt hàng nào?
-        /**
-         * doesnHave('orders'): retrieve all employees that don't have any orders.
-         */
         $employees = Employee::doesntHave('orders')
                                 ->select('employee_id', 'last_name', 'first_name')
                                 ->get();
 
         foreach ($employees as $employee) {
-            dump($employee->employee_id . ': ' . $employee->full_name);
+            dump('Employee ID: ' . $employee->employee_id . ' - Employee Name:' . $employee->full_name);
         }
     }
 }
