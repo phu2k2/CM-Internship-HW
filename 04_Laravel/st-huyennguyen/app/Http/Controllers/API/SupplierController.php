@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     protected const PAGINATE_DEFAULT = 15;
+
     /**
      * Display a listing of the resource.
      */
