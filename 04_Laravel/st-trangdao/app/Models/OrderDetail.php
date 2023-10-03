@@ -36,7 +36,7 @@ class OrderDetail extends Model
           return $query->join('products', 'orderdetails.product_id', '=', 'products.product_id');
     }
 
-    public function scopeJoinpOrder($query)
+    public function scopeJoinOrder($query)
     {
           return $query->join('orders', 'orderdetails.invoice_id', '=', 'orders.id');
     }

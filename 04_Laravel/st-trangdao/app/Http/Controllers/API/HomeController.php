@@ -31,7 +31,7 @@ class HomeController extends Controller
         ->get();
 
         //3. Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
-        $question3 = OrderDetail::joinpOrder()
+        $question3 = OrderDetail::joinOrder()
         ->joinProduct()
         ->join('customers', 'customers.id', '=', 'orders.customer_id')
         ->where('product_name', 'LIKE', '%Sữa%')
