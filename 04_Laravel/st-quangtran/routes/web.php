@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -36,3 +37,6 @@ Route::resource('employees', EmployeeController::class);
 
 //supplier
 Route::resource('suppliers', SupplierController::class);
+
+
+Route::get('practice/{number}', [HomeController::class, 'practice']);

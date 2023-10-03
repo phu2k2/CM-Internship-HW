@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,5 +34,10 @@ class Order extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, 'invoice_id', 'id');
+    }
+
+    public function scopeJoinCustomers(Builder $builder)
+    {
+        $builder->join('customers', 'customers.id', '=', 'orders.customer_id');
     }
 }
