@@ -24,7 +24,7 @@ class SupplierResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'fax' => $this->fax,
-            'products' => ProductResource::collection(Product::where('company_id', $this->company_id)->get())
+            'products' => ProductResource::collection($this->products)
         ];
     }
 }

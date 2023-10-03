@@ -14,7 +14,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return SupplierResource::collection(Supplier::all())->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return SupplierResource::collection(Supplier::all())
+            ->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**
