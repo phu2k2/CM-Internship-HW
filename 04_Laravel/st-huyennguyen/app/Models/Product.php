@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -35,13 +35,18 @@ class Product extends Model
         return $this->belongsTo(Supplier::class, 'company_id', 'company_id');
     }
 
-    public function orderDetails(): HasMany
+    public function orders(): BelongsToMany
     {
-        return $this->hasMany(Orderdetail::class, 'product_id', 'product_id');
+        return $this->belongsToMany(Order::class, 'orderdetails', 'product_id', 'invoice_id', 'product_id');
     }
 
     public function scopeProductName($query, $productName)
     {
         return $query->where('product_name', 'like', '%' . $productName . '%');
+    }
+
+    public function getPriceTotalAttribute()
+    {
+        return $this->pivot->amount * ($this->pivot->price - $this->pivot->discount);
     }
 }

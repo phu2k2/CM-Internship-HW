@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Orderdetail>
  */
-class OrderdetailFactory extends Factory
+class OrderDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class OrderdetailFactory extends Factory
         $products = Product::all();
         foreach ($invoices as $invoice) {
             foreach ($products as $product) {
-                $data[] = $invoice->id . '-' . $product->product_id;
+                $data[] = $invoice->id . '-' . $product->product_id . '-' . $product->price;
             }
         }
         $random = fake()->unique()->randomElement($data);
@@ -31,7 +31,7 @@ class OrderdetailFactory extends Factory
         return [
             'invoice_id' => $foreign[0],
             'product_id' => $foreign[1],
-            'price' => fake()->randomNumber(5, false),
+            'price' => $foreign[2],
             'amount' => fake()->numberBetween(1, 4000),
             'discount' => fake()->numberBetween(0, 4000)
         ];

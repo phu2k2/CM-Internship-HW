@@ -78,7 +78,7 @@ class HomeController extends Controller
          * And then, relationship with customers table
          */
         $productName = 'Sữa hộp';
-        $orders = Order::whereHas('orderdetails.product', fn ($query) => (
+        $orders = Order::whereHas('products', fn ($query) => (
                             $query->productName($productName)))
                         ->with('customer:id,transaction_name')
                         ->get();
@@ -100,7 +100,7 @@ class HomeController extends Controller
         $orderId = 1;
         $order = Order::with(['customer:id,transaction_name',
                                 'employee:id,employee_id,last_name,first_name'])
-                        ->ofOrder($orderId)->first();
+                        ->ofOrder($orderId);
 
         $delivery_date = Carbon::parse($order->delivery_date)->format('H:i:s d/m/Y');
         dump($order->customer->transaction_name . '  - ' . $order->employee->full_name);
@@ -133,12 +133,11 @@ class HomeController extends Controller
          * Price for each product: accessors getPriceTotalAttribute
          */
         $orderId = 3;
-        $orders = Orderdetail::with('product:id,product_id,product_name')
-                                ->ofOrder($orderId)
-                                ->get();
+        $order = Order::with('products:id,product_id,product_name')
+                                ->ofOrder($orderId);
 
-        foreach ($orders as $order) {
-            dump($order->product->product_name . ', price: ' . number_format($order->price_total));
+        foreach ($order->products as $product) {
+            dump($product->product_name . ', price: ' . number_format($product->price_total));
         }
     }
 
@@ -207,7 +206,7 @@ class HomeController extends Controller
         /**
          * doesnHave('orders'): retrieve all products that don't have any orders.
          */
-        $products = Product::doesntHave('orderdetails')
+        $products = Product::doesntHave('orders')
                             ->select('product_id', 'product_name')
                             ->get();
 

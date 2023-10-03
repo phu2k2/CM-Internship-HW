@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -34,20 +34,14 @@ class Order extends Model
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
-    public function orderDetails(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Orderdetail::class, 'invoice_id', 'id');
+        return $this->belongsToMany(Product::class, 'orderdetails', 'invoice_id', 'product_id', 'id', 'product_id')
+                                    ->withPivot('price', 'amount', 'discount');
     }
 
-    /**
-     * Scope a query to only include users of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $order_id
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfOrder($query, $order_id)
+    public function scopeOfOrder($query, $orderId)
     {
-        return $query->where('orders.id', $order_id);
+        return $query->find($orderId);
     }
 }
