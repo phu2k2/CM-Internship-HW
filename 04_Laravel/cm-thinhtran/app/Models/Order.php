@@ -26,7 +26,7 @@ class Order extends Model
      */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
     /**
@@ -34,7 +34,7 @@ class Order extends Model
      */
     public function employee()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
     /**
@@ -42,6 +42,6 @@ class Order extends Model
      */
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'invoice_id', 'id');
     }
 }
