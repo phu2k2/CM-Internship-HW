@@ -28,11 +28,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // Number of records displayed per page
         $perPage = 10;
-
         $categories = Category::paginate($perPage);
-    
         return view('admin.category.index', compact('categories'));
     }
 
@@ -50,17 +47,12 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         try {
-            // Create a new Category instance
-            $category = new Category();
-    
-            // Set the attributes for the new category
-            $category->category_id = $this->generateUniqueCategoryId();
-            $category->category_name = $request->input('category_name');
-    
-            // Save the new category to the database
-            $category->save();
-    
-            return redirect()->route('categories.create')->with('success', 'Successfully added category!');
+            // Create a new Category instance and fill its attributes
+            $category = Category::create([
+                'category_id' => $this->generateUniqueCategoryId(),
+                'category_name' => $request->input('category_name'),
+            ]);
+            return redirect()->route('categories.index');
         } catch (Exception $e) {
             return redirect()->route('categories.create')->with('error', 'An error occurred while adding category!');
         }
@@ -79,11 +71,7 @@ class CategoryController extends Controller
      */
     public function edit(int $id)
     {
-        try {
-            return view('admin.category.edit', ['category' => Category::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.category.edit', ['category' => Category::findOrFail($id)]);
     }
 
     /**
@@ -94,12 +82,15 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->category_name = $request->input('category_name');
-
             $category->save();
 
-            return redirect()->route('categories.edit', $category->id)->with('success', 'Updated category information successfully!');
+            return redirect()
+                        ->route('categories.edit', $category->id)
+                        ->with('success', 'Updated category information successfully!');
         } catch (Exception $e) {
-            return redirect()->route('categories.edit', $id)->with('error', 'Updating category information failed, Please try again!');
+            return redirect()
+                        ->route('categories.edit', $id)
+                        ->with('error', 'Updating category information failed, Please try again!');
         }
     }
 
@@ -111,10 +102,13 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->delete();
-    
-            return redirect()->route('categories.index')->with('success', 'Category has been deleted successfully!');;
+            return redirect()
+                        ->route('categories.index')
+                        ->with('success', 'Category has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('categories.index')->with('error', 'Failed to delete category. An error occurred. Please try again!');;
+            return redirect()
+                        ->route('categories.index')
+                        ->with('error', 'Failed to delete category. An error occurred. Please try again!');
         }
     }
 }

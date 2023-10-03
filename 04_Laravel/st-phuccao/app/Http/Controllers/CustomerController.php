@@ -18,9 +18,7 @@ class CustomerController extends Controller
     {
         // Number of records displayed per page
         $perPage = 10;
-
         $customers = Customer::paginate($perPage);
-    
         return view('admin.customer.index', compact('customers'));
     }
 
@@ -39,10 +37,13 @@ class CustomerController extends Controller
     {
         try {
             Customer::create($request->validated());
-
-            return redirect()->route('customers.create')->with('success', 'Successfully added customer!');
+            return redirect()
+                        ->route('customers.create')
+                        ->with('success', 'Successfully added customer!');
         } catch (Exception $e) {
-            return redirect()->route('customers.create')->with('error', 'An error occurred while adding customer!');
+            return redirect()
+                        ->route('customers.create')
+                        ->with('error', 'An error occurred while adding customer!');
         }
     }
 
@@ -59,11 +60,7 @@ class CustomerController extends Controller
      */
     public function edit(int $id)
     {
-        try {
-            return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
     }
 
     /**
@@ -73,12 +70,14 @@ class CustomerController extends Controller
     {
         try {
             $customer = Customer::findOrFail($id);
-    
             $customer->update($request->validated());
-    
-            return redirect()->route('customers.edit', $customer->id)->with('success', 'Updated customer information successfully!');
+            return redirect()
+                        ->route('customers.edit', $customer->id)
+                        ->with('success', 'Updated customer information successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('customers.edit', $id)->with('error', 'Updating customer information failed, Please try again!');
+            return redirect()
+                        ->route('customers.edit', $id)
+                        ->with('error', 'Updating customer information failed, Please try again!');
         }
     }
 
@@ -90,10 +89,13 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
             $customer->delete();
-    
-            return redirect()->route('customers.index')->with('success', 'Customer has been deleted successfully!');
+            return redirect()
+                        ->route('customers.index')
+                        ->with('success', 'Customer has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('customers.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
+            return redirect()
+                        ->route('customers.index')
+                        ->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }

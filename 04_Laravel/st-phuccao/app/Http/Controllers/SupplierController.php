@@ -30,9 +30,7 @@ class SupplierController extends Controller
     {
         // Number of records displayed per page
         $perPage = 10;
-
         $suppliers = Supplier::paginate($perPage);
-
         return view('admin.supplier.index', compact('suppliers'));
     }
 
@@ -50,21 +48,22 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         try {
-            $supplier = new Supplier();
-    
-            $supplier->company_id = $this->generateUniqueCompanyId();
-            $supplier->company_name = $request->input('company_name');
-            $supplier->transaction_name = $request->input('transaction_name');
-            $supplier->address = $request->input('address');
-            $supplier->phone = $request->input('phone');
-            $supplier->fax = $request->input('fax');
-            $supplier->email = $request->input('email');
-    
-            $supplier->saveOrFail();
-    
-            return redirect()->route('suppliers.create')->with('success', 'Successfully added supplier!');
+            Supplier::create([
+                'company_id' => $this->generateUniqueCompanyId(),
+                'company_name' => $request->input('company_name'),
+                'transaction_name' => $request->input('transaction_name'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'fax' => $request->input('fax'),
+                'email' => $request->input('email'),
+            ]);
+            return redirect()
+                        ->route('suppliers.create')
+                        ->with('success', 'Successfully added supplier!');
         } catch (Exception $e) {
-            return redirect()->route('suppliers.create')->with('error', 'An error occurred while adding supplier!');
+            return redirect()
+                        ->route('suppliers.create')
+                        ->with('error', 'An error occurred while adding supplier!');
         }
     }
 
@@ -81,13 +80,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
-    
-            return view('admin.supplier.edit', compact('supplier'));
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        return view('admin.supplier.edit', ['supplier' => Supplier::where('company_id', $id)->firstOrFail()]);
     }
 
     /**
@@ -97,16 +90,17 @@ class SupplierController extends Controller
     {
         try {
             $supplier = Supplier::where('company_id', $id)->firstOrFail();
-    
             $data = $request->only([
                 'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
             ]);
-    
             $supplier->update($data);
-    
-            return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id])->with('success', 'Updated supplier information successfully!');
+            return redirect()
+                        ->route('suppliers.edit', ['supplier' => $supplier->company_id])
+                        ->with('success', 'Updated supplier information successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('suppliers.edit', ['supplier' => $id])->with('error', 'Updating employee information failed, Please try again!');
+            return redirect()
+                        ->route('suppliers.edit', ['supplier' => $id])
+                        ->with('error', 'Updating employee information failed, Please try again!');
         }
     }
 
@@ -117,12 +111,14 @@ class SupplierController extends Controller
     {
         try {
             $supplier = Supplier::where('company_id', $id)->firstOrFail();
-    
             $supplier->delete();
-    
-            return redirect()->route('suppliers.index')->with('success', 'Supplier has been deleted successfully!');
+            return redirect()
+                        ->route('suppliers.index')
+                        ->with('success', 'Supplier has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('suppliers.index')->with('error', 'Failed to delete customer. An error occurred. Please try again!');
+            return redirect()
+                        ->route('suppliers.index')
+                        ->with('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
     }
 }
