@@ -44,7 +44,7 @@
                                     <a class="dropdown-item"
                                         href="{{ route('employees.edit', ['employee' => $employee['id']]) }}">
                                         <i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                    <a class="dropdown-item" data-bs-toggle="modal"
                                         data-bs-target="#modalCenter{{ $employee['id'] }}">
                                         <i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
@@ -53,7 +53,8 @@
                     </tr>
                     <div class="mt-3">
                         <!-- Modal -->
-                        <div class="modal fade" id="modalCenter{{ $employee['id'] }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal fade" id="modalCenter{{ $employee['id'] }}" tabindex="-1"
+                            aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -84,8 +85,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <button type="submit" class="btn btn-primary">Save
-                                                changes</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
                                         </form>
                                     </div>
                                 </div>

@@ -43,9 +43,8 @@
                         @enderror
                     </div>
                 </div>
-                <a href="" type="button"
-                    class="btn rounded-pill btn-outline-warning">Cancel</a>
-                    <input type="hidden" name="id" value="{{ $category['id'] }}">
+                <a href="" type="button" class="btn rounded-pill btn-outline-warning">Cancel</a>
+                <input type="hidden" name="id" value="{{ $category['id'] }}">
                 <button type="submit" class="btn rounded-pill btn-outline-success">Edit</button>
             </form>
         </div>

@@ -59,7 +59,7 @@ class HomeController extends Controller
 
         //7. Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
         $question7 = Customer::joinSupplier()
-        ->select('customers.company_named')
+        ->select('customers.company_name')
         ->get();
 
         //8. Trong công ty có những nhân viên nào có cùng ngày tháng năm sinh?

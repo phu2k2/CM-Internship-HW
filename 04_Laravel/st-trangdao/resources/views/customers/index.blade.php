@@ -40,7 +40,7 @@
                                     <a class="dropdown-item"
                                         href="{{ route('customers.edit', ['customer' => $customer['id']]) }}">
                                         <i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                    <a class="dropdown-item" data-bs-toggle="modal"
                                         data-bs-target="#modalCenter{{ $customer['id'] }}">
                                         <i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
@@ -80,8 +80,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <button type="submit" class="btn btn-primary">Save
-                                                changes</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
                                         </form>
                                     </div>
                                 </div>
