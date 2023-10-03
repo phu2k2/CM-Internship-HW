@@ -7,7 +7,6 @@
     <div class="col-12 text-end">
         <a class="btn bg-gradient-dark mb-0" href="{{ route('customers.create') }}"><i
                 class="btn rounded-pill btn-outline-info">&nbsp;&nbsp;Add New</i></a>
-                class="btn rounded-pill btn-outline-info">&nbsp;&nbsp;Add New</i></a>
     </div>
     <div class="table-responsive text-nowrap">
         <table class="table">
