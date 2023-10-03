@@ -35,12 +35,8 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        try {
-            Customer::create($request->validated());
-            return redirect()->route('customers.index');
-        } catch (Exception $e) {
-            abort(404);
-        }
+        Customer::create($request->validated());
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -64,13 +60,9 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, int $id)
     {
-        try {
-            $customer = Customer::findOrFail($id);
-            $customer->update($request->validated());
-            return redirect()->route('customers.edit', $customer->id);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id);
+        $customer->update($request->validated());
+        return redirect()->route('customers.edit', $customer->id);
     }
 
     /**
@@ -78,12 +70,8 @@ class CustomerController extends Controller
      */
     public function destroy(int $id)
     {
-        try {
-            $customer = Customer::findOrFail($id);
-            $customer->delete();
-            return redirect()->route('customers.index');
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return redirect()->route('customers.index');
     }
 }

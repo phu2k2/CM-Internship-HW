@@ -47,20 +47,16 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        try {
-            $supplier = new Supplier();
-            $supplier->company_id = $this->generateUniqueCompanyId();
-            $supplier->company_name = $request->input('company_name');
-            $supplier->transaction_name = $request->input('transaction_name');
-            $supplier->address = $request->input('address');
-            $supplier->phone = $request->input('phone');
-            $supplier->fax = $request->input('fax');
-            $supplier->email = $request->input('email');
-            $supplier->saveOrFail();
-            return redirect()->route('suppliers.index');
-        } catch (Exception $e) {
-            abort(404);
-        }
+        Supplier::create([
+            'company_id' => $this->generateUniqueCompanyId(),
+            'company_name' => $request->input('company_name'),
+            'transaction_name' => $request->input('transaction_name'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'fax' => $request->input('fax'),
+            'email' => $request->input('email'),
+        ]);
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -84,16 +80,12 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, string $id)
     {
-        try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
-            $data = $request->only([
-                'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
-            ]);
-            $supplier->update($data);
-            return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id]);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $supplier = Supplier::where('company_id', $id)->firstOrFail();
+        $data = $request->only([
+            'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
+        ]);
+        $supplier->update($data);
+        return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id]);
     }
 
     /**
@@ -101,12 +93,8 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
-            $supplier->delete();
-            return redirect()->route('suppliers.index');
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $supplier = Supplier::where('company_id', $id)->firstOrFail();
+        $supplier->delete();
+        return redirect()->route('suppliers.index');
     }
 }

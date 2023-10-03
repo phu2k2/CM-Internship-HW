@@ -46,23 +46,18 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        try {
-            $employee = new Employee([
-                'employee_id' => $this->generateUniqueEmployeeId(),
-                'last_name' => $request->input('last_name'),
-                'first_name' => $request->input('first_name'),
-                'birthday' => $request->input('birthday'),
-                'start_date' => $request->input('start_date'),
-                'address' => $request->input('address'),
-                'phone' => $request->input('phone'),
-                'base_salary' => $request->input('base_salary'),
-                'allowance' => $request->input('allowance'),
-            ]);
-            $employee->saveOrFail();
-            return redirect()->route('employees.index');
-        } catch (Exception $e) {
-            abort(404);
-        }
+        Employee::create([
+            'employee_id' => $this->generateUniqueEmployeeId(),
+            'last_name' => $request->input('last_name'),
+            'first_name' => $request->input('first_name'),
+            'birthday' => $request->input('birthday'),
+            'start_date' => $request->input('start_date'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'base_salary' => $request->input('base_salary'),
+            'allowance' => $request->input('allowance'),
+        ]);
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -86,16 +81,12 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        try {
-            $employee = Employee::where('employee_id', $id)->firstOrFail();
-            $employee->update($request->only([
-                'last_name', 'first_name', 'birthday', 'start_date',
-                'address', 'phone', 'base_salary', 'allowance'
-            ]));
-            return redirect()->route('employees.edit', $employee->employee_id);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $employee = Employee::where('employee_id', $id)->firstOrFail();
+        $employee->update($request->only([
+            'last_name', 'first_name', 'birthday', 'start_date',
+            'address', 'phone', 'base_salary', 'allowance'
+        ]));
+        return redirect()->route('employees.edit', $employee->employee_id);
     }
 
     /**
@@ -103,12 +94,8 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $employee = Employee::where('employee_id', $id)->firstOrFail();
-            $employee->delete();
-            return redirect()->route('employees.index');
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $employee = Employee::where('employee_id', $id)->firstOrFail();
+        $employee->delete();
+        return redirect()->route('employees.index');
     }
 }

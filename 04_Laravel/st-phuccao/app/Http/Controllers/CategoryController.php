@@ -46,16 +46,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        try {
-            // Create a new Category instance and fill its attributes
-            $category = Category::create([
-                'category_id' => $this->generateUniqueCategoryId(),
-                'category_name' => $request->input('category_name'),
-            ]);
-            return redirect()->route('categories.index');
-        } catch (Exception $e) {
-            abort(404);
-        }
+        // Create a new Category instance and fill its attributes
+        Category::create([
+            'category_id' => $this->generateUniqueCategoryId(),
+            'category_name' => $request->input('category_name'),
+        ]);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -79,14 +75,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        try {
-            $category = Category::findOrFail($id);
-            $category->category_name = $request->input('category_name');
-            $category->save();
-            return redirect()->route('categories.edit', $category->id);
-        } catch (Exception $e) {
-            abort(404);
-        }
+        $category = Category::findOrFail($id);
+        $category->category_name = $request->input('category_name');
+        $category->save();
+        return redirect()->route('categories.edit', $category->id);
     }
 
     /**
