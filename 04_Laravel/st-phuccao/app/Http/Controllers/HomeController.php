@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -12,7 +13,7 @@ class HomeController extends Controller
 {
     public function practice()
     {
-        return $this->exciseTwo();
+        return $this->exciseThree();
     }
 
     public function exciseOne()
@@ -25,19 +26,30 @@ class HomeController extends Controller
 
     public function exciseTwo()
     {
-        // $foodSuppliers = Product::whereHas('category', function ($query) {
-        //     $query->where('category_id', '=', 'VB');
-        // })->with('supplier')->distinct()->get();
-        $foodCategory = Category::where('category_id', 'VB')->first()->products;
-        // $foodProducts = $foodCategory->products;
-        // Tìm tất cả các nhà cung cấp của các sản phẩm thực phẩm
-        // $foodSuppliers = $foodCategory->map(function ($product) {
-        //     return $product->supplier;
-        // })->unique();
-        $foodSuppliers = Product::with(['category', 'supplier'])
-        ->where('category_id', 'TP')
-        ->select('supplier.company_id', 'supplier.company_name')
+        \DB::enableQueryLog();
+
+        Supplier::whereHas('products.category', function ($query) {
+            $query->where('category_name', 'LIKE', '%Thực phẩm%');
+        })
+        ->select('company_id', 'company_name', 'address')
         ->get();
-        return $foodSuppliers;
+
+        dd(\DB::getQueryLog());
+
+    }
+
+    public function exciseThree()
+    {
+        // $milk = Product::with('orderdetails')->where('product_name', 'LIKE' ,'%Sữa hộp%')->get();
+
+        // foreach ($milk as $m) {
+        //     echo $m->orderdetails->order()."</br>";
+        // }
+        $customersByProductName = Product::where('product_name','LIKE', '%Sữa hộp%')
+            ->firstOrFail()
+            ->orderDetails();
+            // ->get();
+        // // return $milk;
+        return $customersByProductName;
     }
 }
