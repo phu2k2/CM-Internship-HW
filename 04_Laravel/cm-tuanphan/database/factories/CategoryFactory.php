@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
     {
         return [
             'category_id' => fake()->unique()->regexify('[A-Z]{2}'),
-            'category_name' => fake()->text(30),
+            'category_name' => fake('vi_VN')->words(rand(2, 3), true),
         ];
     }
 }

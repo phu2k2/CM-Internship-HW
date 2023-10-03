@@ -18,12 +18,12 @@ class SupplierFactory extends Factory
     {
         return [
             'company_id' => fake()->unique()->regexify('[A-Z]{3}'),
-            'company_name' => fake()->text(50),
+            'company_name' => fake('vi_VN')->company(),
             'transaction_name' => strtoupper(fake()->text(20)),
-            'address' => fake()->text(50),
-            'email' => fake()->safeEmail,
-            'phone' => $this->faker->numerify('##########'),
-            'fax' => $this->faker->numerify('##########'),
+            'address' => fake('vi_VN')->city() . "," . fake('vi_VN')->province(),
+            'email' => fake()->unique()->companyEmail(),
+            'phone' => fake()->numerify('##########'),
+            'fax' => fake()->numerify('##########'),
         ];
     }
 }
