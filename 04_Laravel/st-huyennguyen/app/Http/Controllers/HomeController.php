@@ -148,8 +148,7 @@ class HomeController extends Controller
         /**
          * Solution 1: join table
          */
-        $companies = Customer::joinSuppliers()
-                                ->select('customers.transaction_name')
+        $companies = Customer::join('suppliers', 'suppliers.transaction_name', 'customers.transaction_name')
                                 ->get();
 
         foreach ($companies as $company) {
@@ -157,7 +156,7 @@ class HomeController extends Controller
         }
 
         /**
-         * Solution 2: subquery
+         * Solution 2:
          */
         $suppliers = Supplier::select('transaction_name')->get();
         $companies = Customer::select('transaction_name')

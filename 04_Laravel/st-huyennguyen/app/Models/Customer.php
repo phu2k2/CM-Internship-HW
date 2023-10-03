@@ -27,15 +27,4 @@ class Customer extends Model
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
-
-    /**
-     * Scope a query to only include users of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeJoinSuppliers($query)
-    {
-        return $query->join('suppliers', 'suppliers.transaction_name', 'customers.transaction_name');
-    }
 }
