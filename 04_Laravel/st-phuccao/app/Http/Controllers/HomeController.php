@@ -21,10 +21,8 @@ class HomeController extends Controller
 
     public function exciseOne()
     {
-        return Supplier::where('company_name', 'Công ty may mặc Việt Tiến')
-            ->first()
-            ->products
-            ->pluck('product_id', 'product_name');
+        $companyName = 'Công ty may mặc Việt Tiến';
+        return Supplier::with('products')->where('company_name', 'LIKE', "%$companyName%")->get();
     }
 
     public function exciseTwo()
