@@ -17,7 +17,7 @@ class Category extends Model
         'category_id',
         'category_name'
     ];
-    protected $data = ['deleted_at'];
+
     public function product(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'category_id');

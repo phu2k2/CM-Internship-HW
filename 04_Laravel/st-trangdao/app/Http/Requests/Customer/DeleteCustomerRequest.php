@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Employee;
+namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteRequestEmployee extends FormRequest
+class DeleteCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class DeleteRequestEmployee extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:employees,id|integer',
+            'id' => 'required|exists:customers,id|integer',
         ];
     }
 }

@@ -28,7 +28,7 @@ class Employee extends Model
     protected $attributes = [
         'allowance' => 0,
     ];
-    protected $data = ['deleted_at'];
+
     public function order(): HasMany
     {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');

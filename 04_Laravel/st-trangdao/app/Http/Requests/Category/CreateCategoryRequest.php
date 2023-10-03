@@ -4,7 +4,7 @@ namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequestCategory extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UpdateRequestCategory extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:categories,id|integer',
-            'category_id' => 'required|string|size:2|unique:categories,category_id,' . $this->id,
+            'category_id' => 'required|string|unique:categories|size:2',
             'category_name' => 'required|string|max:30',
         ];
     }
