@@ -16,7 +16,7 @@ class HomeController extends Controller
 {
     public function practice()
     {
-        return $this->exciseSix();
+        return $this->exciseOne();
     }
 
     public function exciseOne()
@@ -29,31 +29,18 @@ class HomeController extends Controller
 
     public function exciseTwo()
     {
-        // \DB::enableQueryLog();
-
         Supplier::whereHas('products.category', function ($query) {
             $query->where('category_name', 'LIKE', '%Thực phẩm%');
         })
         ->select('company_id', 'company_name', 'address')
         ->get();
-
-        // dd(\DB::getQueryLog());
-
     }
 
     public function exciseThree()
     {
-        // $milk = Product::with('orderdetails')->where('product_name', 'LIKE' ,'%Sữa hộp%')->get();
-
-        // foreach ($milk as $m) {
-        //     echo $m->orderdetails->order()."</br>";
-        // }
-        $customersByProductName = Product::where('product_name','LIKE', '%Sữa hộp%')
-            ->firstOrFail()
-            ->orderDetails()->with('orders');
-            // ->get();
-        // // return $milk;
-        return $customersByProductName;
+        return Customer::whereHas('orders.orderDetails.product', function ($query) {
+            $query->where('product_name', 'LIKE', '%Sữa hộp%');
+        })->distinct('transaction_name')->pluck('transaction_name');
     }
 
     public function exciseFour()
@@ -81,18 +68,67 @@ class HomeController extends Controller
     public function exciseSix()
     {
         $orderNumber = 3;
+        $orderDetails = OrderDetail::where('invoice_id', $orderNumber)
+        ->with(['product'])
+        ->get();
 
-        $orderDetails = OrderDetail::with('product')->find($orderNumber);
-        return $orderDetails;
+        $result = $orderDetails->map(function ($orderDetail) {
+            $quantity = $orderDetail->amount;
+            $unitPrice = $orderDetail->product->price;
+            $discount = $orderDetail->discount;
+            $totalAmount = $quantity * ($unitPrice - $discount);
+            return [
+                'Tên Hàng' => $orderDetail->product->product_name,
+                'Số tiền phải trả' => $totalAmount,
+            ];
+        });
+
+        return $result;
+    }
+
+    public function exciseSix_methodTwo()
+    {
+        $orderNumber = 3;
+        $result = OrderDetail::where('invoice_id', $orderNumber)
+        ->join('products', 'orderdetails.product_id', '=', 'products.product_id')
+        ->selectRaw('products.product_name, orderdetails.amount * (orderdetails.price - orderdetails.discount) as total_amount')
+        ->get();
+
+        return $result;
     }
 
     public function exciseSeven()
     {
-        $partners = Customer::select('company_name')
-        ->whereIn('transaction_name', function ($query) {
-            $query->select('transaction_name')
-                ->from('suppliers');
+        return Customer::distinct()->join('suppliers', 'customers.transaction_name' , '=' , 'suppliers.transaction_name')->pluck('suppliers.company_name');
+    }
+
+    public function exciseEight()
+    {
+        $employeesWithSameBirthday = Employee::select('birthday')
+        ->selectRaw('GROUP_CONCAT(CONCAT(first_name,last_name)) as name_employees')
+        ->groupBy('birthday')
+        ->havingRaw('COUNT(*) > 1')
+        ->get();
+
+        return $employeesWithSameBirthday;
+    }
+
+    public function exciseNine()
+    {
+        return Order::with('customer')
+        ->whereHas('customer', function ($query) {
+            $query->whereColumn('customers.address', '=', 'orders.destination');
         })
         ->get();
+    }
+
+    public function exciseTen()
+    {
+        return Product::doesntHave('orderDetails')->get();
+    }
+
+    public function exciseEleven()
+    {
+        return Employee::doesntHave('orders')->get();
     }
 }
