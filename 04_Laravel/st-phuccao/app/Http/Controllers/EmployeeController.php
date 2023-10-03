@@ -47,7 +47,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         try {
-            $employee = new Employee([
+            Employee::create([
                 'employee_id' => $this->generateUniqueEmployeeId(),
                 'last_name' => $request->input('last_name'),
                 'first_name' => $request->input('first_name'),
@@ -58,7 +58,6 @@ class EmployeeController extends Controller
                 'base_salary' => $request->input('base_salary'),
                 'allowance' => $request->input('allowance'),
             ]);
-            $employee->saveOrFail();
             return redirect()
                     ->route('employees.create')
                     ->with('success', 'Successfully added employee!');

@@ -48,15 +48,15 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         try {
-            $supplier = new Supplier();
-            $supplier->company_id = $this->generateUniqueCompanyId();
-            $supplier->company_name = $request->input('company_name');
-            $supplier->transaction_name = $request->input('transaction_name');
-            $supplier->address = $request->input('address');
-            $supplier->phone = $request->input('phone');
-            $supplier->fax = $request->input('fax');
-            $supplier->email = $request->input('email');
-            $supplier->saveOrFail();
+            Supplier::create([
+                'company_id' => $this->generateUniqueCompanyId(),
+                'company_name' => $request->input('company_name'),
+                'transaction_name' => $request->input('transaction_name'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'fax' => $request->input('fax'),
+                'email' => $request->input('email'),
+            ]);
             return redirect()
                         ->route('suppliers.create')
                         ->with('success', 'Successfully added supplier!');
