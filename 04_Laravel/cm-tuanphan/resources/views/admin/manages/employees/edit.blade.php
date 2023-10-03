@@ -1,35 +1,75 @@
 @extends('admin.layouts.layout1')
 
 @section('modal')
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModal" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="add-employee-modal" tabindex="-1" aria-labelledby="add-employee-modal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addEmployeeModal">Edit nhân viên</h1>
+          <h1 class="modal-title fs-5" id="add-employee-modal">Edit nhân viên</h1>
         </div>
         <div class="modal-body">
             @if ($errors->any() || Route::is('employees.edit'))
-            @section('modalTrigger')document.querySelector('[data-bs-target="#addEmployeeModal"]').click();@endsection
+            @section('modalTrigger')document.querySelector('[data-bs-target="#add-employee-modal"]').click();@endsection
             @endif
-            <form method="post" action="{{ route('employees.update' , ['employee' => $employeeID ]) }}" id="addEmployeeForm">
+            <form method="post" action="{{ route('employees.update' , ['employee' => $editingEmployee->employee_id ]) }}" id="addEmployeeForm">
                 @csrf
                 @method("PUT")
                 <label>Tên nhân viên</label>
-                <input class="form-control" placeholder="Họ" name="last_name"/>
+                <input class="form-control" value="{{ old('last_name') ? old('last_name') : $editingEmployee->last_name }}" placeholder="Họ" name="last_name"/>
+                @error('last_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Họ</label>
-                <input class="form-control" placeholder="Tên" name="first_name"/>
+                <input class="form-control" value="{{ old('first_name') ? old('first_name') : $editingEmployee->first_name }}" placeholder="Tên" name="first_name"/>
+                @error('first_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Sinh nhật</label>
-                <input class="form-control" placeholder="Sinh nhật" name="birthday"/>
+                <input type="date" class="form-control" value="{{ old('birthday') ? old('birthday') : $editingEmployee->birthday }}" placeholder="Sinh nhật" name="birthday"/>
+                @error('birthday')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Ngày bắt đầu làm việc</label>
-                <input type="date" class="form-control" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                <input type="date" class="form-control" value="{{ old('start_date') ? old('start_date') : $editingEmployee->start_date }}" placeholder="Ngày bắt đầu làm việc" name="start_date"/>
+                @error('start_date')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Địa chỉ</label>
-                <input type="date" class="form-control" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control" value="{{ old('address') ? old('address') : $editingEmployee->address }}" placeholder="Địa chỉ" name="address"/>
+                @error('address')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control" placeholder="Số điện thoại" name="phone"/>
+                <input class="form-control" value="{{ old('phone') ? old('phone') : $editingEmployee->phone }}" placeholder="Số điện thoại" name="phone"/>
+                @error('phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Lương cứng</label>
-                <input class="form-control" placeholder="Lương cứng" name="base_salary"/>
+                <input class="form-control" value="{{ old('base_salary') ? old('base_salary') : $editingEmployee->base_salary }}" placeholder="Lương cứng" name="base_salary"/>
+                @error('base_salary')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Trợ cấp</label>
-                <input class="form-control" placeholder="Trợ cấp" name="allowance"/>
+                <input class="form-control" value="{{ old('allowance') ? old('allowance') : $editingEmployee->allowance }}" placeholder="Trợ cấp" name="allowance"/>
+                @error('allowance')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
         </div>
         <div class="modal-footer">
@@ -48,7 +88,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6>Nhân viên</h6>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Thêm nhân viên</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-employee-modal">Thêm nhân viên</button>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -96,31 +136,31 @@
                                 @foreach ($employees as $index => $employee)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->last_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->last_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->first_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->first_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->birthday}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->birthday }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->start_date}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->start_date }}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->address}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->address }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->phone}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->phone }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->base_salary}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->base_salary }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->allowance}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->allowance }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <button class="btn btn-success">Edit</button>

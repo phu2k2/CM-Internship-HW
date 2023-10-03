@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use View;
+use App\Http\Requests\Employees\CreateEmployeeRequest;
+use App\Http\Requests\Employees\EditEmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -19,19 +21,25 @@ class EmployeeController extends Controller
         return view("admin.manages.employees.index" , compact("employees"));
     }
 
-    public function store(Request $res)
+    public function store(CreateEmployeeRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $employeeID)
     {
         $employees = Employee::get();
-        return view("admin.manages.employees.edit" , compact("employees"));
+        $editingEmployee = Employee::findOrFail($employeeID);
+        return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(EditEmployeeRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
+    }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Employee With ID ' . $id . ' Successfully');
     }
 }

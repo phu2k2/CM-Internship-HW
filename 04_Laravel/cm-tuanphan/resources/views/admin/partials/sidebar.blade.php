@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link {{Route::is("customers.*") ? 'active' : ''}}" href="{{route("customers.index")}}">
+                <a class="nav-link {{ Route::is("customers.*") ? 'active' : ''}}" href="{{ route("customers.index") }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{Route::is("suppliers.*") ? 'active' : ''}}" href="{{route("suppliers.index")}}">
+                <a class="nav-link {{ Route::is("suppliers.*") ? 'active' : '' }}" href="{{route("suppliers.index") }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{Route::is("categories.*") ? 'active' : ''}}" href="{{route("categories.index")}}">
+                <a class="nav-link {{ Route::is("categories.*") ? 'active' : '' }}" href="{{ route("categories.index") }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{Route::is('employees.*') ? 'active' : ''}}" href="{{route('employees.index')}}"> 
+                <a class="nav-link {{ Route::is('employees.*') ? 'active' : '' }}" href="{{ route('employees.index') }}"> 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-app text-info text-sm opacity-10"></i>

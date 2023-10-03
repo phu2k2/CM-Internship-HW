@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use View;
-use App\Http\Requests\CustomersRequest;
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\EditCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -20,19 +21,25 @@ class CustomerController extends Controller
         return view("admin.manages.customers.index" , compact("customers"));
     }
 
-    public function store(Request $res)
+    public function store(CreateCustomerRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $customerID)
     {
         $customers = Customer::get();
-        return view("admin.manages.customers.edit" , compact("customers"));
+        $editingCustomer = Customer::findOrFail($customerID);
+        return view("admin.manages.customers.edit" , compact("customers" , "editingCustomer"));
     }
-    
-    public function update(Request $res, string $id)
+
+    public function update(EditCustomerRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
+    }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Customer With ID ' . $id . ' Successfully');
     }
 }

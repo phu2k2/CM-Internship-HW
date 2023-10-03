@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use View;
+use App\Http\Requests\Suppliers\CreateSupplierRequest;
+use App\Http\Requests\Suppliers\EditSupplierRequest;
 
 class SupplierController extends Controller
 {
@@ -19,19 +21,25 @@ class SupplierController extends Controller
         return view("admin.manages.suppliers.index" , compact("suppliers"));
     }
 
-    public function store(Request $res)
+    public function store(CreateSupplierRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $supplierID)
     {
         $suppliers = Supplier::get();
-        return view("admin.manages.suppliers.edit" , compact("suppliers"));
+        $editingSupplier = Supplier::findOrFail($supplierID);
+        return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(EditSupplierRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
+    }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Supplier With ID ' . $id . ' Successfully');
     }
 }

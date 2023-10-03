@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use View;
-use App\Http\Requests\CategoriesRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -20,19 +21,25 @@ class CategoryController extends Controller
         return view("admin.manages.categories.index" , compact("categories"));
     }
 
-    public function store(Request $res)
+    public function store(CreateCategoryRequest $req)
     {
-        dd($res->all());
+        dd($req->all());
     }
 
     public function edit(string $categoryID)
     {
         $categories = Category::get();
-        return view("admin.manages.categories.edit" , compact("categories"));
+        $editingCategory = Category::findOrFail($categoryID);
+        return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
     }
 
-    public function update(Request $res, string $id)
+    public function update(EditCategoryRequest $req, string $id)
     {
-        dd($res->all());
+        dd($req->all());
+    }
+
+    public function destroy(string $id)
+    {
+        return redirect()->back()->with('success', 'Delete Category With ID ' . $id . ' Successfully');
     }
 }
