@@ -29,12 +29,12 @@ class Product extends Model
         'price'
     ];
 
-    public function companyId(): BelongsTo
+    public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class, 'company_id', 'id');
     }
 
-    public function categoryId(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'category_id');
     }

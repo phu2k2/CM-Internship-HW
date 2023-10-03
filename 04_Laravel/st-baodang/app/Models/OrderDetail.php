@@ -26,12 +26,12 @@ class OrderDetail extends Model
         'discount'
     ];
 
-    public function invoiceId(): BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'invoice_id', 'id');
     }
 
-    public function productId(): BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
