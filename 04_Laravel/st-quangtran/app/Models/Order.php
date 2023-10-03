@@ -35,9 +35,4 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class, 'invoice_id', 'id');
     }
-
-    public function scopeJoinCustomers(Builder $builder)
-    {
-        $builder->join('customers', 'customers.id', '=', 'orders.customer_id');
-    }
 }

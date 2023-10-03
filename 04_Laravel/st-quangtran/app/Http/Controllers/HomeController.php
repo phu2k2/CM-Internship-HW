@@ -73,7 +73,7 @@ class HomeController extends Controller
     // 5. Hãy cho biết số tiền lương mà công ty phải trả cho mỗi nhân viên là bao nhiêu (lương=lương cơ bản+phụ cấp)?
     public function exercise5()
     {
-        $employeesWithSalary = Employee::selectRaw("id, CONCAT(first_name, ' ', last_name) as full_name, (base_salary + allowance) as salary")->get();
+        $employeesWithSalary = Employee::selectRaw('id, CONCAT(first_name, " ", last_name) as full_name, (base_salary + allowance) as salary')->get();
 
         return $employeesWithSalary;
     }
@@ -83,22 +83,8 @@ class HomeController extends Controller
     {
         $orderNumber = 3;
 
-        $results = Order::with('orderDetails.product')
-            ->where('id', $orderNumber)
-            ->first()
-            ->orderDetails
-            ->map(function ($orderDetail) {
-                $quantity = $orderDetail->amount;
-                $price = $orderDetail->price;
-                $discount = $orderDetail->discount;
-
-                $totalAmount = $quantity * ($price -  $discount);
-
-                return [
-                    'product_name' => $orderDetail->product->product_name,
-                    'total_amount' => $totalAmount,
-                ];
-            });
+        $results = OrderDetail::selectRaw('invoice_id, product_id, (price - discount ) * amount as totalPrice')
+            ->where('invoice_id', $orderNumber)->get();
 
         return $results;
     }
@@ -106,8 +92,8 @@ class HomeController extends Controller
     // 7.Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
     public function exercise7()
     {
-        $customerIsSupplier = Supplier::joinCustomers()->get();
-
+        $customerIsSupplier = Customer::join('suppliers', 'customers.transaction_name', '=', 'suppliers.transaction_name')
+            ->get();
         return $customerIsSupplier;
     }
 
