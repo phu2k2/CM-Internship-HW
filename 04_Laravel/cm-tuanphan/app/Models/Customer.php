@@ -12,7 +12,8 @@ class Customer extends Model
         'company_name',
         'transaction_name',
         'address',
+        'email',
         'phone_number',
-        'fax',
+        'fax'
     ];
 }
