@@ -35,7 +35,7 @@ class CategoryController extends Controller
         try {
             Category::insert($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item created failed!');
+            return back()->with('error', 'Item created failed!');
         }
         return redirect()->route('categories.index')->with('success', 'Item created successfully!');
     }
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         try {
             Category::findOrFail($id)->update($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item update failed!');
+            return back()->with('error', 'Item update failed!');
         }
         return redirect()->route('categories.index')->with('success', 'Item update successfully!');
     }

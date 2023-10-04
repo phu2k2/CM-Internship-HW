@@ -33,7 +33,7 @@ class CustomerController extends Controller
         try {
             Customer::insert($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item created failed!');
+            return back()->with('error', 'Item created failed!');
         }
         return redirect()->route('customers.index')->with('success', 'Item created successfully!');
     }
@@ -64,7 +64,7 @@ class CustomerController extends Controller
         try {
             Customer::findOrFail($id)->update($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item update failed!');
+            return back()->with('error', 'Item update failed!');
         }
         return redirect()->route('customers.index')->with('success', 'Item update successfully!');
     }

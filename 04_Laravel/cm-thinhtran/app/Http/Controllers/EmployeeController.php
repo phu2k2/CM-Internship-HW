@@ -37,7 +37,7 @@ class EmployeeController extends Controller
         try {
             Employee::insert($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item created failed!');
+            return back()->with('error', 'Item created failed!');
         }
         return redirect()->route('employees.index')->with('success', 'Item created successfully!');
     }
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
         try {
             Employee::findOrFail($id)->update($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item update failed!');
+            return back()->with('error', 'Item update failed!');
         }
         return redirect()->route('employees.index')->with('success', 'Item update successfully!');
     }

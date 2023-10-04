@@ -36,7 +36,7 @@ class SupplierController extends Controller
         try {
             Supplier::insert($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item created failed!');
+            return back()->with('error', 'Item created failed!');
         }
         return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');
     }
@@ -67,7 +67,7 @@ class SupplierController extends Controller
         try {
             Supplier::findOrFail($id)->update($validated);
         } catch (Exception $e) {
-            return back()->with('error','Item update failed!');
+            return back()->with('error', 'Item update failed!');
         }
         return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');;
     }
