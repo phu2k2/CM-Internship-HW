@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
         return [
             'company_name' => fake('vi_VN')->company(),
             'transaction_name' => strtoupper(fake()->text(20)),
-            'address' => fake('vi_VN')->city() . "  " . fake('vi_VN')->province(),
+            'address' => fake('vi_VN')->address(),
             'email' => fake()->unique()->companyEmail(),
             'phone_number' => fake()->numerify('##########'),
             'fax' => fake()->numerify('##########'),

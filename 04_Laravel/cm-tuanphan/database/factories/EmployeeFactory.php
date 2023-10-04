@@ -23,7 +23,7 @@ class EmployeeFactory extends Factory
             'first_name' => fake('vi_VN')->firstName(),
             'birthday' => fake()->dateTimeBetween('-30 years' , '-18 years')->format('Y/m/d H:i:s'),
             'start_date' => fake()->dateTimeBetween('-5 years' , 'now')->format('Y/m/d H:i:s'),
-            'address' => fake('vi_VN')->city() . "," . fake('vi_VN')->province(),
+            'address' => fake('vi_VN')->address(),
             'phone' => fake()->numerify('##########'),
             'base_salary' => fake()->randomFloat(2, 5000000, 50000000),
             'allowance' => fake()->randomFloat(2, 2000000, 20000000),

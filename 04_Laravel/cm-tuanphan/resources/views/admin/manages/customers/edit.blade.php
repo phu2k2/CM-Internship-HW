@@ -15,35 +15,35 @@
                 @csrf
                 @method("PUT")
                 <label>Tên công ty</label>
-                <input class="form-control @error('company_name') is-invalid @enderror" value="{{ old('company_name') ? old('company_name') : $editingCustomer->company_name}}" placeholder="Tên công ty" name="company_name"/>
+                <input class="form-control @error('company_name') is-invalid @enderror" value="{{ old('company_name') ? old('company_name') : $editingCustomer->company_name }}" placeholder="Tên công ty" name="company_name"/>
                 @error('company_name')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Tên giao dịch</label>
-                <input class="form-control @error('transaction_name') is-invalid @enderror" value="{{ old('transaction_name') ? old('transaction_name') : $editingCustomer->transaction_name}}" placeholder="Tên giao dịch" name="transaction_name"/>
+                <input class="form-control @error('transaction_name') is-invalid @enderror" value="{{ old('transaction_name') ? old('transaction_name') : $editingCustomer->transaction_name }}" placeholder="Tên giao dịch" name="transaction_name"/>
                 @error('transaction_name')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Địa chỉ</label>
-                <input class="form-control @error('address') is-invalid @enderror" value="{{ old('address') ? old('address') : $editingCustomer->address}}" placeholder="Địa chỉ" name="address"/>
+                <input class="form-control @error('address') is-invalid @enderror" value="{{ old('address') ? old('address') : $editingCustomer->address }}" placeholder="Địa chỉ" name="address"/>
                 @error('address')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Số điện thoại</label>
-                <input class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') ? old('phone_number') : $editingCustomer->phone_number}}" placeholder="Số điện thoại" name="phone_number"/>
+                <input class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') ? old('phone_number') : $editingCustomer->phone_number }}" placeholder="Số điện thoại" name="phone_number"/>
                 @error('phone_number')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Số fax</label>
-                <input class="form-control @error('fax') is-invalid @enderror" value="{{ old('fax') ? old('fax') : $editingCustomer->fax}}" placeholder="Số fax" name="fax"/>
+                <input class="form-control @error('fax') is-invalid @enderror" value="{{ old('fax') ? old('fax') : $editingCustomer->fax }}" placeholder="Số fax" name="fax"/>
                 @error('fax')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -105,22 +105,22 @@
                                 @foreach ($customers as $index => $customer)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->company_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->company_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->transaction_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->transaction_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->address}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->address }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$customer->phone_number}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $customer->phone_number }}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$customer->fax}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $customer->fax }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <button class="btn btn-success">Edit</button>

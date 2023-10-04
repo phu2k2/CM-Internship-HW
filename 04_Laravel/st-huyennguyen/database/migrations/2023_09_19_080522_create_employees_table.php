@@ -16,8 +16,8 @@ return new class extends Migration
             $table->char('employee_id', 4)->unique();
             $table->string('last_name', 40);
             $table->string('first_name', 10);
-            $table->timestamp('birthday');
-            $table->timestamp('start_date');
+            $table->date('birthday');
+            $table->date('start_date');
             $table->string('address', 60);
             $table->string('phone', 15);
             $table->decimal('base_salary', 10, 2);
