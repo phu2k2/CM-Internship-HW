@@ -35,7 +35,7 @@ class EmployeeController extends Controller
     {
         $validated = $request->validated();
         try {
-            Employee::insert($validated);
+            Employee::create($validated);
         } catch (Exception $e) {
             return back()->with('error', 'Item created failed!');
         }

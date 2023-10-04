@@ -34,7 +34,7 @@ class SupplierController extends Controller
     {
         $validated = $request->validated();
         try {
-            Supplier::insert($validated);
+            Supplier::create($validated);
         } catch (Exception $e) {
             return back()->with('error', 'Item created failed!');
         }

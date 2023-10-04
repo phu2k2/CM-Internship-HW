@@ -33,7 +33,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         try {
-            Category::insert($validated);
+            Category::create($validated);
         } catch (Exception $e) {
             return back()->with('error', 'Item created failed!');
         }

@@ -31,7 +31,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validated();
         try {
-            Customer::insert($validated);
+            Customer::create($validated);
         } catch (Exception $e) {
             return back()->with('error', 'Item created failed!');
         }
