@@ -19,12 +19,12 @@ class OrderDetailFactory extends Factory
     public function definition(): array
     {
         $product = Product::all()->random();
-        $product_id = $product->product_id;
+        $productId = $product->product_id;
         $price = $product->price + fake()->numberBetween(5, 100) * 1000;
         $amount = fake()->numberBetween(5, $product->amount);
         return [
             'invoice_id' => Order::all()->random()->id,
-            'product_id' => $product_id,
+            'product_id' => $productId,
             'price' =>  $price,
             'amount' => $amount,
             'discount' => fake()->numberBetween(0, 10) * 1000,

@@ -24,15 +24,18 @@ class Product extends Model
         'price'
     ];
     protected $data = ['deleted_at'];
-    public function category(): BelongsTo
+
+    public function categories(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'category_id', 'category_id');
     }
-    public function supplier(): BelongsTo
+
+    public function suppliers(): BelongsTo
     {
         return $this->belongsTo(Supplier::class, 'company_id', 'company_id');
     }
-    public function orderdetail(): HasMany
+
+    public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }

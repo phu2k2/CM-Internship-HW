@@ -29,7 +29,7 @@ class Employee extends Model
         'allowance' => 0,
     ];
 
-    public function order(): HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }

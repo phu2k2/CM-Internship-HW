@@ -21,11 +21,13 @@ class OrderDetail extends Model
         'discount',
     ];
     protected $data = ['deleted_at'];
-    public function order(): BelongsTo
+
+    public function orders(): BelongsTo
     {
-        return $this->belongsTo(Order::class, 'id', 'invoice_id');
+        return $this->belongsTo(Order::class, 'invoice_id', 'id');
     }
-    public function product(): BelongsTo
+
+    public function products(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }

@@ -22,7 +22,7 @@ class Customer extends Model
         'fax'
     ];
 
-    public function order(): HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }

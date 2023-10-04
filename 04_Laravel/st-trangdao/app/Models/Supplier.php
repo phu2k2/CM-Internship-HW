@@ -23,7 +23,7 @@ class Supplier extends Model
         'fax'
     ];
 
-    public function product(): HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'company_id', 'company_id');
     }

@@ -23,15 +23,18 @@ class Order extends Model
         'destination',
     ];
     protected $data = ['deleted_at'];
-    public function customer(): BelongsTo
+
+    public function customers(): BelongsTo
     {
-        return $this->belongsTo(Customer::class, 'id', 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-    public function employee(): BelongsTo
+
+    public function employees(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
-    public function orderdetail(): HasMany
+
+    public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'invoice_id', 'id');
     }
