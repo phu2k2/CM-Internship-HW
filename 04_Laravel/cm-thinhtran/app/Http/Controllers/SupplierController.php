@@ -38,7 +38,7 @@ class SupplierController extends Controller
         } catch (Exception $e) {
             return back()->with('error','Item created failed!');
         }
-        return redirect()->route('suppliers.index')->with('success','Item created successfully!');
+        return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');
     }
 
     /**
@@ -69,7 +69,7 @@ class SupplierController extends Controller
         } catch (Exception $e) {
             return back()->with('error','Item update failed!');
         }
-        return redirect()->route('suppliers.index')->with('success','Item created successfully!');;
+        return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');;
     }
 
     /**
