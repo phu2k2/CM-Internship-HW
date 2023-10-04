@@ -11,18 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customers', function($table) {
-            $table->softDeletes();
-        });
-        Schema::table('categories', function($table) {
-            $table->softDeletes();
-        });
-        Schema::table('employees', function($table) {
-            $table->softDeletes();
-        });
-        Schema::table('suppliers', function($table) {
-            $table->softDeletes();
-        });
+        if (!Schema::hasTable('customers')) {
+            Schema::table('customers', function($table) {
+                $table->softDeletes();
+            });
+        }
+
+        if (!Schema::hasTable('categories')) {
+            Schema::table('categories', function($table) {
+                $table->softDeletes();
+            });
+        }
+
+        if (!Schema::hasTable('employees')) {
+            Schema::table('employees', function($table) {
+                $table->softDeletes();
+            });
+        }
+
+        if (!Schema::hasTable('suppliers')) {
+            Schema::table('suppliers', function($table) {
+                $table->softDeletes();
+            });
+        }
     }
 
     /**

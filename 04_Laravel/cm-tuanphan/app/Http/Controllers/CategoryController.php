@@ -19,12 +19,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
+
         return view("admin.manages.categories.index" , compact("categories"));
     }
 
     public function store(CreateCategoryRequest $req)
     {
         $category = Category::create($req->all());
+
         if ($category) {
             return redirect()->back()->with('success', 'Category created successfully');
         } else {
@@ -36,6 +38,7 @@ class CategoryController extends Controller
     {
         $categories = Category::get();
         $editingCategory = Category::findOrFail($categoryID);
+
         return view("admin.manages.categories.edit" , compact("categories", "editingCategory"));
     }
 
@@ -51,6 +54,7 @@ class CategoryController extends Controller
     public function destroy(DeleteCategoryRequest $req , string $id)
     {
         Category::findOrFail($id)->delete();
+        
         return redirect()->back()->with('success', 'Delete Category With ID ' . $id . ' Successfully');
     }
 }

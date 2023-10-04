@@ -19,6 +19,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::get();
+
         return view("admin.manages.employees.index" , compact("employees"));
     }
 
@@ -40,6 +41,7 @@ class EmployeeController extends Controller
     public function store(CreateEmployeeRequest $req)
     {
         $employee = Employee::create(array_merge($req->all() , ['employee_id' => $this->generatenextEmployeeID()]));
+
         if ($employee) {
             return redirect()->back()->with('success', 'Employee created successfully');
         } else {
@@ -51,6 +53,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::get();
         $editingEmployee = Employee::findOrFail($employeeID);
+
         return view("admin.manages.employees.edit" , compact("employees" , "editingEmployee"));
     }
 
@@ -66,6 +69,7 @@ class EmployeeController extends Controller
     public function destroy(string $id)
     {
         Employee::findOrFail($id)->delete();
+        
         return redirect()->back()->with('success', 'Delete Employee With ID ' . $id . ' Successfully');
     }
 }

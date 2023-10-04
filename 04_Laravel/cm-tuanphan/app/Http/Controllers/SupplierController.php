@@ -19,6 +19,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::get();
+
         return view("admin.manages.suppliers.index" , compact("suppliers"));
     }
 
@@ -26,6 +27,7 @@ class SupplierController extends Controller
     {
         $maxCompanyID = Supplier::max('company_id');
         $nextCompanyID = str_pad((int)$maxCompanyID + 1, 3, '0', STR_PAD_LEFT);
+
         return $nextCompanyID;
     }
 
@@ -44,6 +46,7 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::get();
         $editingSupplier = Supplier::findOrFail($supplierID);
+
         return view("admin.manages.suppliers.edit" , compact("suppliers" , "editingSupplier"));
     }
 
@@ -59,6 +62,7 @@ class SupplierController extends Controller
     public function destroy(string $id)
     {
         Supplier::findOrFail($id)->delete();
+        
         return redirect()->back()->with('success', 'Delete Supplier With ID ' . $id . ' Successfully');
     }
 }
