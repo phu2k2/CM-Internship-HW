@@ -37,7 +37,7 @@
                 @foreach ($employees as $item)
                     <tr>
                     <th scope="row">{{$loop->index}}</th>
-                        <td>{{ $item['employee_id'] }}</td>
+                        <td>{{ $item['id'] }}</td>
                         <td>{{ $item['last_name'] }}</td>
                         <td>{{ $item['first_name'] }}</td>
                         <td>{{ $item['birthday'] }}</td>
@@ -47,14 +47,14 @@
                         <td>{{ $item['base_salary'] }}</td>
                         <td>{{ $item['allowance'] }}</td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.edit', ['employee' => $item['employee_id']]) }}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.edit', ['employee' => $item['id']]) }}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-account-edit"></i>
                                 <span class="hide-menu">Edit</span>
                             </a>
                         </td>
                         <td>
-                            <form action="{{ route('employees.destroy', $item->employee_id) }}" method="POST">
+                            <form action="{{ route('employees.destroy', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>

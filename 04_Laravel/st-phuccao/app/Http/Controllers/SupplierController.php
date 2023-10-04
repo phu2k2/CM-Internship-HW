@@ -78,24 +78,24 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        return view('admin.supplier.edit', ['supplier' => Supplier::where('company_id', $id)->firstOrFail()]);
+        return view('admin.supplier.edit', ['supplier' => Supplier::findOrFail($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSupplierRequest $request, string $id)
+    public function update(UpdateSupplierRequest $request, int $id)
     {
         try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
+            $supplier = Supplier::findOrFail($id);
             $data = $request->only([
                 'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
             ]);
             $supplier->update($data);
             return redirect()
-                        ->route('suppliers.edit', ['supplier' => $supplier->company_id])
+                        ->route('suppliers.edit', ['supplier' => $supplier->id])
                         ->with('success', 'Updated supplier information successfully!');
         } catch (ModelNotFoundException $e) {
             return redirect()
@@ -107,10 +107,10 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         try {
-            $supplier = Supplier::where('company_id', $id)->firstOrFail();
+            $supplier = Supplier::findOrFail($id);
             $supplier->delete();
             return redirect()
                         ->route('suppliers.index')
