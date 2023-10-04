@@ -20,7 +20,6 @@ class OrderDetail extends Model
         'amount',
         'discount',
     ];
-    protected $data = ['deleted_at'];
 
     public function orders(): BelongsTo
     {

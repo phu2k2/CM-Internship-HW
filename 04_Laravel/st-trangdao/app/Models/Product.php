@@ -23,7 +23,6 @@ class Product extends Model
         'unit',
         'price'
     ];
-    protected $data = ['deleted_at'];
 
     public function categories(): BelongsTo
     {

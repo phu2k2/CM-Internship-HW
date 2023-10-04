@@ -22,7 +22,6 @@ class Order extends Model
         'shipping_date',
         'destination',
     ];
-    protected $data = ['deleted_at'];
 
     public function customers(): BelongsTo
     {
