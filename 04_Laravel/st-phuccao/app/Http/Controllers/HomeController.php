@@ -22,16 +22,18 @@ class HomeController extends Controller
     public function exciseOne()
     {
         $companyName = 'Công ty may mặc Việt Tiến';
-        return Supplier::with('products')->where('company_name', 'LIKE', "%$companyName%")->get();
+        return Supplier::with('products')
+            ->where('company_name', 'LIKE', "%$companyName%")
+            ->get();
     }
 
     public function exciseTwo()
     {
-        Supplier::whereHas('products.category', function ($query) {
-            $query->where('category_name', 'LIKE', '%Thực phẩm%');
-        })
-        ->select('company_id', 'company_name', 'address')
-        ->get();
+        return Supplier::whereHas('products.category', function ($query) {
+                $query->where('category_name', 'LIKE', '%Thực phẩm%');
+            })
+            ->select('company_id', 'company_name', 'address')
+            ->get();
     }
 
     public function exciseThree()
@@ -66,37 +68,36 @@ class HomeController extends Controller
     public function exciseSix()
     {
         $orderNumber = 3;
-        $result = OrderDetail::where('invoice_id', $orderNumber)
+        return OrderDetail::where('invoice_id', $orderNumber)
         ->join('products', 'orderdetails.product_id', '=', 'products.product_id')
         ->selectRaw('products.product_name, orderdetails.amount * (orderdetails.price - orderdetails.discount) as total_amount')
         ->get();
-
-        return $result;
     }
 
     public function exciseSeven()
     {
-        return Customer::distinct()->join('suppliers', 'customers.transaction_name' , '=' , 'suppliers.transaction_name')->pluck('suppliers.company_name');
+        return Customer::distinct()
+            ->join('suppliers', 'customers.transaction_name' , '=' , 'suppliers.transaction_name')
+            ->pluck('suppliers.company_name');
     }
 
     public function exciseEight()
     {
-        $employeesWithSameBirthday = Employee::select('birthday')
-        ->selectRaw('GROUP_CONCAT(CONCAT(first_name,last_name)) as name_employees')
-        ->groupBy('birthday')
-        ->havingRaw('COUNT(*) > 1')
-        ->get();
+        return Employee::select('birthday')
+            ->selectRaw('GROUP_CONCAT(CONCAT(first_name,last_name)) as name_employees')
+            ->groupBy('birthday')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
 
-        return $employeesWithSameBirthday;
     }
 
     public function exciseNine()
     {
         return Order::with('customer')
-        ->whereHas('customer', function ($query) {
-            $query->whereColumn('customers.address', '=', 'orders.destination');
-        })
-        ->get();
+            ->whereHas('customer', function ($query) {
+                $query->whereColumn('customers.address', '=', 'orders.destination');
+            })
+            ->get();
     }
 
     public function exciseTen()
