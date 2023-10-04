@@ -24,6 +24,7 @@ class CategoryController extends Controller
             'updated_at' => "2023-09-26 11:45:00",
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -70,6 +71,7 @@ class CategoryController extends Controller
         }
         return view(('admin/category/edit'), compact('category'));
     }
+
     /**
      * Update the specified resource in storage.
      */

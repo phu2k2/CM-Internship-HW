@@ -1,8 +1,6 @@
 @extends('layouts.auth')
 
 @section('content')
-    <!DOCTYPE html>
-    <html lang="en">
 
     <body id="page-top">
         <!-- Page Wrapper -->
