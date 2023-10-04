@@ -68,9 +68,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, string $id)
     {
         $category = Category::findOrFail($id);
-
         $category->update($request->validated());
-
         if ($category->wasChanged()) {
             session()->flash('message', 'Successfully updated!');
         } else {
@@ -86,7 +84,6 @@ class CategoryController extends Controller
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
         $category = Category::findOrFail($id);
-
         if ($category->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {

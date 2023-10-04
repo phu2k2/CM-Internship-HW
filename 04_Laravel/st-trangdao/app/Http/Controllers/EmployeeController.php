@@ -70,9 +70,7 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = Employee::findOrFail($id);
-
         $employee->update($request->validated());
-
         if ($employee->wasChanged()) {
             session()->flash('message', 'Successfully updated!');
         } else {
@@ -88,7 +86,6 @@ class EmployeeController extends Controller
     public function destroy(DeleteEmployeeRequest $request, string $id)
     {
         $employee = Employee::findOrFail($id);
-
         if ($employee->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {

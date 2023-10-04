@@ -71,9 +71,7 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-
         $supplier->update($request->validated());
-
         if ($supplier->wasChanged()) {
             session()->flash('message', 'Successfully updated!');
         } else {
@@ -89,7 +87,6 @@ class SupplierController extends Controller
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-
         if ($supplier->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {
@@ -102,6 +99,7 @@ class SupplierController extends Controller
     public function getSuppliersWithProducts()
     {
         $suppliers = Supplier::with('products')->get();
+
         return SupplierResource::collection($suppliers);
     }
 }
