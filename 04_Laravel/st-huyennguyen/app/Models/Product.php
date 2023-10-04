@@ -39,4 +39,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class, 'orderdetails', 'product_id', 'invoice_id', 'product_id');
     }
+
+    public function scopeProductName($query, $productName)
+    {
+        return $query->where('product_name', 'like', '%' . $productName . '%');
+    }
+
+    public function getPriceTotalAttribute()
+    {
+        return $this->pivot->amount * ($this->pivot->price - $this->pivot->discount);
+    }
 }
