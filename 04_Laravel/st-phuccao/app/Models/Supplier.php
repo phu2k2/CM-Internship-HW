@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'suppliers';
 
@@ -22,6 +21,4 @@ class Supplier extends Model
         'fax',
         'email',
     ];
-
-    protected $dates = ['deleted_at'];
 }

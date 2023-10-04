@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'customers';
 
@@ -21,6 +20,4 @@ class Customer extends Model
         'phone',
         'fax',
     ];
-
-    protected $dates = ['deleted_at'];
 }

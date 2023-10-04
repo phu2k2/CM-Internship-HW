@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'employees';
 
@@ -25,10 +24,8 @@ class Employee extends Model
         'allowance',
     ];
 
-    protected $casts = [
+    protected $dates = [
         'birthday' => 'datetime',
         'start_date' => 'datetime',
     ];
-
-    protected $dates = ['deleted_at'];
 }
