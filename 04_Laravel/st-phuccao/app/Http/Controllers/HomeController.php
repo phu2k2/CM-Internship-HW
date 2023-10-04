@@ -16,7 +16,7 @@ class HomeController extends Controller
 {
     public function practice()
     {
-        return $this->exciseOne();
+        return $this->exciseFour();
     }
 
     public function exciseOne()
@@ -64,27 +64,6 @@ class HomeController extends Controller
     }
 
     public function exciseSix()
-    {
-        $orderNumber = 3;
-        $orderDetails = OrderDetail::where('invoice_id', $orderNumber)
-        ->with(['product'])
-        ->get();
-
-        $result = $orderDetails->map(function ($orderDetail) {
-            $quantity = $orderDetail->amount;
-            $unitPrice = $orderDetail->product->price;
-            $discount = $orderDetail->discount;
-            $totalAmount = $quantity * ($unitPrice - $discount);
-            return [
-                'Tên Hàng' => $orderDetail->product->product_name,
-                'Số tiền phải trả' => $totalAmount,
-            ];
-        });
-
-        return $result;
-    }
-
-    public function exciseSix_methodTwo()
     {
         $orderNumber = 3;
         $result = OrderDetail::where('invoice_id', $orderNumber)
