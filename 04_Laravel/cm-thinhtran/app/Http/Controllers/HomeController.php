@@ -135,5 +135,4 @@ class HomeController extends Controller
         $employees = Employee::doesntHave('orders')->get();
         return $employees;
     }
-
 }
