@@ -52,9 +52,13 @@ class CategoryController extends Controller
                 'category_id' => $this->generateUniqueCategoryId(),
                 'category_name' => $request->input('category_name'),
             ]);
-            return redirect()->route('categories.index');
+            return redirect()
+                        ->route('categories.index')
+                        ->with('success', 'Successfully added category!');
         } catch (Exception $e) {
-            return redirect()->route('categories.create')->with('error', 'An error occurred while adding category!');
+            return redirect()
+                        ->route('categories.create')
+                        ->with('error', 'An error occurred while adding category!');
         }
     }
 
@@ -77,7 +81,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, int $id)
     {
         try {
             $category = Category::findOrFail($id);
@@ -97,7 +101,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         try {
             $category = Category::findOrFail($id);

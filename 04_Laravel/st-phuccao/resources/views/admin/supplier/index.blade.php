@@ -35,7 +35,7 @@
                 @foreach ($suppliers as $item)
                     <tr>
                         <th scope="row">{{$loop->index}}</th>
-                        <td>{{ $item['company_id'] }}</td>
+                        <td>{{ $item['id'] }}</td>
                         <td>{{ $item['company_name'] }}</td>
                         <td>{{ $item['transaction_name'] }}</td>
                         <td>{{ $item['address'] }}</td>
@@ -43,14 +43,14 @@
                         <td>{{ $item['phone'] }}</td>
                         <td>{{ $item['fax'] }}</td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('suppliers.edit', ['supplier' => $item['company_id']]) }}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('suppliers.edit', ['supplier' => $item['id']]) }}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-account-edit"></i>
                                 <span class="hide-menu">Edit</span>
                             </a>
                         </td>
                         <td>
-                            <form action="{{ route('suppliers.destroy', $item->company_id) }}" method="POST">
+                            <form action="{{ route('suppliers.destroy', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?')">Delete</button>
