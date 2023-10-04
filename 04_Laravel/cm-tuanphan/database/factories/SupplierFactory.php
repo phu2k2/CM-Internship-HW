@@ -20,7 +20,7 @@ class SupplierFactory extends Factory
             'company_id' => fake()->unique()->regexify('[A-Z]{3}'),
             'company_name' => fake('vi_VN')->company(),
             'transaction_name' => strtoupper(fake()->text(20)),
-            'address' => fake('vi_VN')->city() . "," . fake('vi_VN')->province(),
+            'address' => fake('vi_VN')->address(),
             'email' => fake()->unique()->companyEmail(),
             'phone' => fake()->numerify('##########'),
             'fax' => fake()->numerify('##########'),
