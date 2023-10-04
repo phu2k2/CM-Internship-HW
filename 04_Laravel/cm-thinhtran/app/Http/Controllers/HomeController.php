@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function cau1()
     {
-        $products = Supplier::where('company_name', 'Stamm LLC')->first()->products;
+        $products = Supplier::where('company_name', 'Công ty Việt Tiến')->first()->products;
         return $products;
     }
 
@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function cau2()
     {
         $suppliers = Supplier::whereHas('products.category', function ($query) {
-            $query->where('category_name', 'LIKE', '%Corrine%');
+            $query->where('category_name', 'LIKE', '%Thực phẩm%');
         })->get();
         return $suppliers;
     }
@@ -43,7 +43,10 @@ class HomeController extends Controller
     public function cau3()
     {
         $suppliers = Customer::whereHas('orders.orderDetails.product', function ($query) {
-            $query->where('product_name', 'LIKE', '%on%');
+            $query->where([
+                ['product_name', 'LIKE', '%Sữa%'],
+                ['unit', 'LIKE', '%Hộp%'],
+            ]);
         })->get();
         return $suppliers;
     }
@@ -76,7 +79,7 @@ class HomeController extends Controller
     public function cau6()
     {
         $order = OrderDetail::selectRaw('invoice_id, product_id, (price - discount )*amount as totalPrice')
-        ->where('invoice_id', 9)
+        ->where('invoice_id', 3)
         ->get();
         return $order;
     }
@@ -109,7 +112,9 @@ class HomeController extends Controller
      */
     public function cau9()
     {
-        $orders = Order::join('customers',  'orders.customer_id', '=', 'customers.id')->whereColumn('orders.destination', '=', 'customers.address')->get();
+        $orders = Order::join('customers',  'orders.customer_id', '=', 'customers.id')
+            ->whereColumn('orders.destination', '=', 'customers.address')
+            ->get();
         return $orders;
     }
 
@@ -132,4 +137,3 @@ class HomeController extends Controller
     }
 
 }
-
