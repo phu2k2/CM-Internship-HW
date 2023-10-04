@@ -10,6 +10,7 @@ use App\Http\Requests\Employees\EditEmployeeRequest;
 
 class EmployeeController extends Controller
 {
+    const DEFAULT_EMPLOYEE_ID = '0001';
     public function __construct()
     {
         View::share('pageTitle', 'Quản lý nhân viên');
@@ -21,24 +22,24 @@ class EmployeeController extends Controller
         return view("admin.manages.employees.index" , compact("employees"));
     }
 
-    private function generateNextEmployeeId()
+    private function generatenextEmployeeID()
     {
-        $maxCompanyId = Employee::max('employee_id');
-        if ($maxCompanyId === null) {
-            $nextCompanyId = '0001';
+        $maxEmployeeID = Employee::max('employee_id');
+        if ($maxEmployeeID === null) {
+            $nextEmployeeID = DEFAULT_EMPLOYEE_ID;
         } else {
-            $nextCompanyId = str_pad((int)$maxCompanyId + 1, 4, '0', STR_PAD_LEFT);
+            $nextEmployeeID = str_pad((int)$maxEmployeeID + 1, 4, '0', STR_PAD_LEFT);
         }
-        while (Employee::where('employee_id', $nextCompanyId)->exists()) {
-            $nextCompanyId = str_pad((int)$nextCompanyId + 1, 4, '0', STR_PAD_LEFT);
+        while (Employee::where('employee_id', $nextEmployeeID)->exists()) {
+            $nextEmployeeID = str_pad((int)$nextEmployeeID + 1, 4, '0', STR_PAD_LEFT);
         }
     
-        return $nextCompanyId;
+        return $nextEmployeeID;
     }
 
     public function store(CreateEmployeeRequest $req)
     {
-        $employee = Employee::create(array_merge($req->except("_token") , ['employee_id' => $this->generateNextEmployeeId()]));
+        $employee = Employee::create(array_merge($req->all() , ['employee_id' => $this->generatenextEmployeeID()]));
         if ($employee) {
             return redirect()->back()->with('success', 'Employee created successfully');
         } else {
@@ -55,7 +56,7 @@ class EmployeeController extends Controller
 
     public function update(EditEmployeeRequest $req, string $id)
     {
-        if(Employee::find($id)->update($req->except("_token" , "_method"))) {
+        if(Employee::find($id)->update($req->all())) {
             return redirect()->back()->with('success', 'Edit employee successfully');
         } else {
             return redirect()->back()->withError('Editing employee failed');

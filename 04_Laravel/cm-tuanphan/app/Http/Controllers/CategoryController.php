@@ -24,7 +24,7 @@ class CategoryController extends Controller
 
     public function store(CreateCategoryRequest $req)
     {
-        $category = Category::create($req->except("_token"));
+        $category = Category::create($req->all());
         if ($category) {
             return redirect()->back()->with('success', 'Category created successfully');
         } else {
@@ -41,7 +41,7 @@ class CategoryController extends Controller
 
     public function update(EditCategoryRequest $req, string $id)
     {
-        if(Category::find($id)->update($req->except("_token" , "_method"))) {
+        if(Category::find($id)->update($req->all())) {
             return redirect()->back()->with('success', 'Edit category successfully');
         } else {
             return redirect()->back()->withError('Editing category failed');

@@ -23,7 +23,7 @@ class CustomerController extends Controller
 
     public function store(CreateCustomerRequest $req)
     {
-        $customer = Customer::create($req->except("_token"));
+        $customer = Customer::create($req->all());
         if ($customer) {
             return redirect()->back()->with('success', 'Customer created successfully');
         } else {
@@ -40,7 +40,7 @@ class CustomerController extends Controller
 
     public function update(EditCustomerRequest $req, string $id)
     {
-        if(Customer::find($id)->update($req->except("_token" , "_method"))) {
+        if(Customer::find($id)->update($req->all())) {
             return redirect()->back()->with('success', 'Edit customer successfully');
         } else {
             return redirect()->back()->withError('Editing customer failed');
