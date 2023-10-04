@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4" method="POST" action="{{ route('employees.update',['employee' => $employee['employee_id']]) }}">
+            <form class="form-horizontal mt-4" method="POST" action="{{ route('employees.update',['employee' => $employee['id']]) }}">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="employee_id" value="{{ $employee['id'] }}">

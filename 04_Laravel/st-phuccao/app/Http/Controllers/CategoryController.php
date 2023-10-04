@@ -73,7 +73,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, int $id)
     {
         $category = Category::findOrFail($id);
         $category->category_name = $request->input('category_name');
@@ -84,14 +84,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        try {
-            $category = Category::findOrFail($id);
-            $category->delete();
-            return redirect()->route('categories.index');
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

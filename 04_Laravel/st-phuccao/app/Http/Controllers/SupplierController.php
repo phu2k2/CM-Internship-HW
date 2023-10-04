@@ -72,28 +72,28 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.supplier.edit', ['supplier' => Supplier::where('company_id', $id)->firstOrFail()]);
+        return view('admin.supplier.edit', ['supplier' => Supplier::findOrFail($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSupplierRequest $request, string $id)
+    public function update(UpdateSupplierRequest $request, int $id)
     {
-        $supplier = Supplier::where('company_id', $id)->firstOrFail();
+        $supplier = Supplier::findOrFail($id);
         $data = $request->only([
             'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
         ]);
         $supplier->update($data);
-        return redirect()->route('suppliers.edit', ['supplier' => $supplier->company_id]);
+        return redirect()->route('suppliers.edit', ['supplier' => $supplier->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        $supplier = Supplier::where('company_id', $id)->firstOrFail();
+        $supplier = Supplier::findOrFail($id);
         $supplier->delete();
         return redirect()->route('suppliers.index');
     }

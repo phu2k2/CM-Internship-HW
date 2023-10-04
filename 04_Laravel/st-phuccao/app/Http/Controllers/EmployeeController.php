@@ -71,30 +71,30 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        return view('admin.employee.edit', ['employee' => Employee::where('employee_id', $id)->firstOrFail()]);
+        return view('admin.employee.edit', ['employee' => Employee::findOrFail($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEmployeeRequest $request, string $id)
+    public function update(UpdateEmployeeRequest $request, int $id)
     {
-        $employee = Employee::where('employee_id', $id)->firstOrFail();
+        $employee = Employee::findOrFail($id);
         $employee->update($request->only([
             'last_name', 'first_name', 'birthday', 'start_date',
             'address', 'phone', 'base_salary', 'allowance'
         ]));
-        return redirect()->route('employees.edit', $employee->employee_id);
+        return redirect()->route('employees.edit', $employee->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        $employee = Employee::where('employee_id', $id)->firstOrFail();
+        $employee = Employee::findOrFail($id);
         $employee->delete();
         return redirect()->route('employees.index');
     }
