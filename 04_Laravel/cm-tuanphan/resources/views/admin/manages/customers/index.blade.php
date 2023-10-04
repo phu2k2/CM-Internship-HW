@@ -34,6 +34,13 @@
                     {{ $message }}
                 </div>
                 @enderror
+                <label>Email</label>
+                <input class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email"/>
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
                 <label>Số điện thoại</label>
                 <input class="form-control @error('phone_number') is-invalid @enderror" placeholder="Số điện thoại" name="phone_number"/>
                 @error('phone_number')

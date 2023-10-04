@@ -23,8 +23,8 @@ class EditCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required',Rule::unique('categories')->ignore($this->category),'max:2'],
-            'category_name' => 'required|string|max:255',
+            'category_id' => 'required|unique:categories|max:2',
+            'category_name' => 'required|string|unique:categories|max:255',
         ];
     }
 
@@ -32,7 +32,6 @@ class EditCategoryRequest extends FormRequest
     {
         return [
             'category_id.required' => 'Vui lòng nhập ID danh mục.',
-            'category_id.numeric' => 'ID danh mục phải là số.',
             'category_id.unique' => 'ID danh mục đã tồn tại.',    
             'category_id.max' => 'Tên danh mục không được vượt quá 2 ký tự.',         
             'category_name.required' => 'Vui lòng nhập Tên danh mục.',
