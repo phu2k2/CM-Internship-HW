@@ -88,7 +88,6 @@ class HomeController extends Controller
             ->groupBy('birthday')
             ->havingRaw('COUNT(*) > 1')
             ->get();
-
     }
 
     public function exciseNine()
