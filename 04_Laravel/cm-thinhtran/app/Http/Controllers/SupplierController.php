@@ -6,7 +6,6 @@ use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Models\Supplier;
 use Exception;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
