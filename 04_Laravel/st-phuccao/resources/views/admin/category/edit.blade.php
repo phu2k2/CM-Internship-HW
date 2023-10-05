@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4" method="POST" action="{{ route('categories.update',['category' => $category['category_id']]) }}">
+            <form class="form-horizontal mt-4" method="POST" action="{{ route('categories.update',['category' => $category['id']]) }}">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

@@ -13,7 +13,14 @@
     <div class="col-12">
         <div class="card card-body">
             <form class="form-horizontal mt-4" method="POST" action="{{ route('employees.store') }}">
-                @csrf 
+                @csrf
+                <div class="form-group">
+                    <label>Employee ID</label>
+                    <input type="text" class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" value="{{ old('employee_id') }}">
+                    @error('employee_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group">
                     <label>Last Name</label>
                     <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">

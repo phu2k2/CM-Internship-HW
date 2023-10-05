@@ -27,11 +27,11 @@ class UpdateEmployeeRequest extends FormRequest
             'first_name' => 'required|max:10',
             'birthday' => 'required|date',
             'start_date' => 'required|date',
-            'address' => 'required|max:60|unique:employees',
+            'address' => 'required|max:60',
             'phone' => [
                 'required',
                 'max:15',
-                Rule::unique('employees', 'phone')->ignore('employee'),
+                Rule::unique('employees', 'phone')->ignore($this->input('employee_id')),
             ],
             'base_salary' => 'required|numeric|min:0',
             'allowance' => 'required|numeric|min:0',

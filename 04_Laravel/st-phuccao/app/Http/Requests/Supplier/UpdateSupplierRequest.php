@@ -30,7 +30,7 @@ class UpdateSupplierRequest extends FormRequest
                 'required',
                 'string',
                 'max:15',
-                Rule::unique('suppliers', 'phone')->ignore('supplier'),
+                Rule::unique('suppliers', 'phone')->ignore($this->input('supplier_id')),
             ],
             'fax' => 'nullable|string|max:15',
             'email' => [
@@ -38,7 +38,7 @@ class UpdateSupplierRequest extends FormRequest
                 'string',
                 'email',
                 'max:30',
-                Rule::unique('suppliers', 'email')->ignore('supplier'),
+                Rule::unique('suppliers', 'email')->ignore($this->input('supplier_id')),
             ], 
         ];
     }

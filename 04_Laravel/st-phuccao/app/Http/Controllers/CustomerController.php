@@ -4,41 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
-use Illuminate\Http\Request;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
-    private $customerData = [
-        [
-            'customer_id' => 1,
-            'company_name' => 'Company A',
-            'transaction_name' => 'Transaction 1',
-            'address' => '123 Main St, City A',
-            'email' => 'companya@example.com',
-            'phone' => '123-456-7890',
-            'fax' => '987-654-3210',
-            'created_at' => '22/09/2023',
-            'updated_at' => '22/09/2023',
-        ],
-        [
-            'customer_id' => 2,
-            'company_name' => 'Company B',
-            'transaction_name' => 'Transaction 2',
-            'address' => '456 Elm St, City B',
-            'email' => 'companyb@example.com',
-            'phone' => '555-555-5555',
-            'fax' => null, // Fax có thể null, vì đã được định nghĩa là nullable()
-            'created_at' => '22/09/2023',
-            'updated_at' => '22/09/2023',
-        ],
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.customer.index', ['customers' => $this->customerData]);
+        // Number of records displayed per page
+        $perPage = 10;
+        $customers = Customer::paginate($perPage);
+        return view('admin.customer.index', compact('customers'));
     }
 
     /**
@@ -54,7 +32,8 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        
+        Customer::create($request->validated());
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -70,12 +49,7 @@ class CustomerController extends Controller
      */
     public function edit(int $id)
     {
-        foreach ($this->customerData as $key => $value) {
-            if ($value['customer_id'] == $id) {
-                $customer = $value;
-            }
-        }
-        return view('admin.customer.edit', compact('customer'));
+        return view('admin.customer.edit', ['customer' => Customer::findOrFail($id)]);
     }
 
     /**
@@ -83,7 +57,9 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, int $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->update($request->validated());
+        return redirect()->route('customers.edit', $customer->id);
     }
 
     /**
@@ -91,6 +67,8 @@ class CustomerController extends Controller
      */
     public function destroy(int $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return redirect()->route('customers.index');
     }
 }

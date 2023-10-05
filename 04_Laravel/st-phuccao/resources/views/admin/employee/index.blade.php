@@ -36,7 +36,7 @@
                 @foreach ($employees as $item)
                     <tr>
                     <th scope="row">{{$loop->index}}</th>
-                        <td>{{ $item['employee_id'] }}</td>
+                        <td>{{ $item['id'] }}</td>
                         <td>{{ $item['last_name'] }}</td>
                         <td>{{ $item['first_name'] }}</td>
                         <td>{{ $item['birthday'] }}</td>
@@ -46,23 +46,31 @@
                         <td>{{ $item['base_salary'] }}</td>
                         <td>{{ $item['allowance'] }}</td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.edit', ['employee' => $item['employee_id']]) }}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.edit', ['employee' => $item['id']]) }}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-account-edit"></i>
                                 <span class="hide-menu">Edit</span>
                             </a>
                         </td>
                         <td>
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=""
-                                aria-expanded="false">
-                                <i class="mdi mdi-account-remove"></i>
-                                <span class="hide-menu">Delete</span>
-                            </a>
+                            <form action="{{ route('employees.destroy', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach   
                 </tbody>
             </table>
+            <div class="text-center">
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $employees->previousPageUrl() }}'" @if (!$employees->onFirstPage()) style="display:inline-block" @else style="display:none" @endif>
+                    Previous
+                </button>
+                <button class="btn btn-success text-white" onclick="window.location.href='{{ $employees->nextPageUrl() }}'" @if ($employees->hasMorePages()) style="display:inline-block" @else style="display:none" @endif>
+                    Next
+                </button>
+            </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <button class="btn btn-success text-white"><a href="{{ route('employees.create') }}">Add Employee</a></button>

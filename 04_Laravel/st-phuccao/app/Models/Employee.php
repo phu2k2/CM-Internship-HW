@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'employees';
 
@@ -23,7 +24,7 @@ class Employee extends Model
         'allowance',
     ];
 
-    protected $casts = [
+    protected $dates = [
         'birthday' => 'datetime',
         'start_date' => 'datetime',
     ];

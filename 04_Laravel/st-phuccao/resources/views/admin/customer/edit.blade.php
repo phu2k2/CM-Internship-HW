@@ -12,9 +12,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            <form class="form-horizontal mt-4" method="POST" action="{{ route('customers.update',['customer' => $customer['customer_id']]) }}">
+            <form class="form-horizontal mt-4" method="POST" action="{{ route('customers.update',['customer' => $customer['id']]) }}">
             @csrf
             @method('PUT')
+                <input type="hidden" name="customer_id" value="{{ $customer['id'] }}">
                 <div class="form-group">
                     <label>Company Name</label>
                     <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name', $customer['company_name']) }}">

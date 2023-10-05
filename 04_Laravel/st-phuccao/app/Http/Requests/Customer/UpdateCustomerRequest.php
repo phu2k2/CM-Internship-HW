@@ -31,13 +31,13 @@ class UpdateCustomerRequest extends FormRequest
                 'string',
                 'email',
                 'max:30',
-                Rule::unique('customers', 'email')->ignore('customer'),
+                Rule::unique('customers', 'email')->ignore($this->input('customer_id')),
             ], 
             'phone' => [
                 'required',
                 'string',
                 'max:15',
-                Rule::unique('customers', 'phone')->ignore('customer'),
+                Rule::unique('customers', 'phone')->ignore($this->input('customer_id')),
             ],
             'fax' => 'nullable|string|max:15',
         ];
