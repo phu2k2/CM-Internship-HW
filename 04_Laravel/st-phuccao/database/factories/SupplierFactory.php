@@ -15,7 +15,6 @@ class SupplierFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = Supplier::class;
 
     public function definition(): array

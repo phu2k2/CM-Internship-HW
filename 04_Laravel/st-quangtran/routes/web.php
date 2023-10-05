@@ -22,17 +22,17 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', function () {
-    return view("admin.customer.show");
+    return view("admin.pages.dashboard");
 });
 
 //customer
-Route::resource("customers", CustomerController::class);
+Route::resource('customers', CustomerController::class);
 
 //category
-Route::resource("categories", CategoryController::class);
+Route::resource('categories', CategoryController::class);
 
 //employee
-Route::resource("employees", EmployeeController::class);
+Route::resource('employees', EmployeeController::class);
 
 //supplier
-Route::resource("suppliers", SupplierController::class);
+Route::resource('suppliers', SupplierController::class);

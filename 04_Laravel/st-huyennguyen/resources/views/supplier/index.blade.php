@@ -3,19 +3,19 @@
 @section('PageName', 'List Suppliers')
 @section('Modal', 'Supplier')
 @section('content')
-    @if (Session::has('message'))
+    @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-text"><strong>Success!</strong> {{ Session::get('message') }}</span>
+            <span class="alert-text"><strong>Success!</strong> {{ session()->get('message') }}</span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     @endif
-    @if (Session::has('error'))
+    @if (session()->has('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <span class="alert-icon"><i class="ni ni-notification-70"></i></span>
-            <span class="alert-text"><strong>Error!</strong> {{ Session::get('error') }}</span>
+            <span class="alert-text"><strong>Error!</strong> {{ session()->get('error') }}</span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -121,4 +121,5 @@
             </div>
         </div>
     </div>
+    {!! $suppliers->links('pagination::bootstrap-4') !!}
 @endsection

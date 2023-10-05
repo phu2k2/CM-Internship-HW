@@ -22,14 +22,10 @@ return new class extends Migration
             $table->unsignedDecimal('price', 10, 2);
             $table->foreign('category_id')
                 ->references('category_id')
-                ->on('categories')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->on('categories');
             $table->foreign('company_id')
                 ->references('company_id')
-                ->on('suppliers')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->on('suppliers');
             $table->timestamps();
         });
     }

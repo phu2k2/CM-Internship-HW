@@ -2,77 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customer\DeleteCustomerRequest;
 use App\Http\Requests\Customer\StoreCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        for ($i = 0; $i < 10; $i++) {
-            $customers[] = [
-                'id' => rand(1, 1000),
-                'company_name' => 'Company ' . $i,
-                'transaction_name' => 'Transaction ' . $i,
-                'address' => 'Address ' . $i,
-                'email' => 'email' . $i . '@example.com',
-                'phone' => '123-456-' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'fax' => 'Fax ' . $i,
-                'created_at' => now()->subDays(rand(1, 365))->format('Y-m-d'),
-                'updated_at' => now()->subDays(rand(1, 365))->format('Y-m-d')
-            ];
-        }
+        $customers = Customer::paginate(5);
 
-        return view("admin.customer.index", ['customers' => $customers]);
+        return view('admin.customer.index', compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view("admin.customer.create");
+        return view('admin.customer.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
+        $customer = new Customer();
+
+        if ($customer->create($request->validated())) {
+            session()->flash('message', 'Create new customer was successful!');
+        } else {
+            session()->flash('error', 'Create new customer failed!');
+        }
+
+        return redirect()->route('customers.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
-        return view('admin.customer.edit', ['id' => $id]);
+        $customer = Customer::findOrFail($id);
+
+        return view('admin.customer.edit', compact('customer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateCustomerRequest $request, int $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        if ($customer->update($request->validated())) {
+            session()->flash('message', 'Update the customer was successful!');
+        } else {
+            session()->flash('error', 'Update the customer failed!');
+        }
+
+        return redirect()->route('customers.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(int $id)
+    public function destroy(DeleteCustomerRequest $request, string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        if ($customer->delete()) {
+            session()->flash('message', 'Delete the customer was successful!');
+        } else {
+            session()->flash('error', 'Delete the customer failed!');
+        }
+
+        return redirect()->route('customers.index');
     }
 }
