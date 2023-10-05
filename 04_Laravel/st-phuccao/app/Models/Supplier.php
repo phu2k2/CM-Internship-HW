@@ -23,8 +23,6 @@ class Supplier extends Model
         'email',
     ];
 
-    protected $dates = ['deleted_at'];
-
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'company_id', 'company_id');
