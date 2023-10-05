@@ -30,4 +30,14 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
+
+    public function scopeJoinProduct($query)
+    {
+          return $query->join('products', 'orderdetails.product_id', '=', 'products.product_id');
+    }
+
+    public function scopeJoinOrder($query)
+    {
+          return $query->join('orders', 'orderdetails.invoice_id', '=', 'orders.id');
+    }
 }

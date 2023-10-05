@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\HomeController;
 use App\Models\Category;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +48,7 @@ Route::get('/chang', function () {
     ];
     return response()->json($results);
 });
+
+Route::get('/supplierWithProduct', [SupplierController::class, 'getSuppliersWithProducts']);
+
+Route::get('/homeController', [HomeController::class, 'practice']);

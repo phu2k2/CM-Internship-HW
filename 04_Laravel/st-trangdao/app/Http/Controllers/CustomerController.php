@@ -71,9 +71,7 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, string $id)
     {
         $customer = Customer::findOrFail($id);
-
         $customer->update($request->validated());
-
         if ($customer->wasChanged()) {
             session()->flash('message', 'Successfully updated!');
         } else {
@@ -89,7 +87,6 @@ class CustomerController extends Controller
     public function destroy(DeleteCustomerRequest $request, string $id)
     {
         $customer = Customer::findOrFail($id);
-
         if ($customer->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {

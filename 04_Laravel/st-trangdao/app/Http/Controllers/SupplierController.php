@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Supplier\CreateSupplierRequest;
 use App\Http\Requests\Supplier\DeleteSupplierRequest;
 use App\Http\Requests\Supplier\UpdateSupplierRequest;
+use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -70,9 +71,7 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-
         $supplier->update($request->validated());
-
         if ($supplier->wasChanged()) {
             session()->flash('message', 'Successfully updated!');
         } else {
@@ -88,7 +87,6 @@ class SupplierController extends Controller
     public function destroy(DeleteSupplierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-
         if ($supplier->delete($id)) {
             session()->flash('message', 'Successfully deleted!');
         } else {
@@ -96,5 +94,12 @@ class SupplierController extends Controller
         }
 
         return redirect()->route('suppliers.index');
+    }
+
+    public function getSuppliersWithProducts()
+    {
+        $suppliers = Supplier::with('products')->get();
+
+        return SupplierResource::collection($suppliers);
     }
 }

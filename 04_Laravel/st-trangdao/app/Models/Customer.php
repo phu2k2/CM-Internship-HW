@@ -26,4 +26,9 @@ class Customer extends Model
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
+
+    public function scopeJoinSupplier($query)
+    {
+          return $query->join('suppliers', 'suppliers.transaction_name', '=', 'customers.transaction_name');
+    }
 }

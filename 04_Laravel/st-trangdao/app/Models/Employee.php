@@ -24,13 +24,21 @@ class Employee extends Model
         'base_salary',
         'allowance'
     ];
-
     protected $attributes = [
         'allowance' => 0,
+    ];
+    protected $casts = [
+        'base_salary' => 'integer',
+        'allowance' => 'integer'
     ];
 
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');
+    }
+
+    public function scopeLeftJoinOrder($query)
+    {
+        return $query->leftjoin('orders', 'orders.employee_id', '=', 'employees.employee_id');
     }
 }

@@ -38,4 +38,18 @@ class Product extends Model
     {
         return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }
+    public function scopeJoinSupplier($query)
+    {
+          return $query->join('suppliers', 'suppliers.company_id', '=', 'products.company_id');
+    }
+
+    public function scopeJoinCategory($query)
+    {
+          return $query->join('categories', 'categories.category_id', '=', 'products.category_id');
+    }
+
+    public function scopeLeftJoinOrderDetail($query)
+    {
+        return $query->leftjoin('orderdetails', 'orderdetails.product_id', '=', 'products.product_id');
+    }
 }
