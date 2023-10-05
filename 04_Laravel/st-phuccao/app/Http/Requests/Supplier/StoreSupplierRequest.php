@@ -22,7 +22,7 @@ class StoreSupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required|max:3|unique:suppliers',
+            'company_id' => 'required|max:3|unique:suppliers,company_id',
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
