@@ -29,8 +29,8 @@ class StoreEmployeeRequest extends FormRequest
             'start_date' => 'nullable|date',
             'address' => 'required|string|max:60',
             'phone' => 'required|string|max:15',
-            'base_salary' => 'required|numeric|digit:12',
-            'allowance' => 'required|numeric|digit:12',
+            'base_salary' => 'required|numeric',
+            'allowance' => 'required|numeric',
         ];
     }
 }

@@ -42,7 +42,9 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Fax</th>
-                                        <th class="text-secondary opacity-7"></th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,17 +75,21 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $customer['fax'] }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('customers.edit', ['customer' => $customer['id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success">Edit</span>
-                                                </a>
-
-                                                <a href="{{ route('customers.destroy', ['customer' => $customer['id']]) }}"
-                                                    class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                    data-original-title="Edit user">
-                                                    <span class="badge badge-sm bg-gradient-success ">Delete</span>
-                                                </a>
+                                                <div class="d-flex justify-content-evenly">
+                                                    <a href="{{ route('customers.edit', ['customer' => $customer['id']]) }}"
+                                                        class="font-weight-bold btn btn-xs bg-gradient-success"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-xs">Delete</button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -111,14 +117,6 @@
                         @csrf
                         <!-- Modal Body -->
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="id" name="id"
-                                    value="{{ old('id') }}">
-                                @error('id')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
                             <div class="mb-3">
                                 <label for="company_name">Company Name:</label>
                                 <input type="text" class="form-control" id="company_name" name="company_name"

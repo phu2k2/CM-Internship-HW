@@ -4,28 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    private $categories = [
-        [ 'category_id' => 'TP',
-          'category_name' => 'Thực phẩm' ],
-        [ 'category_id' => 'DT',
-          'category_name' => 'Ðiện tử' ],
-        [ 'category_id' => 'MM',
-          'category_name' => 'May mặc' ],
-        [ 'category_id' => 'NT',
-          'category_name' => 'Nội thất' ],
-        [ 'category_id' => 'DC',
-          'category_name' => 'Dụng cụ học tập' ]
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = $this->categories;
+        $categories = Category::all();
         return view("admin.pages.category.index", compact('categories'));
     }
 
@@ -43,6 +31,8 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
+        Category::insert($validated);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -58,12 +48,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $categories = $this->categories;
-        foreach ($categories as $category) {
-            if ((int)$category['category_id'] === (int)$id) {
-                return view("admin.pages.category.edit", compact('category'));
-            }
-        }
+        $category = Category::findOrFail($id);
+        return view("admin.pages.category.edit", compact('category'));
     }
 
     /**
@@ -72,6 +58,8 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, string $id)
     {
         $validated = $request->validated();
+        Category::findOrFail($id)->update($validated);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -79,6 +67,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::findOrFail($id)->delete();
+        return redirect()->route('categories.index');
     }
 }

@@ -8,10 +8,14 @@
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="container mt-5">
                             <h1>Edit Category Information</h1>
-                            <form action="{{ route('categories.update', ['category' => $category['category_id']]) }}"
-                                method="POST">
+                            <form action="{{ route('categories.update', ['category' => $category['id']]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <div class="d-none">
+                                    <label for="id" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="id" name="id"
+                                        value="{{ old('id', $category['id']) }}" readonly>
+                                </div>
                                 <div class="mb-3">
                                     <label for="id" class="form-label">ID</label>
                                     <input type="text" class="form-control" id="category_id" name="category_id"

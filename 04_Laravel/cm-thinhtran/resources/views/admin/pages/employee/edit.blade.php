@@ -11,6 +11,11 @@
                             <form action="{{ route('employees.update', ['employee' => $employee['id']]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <div class="d-none">
+                                    <label for="id">ID:</label>
+                                    <input type="text" class="form-control" id="id" name="id"
+                                        value="{{ $employee['id'] }}">
+                                </div>
                                 <div class="mb-3">
                                     <label for="id" class="form-label">ID</label>
                                     <input type="text" class="form-control" id="employee_id" name="employee_id"
@@ -101,7 +106,8 @@
                                 document.write(new Date().getFullYear())
                             </script>,
                             made with <i class="fa fa-heart"></i> by
-                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative
+                                Tim</a>
                             for a better web.
                         </div>
                     </div>
