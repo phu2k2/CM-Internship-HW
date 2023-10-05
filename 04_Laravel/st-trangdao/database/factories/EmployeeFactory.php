@@ -20,12 +20,12 @@ class EmployeeFactory extends Factory
             'employee_id' => strtoupper(fake()->unique()->regexify('([A-Z]{1})([0-9]{3})')),
             'last_name' => fake('vi_VN')->lastName() . ' ' . fake('vi_VN')->middleName(),
             'first_name' => fake('vi_VN')->firstName(),
-            'birthday'  => fake()->dateTimeInInterval('-40 years', '-18 years', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
-            'start_date'  => fake()->dateTimeInInterval('-18 years', 'now', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
+            'birthday'  => fake()->dateTimeBetween('-40 years', '-18 years', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
+            'start_date'  => fake()->dateTimeBetween('-18 years', 'now', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
             'address' => fake()->boolean() ? fake('vi_VN')->city() : fake('vi_VN')->province(),
             'phone' => fake('vi_VN')->unique()->regexify('0([0-9]{9})'),
-            'base_saraly' => fake()->numberBetween(1000000, 99999999),
-            'allowance' => fake()->numberBetween(0, 5000000),
+            'base_salary' => fake()->numberBetween(5000, 99999) * 1000,
+            'allowance' => fake()->numberBetween(0, 5000) * 1000,
         ];
     }
 }

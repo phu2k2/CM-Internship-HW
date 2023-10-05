@@ -66,7 +66,7 @@
 </head>
 
 <body>
-<!-- Layout wrapper -->
+  <!-- Layout wrapper -->
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
       @section('sidebar')
@@ -81,9 +81,35 @@
       <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">@yield('pageName')</span></h4>
-          <div class="row">
+          @if (session('error'))
+            <div class="alert alert-danger" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Notify</div>
+                    <small>Now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('error') }}
+                </div>
+            </div>
+          @endif
+          @if (session('message'))
+              <div class="alert alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                      <i class="bx bx-bell me-2"></i>
+                      <div class="me-auto fw-semibold">Notify</div>
+                      <small>Now</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                      {{ session('message') }}
+                  </div>
+              </div>
+          @endif
+        <div class="row">
             @yield('content')
-          </div>
+        </div>
       </div>
       @show
       @section('footer')
