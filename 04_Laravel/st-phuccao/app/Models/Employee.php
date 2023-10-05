@@ -25,12 +25,10 @@ class Employee extends Model
         'allowance',
     ];
 
-    protected $casts = [
+    protected $dates = [
         'birthday' => 'datetime',
         'start_date' => 'datetime',
     ];
-
-    protected $dates = ['deleted_at'];
 
     public function orders(): HasMany
     {

@@ -22,8 +22,6 @@ class Customer extends Model
         'fax',
     ];
 
-    protected $dates = ['deleted_at'];
-
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');

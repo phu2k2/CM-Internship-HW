@@ -5,31 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Str;
-
 
 class EmployeeController extends Controller
 {
-    private function generateUniqueEmployeeId()
-    {
-        $lengthOfId = 4;
-        do {
-            $employeeId = Str::upper(Str::random($lengthOfId));
-            $existingEmployee = Employee::where('employee_id', $employeeId)->first();
-        } while ($existingEmployee);
-        return $employeeId;
-    }
-    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $perPage = 10; // Number of records displayed per page
-        $employees = Employee::paginate($perPage);
+        $employees = Employee::paginate($perPage); 
         return view('admin.employee.index', compact('employees'));
     }
 
@@ -47,17 +33,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         try {
-            Employee::create([
-                'employee_id' => $this->generateUniqueEmployeeId(),
-                'last_name' => $request->input('last_name'),
-                'first_name' => $request->input('first_name'),
-                'birthday' => $request->input('birthday'),
-                'start_date' => $request->input('start_date'),
-                'address' => $request->input('address'),
-                'phone' => $request->input('phone'),
-                'base_salary' => $request->input('base_salary'),
-                'allowance' => $request->input('allowance'),
-            ]);
+            Employee::create($request->validated());
             return redirect()
                     ->route('employees.create')
                     ->with('success', 'Successfully added employee!');
@@ -91,10 +67,7 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::findOrFail($id);
-            $employee->update($request->only([
-                'last_name', 'first_name', 'birthday', 'start_date',
-                'address', 'phone', 'base_salary', 'allowance'
-            ]));
+            $employee->update($request->validated());
             return redirect()
                         ->route('employees.edit', $employee->id)
                         ->with('success', 'Updated employee information successfully!');

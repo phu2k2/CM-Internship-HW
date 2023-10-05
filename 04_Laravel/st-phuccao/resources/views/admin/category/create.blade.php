@@ -14,7 +14,14 @@
         <div class="card card-body">
             @include('admin.layouts.alerts')
             <form class="form-horizontal mt-4" method="POST" action="{{ route('categories.store') }}">
-                @csrf   
+                @csrf
+                <div class="form-group">
+                    <label for="category_name">Category ID</label>
+                    <input type="text" class="form-control" id="category_id" name="category_id" value = "{{ old('category_id') }}">
+                    @error('category_name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="form-group">
                     <label for="category_name">Category Name</label>
                     <input type="text" class="form-control" id="category_name" name="category_name" value = "{{ old('category_name') }}">
