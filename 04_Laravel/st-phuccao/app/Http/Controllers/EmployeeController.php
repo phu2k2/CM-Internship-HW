@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
-use Illuminate\Support\Str;
-
 
 class EmployeeController extends Controller
 {
