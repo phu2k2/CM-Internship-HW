@@ -36,14 +36,12 @@ class SupplierController extends Controller
     {
         try {
             Supplier::create($request->validated());
-            return redirect()
-                        ->route('suppliers.create')
-                        ->with('success', 'Successfully added supplier!');
+            session()->flash('success', 'Successfully added supplier!');
         } catch (Exception $e) {
-            return redirect()
-                        ->route('suppliers.create')
-                        ->with('error', 'An error occurred while adding supplier!');
+            session()->flash('error', 'An error occurred while adding supplier!');
         }
+        return redirect()
+            ->route('suppliers.create');
     }
 
     /**
@@ -70,14 +68,12 @@ class SupplierController extends Controller
         try {
             $supplier = Supplier::findOrFail($id);
             $supplier->update($request->validated());
-            return redirect()
-                        ->route('suppliers.edit', ['supplier' => $supplier->id])
-                        ->with('success', 'Updated supplier information successfully!');
+            session()->flash('success', 'Updated supplier information successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()
-                        ->route('suppliers.edit', ['supplier' => $id])
-                        ->with('error', 'Updating employee information failed, Please try again!');
+            session()->flash('error', 'Updating employee information failed, Please try again!');
         }
+        return redirect()
+            ->route('suppliers.edit',$id);
     }
 
     /**
@@ -86,15 +82,12 @@ class SupplierController extends Controller
     public function destroy(int $id)
     {
         try {
-            $supplier = Supplier::findOrFail($id);
-            $supplier->delete();
-            return redirect()
-                        ->route('suppliers.index')
-                        ->with('success', 'Supplier has been deleted successfully!');
+            Supplier::findOrFail($id)->delete();
+            session()->flash('success', 'Supplier has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()
-                        ->route('suppliers.index')
-                        ->with('error', 'Failed to delete customer. An error occurred. Please try again!');
+            session()->flash('error', 'Failed to delete customer. An error occurred. Please try again!');
         }
+        return redirect()
+            ->route('suppliers.index');
     }
 }

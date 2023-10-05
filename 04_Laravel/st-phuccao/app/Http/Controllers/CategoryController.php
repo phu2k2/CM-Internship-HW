@@ -35,15 +35,13 @@ class CategoryController extends Controller
     {
         try {
             // Create a new Category instance and fill its attributes
-            $category = Category::create($request->validated());
-            return redirect()
-                        ->route('categories.index')
-                        ->with('success', 'Successfully added category!');
+            Category::create($request->validated());
+            session()->flash('success', 'Successfully added category!');
         } catch (Exception $e) {
-            return redirect()
-                        ->route('categories.create')
-                        ->with('error', 'An error occurred while adding category!');
+            session()->flash('error', 'An error occurred while adding category!');
         }
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
@@ -71,15 +69,12 @@ class CategoryController extends Controller
             $category = Category::findOrFail($id);
             $category->category_name = $request->input('category_name');
             $category->save();
-
-            return redirect()
-                        ->route('categories.edit', $category->id)
-                        ->with('success', 'Updated category information successfully!');
+            session()->flash('success', 'Updated category information successfully!');
         } catch (Exception $e) {
-            return redirect()
-                        ->route('categories.edit', $id)
-                        ->with('error', 'Updating category information failed, Please try again!');
+            session()->flash('error', 'Updating category information failed, Please try again!');
         }
+        return redirect()
+            ->route('categories.index', $id);
     }
 
     /**
@@ -88,15 +83,12 @@ class CategoryController extends Controller
     public function destroy(int $id)
     {
         try {
-            $category = Category::findOrFail($id);
-            $category->delete();
-            return redirect()
-                        ->route('categories.index')
-                        ->with('success', 'Category has been deleted successfully!');
+            Category::findOrFail($id)->delete();
+            session()->flash('success', 'Category has been deleted successfully!');
         } catch (ModelNotFoundException $e) {
-            return redirect()
-                        ->route('categories.index')
-                        ->with('error', 'Failed to delete category. An error occurred. Please try again!');
+            session()->flash('error', 'Failed to delete category. An error occurred. Please try again!');
         }
+        return redirect()
+            ->route('categories.index');
     }
 }

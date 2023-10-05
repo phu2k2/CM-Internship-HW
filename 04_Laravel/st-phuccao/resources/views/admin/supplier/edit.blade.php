@@ -12,7 +12,6 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-body">
-            @include('admin.layouts.alerts')
             <form class="form-horizontal mt-4" method="POST" action="{{ route('suppliers.update', ['supplier' => $supplier['id']]) }}">
                 @csrf
                 @method('PUT')
