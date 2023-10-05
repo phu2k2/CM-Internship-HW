@@ -28,7 +28,9 @@ class HomeController extends Controller
     {
         $companyName = 'Công Ty Việt Tiến';
 
-        $product = Supplier::with('products')->where('company_name', 'LIKE', "%$companyName%")->get();
+        $product = Supplier::with('products')
+            ->where('company_name', 'LIKE', "%$companyName%")
+            ->get();
 
         return $product;
     }
@@ -38,9 +40,11 @@ class HomeController extends Controller
     {
         $categoryName = 'Thực phẩm';
 
-        $suppliers = Supplier::whereHas('products.category', function ($query) use ($categoryName) {
-            $query->where('category_name', 'LIKE', '%' . $categoryName . '%');
-        })->get();
+        $suppliers = Supplier::join('products', 'suppliers.company_id', '=', 'products.company_id')
+            ->join('categories', 'products.category_id', '=', 'categories.category_id')
+            ->where('categories.category_name', 'LIKE', '%' . $categoryName . '%')
+            ->distinct()
+            ->get();
 
         return $suppliers;
     }
@@ -48,11 +52,14 @@ class HomeController extends Controller
     // 3. Những khách hàng nào (tên giao dịch) đã đặt mua mặt hàng sữa hộp của công ty?
     public function exercise3()
     {
-        $productName = 'sữa hộp';
+        $productName = 'quasi';
 
-        $customers = Customer::whereHas('orders.orderDetails.product', function ($query) use ($productName) {
-            $query->where('product_name', 'LIKE', '%' . $productName . '%');
-        })->get();
+        $customers = Customer::join('orders', 'customers.id', '=', 'orders.customer_id')
+            ->join('order_details', 'orders.id', '=', 'order_details.invoice_id')
+            ->join('products', 'order_details.product_id', '=', 'products.product_id')
+            ->where('products.product_name', 'LIKE', '%' . $productName . '%')
+            ->distinct()
+            ->get();
 
         return $customers;
     }
@@ -62,10 +69,12 @@ class HomeController extends Controller
     {
         $invoiceId = 1;
 
-        $firstOrder = Order::with('customer:id,transaction_name,address', 'employee:id,employee_id')
-            ->select('id', 'customer_id', 'employee_id', 'delivery_date', 'destination')
-            ->where('id', '=', $invoiceId)
-            ->first();
+        $firstOrder = Order::join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('employees', 'employees.id', '=', 'orders.customer_id')
+            ->where('orders.id', '=', $invoiceId)
+            ->select(['customers.company_name', 'orders.delivery_date', 'orders.destination'])
+            ->selectRaw('CONCAT(employees.first_name," ", employees.last_name) as full_name')
+            ->get();
 
         return $firstOrder;
     }
@@ -84,7 +93,8 @@ class HomeController extends Controller
         $orderNumber = 3;
 
         $results = OrderDetail::selectRaw('invoice_id, product_id, (price - discount ) * amount as totalPrice')
-            ->where('invoice_id', $orderNumber)->get();
+            ->where('invoice_id', $orderNumber)
+            ->get();
 
         return $results;
     }
@@ -92,8 +102,8 @@ class HomeController extends Controller
     // 7.Hãy cho biết có những khách hàng nào lại chính là đối tác cung cấp hàng cho công ty (tức là có cùng tên giao dịch)?
     public function exercise7()
     {
-        $customerIsSupplier = Customer::join('suppliers', 'customers.transaction_name', '=', 'suppliers.transaction_name')
-            ->get();
+        $customerIsSupplier = Customer::join('suppliers', 'customers.transaction_name', '=', 'suppliers.transaction_name')->get();
+
         return $customerIsSupplier;
     }
 
@@ -111,9 +121,10 @@ class HomeController extends Controller
     // 9.Những đơn hàng nào yêu cầu giao hàng ngay tại công ty đặt hàng và những đơn đó là của công ty nào?
     public function exercise9()
     {
-        $orders = Order::whereHas('customer', function ($query) {
-            $query->whereColumn('orders.destination', '=', 'customers.address');
-        })->with('customer')->get();
+        $orders = Order::join('customers', 'orders.destination', '=', 'customers.address')
+            ->select('orders.*')
+            ->with('customer')
+            ->get();
 
         return $orders;
     }
@@ -121,7 +132,10 @@ class HomeController extends Controller
     // 10. Những mặt hàng nào chưa từng được khách hàng đặt mua?
     public function exercise10()
     {
-        $productsNotOrdered = Product::doesntHave('orderDetails')->get();
+        $productsNotOrdered = Product::leftJoin('order_details', 'products.product_id', '=', 'order_details.product_id')
+            ->whereNull('order_details.invoice_id')
+            ->select('products.*')
+            ->get();
 
         return $productsNotOrdered;
     }
@@ -129,10 +143,12 @@ class HomeController extends Controller
     // 11. Những nhân viên nào của công ty chưa từng lập hóa đơn đặt hàng nào?
     public function exercise11()
     {
-        $employeesWithoutOrders = Employee::doesntHave('orders')
-            ->select('employee_id')
+        $employeesWithoutOrders = Employee::leftJoin('orders', 'employees.employee_id', '=', 'orders.employee_id')
+            ->whereNull('orders.id')
+            ->select('employees.employee_id')
             ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
             ->get();
+
         return $employeesWithoutOrders;
     }
 }

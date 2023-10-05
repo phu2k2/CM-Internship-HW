@@ -39,4 +39,4 @@ Route::resource('employees', EmployeeController::class);
 Route::resource('suppliers', SupplierController::class);
 
 
-Route::get('practice/{number}', [HomeController::class, 'practice']);
+Route::get('practices/{number}', [HomeController::class, 'practice']);
