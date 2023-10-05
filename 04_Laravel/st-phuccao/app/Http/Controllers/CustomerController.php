@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CustomerController extends Controller
 {
@@ -32,8 +34,14 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        Customer::create($request->validated());
-        return redirect()->route('customers.index');
+        try {
+            Customer::create($request->validated());
+            session()->flash('success', 'Successfully added customer!');
+        } catch (Exception $e) {
+            session()->flash('error', 'An error occurred while adding customer!');
+        }
+        return redirect()
+            ->route('customers.index');
     }
 
     /**
@@ -57,9 +65,15 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, int $id)
     {
-        $customer = Customer::findOrFail($id);
-        $customer->update($request->validated());
-        return redirect()->route('customers.edit', $customer->id);
+        try {
+            $customer = Customer::findOrFail($id);
+            $customer->update($request->validated());
+            session()->flash('success', 'Updated customer information successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Updating customer information failed, Please try again!');
+        }
+        return redirect()
+            ->route('customers.edit', $id);
     }
 
     /**
@@ -67,8 +81,13 @@ class CustomerController extends Controller
      */
     public function destroy(int $id)
     {
-        $customer = Customer::findOrFail($id);
-        $customer->delete();
-        return redirect()->route('customers.index');
+        try {
+            Customer::findOrFail($id)->delete();
+            session()->flash('success', 'Customer has been deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash->with('error', 'Failed to delete customer. An error occurred. Please try again!');
+        }
+        return redirect()
+            ->route('customers.index');
     }
 }

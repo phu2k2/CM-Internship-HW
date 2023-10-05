@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EmployeeController extends Controller
 {
@@ -31,8 +33,14 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        Employee::create($request->validated());
-        return redirect()->route('employees.index');
+        try {
+            Employee::create($request->validated());
+            session()->flash('success', 'Successfully added employee!');
+        } catch (Exception $e) {
+            session()->flash('error', 'An error occurred while adding employee!');
+        }
+        return redirect()
+            ->route('employees.index');
     }
 
     /**
@@ -56,9 +64,15 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, int $id)
     {
-        $employee = Employee::findOrFail($id);
-        $employee->update($request->validated());
-        return redirect()->route('employees.edit', $employee->id);
+        try {
+            $employee = Employee::findOrFail($id);
+            $employee->update($request->validated());
+            session()->flash('success', 'Updated employee information successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Updating employee information failed, Please try again!');
+        }
+        return redirect()
+            ->route('employees.edit', $id);
     }
 
     /**
@@ -66,8 +80,13 @@ class EmployeeController extends Controller
      */
     public function destroy(int $id)
     {
-        $employee = Employee::findOrFail($id);
-        $employee->delete();
-        return redirect()->route('employees.index');
+        try {
+            Employee::findOrFail($id)->delete();
+            session()->flash('success', 'Employee has been deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Failed to delete customer. An error occurred. Please try again!');
+        }
+        return redirect()
+            ->route('employees.index');
     }
 }

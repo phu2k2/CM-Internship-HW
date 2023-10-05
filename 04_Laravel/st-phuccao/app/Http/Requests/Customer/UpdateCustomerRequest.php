@@ -37,6 +37,7 @@ class UpdateCustomerRequest extends FormRequest
                 'required',
                 'string',
                 'max:15',
+                'regex:/^\d{10,15}$/',
                 Rule::unique('customers', 'phone')->ignore($this->input('customer_id')),
             ],
             'fax' => 'nullable|string|max:15',

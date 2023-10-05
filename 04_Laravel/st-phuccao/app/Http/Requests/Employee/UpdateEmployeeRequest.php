@@ -31,6 +31,7 @@ class UpdateEmployeeRequest extends FormRequest
             'phone' => [
                 'required',
                 'max:15',
+                'regex:/^\d{10,15}$/',
                 Rule::unique('employees', 'phone')->ignore($this->input('employee_id')),
             ],
             'base_salary' => 'required|numeric|min:0',

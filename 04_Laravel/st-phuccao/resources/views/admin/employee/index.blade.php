@@ -10,6 +10,7 @@
 
 @section('content')
 <div class="col-12">
+    @include('admin.layouts.alerts')
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">List Employees</h4>

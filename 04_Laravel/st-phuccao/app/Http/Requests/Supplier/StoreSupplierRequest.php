@@ -26,8 +26,8 @@ class StoreSupplierRequest extends FormRequest
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
-            'phone' => 'required|string|max:15|unique:suppliers',
-            'fax' => 'nullable|string|max:15',
+            'phone' => 'required|string|max:15|unique:suppliers|regex:/^\d{10,15}$/',
+            'fax' => 'nullable|string|max:15|regex:/^\d{10,15}$/',
             'email' => 'required|string|email|max:30|unique:suppliers',
         ];
     }

@@ -26,8 +26,8 @@ class StoreCustomerRequest extends FormRequest
             'transaction_name' => 'required|string|max:20',
             'address' => 'required|string|max:50',
             'email' => 'required|string|email|max:30|unique:customers', 
-            'phone' => 'required|string|max:15|unique:customers',
-            'fax' => 'nullable|string|max:15',
+            'phone' => 'required|string|max:15|unique:customers|regex:/^\d{10,15}$/',
+            'fax' => 'nullable|string|max:15|regex:/^\d{10,15}$/',
         ];
     }
 }

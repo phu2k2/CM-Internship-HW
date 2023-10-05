@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Models\Supplier;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SupplierController extends Controller
 {
@@ -32,8 +34,14 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        Supplier::create($request->validated());
-        return redirect()->route('suppliers.index');
+        try {
+            Supplier::create($request->validated());
+            session()->flash('success', 'Successfully added supplier!');
+        } catch (Exception $e) {
+            session()->flash('error', 'An error occurred while adding supplier!');
+        }
+        return redirect()
+            ->route('suppliers.create');
     }
 
     /**
@@ -47,7 +55,7 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
         return view('admin.supplier.edit', ['supplier' => Supplier::findOrFail($id)]);
     }
@@ -57,10 +65,15 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, int $id)
     {
-        $supplier = Supplier::findOrFail($id);
-        $data = $request->validated();
-        $supplier->update($data);
-        return redirect()->route('suppliers.edit', ['supplier' => $supplier->id]);
+        try {
+            $supplier = Supplier::findOrFail($id);
+            $supplier->update($request->validated());
+            session()->flash('success', 'Updated supplier information successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Updating employee information failed, Please try again!');
+        }
+        return redirect()
+            ->route('suppliers.edit',$id);
     }
 
     /**
@@ -68,8 +81,13 @@ class SupplierController extends Controller
      */
     public function destroy(int $id)
     {
-        $supplier = Supplier::findOrFail($id);
-        $supplier->delete();
-        return redirect()->route('suppliers.index');
+        try {
+            Supplier::findOrFail($id)->delete();
+            session()->flash('success', 'Supplier has been deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Failed to delete customer. An error occurred. Please try again!');
+        }
+        return redirect()
+            ->route('suppliers.index');
     }
 }

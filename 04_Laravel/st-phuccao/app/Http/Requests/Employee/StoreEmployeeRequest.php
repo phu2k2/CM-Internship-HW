@@ -28,7 +28,7 @@ class StoreEmployeeRequest extends FormRequest
             'birthday' => 'required|date',
             'start_date' => 'required|date',
             'address' => 'required|max:60',
-            'phone' => 'required|max:15||unique:employees',
+            'phone' => 'required|max:15||unique:employees|regex:/^\d{10,15}$/',
             'base_salary' => 'required|numeric|min:0',
             'allowance' => 'required|numeric|min:0',
         ];

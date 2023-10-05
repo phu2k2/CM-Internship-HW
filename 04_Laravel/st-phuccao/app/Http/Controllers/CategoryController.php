@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends Controller
 {
@@ -31,9 +33,15 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        // Create a new Category instance and fill its attributes
-        Category::create($request->validated());
-        return redirect()->route('categories.index');
+        try {
+            // Create a new Category instance and fill its attributes
+            Category::create($request->validated());
+            session()->flash('success', 'Successfully added category!');
+        } catch (Exception $e) {
+            session()->flash('error', 'An error occurred while adding category!');
+        }
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
@@ -57,10 +65,16 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, int $id)
     {
-        $category = Category::findOrFail($id);
-        $category->category_name = $request->input('category_name');
-        $category->save();
-        return redirect()->route('categories.edit', $category->id);
+        try {
+            $category = Category::findOrFail($id);
+            $category->category_name = $request->input('category_name');
+            $category->save();
+            session()->flash('success', 'Updated category information successfully!');
+        } catch (Exception $e) {
+            session()->flash('error', 'Updating category information failed, Please try again!');
+        }
+        return redirect()
+            ->route('categories.index', $id);
     }
 
     /**
@@ -68,8 +82,13 @@ class CategoryController extends Controller
      */
     public function destroy(int $id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()->route('categories.index');
+        try {
+            Category::findOrFail($id)->delete();
+            session()->flash('success', 'Category has been deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            session()->flash('error', 'Failed to delete category. An error occurred. Please try again!');
+        }
+        return redirect()
+            ->route('categories.index');
     }
 }
