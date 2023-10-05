@@ -23,7 +23,7 @@ class UpdateEmployeeRequest extends FormRequest
     {
         return [
             'id' => 'required|integer|exists:employees,id',
-            'employee_id' => 'required|string|unique:employees,employee_id|size:4',
+            'employee_id' => 'required|string|unique:employees,employee_id,' . $this->id . ',id|size:4',
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',
             'birthday' => 'required|date|before:today',

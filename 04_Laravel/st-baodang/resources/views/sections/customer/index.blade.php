@@ -7,9 +7,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @enderror
-    @if(Session::has('success'))
+    @if(Session::has('status'))
         <div class="alert alert-success alert-dismissible" role="alert">
-            {{ Session::get('success') }}
+            {{ Session::get('status') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -45,7 +45,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <a class="dropdown-item" href="{{ route('customer.edit', $customer->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('customers.edit', $customer->id) }}"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                     <a class="dropdown-item" data-bs-toggle="modal"
                                        data-bs-target="#modalCenter{{$customer->id}}"><i

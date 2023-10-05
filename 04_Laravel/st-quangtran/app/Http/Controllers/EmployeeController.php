@@ -2,80 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
+use App\Http\Requests\Employee\StoreEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        for ($i = 0; $i < 10; $i++) {
-            $employees[] = [
-                'ID' => $i,
-                'Employee ID' => rand(1000, 9999),
-                'Last Name' => 'Last Name ' . $i,
-                'First Name' => 'First Name ' . $i,
-                'Birthday' => date('Y-m-d', strtotime('-' . rand(18, 60) . ' years')),
-                'Start Day' => date('Y-m-d', strtotime('-' . rand(1, 10) . ' years')),
-                'Address' => 'Address ' . $i,
-                'Phone' => '123-456-' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'Base Salary' => rand(30000, 80000),
-                'Allowance' => rand(1000, 5000),
-                'Created At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
-                'Updated At' => now()->subDays(rand(1, 365))->format('Y-m-d'),
-            ];
-        }
+        $employees = Employee::paginate(5);
 
-        return view("admin.employee.index", ['employees' => $employees]);
+        return view('admin.employee.index', compact('employees'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.employee.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        //
+        $employee = new Employee();
+
+        if ($employee->create($request->validated())) {
+            session()->flash('message', 'Create employee successful!');
+        } else {
+            session()->flash('error', 'Create new customer failed!');
+        }
+
+        return redirect()->route('employees.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
-        return view('admin.employee.edit', ['id' => $id]);
+        $employee = Employee::findOrFail($id);
+
+        return view('admin.employee.edit', compact('employee'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateEmployeeRequest $request, int $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+
+        if ($employee->update($request->validated())) {
+            session()->flash('message', 'Update employee successful!');
+        } else {
+            session()->flash('error', 'Update employee failed!');
+        }
+
+        return redirect()->route('employees.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(int $id)
+    public function destroy(DeleteEmployeeRequest $request, int $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+
+        if ($employee->delete()) {
+            session()->flash('message', 'Delete employee successful!');
+        } else {
+            session()->flash('error', 'Delete employee failed!');
+        }
+
+        return redirect()->route('employees.index');
     }
 }

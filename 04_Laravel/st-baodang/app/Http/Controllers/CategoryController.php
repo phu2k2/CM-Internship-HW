@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest\DeleteCategoryRequest;
 use App\Http\Requests\CategoryRequest\StoreCategoryRequest;
 use App\Http\Requests\CategoryRequest\UpdateCategoryRequest;
-use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')->get();
+        $categories = Category::all();
 
         return view('sections.category.index', compact('categories'));
     }
@@ -32,11 +32,13 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $isStored = DB::table('categories')->insert([
-            'category_id' => $request->input('category_id'),
-            'category_name' => $request->input('category_name')
-        ]);
-        if ($isStored) {
+        $category = Category::withTrashed()
+            ->where('category_id', $request->input('category_id'))
+            ->first();
+        if ($category && $category->trashed()) {
+            $category->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif (Category::create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
@@ -48,7 +50,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = Category::find($id);
 
         return view('sections.category.show', compact('category'));
     }
@@ -58,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = Category::find($id);
 
         return view('sections.category.edit', compact('category'));
     }
@@ -68,14 +70,13 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        DB::table('categories')
-            ->where('id', $id)
-            ->update([
-                'category_id' => $request->input('category_id'),
-                'category_name' => $request->input('category_name')
-            ]);
+        $category = Category::find($id);
+        $isUpdated = $category->update($request->validated());
+        if ($isUpdated) {
+            session()->flash('status', 'Đã sửa dữ liệu thành công');
+        }
 
-        return redirect()->route('categories.show', $id);
+        return redirect()->route('categories.index', $id);
     }
 
     /**
@@ -83,8 +84,9 @@ class CategoryController extends Controller
      */
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        $records = DB::table('categories')->delete($id);
-        if ($records) {
+        $category = Category::find($id);
+        $isDeleted = $category->delete();
+        if ($isDeleted) {
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 

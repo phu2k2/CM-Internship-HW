@@ -27,7 +27,7 @@ class UpdateSupplierRequest extends FormRequest
                 'required',
                 'string',
                 'size:3',
-                'unique:suppliers,company_id,'.$this->id.',id'
+                'unique:suppliers,company_id,' . $this->id . ',id'
             ],
             'company_name' => 'required|string|max:50',
             'transaction_name' => 'required|string|max:30',
@@ -36,7 +36,7 @@ class UpdateSupplierRequest extends FormRequest
                 'required',
                 'email',
                 'max:30',
-                'unique:suppliers,email,'.$this->id.',id',
+                'unique:suppliers,email,' . $this->id . ',id',
             ],
             'phone' => 'required|string|regex:/^([0-9\-\+\(\)]*)$/|max:15',
             'fax' => 'required|string|max:15'

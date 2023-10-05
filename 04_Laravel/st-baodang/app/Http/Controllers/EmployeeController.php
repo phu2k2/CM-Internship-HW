@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeeRequest\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\StoreEmployeeRequest;
 use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
@@ -14,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = DB::table('employees')->get();
+        $employees = Employee::all();
 
         return view('sections.employee.index', compact('employees'));
     }
@@ -32,18 +33,13 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        $isStored = DB::table('employees')->insert([
-            'employee_id' => $request->input('employee_id'),
-            'last_name' => $request->input('last_name'),
-            'first_name' => $request->input('first_name'),
-            'birthday' => $request->input('birthday'),
-            'start_date' => $request->input('start_date'),
-            'address' => $request->input('address'),
-            'phone' => $request->input('phone'),
-            'base_salary' => $request->input('base_salary'),
-            'allowance' => $request->input('allowance')
-        ]);
-        if ($isStored) {
+        $employee = Employee::withTrashed()
+            ->where('employee_id', $request->input('employee_id'))
+            ->first();
+        if ($employee && $employee->trashed()) {
+            $employee->restore();
+            session()->flash('status', 'Đã khôi phục dữ liệu thành công');
+        } elseif ($employee->create($request->validated())) {
             session()->flash('status', 'Đã thêm dữ liệu thành công');
         }
 
@@ -65,7 +61,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = DB::table('employees')->where('id', $id)->first();
+        $employee = Employee::find($id);
 
         return view('sections.employee.edit', compact('employee'));
     }
@@ -75,19 +71,11 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        DB::table('employees')
-            ->where('id', $id)
-            ->update([
-                'employee_id' => $request->input('employee_id'),
-                'last_name' => $request->input('last_name'),
-                'first_name' => $request->input('first_name'),
-                'birthday' => $request->input('birthday'),
-                'start_date' => $request->input('start_date'),
-                'address' => $request->input('address'),
-                'phone' => $request->input('phone'),
-                'base_salary' => $request->input('base_salary'),
-                'allowance' => $request->input('allowance')
-            ]);
+        $employee = new Employee();
+        $isUpdated = $employee->update($request->validated());
+        if ($isUpdated) {
+            session()->flash('status', 'Đã sửa dữ liệu thành công');
+        }
 
         return redirect()->route('employees.index');
     }
@@ -97,8 +85,9 @@ class EmployeeController extends Controller
      */
     public function destroy(DeleteEmployeeRequest $request, string $id)
     {
-        $records = DB::table('employees')->delete($id);
-        if ($records) {
+        $employee = Employee::find($id);
+        $isDeleted = $employee->delete();
+        if ($isDeleted) {
             session()->flash('status', 'Đã xóa dữ liệu thành công');
         }
 

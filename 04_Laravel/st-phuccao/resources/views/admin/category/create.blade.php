@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <label for="category_name">Category ID</label>
                     <input type="text" class="form-control" id="category_id" name="category_id" value = "{{ old('category_id') }}">
-                    @error('category_name')
+                    @error('category_id')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>

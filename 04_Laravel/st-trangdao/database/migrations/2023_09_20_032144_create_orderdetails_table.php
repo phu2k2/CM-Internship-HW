@@ -20,14 +20,10 @@ return new class extends Migration
             $table->unsignedDecimal('discount', 10, 2);
             $table->foreign('invoice_id')
                 ->references('id')
-                ->on('orders')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->on('orders');
             $table->foreign('product_id')
                 ->references('product_id')
-                ->on('products')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->on('products');
             $table->timestamps();
         });
     }
