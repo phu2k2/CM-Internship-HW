@@ -9,17 +9,6 @@ use Illuminate\Support\Str;
 
 class SupplierController extends Controller
 {
-    private function generateUniqueCompanyId()
-    {
-        $lengthOfId = 3;
-        do {
-            $supplierId = Str::upper(Str::random($lengthOfId));
-            $existingSupplier = Supplier::where('company_id', $supplierId)->first();
-        } while ($existingSupplier);
-
-        return $supplierId;
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -44,15 +33,7 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        Supplier::create([
-            'company_id' => $this->generateUniqueCompanyId(),
-            'company_name' => $request->input('company_name'),
-            'transaction_name' => $request->input('transaction_name'),
-            'address' => $request->input('address'),
-            'phone' => $request->input('phone'),
-            'fax' => $request->input('fax'),
-            'email' => $request->input('email'),
-        ]);
+        Supplier::create($request->validated());
         return redirect()->route('suppliers.index');
     }
 
@@ -78,9 +59,7 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, int $id)
     {
         $supplier = Supplier::findOrFail($id);
-        $data = $request->only([
-            'company_name', 'transaction_name', 'address', 'phone', 'fax', 'email'
-        ]);
+        $data = $request->validated();
         $supplier->update($data);
         return redirect()->route('suppliers.edit', ['supplier' => $supplier->id]);
     }

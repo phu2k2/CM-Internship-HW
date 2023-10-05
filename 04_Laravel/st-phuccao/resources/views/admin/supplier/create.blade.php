@@ -15,6 +15,13 @@
             <form class="form-horizontal mt-4" action="{{ route('suppliers.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
+                    <label for="company_name">Company ID</label>
+                    <input type="text" class="form-control @error('company_id') is-invalid @enderror" id="company_id" name="company_id" value="{{ old('company_id') }}">
+                    @error('company_id')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="company_name">Company Name</label>
                     <input type="text" class="form-control @error('company_name') is-invalid @enderror" id="company_name" name="company_name" value="{{ old('company_name') }}">
                     @error('company_name')

@@ -9,17 +9,6 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    private function generateUniqueCategoryId()
-    {
-        $lengthOfId = 2;
-        do {
-            $categoryId = Str::upper(Str::random($lengthOfId));
-            $existingCategory = Category::where('category_id', $categoryId)->first();
-        } while ($existingCategory);
-
-        return $categoryId;
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -44,10 +33,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         // Create a new Category instance and fill its attributes
-        Category::create([
-            'category_id' => $this->generateUniqueCategoryId(),
-            'category_name' => $request->input('category_name'),
-        ]);
+        Category::create($request->validated());
         return redirect()->route('categories.index');
     }
 
