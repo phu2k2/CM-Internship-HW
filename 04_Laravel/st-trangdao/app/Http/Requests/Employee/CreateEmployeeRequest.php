@@ -22,7 +22,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_id' => 'required|string|size:4',
+            'employee_id' => 'required|unique:employees|string|size:4',
             'last_name' => 'required|string|max:40',
             'first_name' => 'required|string|max:10',
             'birthday' => 'required|date|before:-18 years',

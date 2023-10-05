@@ -5,35 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    private $data = [
-        [
-            'id' => 1,
-            'category_id' => 'TP',
-            'category_name' => 'Thực phẩm',
-        ],
-        [
-            'id' => 2,
-            'category_id' => 'DT',
-            'category_name' => 'Ðiện tử',
-        ],
-        [
-            'id' => 3,
-            'category_id' => 'MM',
-            'category_name' => 'May mặc',
-        ]
-    ];
-
-    /**
-     * Display a listing of the resource.
-     */
-
     public function index()
     {
-        $categories = $this->data;
+        $categories = Category::all();
 
         return view('categories.index', compact('categories'));
     }
@@ -51,7 +30,13 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        session()->flash('message', 'Successfully created!');
+
+        $category = Category::create($request->validated());
+        if ($category) {
+            session()->flash('message', 'Successfully created!');
+        } else {
+            session()->flash('error', 'New creation failed!');
+        }
 
         return redirect()->route('categories.index');
     }
@@ -61,11 +46,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $category = $value;
-            }
-        }
+        $category = Category::findOrFail($id);
 
         return view('categories.show', compact('category'));
     }
@@ -75,11 +56,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        foreach ($this->data as $key => $value) {
-            if ($value['id'] == $id) {
-                $category = $value;
-            }
-        }
+        $category = Category::findOrFail($id);
 
         return view('categories.edit', compact('category'));
     }
@@ -89,7 +66,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        session()->flash('message', 'Successfully updated!');
+        $category = Category::findOrFail($id);
+
+        $category->update($request->validated());
+
+        if ($category->wasChanged()) {
+            session()->flash('message', 'Successfully updated!');
+        } else {
+            session()->flash('error', 'No changes made.');
+        }
 
         return redirect()->route('categories.index');
     }
@@ -99,7 +84,13 @@ class CategoryController extends Controller
      */
     public function destroy(DeleteCategoryRequest $request, string $id)
     {
-        session()->flash('message', 'Successfully deleted!');
+        $category = Category::findOrFail($id);
+
+        if ($category->delete($id)) {
+            session()->flash('message', 'Successfully deleted!');
+        } else {
+            session()->flash('error', 'Deleted failed!');
+        }
 
         return redirect()->route('categories.index');
     }
