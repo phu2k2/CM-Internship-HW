@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
-use App\Models\Supplier;
+use Exception;
 
 class EmployeeController extends Controller
 {
@@ -33,8 +33,12 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $validated = $request->validated();
-        Employee::insert($validated);
-        return redirect()->route('employees.index');
+        try {
+            Employee::create($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item created failed!');
+        }
+        return redirect()->route('employees.index')->with('success', 'Item created successfully!');
     }
 
     /**
@@ -60,8 +64,12 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $validated = $request->validated();
-        Employee::findOrFail($id)->update($validated);
-        return redirect()->route('employees.index');
+        try {
+            Employee::findOrFail($id)->update($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item update failed!');
+        }
+        return redirect()->route('employees.index')->with('success', 'Item update successfully!');
     }
 
     /**

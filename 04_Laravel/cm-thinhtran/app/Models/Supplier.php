@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'suppliers';
 
@@ -22,4 +21,12 @@ class Supplier extends Model
         'fax',
         'email'
     ];
+
+    /**
+     * Get the products associated with the category.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'company_id' , 'company_id');
+    }
 }

@@ -8,12 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $table = 'categories';
 
     protected $fillable = [
         'category_id',
         'category_name',
     ];
+
+    /**
+     * Get the products associated with the category.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id' , 'category_id');
+    }
 }

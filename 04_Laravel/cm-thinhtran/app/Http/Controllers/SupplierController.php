@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
+use Exception;
 
 class SupplierController extends Controller
 {
@@ -32,8 +32,12 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         $validated = $request->validated();
-        Supplier::insert($validated);
-        return redirect()->route('suppliers.index');
+        try {
+            Supplier::create($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item created failed!');
+        }
+        return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');
     }
 
     /**
@@ -59,8 +63,12 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, string $id)
     {
         $validated = $request->validated();
-        Supplier::findOrFail($id)->update($validated);
-        return redirect()->route('suppliers.index');
+        try {
+            Supplier::findOrFail($id)->update($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item update failed!');
+        }
+        return redirect()->route('suppliers.index')->with('success', 'Item created successfully!');;
     }
 
     /**

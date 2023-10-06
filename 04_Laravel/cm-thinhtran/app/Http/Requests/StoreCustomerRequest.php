@@ -27,7 +27,7 @@ class StoreCustomerRequest extends FormRequest
             'address' => 'required|string|max:50',
             'email' => 'required|email|max:30',
             'phone' => 'required|string|max:15',
-            'fax' => 'nullable|string',
+            'fax' => 'nullable|string|max:15',
         ];
     }
 }

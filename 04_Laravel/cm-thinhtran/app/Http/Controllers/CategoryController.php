@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -31,8 +32,12 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
-        Category::insert($validated);
-        return redirect()->route('categories.index');
+        try {
+            Category::create($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item created failed!');
+        }
+        return redirect()->route('categories.index')->with('success', 'Item created successfully!');
     }
 
     /**
@@ -58,8 +63,12 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, string $id)
     {
         $validated = $request->validated();
-        Category::findOrFail($id)->update($validated);
-        return redirect()->route('categories.index');
+        try {
+            Category::findOrFail($id)->update($validated);
+        } catch (Exception $e) {
+            return back()->with('error', 'Item update failed!');
+        }
+        return redirect()->route('categories.index')->with('success', 'Item update successfully!');
     }
 
     /**

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'employees';
 
@@ -24,5 +23,13 @@ class Employee extends Model
         'base_salary',
         'allowance'
     ];
+
+    /**
+     * Get the orders associated with the employee.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
+    }
 
 }

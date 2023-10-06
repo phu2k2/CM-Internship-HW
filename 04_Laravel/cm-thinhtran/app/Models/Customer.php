@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $table = 'customers';
 
     protected $fillable = [
@@ -20,4 +19,12 @@ class Customer extends Model
         'phone',
         'fax'
     ];
+
+    /**
+     * Get the orders associated with the customer.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
 }
