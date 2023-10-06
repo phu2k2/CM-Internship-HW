@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerRequest\CreateCustomerRequest;
-use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
 
 class CustomerController extends Controller
 {
