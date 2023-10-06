@@ -22,13 +22,13 @@ class UpdateSupllierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required',
+            'company_id' => 'required|char|size:3',
             'company_name' => 'required|string|max:20',
             'transaction_name' => 'required|string|max:10',
-            'address' => ['required','unique:suppliers,address,'.$this->supplier . ',id','max:40'],
-            'phone' => 'required|string|max:20',
-            'fax' => 'required|string|max:20',
-            'email' => ['required','unique:suppliers,email,'.$this->supplier . ',id','max:30'],
+            'address' => ['required','unique:suppliers,address,'.$this->id . ',id','max:40'],
+            'phone' => 'required|string|max:20|regex:/^([0-9\-\+\(\)]*)$/|max:15',
+            'fax' => 'required|string|max:20|regex:/^([0-9\-\+\(\)]*)$/|max:15',
+            'email' => ['required','unique:suppliers,email,'.$this->id . ',id'],
         ];
     }
 }

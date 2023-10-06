@@ -61,17 +61,28 @@
                             <button type="submit" class="btn btn-primary" >
                                 Add
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick= "window.location.href = '{{route('employees.index')}}';">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="window.location.href = '{{ route('employees.index') }}';">
                                 Cancel
                             </button>
-                    </div>
-                </form>
-            </div>
+                            =======
+                            <div class="button-container">
+                                <button type="button" class="btn btn-primary"
+                                    onclick="window.location.href = '{{ route('employees.index') }}';">
+                                    Add
+                                </button>
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="window.location.href = '{{ route('employees.index') }}';">
+                                    Cancel
+                                </button>
+                                >>>>>>> 7ea2ccbcb20d3aaab4a4b2c7c2cc890a2f45ba5a
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-</html>
-@endsection
+        </html>
+    @endsection

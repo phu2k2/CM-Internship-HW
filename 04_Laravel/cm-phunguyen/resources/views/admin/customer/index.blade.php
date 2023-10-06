@@ -55,7 +55,7 @@
                                             <td>
                                                 <button type="button" class="btn btn-primary"
                                                     onclick="window.location.href = '{{ route('customers.edit', ['customer' => $customer['id']]) }}';">Edit</button>
-                                                    <form class="user" method="POST"
+                                                <form class="user" method="POST"
                                                     action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}">
                                                     @csrf
                                                     @method('DELETE')
@@ -72,8 +72,7 @@
                 </div>
 
             </div>
-        </div>
-        </div>
+
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

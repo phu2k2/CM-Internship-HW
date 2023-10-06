@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <h6>Employee Id</h6>
                             <input type="text" name="employee_id" class="form-control form-control-user" placeholder="Id"
-                                value="{{ old('employee_id', $employee['employee_id']) }}" >
+                                value="{{ old('employee_id', $employee['employee_id']) }}">
                             @error('employee_id')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -33,39 +33,39 @@
                         </div>
                         <div class="form-group">
                             <h6>Last Name</h6>
-                            <input type="text" name= "last_name" class="form-control form-control-user" placeholder="Last Name"
-                                value="{{ old('last_name', $employee['last_name']) }}">
+                            <input type="text" name="last_name" class="form-control form-control-user"
+                                placeholder="Last Name" value="{{ old('last_name', $employee['last_name']) }}">
                             @error('last_name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <h6>Birthday</h6>
-                            <input type="text" name = "birthday" class="form-control form-control-user" placeholder="Birthday"
-                                value="{{ old('birthday', $employee['birthday']) }}">
+                            <input type="text" name="birthday" class="form-control form-control-user"
+                                placeholder="Birthday" value="{{ old('birthday', $employee['birthday']) }}">
                             @error('birthday')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <h6>Start Date</h6>
-                            <input type="text" name = "start_date" class="form-control form-control-user" placeholder="Start Date"
-                                value="{{ old('start_date', $employee['start_date']) }}">
+                            <input type="text" name="start_date" class="form-control form-control-user"
+                                placeholder="Start Date" value="{{ old('start_date', $employee['start_date']) }}">
                             @error('start_date')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <h6>Address</h6>
-                            <input type="text" name = "address" class="form-control form-control-user" placeholder="Address"
-                                value="{{ old('address', $employee['address']) }}">
+                            <input type="text" name="address" class="form-control form-control-user"
+                                placeholder="Address" value="{{ old('address', $employee['address']) }}">
                             @error('address')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <h6>Phone</h6>
-                            <input type="text" name = "phone" class="form-control form-control-user" placeholder="Phone"
+                            <input type="text" name="phone" class="form-control form-control-user" placeholder="Phone"
                                 value="{{ old('phone', $employee['phone']) }}">
                             @error('phone')
                                 <div class="text-danger">{{ $message }}</div>
@@ -73,16 +73,16 @@
                         </div>
                         <div class="form-group">
                             <h6>Base Salary</h6>
-                            <input type="text" name = "base_salary" class="form-control form-control-user" placeholder="Base Salary"
-                                value="{{ old('base_salary', $employee['base_salary']) }}">
+                            <input type="text" name="base_salary" class="form-control form-control-user"
+                                placeholder="Base Salary" value="{{ old('base_salary', $employee['base_salary']) }}">
                             @error('base_salary')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <h6>Allowance</h6>
-                            <input type="text" name = "allowance" class="form-control form-control-user" placeholder="Allowance"
-                                value="{{ old('allowance', $employee['allowance']) }}">
+                            <input type="text" name="allowance" class="form-control form-control-user"
+                                placeholder="Allowance" value="{{ old('allowance', $employee['allowance']) }}">
                             @error('allowance')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -99,6 +99,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
