@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Supplier extends JsonResource
+class SupplierResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,9 @@ class Supplier extends JsonResource
     public function toArray(Request $request): array
     {
         $supplier = parent::toArray($request);
-        unset($supplier["products"]);
+        $hidden = ['created_at', 'updated_at', 'deleted_at'];
+        $supplier = array_diff_key($supplier, array_flip($hidden));
+        
         return [
             'supplier' => $supplier,
             'product_ids' => $this->products->pluck('product_id'),

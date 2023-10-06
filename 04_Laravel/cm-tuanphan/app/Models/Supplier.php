@@ -10,7 +10,7 @@ use App\Models\Product;
 class Supplier extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    
     protected $fillable = [
         'company_id',
         'company_name',

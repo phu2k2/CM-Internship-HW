@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use App\Http\Resources\Supplier as SupplierResources;
+use App\Http\Resources\SupplierResource;
 
 class SupplierController extends Controller
 {
@@ -15,7 +15,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::with('products')->get();
-        return SupplierResources::collection($suppliers);
+        return SupplierResource::collection($suppliers);
     }
 
     /**
