@@ -27,7 +27,8 @@ class Order extends Model
         return $this->hasOne(Employee::class);
     }
 
-    public function orderDetails() {
+    public function orderDetails()
+    {
         return $this->hasMany(OrderDetail::class , "id" , "invoice_id");
     }
 }
