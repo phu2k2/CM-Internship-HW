@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\customers\CreateCustomerRequest;
-use App\Http\Requests\customers\UpdateCustomerRequest;
+use App\Http\Requests\Categories\UpdateCategoryRequest;
+use App\Http\Requests\CustomerRequest\CreateCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -95,7 +95,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
 
     }
