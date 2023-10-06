@@ -33,6 +33,7 @@ class SupplierController extends Controller
             'updated_at' => "2023-09-26 11:45:00",
         ],
     ];
+
     /**
      * Display a listing of the resource.
      */

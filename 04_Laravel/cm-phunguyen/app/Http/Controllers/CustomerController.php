@@ -66,7 +66,6 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-
     }
 
     /**
@@ -97,7 +96,6 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
-
     }
 
     /**
