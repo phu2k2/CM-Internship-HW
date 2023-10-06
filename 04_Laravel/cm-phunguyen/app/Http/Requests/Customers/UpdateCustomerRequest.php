@@ -27,8 +27,8 @@ class UpdateCustomerRequest extends FormRequest
             'transaction_name'=>'required|string|max:10',
             'address' => 'required|string|max:40',
             'email' => ['required','unique:customers,email,'.$this->id . ',id'],
-            'phone'=>'required|string|max:20|regex:/^[0-9]+$/',
-            'fax'=> 'required|string|max:20|regex:/^[0-9]+$/'
+            'phone'=>'required|string|max:20|regex:/^([0-9\-\+\(\)]*)$/|max:15',
+            'fax'=> 'required|string|max:20|regex:/^([0-9\-\+\(\)]*)$/|max:15'
         ];
     }
 }
