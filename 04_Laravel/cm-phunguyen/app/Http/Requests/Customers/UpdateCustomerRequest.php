@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\customers;
+namespace App\Http\Requests\Customers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCustomerRequest extends FormRequest
+class UpdateCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,11 @@ class CreateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => 'required',
-            'company_name'=>'required|string|max:30',
+            'customer_id' => ['required','unique:customers,id,'.$this->id . ',id'],
+            'company_name' => 'required|string|max:30',
             'transaction_name'=>'required|string|max:10',
             'address' => 'required|string|max:40',
-            'email' => 'required|email|unique:customers|max:20',
+            'email' => ['required','unique:customers,email,'.$this->id . ',id'],
             'phone'=>'required|string|max:20',
             'fax'=> 'required|string'
         ];

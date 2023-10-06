@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\suppliers;
+namespace App\Http\Requests\Suppliers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
