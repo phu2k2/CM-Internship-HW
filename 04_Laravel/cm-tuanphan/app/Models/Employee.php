@@ -10,6 +10,8 @@ class Employee extends Model
 {
     use HasFactory,SoftDeletes;
     protected $primaryKey = "employee_id";
+
+    // The 'keyType' set to "string" allows the edit route to derive the primary key from the model.
     protected $keyType = "string";
     protected $fillable = [
         'employee_id',
