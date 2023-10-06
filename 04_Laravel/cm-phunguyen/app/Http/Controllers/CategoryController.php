@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Categories\UpdateCategoryRequest;
-use App\Http\Requests\CategoryRequest\CreateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
