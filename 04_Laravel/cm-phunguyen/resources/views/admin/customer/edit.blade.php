@@ -7,7 +7,9 @@
         <div class="container-fluid">
             <h1 class="h3 mb-2 text-gray-800">Edit Function</h1>
             <div class="p-5">
-                <form class="user">
+                <form class="user" method="POST" action="{{ route('customers.update', ['customer' => $customer['id']]) }}">
+                    @csrf
+                    @method('PUT')
                     <div class="form-group">
                         <h6>Customer Id</h6>
                         <input type="text" class="form-control form-control-user" placeholder="Id"

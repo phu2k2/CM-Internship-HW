@@ -11,6 +11,8 @@
             <hr class="sidebar-divider my-0">
             <!-- Divider -->
             <hr class="sidebar-divider">
+
+
             <!-- Nav Item - Employees -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('employees.index') }}">

@@ -5,8 +5,11 @@
     <div id="wrapper">
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Employee Information</h1>
+
+
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -47,7 +50,7 @@
                                         <td>{{ $employee['allowance'] }}</td>
                                         <td>
                                             <button type="button" class="btn btn-primary"
-                                                onclick="window.location.href = '{{ route('employees.edit', ['employee' => $employee['employee_id']]) }}';">Edit</button>
+                                                onclick="window.location.href = '{{ route('employees.edit', ['employee' => $employee['id']]) }}';">Edit</button>
                                             <button type="button" class="btn btn-primary">Delete</button>
                                         </td>
                                     </tr>
@@ -58,8 +61,51 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birthday</th>
+                            <th>Start Date</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Base Salary</th>
+                            <th>Allowance</th>
+                            <th>Button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $employee)
+                            <tr>
+                                <td>{{ $employee['employee_id'] }}</td>
+                                <td>{{ $employee['first_name'] }}</td>
+                                <td>{{ $employee['last_name'] }}</td>
+                                <td>{{ $employee['birthday'] }}</td>
+                                <td>{{ $employee['start_date'] }}</td>
+                                <td>{{ $employee['address'] }}</td>
+                                <td>{{ $employee['phone'] }}</td>
+                                <td>{{ $employee['base_salary'] }}</td>
+                                <td>{{ $employee['allowance'] }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="window.location.href = '{{ route('employees.edit', ['employee' => $employee['employee_id']]) }}';">Edit</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
     </div>
     </div>
     </div>
