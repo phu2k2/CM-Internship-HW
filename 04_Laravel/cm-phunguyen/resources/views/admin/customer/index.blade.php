@@ -43,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($customer as $customer)
+                                    @foreach ($customers as $customer)
                                         <tr>
                                             <td>{{ $customer['id'] }}</td>
                                             <td>{{ $customer['company_name'] }}</td>

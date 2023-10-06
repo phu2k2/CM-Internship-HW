@@ -14,8 +14,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::get();
-        return view('admin/customer/index', compact('customer'));
+        $customers = Customer::get();
+
+        return view('admin/customer/index', compact('customers'));
     }
 
     /**
@@ -39,6 +40,7 @@ class CustomerController extends Controller
             'phone' => $request->phone,
             'fax' => $request->fax
         ]);
+
         return redirect(route('customers.index'));
     }
 
@@ -55,10 +57,8 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $customer = Customer::find($id);
-        if (!$customer) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id);
+
         return view('admin/customer/edit', compact('customer'));
     }
 
@@ -67,7 +67,8 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
-        $customer = Customer::where('id', $id)->update([
+        $customer = Customer::findOrFail($id);
+        $customer->update([
             'company_name' => $request->company_name,
             'transaction_name' => $request->transaction_name,
             'address' => $request->address,
@@ -75,9 +76,7 @@ class CustomerController extends Controller
             'phone' => $request->phone,
             'fax' => $request->fax
         ]);
-        if (!$customer) {
-            abort(404);
-        }
+
         return redirect(route('customers.index'));
     }
 
@@ -86,11 +85,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        $customer = Customer::find($id)->delete();
-        if (!$customer) {
-            abort(404);
-        }
+        $customer = Customer::findOrFail($id)->delete();
         session()->flash('status', 'Delete success!');
+
         return redirect()->route('customers.index');
     }
 }

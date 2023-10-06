@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Suppliers\CreateSupplierRequest;
-use App\Http\Requests\Suppliers\UpdateSupplierRequest;
+use App\Http\Requests\Suppliers\UpdateSupllierRequest;
 use App\Models\Supplier;
 
 class SupplierController extends Controller
@@ -13,8 +13,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::get();
-        return view('admin/supplier/index', compact('supplier'));
+        $suppliers = Supplier::get();
+
+        return view('admin/supplier/index', compact('suppliers'));
     }
 
     /**
@@ -39,6 +40,7 @@ class SupplierController extends Controller
             'fax' => $request->fax,
             'email' => $request->email,
         ]);
+
         return redirect(route('suppliers.index'));
     }
 
@@ -55,19 +57,18 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        $supplier = Supplier::find($id);
-        if (!$supplier) {
-            abort(404);
-        }
+        $supplier = Supplier::findOrFail($id);
+
         return view('admin/supplier/edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSupplierRequest $request, string $id)
+    public function update(UpdateSupllierRequest $request, string $id)
     {
-        $supplier = Supplier::where('id', $id)->update([
+        $supplier = Supplier::findOrFail($id);
+        $supplier->update([
             'company_id' => $request->company_id,
             'company_name' => $request->company_name,
             'transaction_name' => $request->transaction_name,
@@ -76,9 +77,7 @@ class SupplierController extends Controller
             'fax' => $request->fax,
             'email' => $request->email,
         ]);
-        if (!$supplier) {
-            abort(404);
-        }
+
         return redirect(route('suppliers.index'));
     }
 
@@ -87,11 +86,9 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        $supplier = Supplier::find($id)->delete();
-        if (!$supplier) {
-            abort(404);
-        }
+        $supplier = Supplier::findOrFail($id)->delete();
         session()->flash('status', 'Delete success!');
+
         return redirect()->route('suppliers.index');
     }
 }

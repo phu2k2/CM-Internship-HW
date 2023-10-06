@@ -13,8 +13,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::get();
-        return view('admin/category/index', compact('category'));
+        $categories = Category::get();
+
+        return view('admin/category/index', compact('categories'));
     }
 
     /**
@@ -34,6 +35,7 @@ class CategoryController extends Controller
             'category_id' => $request->category_id,
             'category_name' => $request->category_name
         ]);
+
         return redirect(route('categories.index'));
     }
 
@@ -50,10 +52,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
-        if (!$category) {
-            abort(404);
-        }
+        $category = Category::findOrFail($id);
+
         return view('admin/category/edit', compact('category'));
     }
     /**
@@ -61,27 +61,25 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        $category = Category::where('id', $id)->update([
+        $category = Category::findOrFail($id);
+        $category->update([
             'category_id' => $request->category_id,
             'category_name' => $request->category_name
         ]);
-        if (!$category) {
-            abort(404);
-        }
-        return redirect(route('categories.index'));
+
+        return redirect()->route('categories.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
-        if(!$category){
-            abort(404);
-        }
+        $category = Category::findOrFail($id);
         $category->delete();
-        session()->flash('status','Delete success!');
+        session()->flash('status', 'Delete success!');
+
         return redirect()->route('categories.index');
     }
 }

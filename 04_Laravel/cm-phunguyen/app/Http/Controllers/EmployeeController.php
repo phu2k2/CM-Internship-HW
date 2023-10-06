@@ -13,8 +13,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = Employee::get();
-        return view('admin/employee/index', compact('employee'));
+        $employees = Employee::get();
+
+        return view('admin/employee/index', compact('employees'));
     }
 
     /**
@@ -41,6 +42,7 @@ class EmployeeController extends Controller
             'base_salary' => $request->base_salary,
             'allowance' => $request->allowance,
         ]);
+
         return redirect(route('employees.index'));
     }
 
@@ -57,10 +59,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::find($id);
-        if (!$employee) {
-            abort(404);
-        }
+        $employee = Employee::findOrFail($id);
+
         return view('admin/employee/edit', compact('employee'));
     }
 
@@ -69,7 +69,8 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        $employee = Employee::where('id', $id)->update([
+        $employee = Employee::findOrFail($id);
+        $employee->update([
             'company_id' => $request->company_id,
             'company_name' => $request->company_name,
             'transaction_name' => $request->transaction_name,
@@ -78,9 +79,7 @@ class EmployeeController extends Controller
             'fax' => $request->fax,
             'email' => $request->email,
         ]);
-        if (!$employee) {
-            abort(404);
-        }
+
         return redirect(route('employees.index'));
     }
 
@@ -89,11 +88,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        $employee = Employee::find($id)->delete();
-        if (!$employee) {
-            abort(404);
-        }
+        $employee = Employee::findOrFail($id)->delete();
         session()->flash('status', 'Delete success!');
+
         return redirect()->route('employees.index');
     }
 }

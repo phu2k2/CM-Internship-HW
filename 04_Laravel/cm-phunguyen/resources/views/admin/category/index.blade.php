@@ -41,7 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category as $category)
+                                    @foreach ($categories as $category)
                                         <tr>
                                             <td>{{ $category['category_id'] }}</td>
                                             <td>{{ $category['category_name'] }}</td>

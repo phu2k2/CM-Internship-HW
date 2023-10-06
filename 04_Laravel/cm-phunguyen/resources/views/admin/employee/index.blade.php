@@ -47,7 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($employee as $employee)
+                                    @foreach ($employees as $employee)
                                         <tr>
                                             <td>{{ $employee['employee_id'] }}</td>
                                             <td>{{ $employee['first_name'] }}</td>

@@ -44,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($supplier as $supplier)
+                                    @foreach ($suppliers as $supplier)
                                         <tr>
                                             <td>{{ $supplier['company_id'] }}</td>
                                             <td>{{ $supplier['company_name'] }}</td>
