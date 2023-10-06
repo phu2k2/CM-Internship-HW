@@ -27,6 +27,6 @@ class Supplier extends Model
      */
     public function products()
     {
-        return $this->hasMany(Product::class, 'company_id' , 'company_id');
+        return $this->hasMany(Product::class, 'company_id', 'company_id');
     }
 }

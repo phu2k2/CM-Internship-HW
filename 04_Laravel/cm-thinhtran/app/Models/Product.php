@@ -34,7 +34,7 @@ class Product extends Model
      */
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'company_id', 'company_id',);
+        return $this->belongsTo(Supplier::class, 'company_id', 'company_id');
     }
 
     /**
@@ -42,6 +42,6 @@ class Product extends Model
      */
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class, 'product_id', 'id');
+        return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }
 }
