@@ -17,12 +17,12 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_name' => fake()->text(50),
+            'company_name' => fake('vi_VN')->company(),
             'transaction_name' => strtoupper(fake()->text(20)),
-            'address' => fake()->text(50),
-            'email' => fake()->safeEmail,
-            'phone_number' => $this->faker->numerify('##########'),
-            'fax' => $this->faker->numerify('##########'),
+            'address' => fake('vi_VN')->address(),
+            'email' => fake()->unique()->companyEmail(),
+            'phone_number' => fake()->numerify('##########'),
+            'fax' => fake()->numerify('##########'),
         ];
     }
 }

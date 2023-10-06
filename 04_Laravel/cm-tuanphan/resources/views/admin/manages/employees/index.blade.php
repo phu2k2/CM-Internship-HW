@@ -159,38 +159,38 @@
                                 @foreach ($employees as $index => $employee)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->last_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->last_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->first_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->first_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->birthday}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->birthday }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$employee->start_date}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $employee->start_date }}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->address}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->address }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->phone}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->phone }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->base_salary}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->base_salary }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$employee->allowance}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $employee->allowance }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('employees.edit', ['employee'=>$employee->employee_id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger" onclick="(function() {
                                             var deleteEmployeeModal = new bootstrap.Modal(document.getElementById('deleteEmployeeModal'), {});
                                             deleteEmployeeModal.show();
-                                            document.getElementById('deleteEmployeeForm').action = '{{route('employees.destroy' , ['employee' => $employee->employee_id])}}';
+                                            document.getElementById('deleteEmployeeForm').action = '{{ route('employees.destroy' , ['employee' => $employee->employee_id]) }}';
                                         })();">Xóa</button>
                                     </td>
                                 </tr>  

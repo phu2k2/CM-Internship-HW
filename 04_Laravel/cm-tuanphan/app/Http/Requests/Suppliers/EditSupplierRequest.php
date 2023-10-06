@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Suppliers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\PhoneNumber;
+use App\Rules\FaxNumber;
 
 class EditSupplierRequest extends FormRequest
 {
@@ -25,8 +27,8 @@ class EditSupplierRequest extends FormRequest
             'company_name' => 'required|string|max:255',
             'transaction_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-            'fax' => 'nullable|string|max:15',
+            'phone' => ['required', new PhoneNumber],
+            'fax' => ['nullable','string','max:15' , new FaxNumber],
             'email' => 'required|email|max:255',
         ];
     }

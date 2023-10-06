@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employees;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\PhoneNumber;
 
 class CreateEmployeeRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class CreateEmployeeRequest extends FormRequest
             'birthday' => 'required|date',
             'start_date' => 'required|date',
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
+            'phone' => ['required', new PhoneNumber],
             'base_salary' => 'required|numeric',
             'allowance' => 'required|numeric',
         ];
