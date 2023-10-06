@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +19,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.pages.dashboard');
 });
+
+Route::get('dashboard', function () {
+    return view("admin.pages.dashboard");
+});
+
+//customer
+Route::resource('customers', CustomerController::class);
+
+//category
+Route::resource('categories', CategoryController::class);
+
+//employee
+Route::resource('employees', EmployeeController::class);
+
+//supplier
+Route::resource('suppliers', SupplierController::class);
+
+
+Route::get('practices/{number}', [HomeController::class, 'practice']);

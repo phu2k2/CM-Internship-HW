@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedDecimal('price', 10, 2);
             $table->unsignedInteger('amount');
             $table->decimal('discount', 10, 2)->nullable();
-            $table->foreign('invoice_id')->references('id')->on('orders')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('product_id')->references('product_id')->on('products')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('invoice_id')->references('id')->on('orders');
+            $table->foreign('product_id')->references('product_id')->on('products');
             $table->timestamps();
         });
     }
