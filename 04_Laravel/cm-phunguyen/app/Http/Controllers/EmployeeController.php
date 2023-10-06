@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\employees\CreateEmployeeRequest;
-use App\Http\Requests\employees\UpdateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\CreateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest\UpdateEmployeeRequest;
 use App\Models\Employee;
-use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {

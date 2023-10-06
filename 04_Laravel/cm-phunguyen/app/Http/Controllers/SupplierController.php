@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\suppliers\CreateSupplierRequest;
-use App\Http\Requests\suppliers\UpdateSupllierRequest;
+use App\Http\Requests\SupplierRequest\CreateSupplierRequest;
+use App\Http\Requests\SupplierRequest\UpdateSupplierRequest;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -66,7 +65,7 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSupllierRequest $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     {
         $supplier = Supplier::where('id', $id)->update([
             'company_id' => $request->company_id,
