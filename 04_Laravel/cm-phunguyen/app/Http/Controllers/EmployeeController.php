@@ -31,17 +31,8 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-        Employee::create([
-            'employee_id' => $request->employee_id,
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'birthday' => $request->birthday,
-            'start_date' => $request->start_date,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'base_salary' => $request->base_salary,
-            'allowance' => $request->allowance,
-        ]);
+        $validated = $request->validated();
+        Employee::insert($validated);
 
         return redirect(route('employees.index'));
     }
@@ -69,18 +60,11 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        $employee = Employee::findOrFail($id);
-        $employee->update([
-            'company_id' => $request->company_id,
-            'company_name' => $request->company_name,
-            'transaction_name' => $request->transaction_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'fax' => $request->fax,
-            'email' => $request->email,
-        ]);
+            $employee = Employee::findOrFail($id);
+            $validated = $request->validated();
+            $employee->update($validated);
 
-        return redirect(route('employees.index'));
+        return redirect()->route('employees.index');
     }
 
     /**

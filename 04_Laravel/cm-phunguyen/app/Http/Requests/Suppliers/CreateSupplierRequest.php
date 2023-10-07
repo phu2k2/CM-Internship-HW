@@ -22,12 +22,12 @@ class CreateSupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required|char|size:3',
+            'company_id' => 'required|unique:suppliers|size:3',
             'company_name' => 'required|string|max:20',
             'transaction_name' => 'required|string|max:10',
             'address' => 'required|string|unique:suppliers|max:40',
             'phone' => 'required|string|max:20|regex:/^([0-9\-\+\(\)]*)$/|max:15',
-            'fax' => 'required|string|max:20','regex:/^([0-9\-\+\(\)]*)$/|max:15',
+            'fax' => 'required|string|max:20', 'regex:/^([0-9\-\+\(\)]*)$/|max:15',
             'email' => 'required|email|unique:suppliers',
         ];
     }

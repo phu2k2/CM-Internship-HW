@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <input type="text" name="email" class="form-control form-control-user" placeholder="email"
                                 value="{{ old('email') }}">
-                            @error('address')
+                            @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

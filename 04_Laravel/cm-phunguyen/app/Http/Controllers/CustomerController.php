@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\customers\CreateCustomerRequest;
-use App\Http\Requests\customers\UpdateCustomerRequest;
+use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
 use App\Models\Customer;
 
 class CustomerController extends Controller
@@ -32,7 +32,10 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
+        $validated = $request->validated();
+        Customer::insert($validated);
 
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -58,7 +61,11 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
+        $customer = Customer::findOrFail($id);
+        $validated = $request->validated();
+        $customer->update($validated);
 
+        return redirect()->route('customers.index');
     }
 
     /**

@@ -31,15 +31,8 @@ class SupplierController extends Controller
      */
     public function store(CreateSupplierRequest $request)
     {
-        Supplier::create([
-            'company_id' => $request->company_id,
-            'company_name' => $request->company_name,
-            'transaction_name' => $request->transaction_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'fax' => $request->fax,
-            'email' => $request->email,
-        ]);
+        $validated = $request->validated();
+        Supplier::insert($validated);
 
         return redirect(route('suppliers.index'));
     }
@@ -68,15 +61,8 @@ class SupplierController extends Controller
     public function update(UpdateSupllierRequest $request, string $id)
     {
         $supplier = Supplier::findOrFail($id);
-        $supplier->update([
-            'company_id' => $request->company_id,
-            'company_name' => $request->company_name,
-            'transaction_name' => $request->transaction_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'fax' => $request->fax,
-            'email' => $request->email,
-        ]);
+        $validated = $request->validated();
+        $supplier->update($validated);
 
         return redirect(route('suppliers.index'));
     }

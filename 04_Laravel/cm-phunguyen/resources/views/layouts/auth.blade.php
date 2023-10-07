@@ -27,6 +27,7 @@
 
 <body id="page-top">
 
+
     <!-- Page Wrapper -->
     <div id="wrapper">
         @include('partials.sidebar')
@@ -35,6 +36,7 @@
             <!-- Main Content -->
             <div id="content">
                 @include('partials.topbar')
+
                 @yield('content')
 
             </div>

@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>Company Id</th>
                                         <th>Company Name</th>
-                                        <th>Transaction Name/th>
+                                        <th>Transaction Name</th>
                                         <th>Address</th>
                                         <th>Phone</th>
                                         <th>Fax</th>
