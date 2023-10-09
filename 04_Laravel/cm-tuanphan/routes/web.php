@@ -32,16 +32,3 @@ Route::prefix('admin')->group(function () {
     Route::resource('suppliers' , SupplierController::class)->name('*', 'suppliers');
     Route::resource('customers' , CustomerController::class)->name('*', 'customers');
 });
-
-// use App\Models\Supplier;
-// use App\Models\Product;
-// use App\Models\Customer;
-// use App\Models\Order;
-// use App\Models\Employee;
-// Route::get('/test' , function() {
-//     dd(Employee::find("0002")->orders);
-//     dd(Order::find(1))->customer;
-//     dd(Customer::find(2)->orders);
-//     dd(Product::find(3)->supplier->company_name);
-//     dd(Supplier::find(2)->products);
-// });
