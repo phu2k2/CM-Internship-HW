@@ -10,7 +10,7 @@ class Employee extends Model
 {
     use HasFactory, SoftDeletes;
     protected $primaryKey = "employee_id";
-    
+  
     // The 'keyType' set to "string" allows the edit route to derive the primary key from the model
     protected $keyType = "string";
 
@@ -25,4 +25,9 @@ class Employee extends Model
         'base_salary',
         'allowance'
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class , 'employee_id' , 'employee_id');
+    }
 }

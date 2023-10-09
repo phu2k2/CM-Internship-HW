@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Product;
 
 class Supplier extends Model
 {
@@ -19,4 +20,9 @@ class Supplier extends Model
         'fax',
         'email'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class , "company_id", "company_id");
+    }
 }
