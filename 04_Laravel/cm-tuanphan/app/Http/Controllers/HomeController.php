@@ -22,7 +22,7 @@ class HomeController extends Controller
 
     function cau1()
     {
-        return Supplier::where("company_name" , 'like' , '%' . "Việt Tiến" . '%')->first()->products;
+        return Supplier::where("company_name", 'like', '%' . "Việt Tiến" . '%')->first()->products;
     }
 
     function cau2() {
@@ -38,7 +38,7 @@ class HomeController extends Controller
         return Customer::select('company_name', 'transaction_name')
             ->distinct()
             ->whereHas('orders.orderDetails.product' , function ($query) {
-                $query->where('product_name' , 'like' , '%' . 'sữa hộp' . '%');
+                $query->where('product_name', 'like', '%' . 'sữa hộp' . '%');
             })->get();
     }
 
@@ -75,7 +75,7 @@ class HomeController extends Controller
     function cau7()
     {
         return Customer::distinct()
-            ->join('suppliers', 'customers.transaction_name' , '=' , 'suppliers.transaction_name')
+            ->join('suppliers', 'customers.transaction_name', '=', 'suppliers.transaction_name')
             ->pluck('suppliers.company_name');
     }
 

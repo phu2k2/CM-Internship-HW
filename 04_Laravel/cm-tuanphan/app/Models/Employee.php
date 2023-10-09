@@ -27,6 +27,6 @@ class Employee extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class , 'employee_id' , 'employee_id');
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
 }
