@@ -28,7 +28,7 @@ class UpdateEmployeeRequest extends FormRequest
             'birthday' => 'required|date_format:Y-m-d H:i:s',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'address' => 'required|string|max:40',
-            'phone' => ['required','unique:employees,phone,'.$this->id . ',id','regex:/^[0-9]+$/'],
+            'phone' => ['required','unique:employees,phone,'.$this->id . ',id','regex:/^([0-9\-\+\(\)]*)$/'],
             'base_salary' => 'required|numeric|min:0',
             'allowance' => 'required|numeric|min:0'
         ];
