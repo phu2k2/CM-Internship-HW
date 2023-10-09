@@ -62,6 +62,7 @@ class HomeController extends Controller
             ->joinCustomers()
             ->join('products', 'products.product_id', '=', 'orderdetails.product_id')
             ->where('products.product_name', 'LIKE', '%Sữa hộp%')
+            ->distinct()
             ->get(['customers.transaction_name']);
         dump($customerOrderMilk);
     }
