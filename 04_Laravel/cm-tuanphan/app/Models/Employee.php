@@ -13,7 +13,6 @@ class Employee extends Model
   
     // The 'keyType' set to "string" allows the edit route to derive the primary key from the model
     protected $keyType = "string";
-
     protected $fillable = [
         'employee_id',
         'last_name',
@@ -28,6 +27,6 @@ class Employee extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class , 'employee_id' , 'employee_id');
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
 }

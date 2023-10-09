@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('categories' , CategoryController::class)->name('*', 'categories');
     Route::resource('suppliers' , SupplierController::class)->name('*', 'suppliers');
     Route::resource('customers' , CustomerController::class)->name('*', 'customers');
+    Route::get('sql/{question}' , [HomeController::class, "index"]);
 });
