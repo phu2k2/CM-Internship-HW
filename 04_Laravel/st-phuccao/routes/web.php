@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,5 @@ Route::resource('categories', CategoryController::class);
 Route::resource('suppliers', SupplierController::class);
 
 Route::resource('employees', EmployeeController::class);
+
+Route::get('/practice', [HomeController::class, 'practice']);
