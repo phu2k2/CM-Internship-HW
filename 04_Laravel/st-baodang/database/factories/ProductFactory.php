@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'company_id' => Supplier::all()->random()->company_id,
             'category_id' => Category::all()->random()->category_id,
             'amount' => fake()->numberBetween(1, 2000),
-            'unit' => fake('vi_VN')->word,
+            'unit' => fake('vi_VN')->lexify('???????'),
             'price' => fake()->numberBetween(1000, 9999999),
         ];
     }

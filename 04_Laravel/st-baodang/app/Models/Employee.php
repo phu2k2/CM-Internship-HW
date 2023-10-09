@@ -38,4 +38,9 @@ class Employee extends Model
     {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
+
+    public function getFullNameAttribute()
+    {
+        return preg_replace('/\s+/', ' ', $this->first_name . ' ' . $this->last_name);
+    }
 }
