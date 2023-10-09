@@ -132,29 +132,29 @@
                                 @foreach ($suppliers as $index => $supplier)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->company_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $supplier->company_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->transaction_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $supplier->transaction_name }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->address}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $supplier->address }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$supplier->phone}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $supplier->phone }}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$supplier->fax}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $supplier->fax }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('suppliers.edit', ['supplier'=>$supplier->id]) }}" class="btn btn-success">Edit</a>
                                         <button class="btn btn-danger" onclick="(function() {
                                             var deleteSupplierModal = new bootstrap.Modal(document.getElementById('deleteSupplierModal'), {});
                                             deleteSupplierModal.show();
-                                            document.getElementById('deleteSupplierForm').action = '{{route('suppliers.destroy' , ['supplier' => $supplier->id])}}';
+                                            document.getElementById('deleteSupplierForm').action = '{{ route('suppliers.destroy' , ['supplier' => $supplier->id]) }}';
                                         })();">Xóa</button>
                                     </td>
                                 </tr>  

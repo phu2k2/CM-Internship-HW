@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EditCategoryRequest extends FormRequest
 {

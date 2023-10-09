@@ -10,18 +10,18 @@
             @if ($errors->any() || Route::is('categories.edit'))
             @section('modalTrigger')document.querySelector('[data-bs-target="#add-category-modal"]').click();@endsection
             @endif
-            <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $editingCategory->category_id ]) }}">
+            <form id="addCategoryForm" method="post" action="{{ route('categories.update' , ['category' => $editingCategory->id ]) }}">
                 @csrf
                 @method("PUT")
                 <label>ID danh mục</label>
-                <input class="form-control @error('category_id') is-invalid @enderror" value="{{ old('category_id') ? old('category_id') : $editingCategory->category_id}}" placeholder="ID danh mục" name="category_id"/>
+                <input class="form-control @error('category_id') is-invalid @enderror" value="{{ old('category_id') ? old('category_id') : $editingCategory->category_id }}" placeholder="ID danh mục" name="category_id"/>
                 @error('category_id')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
                 <label>Tên danh mục</label>
-                <input class="form-control @error('category_name') is-invalid @enderror" value="{{ old('category_name') ? old('category_name') : $editingCategory->category_name}}" placeholder="Tên danh mục" name="category_name"/>
+                <input class="form-control @error('category_name') is-invalid @enderror" value="{{ old('category_name') ? old('category_name') : $editingCategory->category_name }}" placeholder="Tên danh mục" name="category_name"/>
                 @error('category_name')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -70,13 +70,13 @@
                                 @foreach ($categories as $index => $category)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center">{{$index + 1}}</p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $index + 1 }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$category->category_id}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $category->category_id }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$category->category_name}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $category->category_name }}</p>
                                     </td>
                                     <td class="align-middle">
                                         <button class="btn btn-success">Edit</button>

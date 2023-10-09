@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->name('dashboard');
+
+Route::resource('categories', CategoryController::class)->except('show');
+Route::resource('customers', CustomerController::class);
+Route::resource('employees', EmployeeController::class);
+Route::resource('suppliers', SupplierController::class);
+
+Route::get('/home/{id}', [HomeController::class, 'practice']);
