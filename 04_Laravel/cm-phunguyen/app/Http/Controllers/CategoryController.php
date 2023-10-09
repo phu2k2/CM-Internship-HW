@@ -2,35 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Http\Requests\Categories\UpdateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    private $categoriesData = [
-        [
-            'id' => 1,
-            'category_id' => 'C1',
-            'category_name' => 'Electronics',
-            'created_at' => "2023-09-26 10:00:00",
-            'updated_at' => "2023-09-26 10:30:00",
-        ],
-        [
-            'id' => 2,
-            'category_id' => 'C2',
-            'category_name' => 'Clothing',
-            'created_at' => "2023-09-26 11:15:00",
-            'updated_at' => "2023-09-26 11:45:00",
-        ],
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->categoriesData;
-        return view('admin/category/index', compact('data'));
+        $categories = Category::get();
+
+        return view('admin/category/index', compact('categories'));
     }
 
     /**
@@ -46,6 +31,10 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+        $validated = $request->validated();
+        Category::insert($validated);
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -61,14 +50,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = null;
-        foreach ($this->categoriesData as $key => $value) {
-            if ($value['id'] == $id) {
-                $category = $value;
-                break;
-            }
-        }
-        return view(('admin/category/edit'), compact('category'));
+        $category = Category::findOrFail($id);
+
+        return view('admin/category/edit', compact('category'));
     }
 
     /**
@@ -76,14 +60,23 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $validated = $request->validated();
+        $category->update($validated);
+
+        return redirect()->route('categories.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        session()->flash('status', 'Delete success!');
+
+        return redirect()->route('categories.index');
     }
 }

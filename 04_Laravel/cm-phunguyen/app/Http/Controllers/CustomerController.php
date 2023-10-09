@@ -4,53 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Customers\CreateCustomerRequest;
 use App\Http\Requests\Customers\UpdateCustomerRequest;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
-
-    private $customerData = [
-        [
-            'id' => 1,
-            'company_name' => "ABC Inc.",
-            'transaction_name' => "Purchase",
-            'address' => "123 Main Street",
-            'email' => "abc@example.com",
-            'phone' => "555-123-4567",
-            'fax' => "555-987-6543",
-            'created_at' => "2023-09-26 10:00:00",
-            'updated_at' => "2023-09-26 10:30:00",
-        ],
-        [
-            'id' => 2,
-            'company_name' => "XYZ Corp.",
-            'transaction_name' => "Sale",
-            'address' => "456 Elm Street",
-            'email' => "xyz@example.com",
-            'phone' => "555-987-6543",
-            'fax' => "555-123-4567",
-            'created_at' => "2023-09-26 11:15:00",
-            'updated_at' => "2023-09-26 11:45:00",
-        ],
-        [
-            'id' => 3,
-            'company_name' => "LMN Ltd.",
-            'transaction_name' => "Service",
-            'address' => "789 Oak Street",
-            'email' => "lmn@example.com",
-            'phone' => "555-222-3333",
-            'fax' => "555-333-2222",
-            'created_at' => "2023-09-26 12:30:00",
-            'updated_at' => "2023-09-26 13:00:00",
-        ],
-    ];
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->customerData;
-        return view('admin/customer/index', compact('data'));
+        $customers = Customer::get();
+
+        return view('admin/customer/index', compact('customers'));
     }
 
     /**
@@ -66,6 +32,10 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
+        $validated = $request->validated();
+        Customer::insert($validated);
+
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -81,14 +51,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $customer = null;
-        foreach ($this->customerData as $key => $value) {
-            if ($value['id'] == $id) {
-                $customer = $value;
-                break;
-            }
-        }
-        return view(('admin/customer/edit'), compact('customer'));
+        $customer = Customer::findOrFail($id);
+
+        return view('admin/customer/edit', compact('customer'));
     }
 
     /**
@@ -96,6 +61,11 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, string $id)
     {
+        $customer = Customer::findOrFail($id);
+        $validated = $request->validated();
+        $customer->update($validated);
+
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -103,6 +73,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id)->delete();
+        session()->flash('status', 'Delete success!');
+
+        return redirect()->route('customers.index');
     }
 }

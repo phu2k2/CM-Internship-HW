@@ -4,48 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Employees\CreateEmployeeRequest;
 use App\Http\Requests\Employees\UpdateEmployeeRequest;
+use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    private $employeeData = [
-        [
-            'id'=>1,
-            'employee_id' => 'EMP1',
-            'last_name' => 'Smith',
-            'first_name' => 'John',
-            'birthday' => '1985-05-15 00:00:00',
-            'start_date' => '2022-01-10 00:00:00',
-            'address' => '123 Main Street',
-            'phone' => '0953430664',
-            'base_salary' => 50000.00,
-            'allowance' => 2000.00,
-            'created_at' => "2023-09-25 00:00:00",
-            'updated_at' => "2023-09-25 00:00:00"
-        ],
-        [
-            'id'=>2,
-            'employee_id' => 'EMP2',
-            'last_name' => 'Johnson',
-            'first_name' => 'Emily',
-            'birthday' => '1990-08-22 00:00:00',
-            'start_date' => '2021-03-05 00:00:00',
-            'address' => '456 Elm Street',
-            'phone' => '0953430664',
-            'base_salary' => 55000.00,
-            'allowance' => 2500.00,
-            'created_at' => "2023-09-25 00:00:00",
-            'updated_at' => "2023-09-25 00:00:00"
-        ],
-
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->employeeData;
-        return view('admin/employee/index', compact('data'));
+        $employees = Employee::get();
+
+        return view('admin/employee/index', compact('employees'));
     }
 
     /**
@@ -61,6 +31,10 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
+        $validated = $request->validated();
+        Employee::insert($validated);
+
+        return redirect(route('employees.index'));
     }
 
     /**
@@ -76,14 +50,9 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = null;
-        foreach ($this->employeeData as $key => $value) {
-            if ($value['id'] == $id) {
-                $employee = $value;
-                break;
-            }
-        }
-        return view(('admin/employee/edit'), compact('employee'));
+        $employee = Employee::findOrFail($id);
+
+        return view('admin/employee/edit', compact('employee'));
     }
 
     /**
@@ -91,7 +60,11 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, string $id)
     {
-        //
+            $employee = Employee::findOrFail($id);
+            $validated = $request->validated();
+            $employee->update($validated);
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -99,6 +72,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $employee = Employee::findOrFail($id)->delete();
+        session()->flash('status', 'Delete success!');
+
+        return redirect()->route('employees.index');
     }
 }

@@ -23,8 +23,11 @@
                         </div>
                         <div class="form-group">
                             <h6>Category Name</h6>
-                            <input type="text" class="form-control form-control-user" placeholder="Category Name"
-                                value="{{ old('category_name', $category['category_name']) }}">
+                            <input type="text" name="category_name" class="form-control form-control-user"
+                                placeholder="Category Name" value="{{ old('category_name', $category['category_name']) }}">
+                            @error('category_name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="button-container">
                             <button type="submit" class="btn btn-primary">
@@ -38,7 +41,6 @@
                     </form>
                 </div>
             </div>
-        </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
